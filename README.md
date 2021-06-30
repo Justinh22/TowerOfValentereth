@@ -3,6 +3,10 @@ A turn-based roguelike rpg, entirely in text.
 
 Welcome to Tower of Valentereth!!
 
+TO INSTALL:
+	Download the "Tower of Valentereth.msi" file, and use the installer to finish the installation progress. Files will be installed at the chosen
+	path, and player data will be kept at C:\Users\{USER}\AppData\Local\VirtualStore.
+
 Intro:
     Tower of Valentereth is a text-based, turn-based roguelike in which you must navigate through chamber after chamber collecting items,
     defeating enemies, and becoming stronger as you go. The UI is entirely text based, so all of your interactions will be done by typing
