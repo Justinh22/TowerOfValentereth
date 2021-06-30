@@ -1,0 +1,10 @@
+BigBoi 30
+StrongBoi 25
+HeftyBoi 20
+SizableBoi 15
+NormalBoi 10
+LankyBoi 8
+FrailBoi 6
+LilBoi 4
+SmolBoi 2
+Boi 1
