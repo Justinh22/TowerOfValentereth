@@ -110,24 +110,13 @@ int main()
                 stoi >> intChoice;
                 if(intChoice>0&&intChoice<9)
                 {
-                    cout << "-TAKE" << endl;
-                    cout << "-EXAMINE" << endl;
-                    cout << "ACTION: ";
+                    cout << dir.maskDirectory[intChoice-1].getName() << " | " << dir.maskDirectory[intChoice-1].getDesc() << endl;
+                    cout << "Take the mask? (y/n): ";
                     cin >> strChoice;
-                    if(strChoice=="take")
+                    if(strChoice=="y")
                     {
                         mask = dir.maskDirectory[intChoice-1].getID();
                         cout << "You put on the " << dir.maskDirectory[intChoice-1].getName() << "." << endl;
-                        Sleep(2000);
-                    }
-                    else if(strChoice=="examine")
-                    {
-                        cout << dir.maskDirectory[intChoice-1].getName() << " | " << dir.maskDirectory[intChoice-1].getDesc() << endl;
-                        Sleep(4000);
-                    }
-                    else
-                    {
-                        cout << "Invalid command." << endl;
                         Sleep(2000);
                     }
                 }
