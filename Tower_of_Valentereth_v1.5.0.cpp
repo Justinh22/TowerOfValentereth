@@ -149,7 +149,7 @@ int main()
 
     string name;
     string filename;
-    int saveStats[15];
+    int saveStats[16];
     int depth = 1;
     string save;
     string saveName;
@@ -238,7 +238,7 @@ int main()
                 cout << "DDG: " << saveStats[10] << endl;
                 cout << "DEPTH: " << saveStats[11] << endl;
                 cout << "KEYS: " << saveStats[12] << endl;
-                cout << "MASK: " << saveStats[13] << endl << endl;
+                cout << "MASK: " << dir.maskDirectory[saveStats[13]].getName() << endl << endl;
                 cout << "Continue with this character? (y/n): ";
                 cin >> load;
                 if(load=="y")
@@ -282,7 +282,8 @@ int main()
     hero.setEXPGoal(20*hero.level);
     hero.setHP(saveStats[3]);
     hero.setMP(saveStats[5]);
-    mask = dir.maskDirectory[saveStats[13]].getID();
+    if(saveStats[13]>=0)
+        mask = saveStats[13];
     if(intChoice==2)
     {
         hero.equipment = equipSave;
@@ -293,9 +294,9 @@ int main()
     if((depth/5)+2>11)
         hero.empowered = 1;
     if(saveStats[14]!=-1)
-        hero.equipWpn(dir.weaponDirectory[saveStats[13]]);
+        hero.equipWpn(dir.weaponDirectory[saveStats[14]]);
     if(saveStats[15]!=-1)
-        hero.equipAmr(dir.armorDirectory[saveStats[14]-57]);
+        hero.equipAmr(dir.armorDirectory[saveStats[15]-57]);
 
     if(mask>=0)
     {
