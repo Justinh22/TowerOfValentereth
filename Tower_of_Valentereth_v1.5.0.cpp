@@ -181,6 +181,7 @@ int main()
         saveStats[12] = 0;
         saveStats[13] = -1;
         saveStats[14] = -1;
+        saveStats[15] = -1;
     }
     else if(intChoice==2)
     {
@@ -200,7 +201,7 @@ int main()
                 {
                     std::stringstream data(save);
                     saveFound = 1;
-                    for(int i=0;i<15;i++)
+                    for(int i=0;i<16;i++)
                         data >> saveStats[i];
                     for(int i=0;i<6;i++)
                     {
@@ -236,7 +237,8 @@ int main()
                 cout << "DEF: " << saveStats[9] << endl;
                 cout << "DDG: " << saveStats[10] << endl;
                 cout << "DEPTH: " << saveStats[11] << endl;
-                cout << "KEYS: " << saveStats[12] << endl << endl;
+                cout << "KEYS: " << saveStats[12] << endl;
+                cout << "MASK: " << saveStats[13] << endl << endl;
                 cout << "Continue with this character? (y/n): ";
                 cin >> load;
                 if(load=="y")
@@ -263,6 +265,7 @@ int main()
                     saveStats[12] = 0;
                     saveStats[13] = -1;
                     saveStats[14] = -1;
+                    saveStats[15] = -1;
                     good = 1;
                 }
                 else
@@ -279,6 +282,7 @@ int main()
     hero.setEXPGoal(20*hero.level);
     hero.setHP(saveStats[3]);
     hero.setMP(saveStats[5]);
+    mask = dir.maskDirectory[saveStats[13]].getID();
     if(intChoice==2)
     {
         hero.equipment = equipSave;
@@ -288,9 +292,9 @@ int main()
     depth = saveStats[11];
     if((depth/5)+2>11)
         hero.empowered = 1;
-    if(saveStats[13]!=-1)
-        hero.equipWpn(dir.weaponDirectory[saveStats[13]]);
     if(saveStats[14]!=-1)
+        hero.equipWpn(dir.weaponDirectory[saveStats[13]]);
+    if(saveStats[15]!=-1)
         hero.equipAmr(dir.armorDirectory[saveStats[14]-57]);
 
     if(mask>=0)
@@ -1431,8 +1435,8 @@ void saveFunc(Player &hero,string filename, int depth)
     std::ofstream saveFile;
     saveFile.open(filename);
     saveFile << hero.level << " " << hero.exp << " " << hero.gold << " " << hero.getHP() << " " << hero.getMHP() << " " << hero.getMP() << " "
-             << hero.getMMP() << " " << hero.getNSTR() << " " << hero.getNCRT() << " " << hero.getNDEF()
-             << " " << hero.getNDDG() << " " << depth << " " << hero.keys << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID();
+             << hero.getMMP() << " " << hero.getNSTR() << " " << hero.getNCRT() << " " << hero.getNDEF() << " " << hero.getNDDG() << " " << depth
+             << " " << hero.keys << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID();
     for(int i=0;i<hero.equipment.size();i++)
     {
         saveFile << " " << hero.equipment[i];

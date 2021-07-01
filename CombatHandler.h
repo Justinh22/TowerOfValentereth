@@ -6,6 +6,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
     char yn;
     string action;
     string strChoice;
+    string monName = monster.getName();
     int choice;
     int hit;
     int crit;
@@ -20,6 +21,9 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
     float amp;
     int monHP = monster.getHP();
     vector<Buff> buffCounter;
+
+    if(hero.mask.getID()==2) //Darkness
+        monName = "Silhouette";
 
     amp = static_cast<float>(hero.getMA())/100;
     //cout << "AMP: " << hero.getMA() << " / 100 = " << amp << endl;
@@ -37,9 +41,9 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         if(action=="strike"||hero.mask.getID()==6)
         {
             if(hero.mask.getID()==6)
-                cout << "You lunge at the " << monster.getName() << " ferociously!" << endl;
+                cout << "You lunge at the " << monName << " ferociously!" << endl;
             else
-                cout << "You attack the " << monster.getName() << "!" << endl;
+                cout << "You attack the " << monName << "!" << endl;
             Sleep(1000);
             hit = rand() % 100 + 1;
             //cout << hit+monster.getDDG() << ", " << hero.getACC()+accBuff << endl;
@@ -58,7 +62,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     if(hero.mask.getID()==6) //Beasts
                         dmg = dmg + (dmg/2);
                     monHP -= dmg;
-                    cout << "Dealt " << dmg << " damage to " << monster.getName() << "!" << endl;
+                    cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
                     Sleep(2000);
                 }
                 else
@@ -73,7 +77,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     if(hero.mask.getID()==6) //Beasts
                         dmg = dmg + (dmg/2);
                     monHP -= dmg;
-                    cout << "Dealt " << dmg << " damage to " << monster.getName() << "!" << endl;
+                    cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
                     Sleep(2000);
                 }
             }
@@ -156,7 +160,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         dmg = dmg/2;
                     monHP -= dmg;
                     cout << hero.getName() << " cast " << dir.getItemName(hero.spellbook[choice-1]) << "!" << endl;
-                    cout << "Dealt " << dmg << " damage to " << monster.getName() << "!" << endl;
+                    cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
                     hero.changeMP(-(dir.attackSpellDirectory[hero.spellbook[choice-1]-200].getManaCost()));
                     Sleep(2000);
                 }
@@ -388,9 +392,9 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         hero.changeHP(hpBuff);
         hero.changeMP(hero.getMG());
         //Sleep(1000);
-        cout << monster.getName() << "'s Turn!" << endl;
+        cout << monName << "'s Turn!" << endl;
         Sleep(1000);
-        cout << monster.getName() << " attacks!" << endl;
+        cout << monName << " attacks!" << endl;
         Sleep(1000);
         hit = rand() % 100 + 1;
 
@@ -399,7 +403,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
 
         if(hit+hero.getDDG()+ddgBuff<=monster.getACC())
         {
-            cout << monster.getName() << " hits!" << endl;
+            cout << monName << " hits!" << endl;
             Sleep(1000);
             dmg = monster.getSTR() - hero.getDEF() - defBuff;
             if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whispers
@@ -414,7 +418,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         }
         else
         {
-            cout << monster.getName() << " misses!" << endl;
+            cout << monName << " misses!" << endl;
             Sleep(2000);
         }
         if(hero.getHP()<=0)

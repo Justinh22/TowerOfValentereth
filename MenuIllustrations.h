@@ -230,6 +230,8 @@ void storeMenu(Player hero, Merchant store, Directory dir)
 void combatMain(Player hero, Creature monster, int monCHP)
 {//111 Long
     string monName;
+    string enemyHP = std::to_string(monster.getHP());
+    string enemyCHP = std::to_string(monCHP);
     if(hero.mask.getID()==2)
         monName = "Silhouette";
     else
@@ -244,6 +246,8 @@ void combatMain(Player hero, Creature monster, int monCHP)
         for(int i=0;i<monster.getHP();i++)
             monHP += "X";
         monName = "Silhouette";
+        enemyHP = "XX";
+        enemyCHP = "XX";
     }
 
     string plrHP;
@@ -251,7 +255,7 @@ void combatMain(Player hero, Creature monster, int monCHP)
         plrHP += "|";
     std::system("cls");
     cout << "  /------------------------------------------------------------------------------------------------------------------\\" << endl;
-    cout << "  |-  " << setw(59) << std::left << "< " + monName + " >  [ " + std::to_string(monCHP) + " \\ " + std::to_string(monster.getHP()) + " ]" << "                                                   -|" << endl;
+    cout << "  |-  " << setw(59) << std::left << "< " + monName + " >  [ " + enemyCHP + " \\ " + enemyHP + " ]" << "                                                   -|" << endl;
     cout << "  |- {" << setw(monster.getHP()) << std::left << monHP << setw(103-monster.getHP()) << std::left << "} " << "       -|" << endl;
     cout << "  |-                                                                                                                -|" << endl;
     cout << "  |-                                                                                                                -|" << endl;
