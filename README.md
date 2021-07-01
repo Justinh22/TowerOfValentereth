@@ -13,10 +13,11 @@ Intro:
     an action into the command line when prompted. All actions and targets are accepted in all lower case. A list of applicable actions
     is provided below.
 
-Gameplay:
+Exploration:
     The game follows a set pattern; you advance to a new floor, and examine its surroundings. You can examine sections of the room's
     description to learn more about it, or look at containers around the room to find new items, equipment, and spells for you to pick up.
-    Sometimes, even features around the room can have items hidden within them.
+    Sometimes, even features around the room can have items hidden within them. If you wish to get items more quickly, you can target "all"
+	to pick up all items in the room, excluding those hidden in features.
     If a creature is present in the room with you, they must be defeated before you can advance to the next floor, unless you attempt to run past.
     Once you gain enough experience points, your character will level up, gaining stat boosts and being restored to full health. The rarity and
     power of items you find will increase the further you ascend the tower. This can continue for countless floors, however, the end of your journey
@@ -56,6 +57,17 @@ Shops:
 Masks:
     Masks are a special item that can only be equipped at the start of an ascension of the tower. Each type of mask is an overhaul of one of the game's
     mechanics, and wearing one throughout the game will drastically alter the playstyle. Try them out and see how far you can make it!
+	-MASK OF GLASS: A smiling mask made of shimmering glass. When worn, doubles the damage dealt with strikes, but doubles the damage dealt to the
+		wearer.
+	-MASK OF WRATH: An enraged mask made of searing hot stone. When worn, raises strength and crit chance by 50%, but lowers accuracy by 33%.
+	-MASK OF DARKNESS: A screaming mask made of dark obsidian. When worn, spells are amplified by 50%, but enemies cannot be identified.
+	-MASK OF ARCANA: A peaceful mask made of smooth marble. When worn, increases mana regeneration by 5, but all strikes deal half damage.
+	-MASK OF STEEL: A stoic mask made of hardened metal. When worn, halves damage taken from attacks, but enemies never miss.
+	-MASK OF WHISPERS: A transparent mask made of invisible threads. When worn, increases chance to dodge by 50%, but enemies deal double damage to
+		the wearer.
+	-MASK OF BEASTS: A ravenous mask made of bloodied pelts. When worn, increases strength by 50%, but the wearer must strike each round of combat.
+	-MASK OF SOULS: An expressionless mask made of light itself. When worn, triples the amount of EXP earned by the wearer, but restricts the wearer
+		from equipping any armor.
 
 Karma:
     Karma is a hidden statistic that effects the difficulty of the rooms generated during the game. The difficulty of enemies and the amount and quality
