@@ -307,17 +307,6 @@ int main()
     string action;
     string target;
 
-
-    /*cout << weaponDirectory[24].getName() << endl;
-    cout << armorDirectory[5].getName() << endl;
-    cout << consumableDirectory[6].getName() << endl;
-    cout << creatureDirectory[7].getName() << endl;
-    cout << attackSpellDirectory[13].getName() << endl;
-    cout << healingSpellDirectory[5].getName() << endl;
-    cout << buffSpellDirectory[6].getName() << endl;
-    cout << featureDirectory[5].getName() << endl;
-    cout << roomDirectory[6].getDesc() << endl;*/
-
     int err = 0;
     int end = 0;
 
@@ -347,6 +336,7 @@ int main()
     int egDefBuff;
     int egDdgBuff;
 
+    cout << "Floor " << depth << endl;
     currentRoom = roomGenerator(diff,rew,adv,dir,hero);
 
     while(end==0)
@@ -385,7 +375,6 @@ int main()
                             adv++;
                     }
                     roomLogic(diff,rew,karma);
-                    //cout << "Generating room with diff = " << diff << ", rew = " << rew << ", and adv = " << adv << "." << endl;
                     if(diff==0)
                         pass = 1;
                     else
@@ -449,7 +438,6 @@ int main()
                                 adv++;
                         }
                         roomLogic(diff,rew,karma);
-                        //cout << "Generating room with diff = " << diff << ", rew = " << rew << ", and adv = " << adv << "." << endl;
                         if(diff==0)
                             pass = 1;
                         else
@@ -689,7 +677,6 @@ int main()
                                     adv++;
                             }
                             roomLogic(diff,rew,karma);
-                            //cout << "Generating room with diff = " << diff << ", rew = " << rew << ", and adv = " << adv << "." << endl;
                             if(diff==0)
                                 pass = 1;
                             else
@@ -728,24 +715,21 @@ int main()
                 else
                 {
                     cout << text << endl;
-                    /*cout << "Equipment Size: " << hero.equipment.size() << endl;
-                    cout << "Inventory Size: " << hero.inventory.size() << endl;
-                    cout << "Spellbook Size: " << hero.spellbook.size() << endl;*/
                 }
             }
             else if(err==4)
             {
                 menuval = menuHandler(hero,dir);
                 clear();
-                if(menuval==-1)
+                if(menuval==-1) //Writing Save File
                 {
                     cout << "Quitting..." << endl;
 
                     std::ofstream saveFile;
                     saveFile.open(filename);
                     saveFile << hero.level << " " << hero.exp << " " << hero.gold << " " << hero.getHP() << " " << hero.getMHP() << " " << hero.getMP() << " "
-                             << hero.getMMP() << " " << hero.getNSTR() << " " << hero.getNCRT() << " " << hero.getNDEF()
-                             << " " << hero.getNDDG() << " " << depth << " " << hero.keys << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID();
+                             << hero.getMMP() << " " << hero.getNSTR() << " " << hero.getNCRT() << " " << hero.getNDEF() << " " << hero.getNDDG() << " " << depth
+                             << " " << hero.keys << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID();
                     for(int i=0;i<hero.equipment.size();i++)
                     {
                         saveFile << " " << hero.equipment[i];
@@ -839,7 +823,7 @@ int main()
                 cout << "        -Meaning: Opens a guide to actions." << endl;
                 cout << "        -EG: help" << endl;
                 cout << endl;
-                cout << "For further help, consult the instructions file in the game files." << endl << endl;
+                cout << "For further help, consult the REAMDE file in the game files." << endl << endl;
             }
             /*else if(err==5)
             {
@@ -1477,39 +1461,22 @@ bool hiscores(Player &hero, int depth)
     }
 
     for(i=9;i>=0;i--) //Determining if the score is on the leaderboard, and its position
-    {
         if(depth>=depthArr[i])
-        {
             flag = i;
-        }
-    }
-    //cout << "Flag: " << flag << endl;
     if(flag==-1)
         return 0;
 
     for(i=9;i>=0;i--) //Inserting it into the leaderboard
         if(i>flag)
-        {
-            //cout << "Shifting..." << endl;
             depthArr[i] = depthArr[i-1];
-        }
         else if(i==flag)
-        {
-            //cout << "Placing score!" << endl;
             depthArr[i] = depth;
-        }
 
     for(i=9;i>=0;i--) //Inserting name into the leaderboard
         if(i>flag)
-        {
-            //cout << "Shifting..." << endl;
             nameArr[i] = nameArr[i-1];
-        }
         else if(i==flag)
-        {
-            //cout << "Placing name!" << endl;
             nameArr[i] = hero.getName();
-        }
 
     readFile.close();
 
