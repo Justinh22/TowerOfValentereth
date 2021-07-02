@@ -212,7 +212,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 if(choice<=hero.inventory.size()&&choice>0)
                 {
                     cout << dir.getItemName(hero.inventory[choice-1]) << ": " << dir.getItemDesc(hero.inventory[choice-1]) << endl;
-                    cout << "Use this? (y/n)";
+                    cout << "Use this? (y/n)" << endl;
                     yn = getch();
                     if(yn=='y')
                         confirm = 1;

@@ -372,7 +372,7 @@ int main()
                         if(adv<10)
                             adv++;
                     }
-                    roomLogic(diff,rew,karma);
+                    roomLogic(diff,rew,karma,adv);
                     if(diff==0)
                         pass = 1;
                     else
@@ -436,7 +436,7 @@ int main()
                             if(adv<10)
                                 adv++;
                         }
-                        roomLogic(diff,rew,karma);
+                        roomLogic(diff,rew,karma,adv);
                         if(diff==0)
                             pass = 1;
                         else
@@ -689,7 +689,7 @@ int main()
                                 if(adv<10)
                                     adv++;
                             }
-                            roomLogic(diff,rew,karma);
+                            roomLogic(diff,rew,karma,adv);
                             if(diff==0)
                                 pass = 1;
                             else
@@ -853,7 +853,7 @@ int main()
                         adv++;
                     lvup = 1;
                 }
-                roomLogic(diff,rew,karma);
+                roomLogic(diff,rew,karma,adv);
                 //cout << "Generating room with diff = " << diff << ", rew = " << rew << ", and adv = " << adv << "." << endl;
                 if(diff==0)
                     pass = 1;
