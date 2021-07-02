@@ -3,8 +3,8 @@ StrongBoi 25
 HeftyBoi 20
 SizableBoi 15
 NormalBoi 10
+testboi 8
 LankyBoi 8
 FrailBoi 6
+testboi 4
 LilBoi 4
-SmolBoi 2
-Boi 1

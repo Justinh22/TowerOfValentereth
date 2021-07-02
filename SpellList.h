@@ -62,23 +62,23 @@ vector<HealingSpell> initHSDir(vector<HealingSpell> healingSpellDirectory)
 vector<BuffSpell> initBSDir(vector<BuffSpell> buffSpellDirectory)
 {
 
-    BuffSpell Rage("Rage","Increases your Atk by 5.",1,221,6,5,0,0,0,0);
+    BuffSpell Rage("Rage","Increases your Atk.",1,221,6,5,0,0,0,0);
     buffSpellDirectory.push_back(Rage);
-    BuffSpell Brace("Brace","Increases your Def by 5.",1,222,6,0,5,0,0,0);
+    BuffSpell Brace("Brace","Increases your Def.",1,222,6,0,5,0,0,0);
     buffSpellDirectory.push_back(Brace);
-    BuffSpell Focus("Focus","Increases your Acc by 15.",2,223,8,0,0,0,15,0);
+    BuffSpell Focus("Focus","Increases your Acc.",2,223,8,0,0,0,15,0);
     buffSpellDirectory.push_back(Focus);
-    BuffSpell Speed("Speed","Increases your Ddg by 15.",2,224,8,0,0,0,0,15);
+    BuffSpell Speed("Speed","Increases your Ddg.",2,224,8,0,0,0,0,15);
     buffSpellDirectory.push_back(Speed);
-    BuffSpell Luck("Luck","Increases your Crt by 15.",3,225,10,0,0,15,0,0);
+    BuffSpell Luck("Luck","Increases your Crt.",3,225,10,0,0,15,0,0);
     buffSpellDirectory.push_back(Luck);
-    BuffSpell Rage_II("Rage II","Increases your Atk by 10.",4,226,12,10,0,0,0,0);
+    BuffSpell Rage_II("Rage II","Increases your Atk by a great amount.",4,226,12,10,0,0,0,0);
     buffSpellDirectory.push_back(Rage_II);
-    BuffSpell Brace_II("Brace II","Increases your Def by 10.",4,227,12,0,10,0,0,0);
+    BuffSpell Brace_II("Brace II","Increases your Def by a great amount.",4,227,12,0,10,0,0,0);
     buffSpellDirectory.push_back(Brace_II);
-    BuffSpell Focus_II("Focus II","Increases your Acc by 30.",5,228,16,0,0,0,30,0);
+    BuffSpell Focus_II("Focus II","Increases your Acc by a great amount.",5,228,16,0,0,0,30,0);
     buffSpellDirectory.push_back(Focus_II);
-    BuffSpell Speed_II("Speed II","Increases your Ddg by 30.",5,229,16,0,0,0,0,30);
+    BuffSpell Speed_II("Speed II","Increases your Ddg by a great amount.",5,229,16,0,0,0,0,30);
     buffSpellDirectory.push_back(Speed_II);
 
     //cout << "Spell List Initialized! (3/3)" << endl;

@@ -264,7 +264,7 @@ void combatMain(Player hero, Creature monster, int monCHP)
     cout << "  |-       " << setw(103-hero.getMHP()) << std::right << " {" << setw(hero.getMHP()) << std::right << plrHP << "} -|" << endl;
     cout << "  |------------------------------------------------------------------------------------------------------------------|" << endl;
     cout << "  |-                           |                            |                            |                          -|" << endl;
-    cout << "  |-       <--STRIKE-->        |         <--CAST-->         |          <--USE-->         |         <--RUN-->        -|" << endl;
+    cout << "  |-     <--STRIKE [J]-->      |       <--CAST [K]-->       |        <--USE [L]-->       |       <--RUN [;]-->      -|" << endl;
     cout << "  |-                           |         " << setw(3) << std::right << hero.getMP() << " // " << setw(3) << std::left << hero.getMMP() << "         |                            |                          -|" << endl;
     cout << "  \\------------------------------------------------------------------------------------------------------------------/" << endl;
 }//                         27                           28                            28                           28

@@ -288,10 +288,11 @@ protected:
 class Buff
 {
 public:
-    Buff(int atu, int dfu, int cu, int acu, int dgu, int hpu)
-    {atkUp=atu;defUp=dfu;crtUp=cu;accUp=acu;ddgUp=dgu;hpUp=hpu;counter=6;}
+    Buff(string nm, int atu, int dfu, int cu, int acu, int dgu, int hpu)
+    {name=nm;atkUp=atu;defUp=dfu;crtUp=cu;accUp=acu;ddgUp=dgu;hpUp=hpu;counter=6;}
     int getCount(){return counter;}
     void tick(){counter-=1;}
+    string getName(){return name;}
     int getATKU(){return atkUp;}
     int getDEFU(){return defUp;}
     int getCRTU(){return crtUp;}
@@ -300,6 +301,7 @@ public:
     int getHPU(){return hpUp;}
 protected:
     int counter;
+    string name;
     int atkUp;
     int defUp;
     int crtUp;

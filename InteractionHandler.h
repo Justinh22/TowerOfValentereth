@@ -224,7 +224,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                         }
                         else
                         {
-                            cout << dir.consumableDirectory[currentRoom.getIList()[i]-100].getName() << " | " << dir.consumableDirectory[currentRoom.getIList()[i]-65].getDesc() << endl;
+                            cout << dir.consumableDirectory[currentRoom.getIList()[i]-100].getName() << " | " << dir.consumableDirectory[currentRoom.getIList()[i]-100].getDesc() << endl;
                             cout << "RARITY: " << dir.consumableDirectory[currentRoom.getIList()[i]-100].getRarity() << endl;
                             cout << "HP " << dir.consumableDirectory[currentRoom.getIList()[i]-100].getHP() << endl;
                             cout << "MP " << dir.consumableDirectory[currentRoom.getIList()[i]-100].getMP() << endl;
@@ -259,6 +259,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
     {
         //cout << "Command was 'GET'" << endl;
         returner = "";
+        //cout << currentRoom.getIList().size();
         for(int i=0;i<currentRoom.getIList().size();i++)
         {
             valid = 0;
