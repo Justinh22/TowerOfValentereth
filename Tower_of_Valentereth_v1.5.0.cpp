@@ -549,7 +549,7 @@ int main()
                         else
                         {
                             cout << "Would you like to use a key to open the lock? You have " << hero.keys << " key(s) remaining. (y/n)" << endl;
-                            cin >> yn;
+                            yn = getch();
                             if(yn=='y')
                             {
                                 hero.keys -= 1;
@@ -1351,7 +1351,7 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                 }
             }
             cout << "PRICE: " << currentRoom.store.storeCost[intChoice-1] << endl << endl;
-            cout << "Would you like to purchase this item? (y/n): ";
+            cout << "Would you like to purchase this item? (y/n)" << endl;
             strChoice = getch();
             if(strChoice=="y"||strChoice=="Y")
             {

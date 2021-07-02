@@ -36,6 +36,10 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         if(hero.getMP()>hero.getMMP())
             hero.setMP(hero.getMMP());
         combatMain(hero,monster,monHP);
+
+        for(int i=0;i<buffCounter.size();i++)
+            cout << buffCounter[i].getName() << " lasts for " << buffCounter[i].getCount()-1 << " more turns." << endl;
+
         cout << endl << "Your Turn!" << endl << ": ";
         action = getch();
         if(action=="j"||hero.mask.getID()==6)
@@ -171,7 +175,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     hero.changeMP(-(dir.healingSpellDirectory[hero.spellbook[choice-1]-215].getManaCost()));
                     if(hero.spellbook[choice-1]==217||hero.spellbook[choice-1]==218||hero.spellbook[choice-1]==220)
                     {
-                        Buff regen(0,0,0,0,0,dir.healingSpellDirectory[hero.spellbook[choice-1]-215].getHPR());
+                        Buff regen(dir.getItemName(hero.spellbook[choice-1]),0,0,0,0,0,ceil(static_cast<float>(dir.healingSpellDirectory[hero.spellbook[choice-1]-215].getHPR())+(amp*static_cast<float>(dir.healingSpellDirectory[hero.spellbook[choice-1]-215].getHPR()))));
                         buffCounter.push_back(regen);
                     }
                     else
@@ -188,11 +192,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 else
                 {
                     //cout << "Buff Spell!" << endl;
-                    Buff newBuff(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getATKU(),
-                        dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDEFU(),
-                        dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getCRTU(),
-                        dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getACCU(),
-                        dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDDGU(), 0);
+                    Buff newBuff(dir.getItemName(hero.spellbook[choice-1]),
+                        ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getATKU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getATKU()))),
+                        ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDEFU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDEFU()))),
+                        ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getCRTU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getCRTU()))),
+                        ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getACCU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getACCU()))),
+                        ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDDGU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDDGU()))), 0);
                     buffCounter.push_back(newBuff);
                     cout << hero.getName() << " cast " << dir.getItemName(hero.spellbook[choice-1]) << "!" << endl;
                     hero.changeMP(-(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getManaCost()));

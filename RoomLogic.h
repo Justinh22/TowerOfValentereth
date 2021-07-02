@@ -146,7 +146,7 @@ void roomLogic(int &diff, int &rew, int &karma, int adv)
             }
             else if(karma>5)
             {
-                if(chance<=3)
+                if(chance<=2)
                 {
                     diff = 0;
                     karma -= 2;
@@ -188,7 +188,7 @@ void roomLogic(int &diff, int &rew, int &karma, int adv)
             }
             else if(karma>15)
             {
-                if(chance<=3)
+                if(chance<=2)
                 {
                     diff = 0;
                     karma -= 2;
