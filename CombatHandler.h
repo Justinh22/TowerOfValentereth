@@ -38,7 +38,8 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         combatMain(hero,monster,monHP);
 
         for(int i=0;i<buffCounter.size();i++)
-            cout << buffCounter[i].getName() << " lasts for " << buffCounter[i].getCount()-1 << " more turns." << endl;
+            if(buffCounter[i].getCount()>1)
+                cout << buffCounter[i].getName() << " lasts for " << buffCounter[i].getCount()-1 << " more turns." << endl;
 
         cout << endl << "Your Turn!" << endl << ": ";
         action = getch();
@@ -127,6 +128,16 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         else
                         {
                             cout << "MANA COST: " << dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getManaCost() << endl;
+                            if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getATKU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getATKU())))>0)
+                                cout << "ATK BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getATKU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getATKU()))) << endl;
+                            if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDEFU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDEFU())))>0)
+                                cout << "DEF BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDEFU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDEFU()))) << endl;
+                            if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getCRTU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getCRTU())))>0)
+                                cout << "CRT BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getCRTU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getCRTU()))) << endl;
+                            if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getACCU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getACCU())))>0)
+                                cout << "ACC BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getACCU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getACCU()))) << endl;
+                            if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDDGU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDDGU())))>0)
+                                cout << "DDG BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDDGU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDDGU()))) << endl;
                         }
                         cout << "Cast? (y/n)" << endl;
                         yn = getch();

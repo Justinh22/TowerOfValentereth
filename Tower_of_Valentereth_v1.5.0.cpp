@@ -1053,10 +1053,28 @@ int menuHandler(Player &hero, Directory dir)
                 {
                     if(intChoice==0)
                         break;
-                    cout << "What do you want to do to " << dir.getItemName(hero.equipment[intChoice-1]) << "?" << endl;
+                    if(hero.equipment[intChoice-1]<57)
+                    {
+                        cout << dir.getItemName(hero.equipment[intChoice-1]) << " | " << dir.getItemDesc(hero.equipment[intChoice-1]) << endl;
+                        cout << "RARITY: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getRarity() << endl;
+                        cout << "STR: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getStr() << endl;
+                        cout << "ACC: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getAcc() << endl;
+                        cout << "CRIT: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getCrt() << endl;
+                        if(dir.weaponDirectory[hero.equipment[intChoice-1]].getMA()!=0)
+                            cout << "MAGIC AMP: +" << dir.weaponDirectory[hero.equipment[intChoice-1]].getMA() << "%" << endl;
+                    }
+                    else
+                    {
+                        cout << dir.getItemName(hero.equipment[intChoice-1]) << " | " << dir.getItemDesc(hero.equipment[intChoice-1]) << endl;
+                        cout << "RARITY: " << dir.armorDirectory[hero.equipment[intChoice-1]-57].getRarity() << endl;
+                        cout << "DEF: " << dir.armorDirectory[hero.equipment[intChoice-1]-57].getDef() << endl;
+                        cout << "DDG: " << dir.armorDirectory[hero.equipment[intChoice-1]-57].getDdg() << endl;
+                        if(dir.armorDirectory[hero.equipment[intChoice-1]-57].getMG()!=0)
+                            cout << "MANA REGEN: " << dir.armorDirectory[hero.equipment[intChoice-1]-57].getMG()  << endl;
+                    }
+                    cout << endl << "What do you want to do to " << dir.getItemName(hero.equipment[intChoice-1]) << "?" << endl;
                     cout << "1) EQUIP" << endl;
-                    cout << "2) EXAMINE" << endl;
-                    cout << "3) DROP" << endl;
+                    cout << "2) DROP" << endl;
                     cout << "0) RETURN" << endl;
                     strChoice = getch();
                     if(strChoice=="1")
@@ -1083,29 +1101,6 @@ int menuHandler(Player &hero, Directory dir)
                         }
                     }
                     else if(strChoice=="2")
-                    {
-                        if(hero.equipment[intChoice-1]<57)
-                        {
-                            cout << dir.getItemName(hero.equipment[intChoice-1]) << " | " << dir.getItemDesc(hero.equipment[intChoice-1]) << endl;
-                            cout << "RARITY: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getRarity() << endl;
-                            cout << "STR: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getStr() << endl;
-                            cout << "ACC: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getAcc() << endl;
-                            cout << "CRIT: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getCrt() << endl;
-                            if(dir.weaponDirectory[hero.equipment[intChoice-1]].getMA()!=0)
-                                cout << "MAGIC AMP: +" << dir.weaponDirectory[hero.equipment[intChoice-1]].getMA() << "%" << endl;
-                        }
-                        else
-                        {
-                            cout << dir.getItemName(hero.equipment[intChoice-1]) << " | " << dir.getItemDesc(hero.equipment[intChoice-1]) << endl;
-                            cout << "RARITY: " << dir.armorDirectory[hero.equipment[intChoice-1]-57].getRarity() << endl;
-                            cout << "DEF: " << dir.armorDirectory[hero.equipment[intChoice-1]-57].getDef() << endl;
-                            cout << "DDG: " << dir.armorDirectory[hero.equipment[intChoice-1]-57].getDdg() << endl;
-                            if(dir.armorDirectory[hero.equipment[intChoice-1]-57].getMG()!=0)
-                                cout << "MANA REGEN: " << dir.armorDirectory[hero.equipment[intChoice-1]-57].getMG()  << endl;
-                        }
-                        Sleep(3000);
-                    }
-                    else if(strChoice=="3")
                     {
                         cout << "Are you sure you want to drop " << dir.getItemName(hero.equipment[intChoice-1]) << "? (y/n)" << endl;
                         strChoice = getch();
@@ -1144,10 +1139,13 @@ int menuHandler(Player &hero, Directory dir)
                 {
                     if(intChoice==0)
                         break;
+                    cout << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getName() << " | " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getDesc() << endl;
+                    cout << "RARITY: " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getRarity() << endl;
+                    cout << "HP: " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getHP() << endl;
+                    cout << "MP: " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getMP() << endl << endl;
                     cout << "What do you want to do to " << dir.getItemName(hero.inventory[intChoice-1]) << "?" << endl;
                     cout << "1) USE" << endl;
-                    cout << "2) EXAMINE" << endl;
-                    cout << "3) DROP" << endl;
+                    cout << "2) DROP" << endl;
                     cout << "0) RETURN" << endl;
                     strChoice = getch();
                     if(strChoice=="1")
@@ -1171,14 +1169,6 @@ int menuHandler(Player &hero, Directory dir)
                         hero.inventory.erase(hero.inventory.begin()+intChoice-1);
                     }
                     else if(strChoice=="2")
-                    {
-                        cout << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getName() << " | " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getDesc() << endl;
-                        cout << "RARITY: " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getRarity() << endl;
-                        cout << "HP: " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getHP() << endl;
-                        cout << "MP: " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getMP() << endl;
-                        Sleep(3000);
-                    }
-                    else if(strChoice=="3")
                     {
                         hero.inventory.erase(hero.inventory.begin()+intChoice-1);
                     }
@@ -1214,13 +1204,39 @@ int menuHandler(Player &hero, Directory dir)
                 {
                     if(intChoice==0)
                         break;
-                    cout << "What do you want to do to " << dir.getItemName(hero.spellbook[intChoice-1]) << "?" << endl;
-                    cout << "1) EXAMINE" << endl;
+                    cout << dir.getItemName(hero.spellbook[intChoice-1]) << " | " << dir.getItemDesc(hero.spellbook[intChoice-1]) << endl;
+                    cout << "RARITY: " << dir.getItemRarity(hero.spellbook[intChoice-1]) << endl;
+                    if(hero.spellbook[intChoice-1]<=214)
+                    {
+                        cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-200].getManaCost() << endl;
+                        cout << "DAMAGE: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-200].getDMG() << endl;
+                    }
+                    else if(hero.spellbook[intChoice-1]<=220)
+                    {
+                        cout << "MANA COST: " << dir.healingSpellDirectory[hero.spellbook[intChoice-1]-215].getManaCost() << endl;
+                        cout << "HEALING: " << dir.healingSpellDirectory[hero.spellbook[intChoice-1]-215].getHPR() << endl;
+                    }
+                    else
+                    {
+                        cout << "MANA COST: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getManaCost() << endl;
+                        if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU())))>0)
+                            cout << "ATK BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU()))) << endl;
+                        if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU())))>0)
+                            cout << "DEF BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU()))) << endl;
+                        if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU())))>0)
+                            cout << "CRT BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU()))) << endl;
+                        if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU())))>0)
+                            cout << "ACC BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU()))) << endl;
+                        if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU())))>0)
+                            cout << "DDG BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU()))) << endl;
+                    }
+
+                    cout << endl << "What do you want to do to " << dir.getItemName(hero.spellbook[intChoice-1]) << "?" << endl;
                     if(hero.spellbook[intChoice-1]==215||hero.spellbook[intChoice-1]==216||hero.spellbook[intChoice-1]==219)
-                        cout << "2) USE" << endl;
+                        cout << "1) USE" << endl;
                     cout << "0) RETURN" << endl;
                     strChoice = getch();
-                    if(strChoice=="2"&&(hero.spellbook[intChoice-1]==215||hero.spellbook[intChoice-1]==216||hero.spellbook[intChoice-1]==219))
+                    if(strChoice=="1"&&(hero.spellbook[intChoice-1]==215||hero.spellbook[intChoice-1]==216||hero.spellbook[intChoice-1]==219))
                     {
                         if(hero.getMP()>=dir.healingSpellDirectory[hero.spellbook[intChoice-1]-215].getManaCost())
                         {
@@ -1233,26 +1249,6 @@ int menuHandler(Player &hero, Directory dir)
                         }
                         else
                             cout << "You don't have enough mana." << endl;
-                    }
-                    else if(strChoice=="1")
-                    {
-                        cout << dir.getItemName(hero.spellbook[intChoice-1]) << " | " << dir.getItemDesc(hero.spellbook[intChoice-1]) << endl;
-                        cout << "RARITY: " << dir.getItemRarity(hero.spellbook[intChoice-1]) << endl;
-                        if(hero.spellbook[intChoice-1]<=214)
-                        {
-                            cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-200].getManaCost() << endl;
-                            cout << "DAMAGE: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-200].getDMG() << endl;
-                        }
-                        else if(hero.spellbook[intChoice-1]<=220)
-                        {
-                            cout << "MANA COST: " << dir.healingSpellDirectory[hero.spellbook[intChoice-1]-215].getManaCost() << endl;
-                            cout << "HEALING: " << dir.healingSpellDirectory[hero.spellbook[intChoice-1]-215].getHPR() << endl;
-                        }
-                        else
-                        {
-                            cout << "MANA COST: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getManaCost() << endl;
-                        }
-                        Sleep(3000);
                     }
                     else if(strChoice!="0")
                     {
