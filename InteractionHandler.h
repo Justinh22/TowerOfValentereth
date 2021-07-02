@@ -259,6 +259,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
     {
         //cout << "Command was 'GET'" << endl;
         returner = "";
+        cout << currentRoom.getIList().size();
         for(int i=0;i<currentRoom.getIList().size();i++)
         {
             valid = 0;

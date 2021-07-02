@@ -37,8 +37,8 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
             hero.setMP(hero.getMMP());
         combatMain(hero,monster,monHP);
         cout << endl << "Your Turn!" << endl << ": ";
-        cin >> action;
-        if(action=="strike"||hero.mask.getID()==6)
+        action = getch();
+        if(action=="j"||hero.mask.getID()==6)
         {
             if(hero.mask.getID()==6)
                 cout << "You lunge at the " << monName << " ferociously!" << endl;
@@ -87,14 +87,13 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 Sleep(2000);
             }
         }
-        else if(action=="cast")
+        else if(action=="k")
         {
             confirm = 0;
             while(confirm==0)
             {
                 spellbookMenu(hero.spellbook,dir);
-                cout << "CAST: ";
-                cin >> strChoice;
+                strChoice = getch();
                 std::stringstream stoi(strChoice);
                 stoi >> choice;
                 if(choice>50)
@@ -125,8 +124,8 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         {
                             cout << "MANA COST: " << dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getManaCost() << endl;
                         }
-                        cout << "Cast? (y/n): ";
-                        cin >> yn;
+                        cout << "Cast? (y/n)" << endl;
+                        yn = getch();
                         if(yn=='y')
                             confirm = 1;
                     }
@@ -201,21 +200,20 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 }
             }
         }
-        else if(action=="use")
+        else if(action=="l")
         {
             confirm = 0;
             while(confirm==0)
             {
                 itemMenu(hero,hero.inventory,dir);
-                cout << "USE: ";
-                cin >> strChoice;
+                strChoice = getch();
                 std::stringstream stoi(strChoice);
                 stoi >> choice;
                 if(choice<=hero.inventory.size()&&choice>0)
                 {
                     cout << dir.getItemName(hero.inventory[choice-1]) << ": " << dir.getItemDesc(hero.inventory[choice-1]) << endl;
-                    cout << "Use this? (y/n): ";
-                    cin >> yn;
+                    cout << "Use this? (y/n)";
+                    yn = getch();
                     if(yn=='y')
                         confirm = 1;
                 }
@@ -245,7 +243,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 hero.inventory.erase(hero.inventory.begin()+choice-1);
             }
         }
-        else if(action=="run")
+        else if(action==";")
         {
             {
                 hit = rand() % 100 + 1;

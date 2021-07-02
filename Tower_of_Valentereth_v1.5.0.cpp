@@ -11,6 +11,7 @@
 #include <bits/stdc++.h>
 #include <sstream>
 #include <fstream>
+#include <conio.h>
 using std::cout;
 using std::endl;
 using std::string;
@@ -76,8 +77,7 @@ int main()
     {
         clear();
         titleScreen();
-        cout << " : ";
-        cin >> strChoice;
+        strChoice = getch();
         std::stringstream stoi(strChoice);
         stoi >> intChoice;
         if(intChoice==1||intChoice==2)
@@ -90,8 +90,7 @@ int main()
             while(men==0)
             {
                 scores();
-                cout << " : ";
-                cin >> strChoice;
+                strChoice = getch();
                 std::stringstream stoi(strChoice);
                 stoi >> intChoice;
                 if(intChoice==0)
@@ -104,8 +103,7 @@ int main()
             while(men==0)
             {
                 maskSelect();
-                cout << " : ";
-                cin >> strChoice;
+                strChoice = getch();
                 std::stringstream stoi(strChoice);
                 stoi >> intChoice;
                 if(intChoice>0&&intChoice<9)
@@ -239,15 +237,15 @@ int main()
                 cout << "DEPTH: " << saveStats[11] << endl;
                 cout << "KEYS: " << saveStats[12] << endl;
                 cout << "MASK: " << dir.maskDirectory[saveStats[13]].getName() << endl << endl;
-                cout << "Continue with this character? (y/n): ";
-                cin >> load;
+                cout << "Continue with this character? (y/n)" << endl;
+                load = getch();
                 if(load=="y")
                     good = 1;
             }
             else
             {
-                cout << "Could not locate save data. Create new character with this name? (y/n): ";
-                cin >> load;
+                cout << "Could not locate save data. Create new character with this name? (y/n)" << endl;
+                load = getch();
                 if(load=="y")
                 {
                     saveStats[0] = 1;
@@ -431,6 +429,7 @@ int main()
                     }
                     if(pass==3)
                     {
+                        pass = 1;
                         depth++;
                         if(depth%5==0)
                         {
@@ -470,6 +469,7 @@ int main()
                             boss = 2;
                         for(int i=0;i<3;i++)
                             itemStatus[i] = 0;
+                        continue;
                     }
                     pass = 1;
                     if(boss==1)
@@ -500,7 +500,7 @@ int main()
                         cout << "So you must ascend even further to truly break this cycle..." << endl;
                         Sleep(2000);
                         cout << "Press any key to continue ascending the tower.";
-                        cin >> yn;
+                        yn = getch();
                         hero.Empower();
                     }
                     if(boss==2)
@@ -510,6 +510,19 @@ int main()
                         break;
                     }
                     currentRoom.creatDesc = "";
+                    cout << "Floor " << depth << endl;
+                    cout << currentRoom.getDesc() << endl;
+                    for(int i=0;i<currentRoom.getLDescList().size();i++)
+                        cout << currentRoom.getLDescList()[i] << endl;
+                    if(hero.empowered==1)
+                        cout << currentRoom.ascDesc << endl;
+                    cout << currentRoom.getDrDesc() << endl;
+                    if(currentRoom.store.getLevel()!=-1)
+                        if(currentRoom.store.isUnlocked()==0)
+                            cout << "There is a locked door at the side of the room. The sign above it says it is a shop." << endl;
+                        else
+                            cout << "There is a shop on the side wall of the room." << endl;
+                    cout << currentRoom.creatDesc << endl;
                 }
                 else if(text=="room")
                 {
@@ -573,8 +586,8 @@ int main()
                 }
                 else if(text=="escape")
                 {
-                    cout << "Enemy has not yet been defeated. Try to run past? (y/n): ";
-                    cin >> yn;
+                    cout << "Enemy has not yet been defeated. Try to run past? (y/n)" << endl;
+                    yn = getch();
                     if(yn=='y')
                     {
                         foo = rand() % 100 + 1;
@@ -771,8 +784,8 @@ int main()
                 if(manSave==0)
                 {
                     cout << "ToV uses autosave. Would you like to enable manual save? You can re-enable" << endl;
-                    cout << "autosave by typing save again or restarting the game. (y/n)" << endl << ": ";
-                    cin >> yn;
+                    cout << "autosave by typing save again or restarting the game. (y/n)" << endl;
+                    yn = getch();
                     if(yn=='y')
                     {
                         cout << "Autosave disabled. Saving..." << endl;
@@ -781,8 +794,8 @@ int main()
                 }
                 else
                 {
-                    cout << "Autosave is disabled. Re-enable? (y/n)" << endl << ": ";
-                    cin >> yn;
+                    cout << "Autosave is disabled. Re-enable? (y/n)" << endl;
+                    yn = getch();
                     if(yn=='y')
                     {
                         cout << "Autosave re-enabled." << endl;
@@ -998,10 +1011,10 @@ int menuHandler(Player &hero, Directory dir)
     do{
         nav = 0;
         mainMenu();
-        cout << "MENU: ";
-        cin >> strChoice;
+        strChoice = getch();
         std::stringstream stoi(strChoice);
         stoi >> intChoice;
+
         if(intChoice==1)
         {
             nav = 1;
@@ -1012,7 +1025,7 @@ int menuHandler(Player &hero, Directory dir)
             {
                 statMenu(hero,dir);
                 cout << "STATS: ";
-                cin >> strChoice;
+                strChoice = getch();
                 std::stringstream stoi(strChoice);
                 stoi >> intChoice;
                 if(intChoice==0)
@@ -1027,7 +1040,7 @@ int menuHandler(Player &hero, Directory dir)
                 nav = 0;
                 equipmentMenu(hero.equipment,dir);
                 cout << "EQUIPMENT: ";
-                cin >> strChoice;
+                strChoice = getch();
                 std::stringstream stoi(strChoice);
                 stoi >> intChoice;
                 /*if(intChoice<=0&&intChoice>=9)
@@ -1041,13 +1054,12 @@ int menuHandler(Player &hero, Directory dir)
                     if(intChoice==0)
                         break;
                     cout << "What do you want to do to " << dir.getItemName(hero.equipment[intChoice-1]) << "?" << endl;
-                    cout << "-EQUIP" << endl;
-                    cout << "-EXAMINE" << endl;
-                    cout << "-DROP" << endl;
-                    cout << "-RETURN" << endl;
-                    cout << "ACTION: ";
-                    cin >> strChoice;
-                    if(strChoice=="equip")
+                    cout << "1) EQUIP" << endl;
+                    cout << "2) EXAMINE" << endl;
+                    cout << "3) DROP" << endl;
+                    cout << "0) RETURN" << endl;
+                    strChoice = getch();
+                    if(strChoice=="1")
                     {
                         if(hero.equipment[intChoice-1]<57)
                         {
@@ -1070,7 +1082,7 @@ int menuHandler(Player &hero, Directory dir)
                             }
                         }
                     }
-                    else if(strChoice=="examine")
+                    else if(strChoice=="2")
                     {
                         if(hero.equipment[intChoice-1]<57)
                         {
@@ -1093,11 +1105,14 @@ int menuHandler(Player &hero, Directory dir)
                         }
                         Sleep(3000);
                     }
-                    else if(strChoice=="drop")
+                    else if(strChoice=="3")
                     {
-                        hero.equipment.erase(hero.equipment.begin()+intChoice-1);
+                        cout << "Are you sure you want to drop " << dir.getItemName(hero.equipment[intChoice-1]) << "? (y/n)" << endl;
+                        strChoice = getch();
+                        if(strChoice=="y")
+                            hero.equipment.erase(hero.equipment.begin()+intChoice-1);
                     }
-                    else if(strChoice!="return")
+                    else if(strChoice!="0")
                     {
                         cout << "Invalid action." << endl;
                         Sleep(2000);
@@ -1116,8 +1131,7 @@ int menuHandler(Player &hero, Directory dir)
             do{
                 nav = 0;
                 itemMenu(hero,hero.inventory,dir);
-                cout << "ITEM: ";
-                cin >> strChoice;
+                strChoice = getch();
                 std::stringstream stoi(strChoice);
                 stoi >> intChoice;
                 /*if(intChoice<=0&&intChoice>=9)
@@ -1131,13 +1145,12 @@ int menuHandler(Player &hero, Directory dir)
                     if(intChoice==0)
                         break;
                     cout << "What do you want to do to " << dir.getItemName(hero.inventory[intChoice-1]) << "?" << endl;
-                    cout << "-USE" << endl;
-                    cout << "-EXAMINE" << endl;
-                    cout << "-DROP" << endl;
-                    cout << "-RETURN" << endl;
-                    cout << "ACTION: ";
-                    cin >> strChoice;
-                    if(strChoice=="use")
+                    cout << "1) USE" << endl;
+                    cout << "2) EXAMINE" << endl;
+                    cout << "3) DROP" << endl;
+                    cout << "0) RETURN" << endl;
+                    strChoice = getch();
+                    if(strChoice=="1")
                     {
                         if(dir.consumableDirectory[hero.inventory[intChoice-1]-100].getHP()>0)
                         {
@@ -1157,7 +1170,7 @@ int menuHandler(Player &hero, Directory dir)
                         }
                         hero.inventory.erase(hero.inventory.begin()+intChoice-1);
                     }
-                    else if(strChoice=="examine")
+                    else if(strChoice=="2")
                     {
                         cout << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getName() << " | " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getDesc() << endl;
                         cout << "RARITY: " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getRarity() << endl;
@@ -1165,11 +1178,11 @@ int menuHandler(Player &hero, Directory dir)
                         cout << "MP: " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getMP() << endl;
                         Sleep(3000);
                     }
-                    else if(strChoice=="drop")
+                    else if(strChoice=="3")
                     {
                         hero.inventory.erase(hero.inventory.begin()+intChoice-1);
                     }
-                    else if(strChoice!="return")
+                    else if(strChoice!="0")
                     {
                         cout << "Invalid action." << endl;
                         Sleep(2000);
@@ -1188,8 +1201,7 @@ int menuHandler(Player &hero, Directory dir)
             do{
                 nav = 0;
                 spellbookMenu(hero.spellbook,dir);
-                cout << "SPELL: ";
-                cin >> strChoice;
+                strChoice = getch();
                 std::stringstream stoi(strChoice);
                 stoi >> intChoice;
                 /*if(intChoice<=0&&intChoice>=29)
@@ -1203,13 +1215,12 @@ int menuHandler(Player &hero, Directory dir)
                     if(intChoice==0)
                         break;
                     cout << "What do you want to do to " << dir.getItemName(hero.spellbook[intChoice-1]) << "?" << endl;
-                    cout << "-EXAMINE" << endl;
+                    cout << "1) EXAMINE" << endl;
                     if(hero.spellbook[intChoice-1]==215||hero.spellbook[intChoice-1]==216||hero.spellbook[intChoice-1]==219)
-                        cout << "-USE" << endl;
-                    cout << "-RETURN" << endl;
-                    cout << "ACTION: ";
-                    cin >> strChoice;
-                    if(strChoice=="use"&&(hero.spellbook[intChoice-1]==215||hero.spellbook[intChoice-1]==216||hero.spellbook[intChoice-1]==219))
+                        cout << "2) USE" << endl;
+                    cout << "0) RETURN" << endl;
+                    strChoice = getch();
+                    if(strChoice=="2"&&(hero.spellbook[intChoice-1]==215||hero.spellbook[intChoice-1]==216||hero.spellbook[intChoice-1]==219))
                     {
                         if(hero.getMP()>=dir.healingSpellDirectory[hero.spellbook[intChoice-1]-215].getManaCost())
                         {
@@ -1223,7 +1234,7 @@ int menuHandler(Player &hero, Directory dir)
                         else
                             cout << "You don't have enough mana." << endl;
                     }
-                    else if(strChoice=="examine")
+                    else if(strChoice=="1")
                     {
                         cout << dir.getItemName(hero.spellbook[intChoice-1]) << " | " << dir.getItemDesc(hero.spellbook[intChoice-1]) << endl;
                         cout << "RARITY: " << dir.getItemRarity(hero.spellbook[intChoice-1]) << endl;
@@ -1243,7 +1254,7 @@ int menuHandler(Player &hero, Directory dir)
                         }
                         Sleep(3000);
                     }
-                    else if(strChoice!="return")
+                    else if(strChoice!="0")
                     {
                         cout << "Invalid action." << endl;
                         Sleep(2000);
@@ -1260,7 +1271,7 @@ int menuHandler(Player &hero, Directory dir)
         else if(intChoice==6)
         {
             cout << "Are you sure you want to quit? Your progress will be saved under your name. (y/n): ";
-            cin >> strChoice;
+            strChoice = getch();
             if(strChoice=="y")
                 nav = -1;
         }
@@ -1290,7 +1301,7 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
         storeMenu(hero,currentRoom.store,dir);
         chck = 0;
         cout << "MENU: ";
-        cin >> strChoice;
+        strChoice = getch();
         std::stringstream stoi(strChoice);
         stoi >> intChoice;
         if(intChoice==0)
@@ -1341,7 +1352,7 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
             }
             cout << "PRICE: " << currentRoom.store.storeCost[intChoice-1] << endl << endl;
             cout << "Would you like to purchase this item? (y/n): ";
-            cin >> strChoice;
+            strChoice = getch();
             if(strChoice=="y"||strChoice=="Y")
             {
                 if(hero.gold<currentRoom.store.storeCost[intChoice-1])
