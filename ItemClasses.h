@@ -328,6 +328,7 @@ public:
     int getNCRT(){return ncrit;}
     int getNDEF(){return ndef;}
     int getNDDG(){return nddg;}
+    void setNDDG(int d){nddg=d;}
     int getMG()
     {
         if(mask.getID()==3)
@@ -346,16 +347,8 @@ public:
     {
         if(mask.getID()!=7)
             eqpAmr=amr;
-        if(mask.getID()==5) //Whispers
-        {
-            def=amr.getDef()+ndef;
-            ddg=(amr.getDdg()+nddg)+((amr.getDdg()+nddg)/2);
-        }
-        else
-        {
-            def=amr.getDef()+ndef;
-            ddg=amr.getDdg()+nddg;
-        }
+        def=amr.getDef()+ndef;
+        ddg=amr.getDdg()+nddg;
     }
     void equipWpn(Weapon wpn)
     {
@@ -406,19 +399,21 @@ public:
         ndef += boost;
         if(boost!=0)
             cout << "DEF went up by " << boost << "!" << endl;
-        boost = rand() % 3;
-        nddg += boost;
-        if(boost!=0)
-            cout << "DDG went up by " << boost << "!" << endl;
-
         if(mask.getID()==5) //Whispers
         {
-            str=eqpWpn.getStr()+nstr;
-            crit=eqpWpn.getCrt()+ncrit;
-            def=eqpAmr.getDef()+ndef;
-            ddg=(eqpAmr.getDdg()+nddg)+((eqpAmr.getDdg()+nddg)/2);
+            boost = rand() % 4 + 1;
+            nddg += boost;
+            cout << "DDG went up by " << boost << "!" << endl;
         }
-        else if(mask.getID()==1) //Wrath
+        else
+        {
+            boost = rand() % 3;
+            nddg += boost;
+            if(boost!=0)
+                cout << "DDG went up by " << boost << "!" << endl;
+        }
+
+        if(mask.getID()==1) //Wrath
         {
             str=eqpWpn.getStr()+(nstr+(nstr/2));
             crit=eqpWpn.getCrt()+(ncrit+(ncrit/2));
@@ -444,14 +439,7 @@ public:
         ndef += 5;
         nddg += 5;
 
-        if(mask.getID()==5) //Whispers
-        {
-            str=eqpWpn.getStr()+nstr;
-            crit=eqpWpn.getCrt()+ncrit;
-            def=eqpAmr.getDef()+ndef;
-            ddg=(eqpAmr.getDdg()+nddg)+((eqpAmr.getDdg()+nddg)/2);
-        }
-        else if(mask.getID()==1) //Wrath
+        if(mask.getID()==1) //Wrath
         {
             str=eqpWpn.getStr()+(nstr+(nstr/2));
             crit=eqpWpn.getCrt()+(ncrit+(ncrit/2));

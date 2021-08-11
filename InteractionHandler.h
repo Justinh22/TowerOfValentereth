@@ -262,9 +262,9 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
         //cout << currentRoom.getIList().size();
         for(int i=0;i<currentRoom.getIList().size();i++)
         {
-            valid = 0;
             if(itemStatus[i]==1)
                 continue;
+            valid = 0;
             holder = dir.getItemName((currentRoom.getIList())[i]);
             std::transform(holder.begin(), holder.end(), holder.begin(), ::tolower);
             //cout << holder << ", " << target << endl;
@@ -407,6 +407,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 }
             }
         }
+        cout << valid << endl;
         if(valid!=2)
             return "Unknown target.";
         else

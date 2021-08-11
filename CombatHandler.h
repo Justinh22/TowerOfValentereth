@@ -277,7 +277,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         cout << "The enemy attacks as you escape!" << endl;
                         Sleep(2000);
                         dmg = monster.getSTR() - hero.getDEF();
-                        if(hero.mask.getID()==0) //Glass
+                        if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
                             dmg = dmg*2;
                         if(hero.mask.getID()==4) //Steel
                             dmg = dmg/2;
@@ -299,7 +299,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         cout << "The enemy knocks you back into the room, blocking your way!" << endl;
                         Sleep(2000);
                         dmg = monster.getSTR() - hero.getDEF();
-                        if(hero.mask.getID()==0) //Glass
+                        if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
                             dmg = dmg*2;
                         if(hero.mask.getID()==4) //Steel
                             dmg = dmg/2;
@@ -324,8 +324,10 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         cout << "The enemy attacks as you escape!" << endl;
                         Sleep(2000);
                         dmg = monster.getSTR() - hero.getDEF();
-                        if(hero.mask.getID()==0)
+                        if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
                             dmg = dmg*2;
+                        if(hero.mask.getID()==4) //Steel
+                            dmg = dmg/2;
                         if(dmg<0)
                             dmg = 0;
                         hero.changeHP(-dmg);
@@ -344,8 +346,10 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         cout << "The enemy knocks you back into the room, blocking your way!" << endl;
                         Sleep(2000);
                         dmg = monster.getSTR() - hero.getDEF();
-                        if(hero.mask.getID()==0)
+                        if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
                             dmg = dmg*2;
+                        if(hero.mask.getID()==4) //Steel
+                            dmg = dmg/2;
                         if(dmg<0)
                             dmg = 0;
                         hero.changeHP(-dmg);

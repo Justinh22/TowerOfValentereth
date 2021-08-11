@@ -383,7 +383,7 @@ Room roomBuilder(int type, vector<int> loot, int cid, Directory dir)
     Room newRoom;
     if(type==0)
     {
-        id = rand() % 30;
+        id = rand() % 31;
         newRoom = dir.roomDirectory[id];
         bool crateTog = 0;
         bool chestTog = 0;

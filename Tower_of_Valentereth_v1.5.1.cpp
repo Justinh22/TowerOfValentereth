@@ -109,8 +109,8 @@ int main()
                 if(intChoice>0&&intChoice<9)
                 {
                     cout << dir.maskDirectory[intChoice-1].getName() << " | " << dir.maskDirectory[intChoice-1].getDesc() << endl;
-                    cout << "Take the mask? (y/n): ";
-                    cin >> strChoice;
+                    cout << "Take the mask? (y/n)" << endl;
+                    strChoice = getch();
                     if(strChoice=="y")
                     {
                         mask = dir.maskDirectory[intChoice-1].getID();
@@ -236,7 +236,8 @@ int main()
                 cout << "DDG: " << saveStats[10] << endl;
                 cout << "DEPTH: " << saveStats[11] << endl;
                 cout << "KEYS: " << saveStats[12] << endl;
-                cout << "MASK: " << dir.maskDirectory[saveStats[13]].getName() << endl << endl;
+                if(saveStats[13]>=0)
+                    cout << "MASK: " << dir.maskDirectory[saveStats[13]].getName() << endl << endl;
                 cout << "Continue with this character? (y/n)" << endl;
                 load = getch();
                 if(load=="y")
@@ -301,6 +302,9 @@ int main()
         hero.mask = dir.maskDirectory[mask];
     }
 
+    if(hero.getNDDG()==0&&hero.mask.getID()==5) //Whispers
+        hero.setNDDG(25);
+
     srand(time(NULL));
     string action;
     string target;
@@ -322,7 +326,7 @@ int main()
     string text;
 
     Room currentRoom;
-    bool itemStatus[3] = {0,0,0};
+    bool itemStatus[6] = {0,0,0,0,0,0};
     int boss = 0;
     bool win = 0;
     bool lvup = 0;
@@ -604,7 +608,7 @@ int main()
                                 cout << "The enemy attacks as you escape!" << endl;
                                 Sleep(2000);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
-                                if(hero.mask.getID()==0) //Glass
+                                if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
                                     dmg = dmg*2;
                                 if(hero.mask.getID()==4) //Steel
                                     dmg = dmg/2;
@@ -620,7 +624,7 @@ int main()
                                 cout << "The enemy knocks you back into the room, blocking your way!" << endl;
                                 Sleep(2000);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
-                                if(hero.mask.getID()==0) //Glass
+                                if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
                                     dmg = dmg*2;
                                 if(hero.mask.getID()==4) //Steel
                                     dmg = dmg/2;
@@ -645,7 +649,7 @@ int main()
                                 cout << "The enemy attacks as you escape!" << endl;
                                 Sleep(2000);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
-                                if(hero.mask.getID()==0) //Glass
+                                if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
                                     dmg = dmg*2;
                                 if(hero.mask.getID()==4) //Steel
                                     dmg = dmg/2;
@@ -661,7 +665,7 @@ int main()
                                 cout << "The enemy knocks you back into the room, blocking your way!" << endl;
                                 Sleep(2000);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
-                                if(hero.mask.getID()==0) //Glass
+                                if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
                                     dmg = dmg*2;
                                 if(hero.mask.getID()==4) //Steel
                                     dmg = dmg/2;
@@ -844,37 +848,30 @@ int main()
                 cout << "Generating room with diff = " << diff << ", rew = " << rew << ", and adv = " << adv << "." << endl;
                 roomGenerator(diff,rew,adv,dir);
             }*/
-            /*else if(err==6)
+            /*else if(err==6) //DEBUG_GO
             {
                 depth++;
                 if(depth%5==0)
                 {
                     if(adv<10)
                         adv++;
-                    lvup = 1;
                 }
                 roomLogic(diff,rew,karma,adv);
-                //cout << "Generating room with diff = " << diff << ", rew = " << rew << ", and adv = " << adv << "." << endl;
                 if(diff==0)
                     pass = 1;
                 else
                     pass = 0;
                 std::system("cls");
                 cout << "Floor " << depth << endl;
-                if(lvup==1)
-                {
-                    hero.levelUp();
-                    lvup = 0;
-                }
                 if(depth==55&&win==0)
                     diff = 5;
-                else if(depth>55&&depth<100)
+                else if(depth>55&&depth<80)
                     diff = 6;
-                else if(depth==100)
+                else if(depth>=80)
                     diff = 7;
                 currentRoom = roomGenerator(diff,rew,adv,dir,hero);
                 //cout << "Karma: " << karma << endl;
-                if(hero.getLEV()>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
+                if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
                 {
                     egStrBuff = (hero.getLEV()-11)*4;
                     egAccBuff = (hero.getLEV()-11)*3;
@@ -886,12 +883,28 @@ int main()
                     currentRoom.monster.setDEF(currentRoom.monster.getDEF()+egDefBuff);
                     currentRoom.monster.setDDG(currentRoom.monster.getDDG()+egDdgBuff);
                 }
-                if(diff==5&&adv==10)
+                if(diff==5&&adv==10&&win==0)
                     boss = 1;
                 if(diff==7)
                     boss = 2;
                 for(int i=0;i<3;i++)
                     itemStatus[i] = 0;
+            }
+            else if(err==10) //SEE
+            {
+                //THIS CODE WORKS FOR IDENTIFYING WHERE ITEMS ARE LOCATED
+                cout << "The room contains the following items in the following places: " << endl;
+                for(int i=0;i<currentRoom.getIList().size();i++)
+                {
+                    cout << dir.getItemName(currentRoom.getIList()[i]) << ".";
+                    if(itemStatus[i]==1)
+                        cout << " (Taken)" << endl;
+                    else
+                        cout << endl;
+                }
+                cout << "Inside of: " << endl;
+                for(int i=0;i<currentRoom.getBList().size();i++)
+                    cout << currentRoom.getBList()[i] << "." << endl;
             }*/
         }
         else
@@ -983,10 +996,10 @@ int actionHandler(string act)
     {
         return 8;
     }
-    /*else if(act=="debug_go")
+    else if(act=="debug_go")
     {
         return 6;
-    }*/
+    }
     /*else if(act=="room")
     {
         return 5;
@@ -996,6 +1009,10 @@ int actionHandler(string act)
         cout << "Exiting..." << endl;
         return -1;
     }*/
+    else if(act=="see")
+    {
+        return 10;
+    }
     else
     {
         cout << "Unknown command." << endl;
