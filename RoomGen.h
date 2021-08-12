@@ -383,7 +383,7 @@ Room roomBuilder(int type, vector<int> loot, int cid, Directory dir)
     Room newRoom;
     if(type==0)
     {
-        id = rand() % 31;
+        id = rand() % dir.roomDirectory.size();
         newRoom = dir.roomDirectory[id];
         bool crateTog = 0;
         bool chestTog = 0;
@@ -411,44 +411,7 @@ Room roomBuilder(int type, vector<int> loot, int cid, Directory dir)
         //cout << "Handling loot; Size = " << loot.size() << endl;
         for(int i=0;i<loot.size();i++)
         {
-            //cout << "Loot " << i+1 << endl;
-            /*do
-            {
-                cont = 0;
-                foo = rand() % 3 + 1;
-                if(foo==1)
-                    if(crateTog==1)
-                    {
-                        cont = 1;
-                    }
-                if(foo==2)
-                    if(barrelTog==1)
-                    {
-                        cont = 1;
-                    }
-                if(foo==3)
-                    if(chestTog==1)
-                    {
-                        cont = 1;
-                    }
-            }while(cont==1);*/
             newRoom.addItem(loot[i]);
-            //cout << "Loot added!" << endl;
-
-            /*
-            if(loot[i]<=38)
-                newRoom.addItem(dir.weaponDirectory[loot[i]]);
-            else if(loot[i]<=64)
-                newRoom.addItem(dir.armorDirectory[loot[i]]);
-            else if(loot[i]<=76)
-                newRoom.addItem(dir.consumableDirectory[loot[i]]);
-            else if(loot[i]<=114)
-                newRoom.addItem(dir.attackSpellDirectory[loot[i]-100]);
-            else if(loot[i]<=120)
-                newRoom.addItem(dir.healingSpellDirectory[loot[i]-100]);
-            else if(loot[i]<=129)
-                newRoom.addItem(dir.buffSpellDirectory[loot[i]-100]);
-            */
         }
 
         //cout << "It contains: ";
