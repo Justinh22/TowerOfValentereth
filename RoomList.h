@@ -135,7 +135,113 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     R30.addFeat(featureDirectory[31]);
     roomDirectory.push_back(R30);
 
+    Room R31(31,"The stone floor at the sides of the room seem to have fallen through, revealing a bed of razor-sharp stalagmites at the bottom of a deep pit.");
+    R31.addFeat(featureDirectory[2]);
+    R31.addFeat(featureDirectory[32]);
+    roomDirectory.push_back(R31);
 
+    Room R32(32,"A single human skeleton is stuck to the wall at the far side of the room, as if it were an effigy. It is affixed with a dark, black slime...");
+    R32.addFeat(featureDirectory[22]);
+    R32.addFeat(featureDirectory[24]);
+    roomDirectory.push_back(R32);
+
+    Room R33(33,"Empty suits of armor stand guard around the perimeter of the circular room, looming over you menacingly. In the center of the room in the middle of the cobblestone floor, a glowing sigil pulses.");
+    R33.addFeat(featureDirectory[2]);
+    R33.addFeat(featureDirectory[12]);
+    R33.addFeat(featureDirectory[17]);
+    roomDirectory.push_back(R33);
+
+    Room R34(34,"Shockingly, this room seems to almost open up to a flourishing garden surrounded by stone walls, and the ceiling above disappears to reveal a blinding sun.");
+    R34.addFeat(featureDirectory[10]);
+    R34.addFeat(featureDirectory[33]);
+    R34.addFeat(featureDirectory[34]);
+    roomDirectory.push_back(R34);
+
+    Room R35(35,"You step into a crowded study, filled with bookshelves, papers, and books scattered all about, all lit by a candelabra hanging from the ceiling.");
+    R35.addFeat(featureDirectory[1]);
+    R35.addFeat(featureDirectory[35]);
+    R35.addFeat(featureDirectory[36]);
+    R35.addFeat(featureDirectory[rand()%4+37]);
+    roomDirectory.push_back(R35);
+
+    Room R36(36,"You wade into a massive pool of water, consuming nearly all of the space in the marble room.");
+    R36.addFeat(featureDirectory[26]);
+    R36.addFeat(featureDirectory[41]);
+    roomDirectory.push_back(R36);
+
+    Room R37(37,"A corpse lies in the center of an empty circular room, with its blood soaking into the stone floor.");
+    R37.addFeat(featureDirectory[1]);
+    R37.addFeat(featureDirectory[14]);
+    R37.addFeat(featureDirectory[rand()%3+42]);
+    roomDirectory.push_back(R37);
+
+    Room R38(38,"The room is littered with pieces of scrap, lit only by a single torch, forcing you to watch your step to traverse it.");
+    R38.addFeat(featureDirectory[0]);
+    R38.addFeat(featureDirectory[45]);
+    roomDirectory.push_back(R38);
+
+    Room R39(39,"An unnatural wind billows through the room, seemingly through the loose stone walls. The plants and vines sprouting from the dirt floor blow violently from the wind.");
+    R39.addFeat(featureDirectory[3]);
+    R39.addFeat(featureDirectory[10]);
+    R39.addFeat(featureDirectory[30]);
+    R39.addFeat(featureDirectory[33]);
+    roomDirectory.push_back(R39);
+
+    Room R40(40,"A forge is set up in the corner of the room, lighting the stone walls dimly, with weapon racks on the walls around it.");
+    R40.addFeat(featureDirectory[10]);
+    R40.addFeat(featureDirectory[46]);
+    R40.addFeat(featureDirectory[47]);
+    roomDirectory.push_back(R40);
+
+    Room R41(41,"Cages line the walls of the room, with skeletons in each one bound to the walls with chains.");
+    R41.addFeat(featureDirectory[10]);
+    R41.addFeat(featureDirectory[24]);
+    R41.addFeat(featureDirectory[28]);
+    R41.addFeat(featureDirectory[48]);
+    roomDirectory.push_back(R41);
+
+    Room R42(42,"A deep pit lies in the center of the room, with vines growing out of it at an impossible rate. They extend into the walls and ceiling through cracks in the stone...");
+    R42.addFeat(featureDirectory[10]);
+    R42.addFeat(featureDirectory[30]);
+    R42.addFeat(featureDirectory[49]);
+    roomDirectory.push_back(R42);
+
+    Room R43(43,"A great hall spans out before you, with tables stretching down the length of the room, lit magnificently by glowing candelabras.");
+    R43.addFeat(featureDirectory[1]);
+    R43.addFeat(featureDirectory[50]);
+    roomDirectory.push_back(R43);
+
+    Room R44(44,"The floor narrows to a small pathway, with the cobblestone floor on either side of it opening up to a pit of spikes.");
+    R44.addFeat(featureDirectory[2]);
+    R44.addFeat(featureDirectory[32]);
+    roomDirectory.push_back(R44);
+
+    Room R45(45,"The light in this room seems to almost be absorbed by a suit of armor at its center, whose eyes are glowing with light.");
+    R45.addFeat(featureDirectory[8]);
+    R45.addFeat(featureDirectory[12]);
+    roomDirectory.push_back(R45);
+
+    Room R46(46,"The room is filled with racks full of weapons, and suits of armor all over. It appears this used to be an armory.");
+    R46.addFeat(featureDirectory[12]);
+    R46.addFeat(featureDirectory[47]);
+    roomDirectory.push_back(R46);
+
+    Room R47(47,"The wall to your left as you enter the room is in shambles, and through the rubble you can see the sun shining brightly in at you. You could have sworn in was nighttime when you entered...");
+    R47.addFeat(featureDirectory[10]);
+    R47.addFeat(featureDirectory[34]);
+    roomDirectory.push_back(R47);
+
+    Room R48(48,"A single torch illuminates a long wooden table, upon which you see a number of scrolls and books.");
+    R48.addFeat(featureDirectory[0]);
+    R48.addFeat(featureDirectory[35]);
+    R48.addFeat(featureDirectory[rand()%4+37]);
+    R48.addFeat(featureDirectory[50]);
+    roomDirectory.push_back(R48);
+
+    Room R49(49,"A sigil of some sort is etched into the ceiling of the room, and from its center you can see black ooze dripping to the floor...");
+    R49.addFeat(featureDirectory[17]);
+    R49.addFeat(featureDirectory[22]);
+    roomDirectory.push_back(R49);
     //cout << "Room List Initialized!" << endl;
 
     return roomDirectory;

@@ -1,4 +1,4 @@
-void roomLogic(int &diff, int &rew, int &karma, int adv)
+void roomLogic(int &diff, int &rew, int &karma, int adv, Player hero)
 { //  -25 << KARMA >> 25
     int chance;
     if(diff==5)
@@ -19,7 +19,7 @@ void roomLogic(int &diff, int &rew, int &karma, int adv)
             diff = 0;
         }
     }
-    else if(adv<3)
+    else if(adv<3||hero.level<adv)
     {
         {
             chance = rand() % 10 + 1;

@@ -293,7 +293,7 @@ vector<Item> initMDir(vector<Item> maskDirectory)
     Item Mask_of_Steel("Mask of Steel","A stoic mask made of hardened metal. When worn, halves damage taken from attacks, but enemies never miss.",10,4);
     maskDirectory.push_back(Mask_of_Steel);
 
-    Item Mask_of_Whispers("Mask of Whispers","A transparent mask made of invisible threads. When worn, increases chance to dodge by 50%, but enemies deal double damage to the wearer.",10,5);
+    Item Mask_of_Whispers("Mask of Whispers","A transparent mask made of invisible threads. When worn, increases chance to dodge by 25% and increases dodge gained on level up, but enemies deal double damage to the wearer.",10,5);
     maskDirectory.push_back(Mask_of_Whispers);
 
     Item Mask_of_Beasts("Mask of Beasts","A ravenous mask made of bloodied pelts. When worn, increases strength by 50%, but the wearer must strike each round of combat.",10,6);

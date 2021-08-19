@@ -166,6 +166,8 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
     Feature StoneStatue("statue","A serene stone statue of a mythical beast.\nAs you approach it, you hear a voice in your head; 'BEGONE HUMAN. OR FACE THE WRATH OF VALENTERETH HERSELF.'",0,0); //21
     StoneStatue.addKey("statue");
     StoneStatue.addKey("stone statue");
+    StoneStatue.addKey("beast");
+    StoneStatue.addKey("beast statue");
     featureDirectory.push_back(StoneStatue);
 
     Feature BlackSlime("slime","A thick black slime. If you listen close enough, it even has a heartbeat.",3,1); //22
@@ -238,6 +240,158 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
     Statue.addKey("glowing statue");
     Statue.addKey("eyes");
     featureDirectory.push_back(Statue);
+
+    Feature Spikes("spikes","Sharp, pointed spikes lie at the bottom of the pit. A number of skeletons lie littered among them.",0,0); //32
+    Spikes.addKey("spikes");
+    Spikes.addKey("stalagmites");
+    Spikes.addKey("spike");
+    Spikes.addKey("stalagmite");
+    Spikes.addKey("pit");
+    Spikes.addKey("bottom");
+    Spikes.addKey("down");
+    featureDirectory.push_back(Spikes);
+
+    Feature Plants("plants","Beautiful roses, tulips, and other wildflowers are flourishing here.",3,1); //33
+    Plants.addKey("plants");
+    Plants.addKey("plant");
+    Plants.addKey("flowers");
+    Plants.addKey("flower");
+    Plants.addKey("garden");
+    Plants.addKey("grass");
+    featureDirectory.push_back(Plants);
+
+    Feature Sunlight("sunlight","The sunlight is blinding, keeping you from gazing right into it.",0,0); //34
+    Sunlight.addKey("sunlight");
+    Sunlight.addKey("sun");
+    Sunlight.addKey("light");
+    Sunlight.addKey("ceiling");
+    Sunlight.addKey("sky");
+    featureDirectory.push_back(Sunlight);
+
+    Feature Scroll("scroll","A piece of parchment covered in ancient runes and glyphs, detailing the casting of a spell.",4,3); //35
+    Scroll.addKey("scroll");
+    Scroll.addKey("scrolls");
+    Scroll.addKey("paper");
+    Scroll.addKey("papers");
+    Scroll.addKey("parchment");
+    featureDirectory.push_back(Scroll);
+
+    Feature Bookshelf("bookshelf","A rustic-looking bookshelf.",3,1); //36
+    Bookshelf.addKey("bookshelf");
+    Bookshelf.addKey("bookshelves");
+    Bookshelf.addKey("shelf");
+    Bookshelf.addKey("shelves");
+    featureDirectory.push_back(Bookshelf);
+
+    Feature BookA("book","An old book, filled with ancient runes.",4,2); //37
+    BookA.addKey("book");
+    BookA.addKey("books");
+    BookA.addKey("tome");
+    BookA.addKey("tomes");
+    featureDirectory.push_back(BookA);
+
+    Feature BookB("book","An tattered book, filled with illegible writing.",0,0); //38
+    BookB.addKey("book");
+    BookB.addKey("books");
+    BookB.addKey("tome");
+    BookB.addKey("tomes");
+    featureDirectory.push_back(BookB);
+
+    Feature BookC("book","An old spellbook, detailing the casting of a specific spell.",4,3); //39
+    BookC.addKey("book");
+    BookC.addKey("books");
+    BookC.addKey("tome");
+    BookC.addKey("tomes");
+    featureDirectory.push_back(BookC);
+
+    Feature BookD("book","A hollowed-out book, with space for something to be hidden inside.",3,3); //40
+    BookD.addKey("book");
+    BookD.addKey("books");
+    BookD.addKey("tome");
+    BookD.addKey("tomes");
+    featureDirectory.push_back(BookD);
+
+    Feature Pond("pond","A deep pool of water, which you cannot see the bottom of.",3,2); //41
+    Pond.addKey("pond");
+    Pond.addKey("puddle");
+    Pond.addKey("pool");
+    Pond.addKey("water");
+    Pond.addKey("sweet juice");
+    featureDirectory.push_back(Pond);
+
+    Feature BodyA("body","The body of a young man, with a large gash along it's chest.",3,1); //42
+    BodyA.addKey("body");
+    BodyA.addKey("bodies");
+    BodyA.addKey("corpse");
+    BodyA.addKey("corpses");
+    BodyA.addKey("dead body");
+    BodyA.addKey("dead bodies");
+    featureDirectory.push_back(BodyA);
+
+    Feature BodyB("body","The body of a woman, with a weapon in her hand.",1,3); //43
+    BodyB.addKey("body");
+    BodyB.addKey("bodies");
+    BodyB.addKey("corpse");
+    BodyB.addKey("corpses");
+    BodyB.addKey("dead body");
+    BodyB.addKey("dead bodies");
+    featureDirectory.push_back(BodyB);
+
+    Feature BodyC("body","A decayed body, whose gender and age are completely undecipherable.",0,0); //44
+    BodyC.addKey("body");
+    BodyC.addKey("bodies");
+    BodyC.addKey("corpse");
+    BodyC.addKey("corpses");
+    BodyC.addKey("dead body");
+    BodyC.addKey("dead bodies");
+    featureDirectory.push_back(BodyC);
+
+    Feature Scrap("scrap","Sharp pieces of scrap metal, wood, and other materials.",1,1); //45
+    Scrap.addKey("scrap");
+    Scrap.addKey("scraps");
+    Scrap.addKey("metal");
+    Scrap.addKey("wood");
+    Scrap.addKey("shards");
+    Scrap.addKey("shard");
+    featureDirectory.push_back(Scrap);
+
+    Feature Furnace("furnace","A stone furnace, with its walls seared from use.",1,1); //46
+    Furnace.addKey("furnace");
+    Furnace.addKey("oven");
+    Furnace.addKey("forge");
+    featureDirectory.push_back(Furnace);
+
+    Feature WeaponRack("weapon rack","A wooden rack filled with weapons, most of which are rusted.",1,3); //47
+    WeaponRack.addKey("weapon rack");
+    WeaponRack.addKey("weapon racks");
+    WeaponRack.addKey("rack");
+    WeaponRack.addKey("racks");
+    WeaponRack.addKey("shelf");
+    WeaponRack.addKey("shelves");
+    WeaponRack.addKey("weapons");
+    featureDirectory.push_back(WeaponRack);
+
+    Feature Cage("cage","A sturdy metal cage, locked tight.",3,1); //48
+    Cage.addKey("cage");
+    Cage.addKey("cages");
+    Cage.addKey("bars");
+    Cage.addKey("prison");
+    Cage.addKey("cell");
+    featureDirectory.push_back(Cage);
+
+    Feature VinePit("vine pit","A bottomless pit, with vines rushing out from it.",0,0); //49
+    VinePit.addKey("vine pit");
+    VinePit.addKey("pit");
+    VinePit.addKey("bottomless pit");
+    VinePit.addKey("hole");
+    VinePit.addKey("deep pit");
+    featureDirectory.push_back(VinePit);
+
+    Feature Table("table","A long wooden table, covered with plates and cutlery.",3,2); //50
+    Table.addKey("table");
+    Table.addKey("tables");
+    Table.addKey("plates");
+    featureDirectory.push_back(Table);
 
     //cout << "Feature List Initialized!" << endl;
 
