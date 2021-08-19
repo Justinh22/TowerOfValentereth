@@ -50,19 +50,19 @@ int spellPicker(int rarity)
         switch(rarity)
         {
             case 1:
-                sid = rand() % 2 + 221;
+                sid = rand() % 5 + 221;
                 break;
             case 2:
-                sid = rand() % 2 + 223;
+                sid = rand() % 5 + 226;
                 break;
             case 3:
-                sid = 225;
+                sid = rand() % 5 + 231;
                 break;
             case 4:
-                sid = rand() % 2 + 226;
+                sid = rand() % 6 + 236;
                 break;
             case 5:
-                sid = rand() % 2 + 228;
+                sid = 242;
                 break;
         }
     }

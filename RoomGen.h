@@ -242,7 +242,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
         else if(itemType==2)
         {
             conFlag = 1;
-            foo = rand() % 13 + 1; //DEBUG | Original is 12
+            foo = rand() % 12 + 1; //DEBUG | Original is 12
             if(foo>10)
             {
                 keyFlag = 1;

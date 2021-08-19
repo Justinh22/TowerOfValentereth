@@ -363,13 +363,17 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
 
     Feature WeaponRack("weapon rack","A wooden rack filled with weapons, most of which are rusted.",1,3); //47
     WeaponRack.addKey("weapon rack");
+    WeaponRack.addKey("weapon racks");
     WeaponRack.addKey("rack");
+    WeaponRack.addKey("racks");
     WeaponRack.addKey("shelf");
+    WeaponRack.addKey("shelves");
     WeaponRack.addKey("weapons");
     featureDirectory.push_back(WeaponRack);
 
     Feature Cage("cage","A sturdy metal cage, locked tight.",3,1); //48
     Cage.addKey("cage");
+    Cage.addKey("cages");
     Cage.addKey("bars");
     Cage.addKey("prison");
     Cage.addKey("cell");

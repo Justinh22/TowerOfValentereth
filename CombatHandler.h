@@ -98,7 +98,11 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
             while(confirm==0)
             {
                 spellbookMenu(hero.spellbook,dir);
-                strChoice = getch();
+                cout << "SELECT: ";
+                if(hero.spellbook.size()>9)
+                    cin >> strChoice;
+                else
+                    strChoice = getch();
                 std::stringstream stoi(strChoice);
                 stoi >> choice;
                 if(choice>50)

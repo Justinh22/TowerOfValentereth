@@ -376,7 +376,7 @@ int main()
                         if(adv<10)
                             adv++;
                     }
-                    roomLogic(diff,rew,karma,adv);
+                    roomLogic(diff,rew,karma,adv,hero);
                     if(diff==0)
                         pass = 1;
                     else
@@ -440,7 +440,7 @@ int main()
                             if(adv<10)
                                 adv++;
                         }
-                        roomLogic(diff,rew,karma,adv);
+                        roomLogic(diff,rew,karma,adv,hero);
                         if(diff==0)
                             pass = 1;
                         else
@@ -693,7 +693,7 @@ int main()
                                 if(adv<10)
                                     adv++;
                             }
-                            roomLogic(diff,rew,karma,adv);
+                            roomLogic(diff,rew,karma,adv,hero);
                             if(diff==0)
                                 pass = 1;
                             else
@@ -848,7 +848,7 @@ int main()
                 cout << "Generating room with diff = " << diff << ", rew = " << rew << ", and adv = " << adv << "." << endl;
                 roomGenerator(diff,rew,adv,dir);
             }*/
-            /*else if(err==6) //DEBUG_GO
+            else if(err==6) //DEBUG_GO
             {
                 depth++;
                 if(depth%5==0)
@@ -856,7 +856,7 @@ int main()
                     if(adv<10)
                         adv++;
                 }
-                roomLogic(diff,rew,karma,adv);
+                roomLogic(diff,rew,karma,adv,hero);
                 if(diff==0)
                     pass = 1;
                 else
@@ -905,7 +905,7 @@ int main()
                 cout << "Inside of: " << endl;
                 for(int i=0;i<currentRoom.getBList().size();i++)
                     cout << currentRoom.getBList()[i] << "." << endl;
-            }*/
+            }
         }
         else
             end = 1;
@@ -1208,7 +1208,11 @@ int menuHandler(Player &hero, Directory dir)
             do{
                 nav = 0;
                 spellbookMenu(hero.spellbook,dir);
-                strChoice = getch();
+                cout << "SELECT: ";
+                if(hero.spellbook.size()>9)
+                    cin >> strChoice;
+                else
+                    strChoice = getch();
                 std::stringstream stoi(strChoice);
                 stoi >> intChoice;
                 /*if(intChoice<=0&&intChoice>=29)

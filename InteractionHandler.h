@@ -197,7 +197,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     valid = 1;
                 else if(target=="potion"&&currentRoom.getIList()[i]>=104&&currentRoom.getIList()[i]<=111)
                     valid = 1;
-                else if((target=="spell"||target=="scroll")&&currentRoom.getIList()[i]>=200&&currentRoom.getIList()[i]<=229)
+                else if((target=="spell"||target=="scroll")&&currentRoom.getIList()[i]>=200&&currentRoom.getIList()[i]<=242)
                     valid = 1;
                 if(valid==1)
                 {
@@ -298,7 +298,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 valid = 1;
             else if(target=="potion"&&currentRoom.getIList()[i]>=104&&currentRoom.getIList()[i]<=111)
                 valid = 1;
-            else if((target=="spell"||target=="scroll")&&currentRoom.getIList()[i]>=200&&currentRoom.getIList()[i]<=229)
+            else if((target=="spell"||target=="scroll")&&currentRoom.getIList()[i]>=200&&currentRoom.getIList()[i]<=242)
                 valid = 1;
             else if(target=="all"||target=="everything")
                 valid = 2;
@@ -358,7 +358,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                         hero.keys += 1;
                     }
                 }
-                else if(currentRoom.getIList()[i]<=229&&currentRoom.getIList()[i]>112)
+                else if(currentRoom.getIList()[i]<=242&&currentRoom.getIList()[i]>112)
                 {
                     for(int j=0;j<hero.spellbook.size();j++)
                         if(currentRoom.getIList()[i]==hero.spellbook[j])
@@ -407,7 +407,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 }
             }
         }
-        cout << valid << endl;
+        //cout << valid << endl;
         if(valid!=2)
             return "Unknown target.";
         else

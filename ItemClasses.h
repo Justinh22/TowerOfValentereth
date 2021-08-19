@@ -495,7 +495,7 @@ public:
             return attackSpellDirectory[i-200].getName();
         else if(i<=220)
             return healingSpellDirectory[i-215].getName();
-        else if(i<=229)
+        else if(i<=242)
             return buffSpellDirectory[i-221].getName();
         else
             return "Error";
@@ -512,7 +512,7 @@ public:
             return attackSpellDirectory[i-200].getDesc();
         else if(i<=220)
             return healingSpellDirectory[i-215].getDesc();
-        else if(i<=229)
+        else if(i<=242)
             return buffSpellDirectory[i-221].getDesc();
         else
             return "Error";
@@ -529,7 +529,7 @@ public:
             return attackSpellDirectory[i-200].getRarity();
         else if(i<=220)
             return healingSpellDirectory[i-215].getRarity();
-        else if(i<=229)
+        else if(i<=242)
             return buffSpellDirectory[i-221].getRarity();
         else
             return 0;
