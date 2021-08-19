@@ -1241,15 +1241,15 @@ int menuHandler(Player &hero, Directory dir)
                     {
                         cout << "MANA COST: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getManaCost() << endl;
                         if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU())))>0)
-                            cout << "ATK BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU()))) << endl;
+                            cout << "ATK BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU())+((static_cast<float>(hero.getMA())/100)*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU()))) << endl;
                         if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU())))>0)
-                            cout << "DEF BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU()))) << endl;
+                            cout << "DEF BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU())+((static_cast<float>(hero.getMA())/100)*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU()))) << endl;
                         if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU())))>0)
-                            cout << "CRT BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU()))) << endl;
+                            cout << "CRT BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU())+((static_cast<float>(hero.getMA())/100)*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU()))) << endl;
                         if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU())))>0)
-                            cout << "ACC BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU()))) << endl;
+                            cout << "ACC BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU())+((static_cast<float>(hero.getMA())/100)*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU()))) << endl;
                         if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU())))>0)
-                            cout << "DDG BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU()))) << endl;
+                            cout << "DDG BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU())+((static_cast<float>(hero.getMA())/100)*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU()))) << endl;
                     }
 
                     cout << endl << "What do you want to do to " << dir.getItemName(hero.spellbook[intChoice-1]) << "?" << endl;
