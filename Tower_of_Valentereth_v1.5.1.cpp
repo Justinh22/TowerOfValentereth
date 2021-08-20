@@ -457,10 +457,10 @@ int main()
                         //cout << "Karma: " << karma << endl;
                         if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
                         {
-                            egStrBuff = (hero.getLEV()-11)*4;
-                            egAccBuff = (hero.getLEV()-11)*3;
-                            egDefBuff = (hero.getLEV()-11)*4;
-                            egDdgBuff = (hero.getLEV()-11)*2;
+                            egStrBuff = (adv-11)*4;
+                            egAccBuff = (adv-11)*3;
+                            egDefBuff = (adv-11)*4;
+                            egDdgBuff = (adv-11)*2;
 
                             currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
                             currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
@@ -489,7 +489,7 @@ int main()
                         cout << "A voice calls to you from above... 'NOW YOU HAVE INHERITED THE MANTLE. YOU SHALL REMAIN HERE, AND DEFEND THE THRONE...'" << endl << endl;
                         Sleep(3000);
                         cout << "You have defeated Valentereth, and inherited the throne! Would you like to continue upward? (y/n): " << endl;
-                        cin >> yn;
+                        yn = getch();
                         boss = 0;
                         if(yn=='n')
                         {
@@ -506,6 +506,7 @@ int main()
                         cout << "Press any key to continue ascending the tower.";
                         yn = getch();
                         hero.Empower();
+                        std::system("cls");
                     }
                     if(boss==2)
                     {

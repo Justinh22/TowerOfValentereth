@@ -118,11 +118,11 @@ string creatureDesc(int cid, vector<Creature> creatureDirectory, Player &hero)
     else
         name = creatureDirectory[cid].getName();
 
-    if(cid==36)
+    if(cid==48)
     {
         return "The light escapes from the room; the voices in your head become deafening, and from the shadows in front of you, you see a figure appear, axe in hand. It is Valentereth, the Tyrant. The voices beg you to leave, but you seem to be caught in a trance... Valentereth's eyes seem almost glazed over as she calls you to battle.";
     }
-    if(cid==43)
+    if(cid==56)
     {
         return "This is the end. Before you, stands its guardian. Termineth stands at the tower's apex.";
     }
