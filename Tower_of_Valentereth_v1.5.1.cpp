@@ -393,10 +393,10 @@ int main()
                     //cout << "Karma: " << karma << endl;
                     if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
                     {
-                        egStrBuff = ((depth/5)+1)*4;
-                        egAccBuff = ((depth/5)+1)*3;
-                        egDefBuff = ((depth/5)+1)*4;
-                        egDdgBuff = ((depth/5)+1)*2;
+                        egStrBuff = ((depth/5)-11)*4;
+                        egAccBuff = ((depth/5)-11)*3;
+                        egDefBuff = ((depth/5)-11)*4;
+                        egDdgBuff = ((depth/5)-11)*2;
 
                         currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
                         currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
@@ -409,7 +409,6 @@ int main()
                         boss = 2;
                     for(int i=0;i<3;i++)
                         itemStatus[i] = 0;
-
                     //THIS CODE WORKS FOR IDENTIFYING WHERE ITEMS ARE LOCATED
                     //
                     /*cout << "The room contains the following items in the following places: " << endl;
@@ -457,10 +456,10 @@ int main()
                         //cout << "Karma: " << karma << endl;
                         if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
                         {
-                            egStrBuff = (adv-11)*4;
-                            egAccBuff = (adv-11)*3;
-                            egDefBuff = (adv-11)*4;
-                            egDdgBuff = (adv-11)*2;
+                            egStrBuff = ((depth/5)-11)*4;
+                            egAccBuff = ((depth/5)-11)*3;
+                            egDefBuff = ((depth/5)-11)*4;
+                            egDdgBuff = ((depth/5)-11)*2;
 
                             currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
                             currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
@@ -711,10 +710,10 @@ int main()
                             //cout << "Karma: " << karma << endl;
                             if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
                             {
-                                egStrBuff = (hero.getLEV()-11)*4;
-                                egAccBuff = (hero.getLEV()-11)*3;
-                                egDefBuff = (hero.getLEV()-11)*4;
-                                egDdgBuff = (hero.getLEV()-11)*2;
+                                egStrBuff = ((depth/5)-11)*4;
+                                egAccBuff = ((depth/5)-11)*3;
+                                egDefBuff = ((depth/5)-11)*4;
+                                egDdgBuff = ((depth/5)-11)*2;
 
                                 currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
                                 currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
@@ -874,10 +873,10 @@ int main()
                 //cout << "Karma: " << karma << endl;
                 if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
                 {
-                    egStrBuff = (hero.getLEV()-11)*4;
-                    egAccBuff = (hero.getLEV()-11)*3;
-                    egDefBuff = (hero.getLEV()-11)*4;
-                    egDdgBuff = (hero.getLEV()-11)*2;
+                    egStrBuff = ((depth/5)-11)*4;
+                    egAccBuff = ((depth/5)-11)*3;
+                    egDefBuff = ((depth/5)-11)*4;
+                    egDdgBuff = ((depth/5)-11)*2;
 
                     currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
                     currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
