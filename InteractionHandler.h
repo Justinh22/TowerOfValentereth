@@ -335,7 +335,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     {
                         if(valid==1)
                             return "Your inventory is full.";
-                        else if(valid!=2||i>=currentRoom.contents)
+                        else if(valid!=2||i<currentRoom.contents)
                         {
                             if(returner!="")
                                 returner += "\n";
