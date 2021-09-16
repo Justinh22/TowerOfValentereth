@@ -409,6 +409,10 @@ int main()
                         boss = 2;
                     for(int i=0;i<3;i++)
                         itemStatus[i] = 0;
+
+                    /*cout << "Karma is " << karma << endl;
+                    cout << "Reward Stat is " << rew << endl;
+                    cout << "Difficulty Stat is " << diff << endl;*/
                     //THIS CODE WORKS FOR IDENTIFYING WHERE ITEMS ARE LOCATED
                     //
                     /*cout << "The room contains the following items in the following places: " << endl;
@@ -889,6 +893,10 @@ int main()
                     boss = 2;
                 for(int i=0;i<3;i++)
                     itemStatus[i] = 0;
+
+                /*cout << "Karma is " << karma << endl;
+                cout << "Reward Stat is " << rew << endl;
+                cout << "Difficulty Stat is " << diff << endl;*/
             }
             else if(err==10) //SEE
             {
@@ -996,10 +1004,10 @@ int actionHandler(string act)
     {
         return 8;
     }
-    /*else if(act=="debug_go")
+    else if(act=="debug_go")
     {
         return 6;
-    }*/
+    }
     /*else if(act=="room")
     {
         return 5;
@@ -1009,10 +1017,10 @@ int actionHandler(string act)
         cout << "Exiting..." << endl;
         return -1;
     }*/
-    /*else if(act=="see")
+    else if(act=="see")
     {
         return 10;
-    }*/
+    }
     else
     {
         cout << "Unknown command." << endl;

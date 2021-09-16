@@ -78,10 +78,15 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
             }
 
             foo = rand() % 10 + 1;
+            if(lootcnt==0)
+                foo+=2;
+            else if(lootcnt==1)
+                foo++;
+                
             switch(maxRarity)
             {
                 case 2:
-                    if(foo<7)
+                    if(foo<5)
                     {
                         itemRarity = 1;
                         cost = 1;
@@ -93,12 +98,12 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                     }
                     break;
                 case 3:
-                    if(foo<4)
+                    if(foo<3)
                     {
                         itemRarity = 1;
                         cost = 1;
                     }
-                    else if(foo<9)
+                    else if(foo<8)
                     {
                         itemRarity = 2;
                         cost = 2;
@@ -110,12 +115,12 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                     }
                     break;
                 case 4:
-                    if(foo<4)
+                    if(foo<3)
                     {
                         itemRarity = 2;
                         cost = 1;
                     }
-                    else if(foo<9)
+                    else if(foo<8)
                     {
                         itemRarity = 3;
                         cost = 2;
@@ -127,12 +132,12 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                     }
                     break;
                 case 5:
-                    if(foo<4)
+                    if(foo<3)
                     {
                         itemRarity = 3;
                         cost = 1;
                     }
-                    else if(foo<9)
+                    else if(foo<8)
                     {
                         itemRarity = 4;
                         cost = 2;
@@ -144,12 +149,12 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                     }
                     break;
                 case 6:
-                    if(foo<4)
+                    if(foo<3)
                     {
                         itemRarity = 4;
                         cost = 2;
                     }
-                    else if(foo<9)
+                    else if(foo<8)
                     {
                         itemRarity = 5;
                         cost = 3;
@@ -166,7 +171,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 5;
                         cost = 2;
                     }
-                    else if(foo<9)
+                    else if(foo<8)
                     {
                         itemRarity = 6;
                         cost = 3;
@@ -183,7 +188,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 6;
                         cost = 2;
                     }
-                    else if(foo<9)
+                    else if(foo<8)
                     {
                         itemRarity = 7;
                         cost = 3;
@@ -200,7 +205,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 7;
                         cost = 3;
                     }
-                    else if(foo<9)
+                    else if(foo<8)
                     {
                         itemRarity = 8;
                         cost = 4;
@@ -217,7 +222,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 8;
                         cost = 3;
                     }
-                    else if(foo<9)
+                    else if(foo<8)
                     {
                         itemRarity = 9;
                         cost = 4;
