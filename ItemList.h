@@ -213,7 +213,7 @@ vector<Armor> initADir(vector<Armor> armorDirectory)
     armorDirectory.push_back(Mechanical_Armor);
     Armor Heavy_Mechanical_Armor("Heavy Mechanical Armor","A suit of heavy armor with cogs and pipes whirring along it.",9,91,19,15,0);
     armorDirectory.push_back(Heavy_Mechanical_Armor);
-    Armor Clockwork_Robe("Clockwork Robe","A robe sewn from threads of time itself.",9,92,11,40,10);
+    Armor Clockwork_Robe("Clockwork Robe","A robe sewn from threads of time itself.",9,92,11,30,10);
     armorDirectory.push_back(Clockwork_Robe);
     Armor Clockwork_Arcanist_Armor("Clockwork Arcanist Armor","A set of clockwork battlemage armor, with magical energy flowing through it like time itself.",9,93,13,30,4);
     armorDirectory.push_back(Clockwork_Arcanist_Armor);
@@ -224,7 +224,7 @@ vector<Armor> initADir(vector<Armor> armorDirectory)
     armorDirectory.push_back(Plate_of_the_Vanguard);
     Armor Shield_of_the_Conquerer("Shield of the Conquerer","A massive suit of heavy armor once worn by the ruler of an ancient kingdom.",10,96,24,0,0);
     armorDirectory.push_back(Shield_of_the_Conquerer);
-    Armor Robe_of_the_Archmage("Robe of the Archmage","A robe that harnesses the magical power of the world.",10,97,13,40,12);
+    Armor Robe_of_the_Archmage("Robe of the Archmage","A robe that harnesses the magical power of the world.",10,97,13,30,12);
     armorDirectory.push_back(Amethyst_Robe);
     Armor Helm_of_the_Ancients("Helm of the Ancients","A regal suit of armor, passed down from an ancient kingdom of magic.",10,98,16,25,6);
     armorDirectory.push_back(Helm_of_the_Ancients);

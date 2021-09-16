@@ -47,11 +47,11 @@ vector<HealingSpell> initHSDir(vector<HealingSpell> healingSpellDirectory)
     healingSpellDirectory.push_back(Heal);
     HealingSpell Minor_Regenerate("Minor Regenerate","Heals for a small amount of health over time.",2,217,10,6);
     healingSpellDirectory.push_back(Minor_Regenerate);
-    HealingSpell Regenerate("Regenerate","Heals for a moderate amount of health over time.",3,218,16,12);
+    HealingSpell Regenerate("Regenerate","Heals for a moderate amount of health over time.",3,218,18,12);
     healingSpellDirectory.push_back(Regenerate);
-    HealingSpell Major_Heal("Major Heal","Heals for a large amount of health.",4,219,16,80);
+    HealingSpell Major_Heal("Major Heal","Heals for a large amount of health.",4,219,20,80);
     healingSpellDirectory.push_back(Major_Heal);
-    HealingSpell Major_Regenerate("Major Regenerate","Heals for a large amount of health over time.",5,220,24,30);
+    HealingSpell Major_Regenerate("Major Regenerate","Heals for a large amount of health over time.",5,220,30,24);
     healingSpellDirectory.push_back(Major_Regenerate);
 
     //cout << "Spell List Initialized! (2/3)" << endl;
@@ -105,10 +105,10 @@ vector<BuffSpell> initBSDir(vector<BuffSpell> buffSpellDirectory)
     buffSpellDirectory.push_back(Trance_II);
     BuffSpell Veil_II("Veil II","Increases your Def and Ddg by a great amount.",4,240,16,0,10,0,0,30);
     buffSpellDirectory.push_back(Veil_II);
-    BuffSpell Spectrum("Spectrum","Increases all your stats.",4,241,18,5,5,15,15,15);
+    BuffSpell Spectrum("Spectrum","Increases all your stats.",4,241,20,5,5,15,15,15);
     buffSpellDirectory.push_back(Spectrum);
 
-    BuffSpell Spectrum_II("Spectrum II","Increases all your stats by a great amount.",5,242,30,10,10,30,30,30);
+    BuffSpell Spectrum_II("Spectrum II","Increases all your stats by a great amount.",5,242,36,10,10,30,30,30);
     buffSpellDirectory.push_back(Spectrum_II);
     //cout << "Spell List Initialized! (3/3)" << endl;
 
