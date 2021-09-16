@@ -82,7 +82,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                 foo+=2;
             else if(lootcnt==1)
                 foo++;
-                
+
             switch(maxRarity)
             {
                 case 2:
@@ -460,7 +460,7 @@ Merchant storeHandler(int level)
                 foo = rand() % 10 + 1;
                 if(foo<3)
                     itemRarity = level - 2;
-                else if(foo<7)
+                else if(foo<6)
                     itemRarity = level - 1;
                 else
                     itemRarity = level;

@@ -10,43 +10,43 @@ int goldPicker(int level)
             gold = rand() % 3 + 4;
             break;
         case 4:
-            gold = rand() % 3 + 7;
+            gold = rand() % 3 + 6;
             break;
         case 5:
-            gold = rand() % 4 + 14;
+            gold = rand() % 4 + 8;
             break;
         case 6:
-            gold = rand() % 5 + 23;
+            gold = rand() % 5 + 10;
             break;
         case 7:
-            gold = rand() % 6 + 30;
+            gold = rand() % 6 + 12;
             break;
         case 8:
-            gold = rand() % 7 + 40;
+            gold = rand() % 7 + 14;
             break;
         case 9:
-            gold = rand() % 8 + 52;
+            gold = rand() % 8 + 16;
             break;
         case 10:
-            gold = rand() % 9 + 66;
+            gold = rand() % 9 + 18;
             break;
         case 11:
-            gold = rand() % 10 + 80;
+            gold = rand() % 10 + 20;
             break;
         case 12:
-            gold = rand() % 11 + 96;
+            gold = rand() % 11 + 22;
             break;
         case 13:
-            gold = rand() % 12 + 114;
+            gold = rand() % 12 + 24;
             break;
         case 14:
-            gold = rand() % 13 + 130;
+            gold = rand() % 13 + 26;
             break;
         case 15:
             gold = 250;
             break;
         case 16:
-            gold = rand() % 25 + 125;
+            gold = rand() % 25 + 30;
             break;
         case 17:
             gold = 1000;
