@@ -410,7 +410,7 @@ int main()
                     for(int i=0;i<3;i++)
                         itemStatus[i] = 0;
 
-                    cout << "Karma: " << karma << endl;
+                    //cout << "Karma: " << karma << endl;
                     /*cout << "Reward Stat is " << rew << endl;
                     cout << "Difficulty Stat is " << diff << endl;*/
                     //THIS CODE WORKS FOR IDENTIFYING WHERE ITEMS ARE LOCATED
