@@ -477,7 +477,7 @@ int main()
                         for(int i=0;i<3;i++)
                             itemStatus[i] = 0;
                         continue;
-                        cout << "Karma: " << karma << endl;
+                        //cout << "Karma: " << karma << endl;
                     }
                     pass = 1;
                     if(boss==1)
@@ -731,7 +731,7 @@ int main()
                                 boss = 2;
                             for(int i=0;i<3;i++)
                                 itemStatus[i] = 0;
-                            cout << "Karma: " << karma << endl;
+                            //cout << "Karma: " << karma << endl;
                         }
                     }
                 }
@@ -1006,10 +1006,10 @@ int actionHandler(string act)
     {
         return 8;
     }
-    else if(act=="debug_go")
+    /*else if(act=="debug_go")
     {
         return 6;
-    }
+    }*/
     /*else if(act=="room")
     {
         return 5;
@@ -1019,10 +1019,10 @@ int actionHandler(string act)
         cout << "Exiting..." << endl;
         return -1;
     }*/
-    else if(act=="see")
+    /*else if(act=="see")
     {
         return 10;
-    }
+    }*/
     else
     {
         cout << "Unknown command." << endl;
