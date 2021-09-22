@@ -393,10 +393,10 @@ int main()
                     //cout << "Karma: " << karma << endl;
                     if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
                     {
-                        egStrBuff = ((depth/5)+1)*4;
-                        egAccBuff = ((depth/5)+1)*3;
-                        egDefBuff = ((depth/5)+1)*4;
-                        egDdgBuff = ((depth/5)+1)*2;
+                        egStrBuff = ((depth/5)-11)*4;
+                        egAccBuff = ((depth/5)-11)*3;
+                        egDefBuff = ((depth/5)-11)*4;
+                        egDdgBuff = ((depth/5)-11)*2;
 
                         currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
                         currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
@@ -410,6 +410,9 @@ int main()
                     for(int i=0;i<3;i++)
                         itemStatus[i] = 0;
 
+                    cout << "Karma: " << karma << endl;
+                    /*cout << "Reward Stat is " << rew << endl;
+                    cout << "Difficulty Stat is " << diff << endl;*/
                     //THIS CODE WORKS FOR IDENTIFYING WHERE ITEMS ARE LOCATED
                     //
                     /*cout << "The room contains the following items in the following places: " << endl;
@@ -457,10 +460,10 @@ int main()
                         //cout << "Karma: " << karma << endl;
                         if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
                         {
-                            egStrBuff = (hero.getLEV()-11)*4;
-                            egAccBuff = (hero.getLEV()-11)*3;
-                            egDefBuff = (hero.getLEV()-11)*4;
-                            egDdgBuff = (hero.getLEV()-11)*2;
+                            egStrBuff = ((depth/5)-11)*4;
+                            egAccBuff = ((depth/5)-11)*3;
+                            egDefBuff = ((depth/5)-11)*4;
+                            egDdgBuff = ((depth/5)-11)*2;
 
                             currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
                             currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
@@ -474,6 +477,7 @@ int main()
                         for(int i=0;i<3;i++)
                             itemStatus[i] = 0;
                         continue;
+                        cout << "Karma: " << karma << endl;
                     }
                     pass = 1;
                     if(boss==1)
@@ -489,7 +493,7 @@ int main()
                         cout << "A voice calls to you from above... 'NOW YOU HAVE INHERITED THE MANTLE. YOU SHALL REMAIN HERE, AND DEFEND THE THRONE...'" << endl << endl;
                         Sleep(3000);
                         cout << "You have defeated Valentereth, and inherited the throne! Would you like to continue upward? (y/n): " << endl;
-                        cin >> yn;
+                        yn = getch();
                         boss = 0;
                         if(yn=='n')
                         {
@@ -506,6 +510,7 @@ int main()
                         cout << "Press any key to continue ascending the tower.";
                         yn = getch();
                         hero.Empower();
+                        std::system("cls");
                     }
                     if(boss==2)
                     {
@@ -710,10 +715,10 @@ int main()
                             //cout << "Karma: " << karma << endl;
                             if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
                             {
-                                egStrBuff = (hero.getLEV()-11)*4;
-                                egAccBuff = (hero.getLEV()-11)*3;
-                                egDefBuff = (hero.getLEV()-11)*4;
-                                egDdgBuff = (hero.getLEV()-11)*2;
+                                egStrBuff = ((depth/5)-11)*4;
+                                egAccBuff = ((depth/5)-11)*3;
+                                egDefBuff = ((depth/5)-11)*4;
+                                egDdgBuff = ((depth/5)-11)*2;
 
                                 currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
                                 currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
@@ -726,6 +731,7 @@ int main()
                                 boss = 2;
                             for(int i=0;i<3;i++)
                                 itemStatus[i] = 0;
+                            cout << "Karma: " << karma << endl;
                         }
                     }
                 }
@@ -873,10 +879,10 @@ int main()
                 //cout << "Karma: " << karma << endl;
                 if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
                 {
-                    egStrBuff = (hero.getLEV()-11)*4;
-                    egAccBuff = (hero.getLEV()-11)*3;
-                    egDefBuff = (hero.getLEV()-11)*4;
-                    egDdgBuff = (hero.getLEV()-11)*2;
+                    egStrBuff = ((depth/5)-11)*4;
+                    egAccBuff = ((depth/5)-11)*3;
+                    egDefBuff = ((depth/5)-11)*4;
+                    egDdgBuff = ((depth/5)-11)*2;
 
                     currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
                     currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
@@ -889,6 +895,10 @@ int main()
                     boss = 2;
                 for(int i=0;i<3;i++)
                     itemStatus[i] = 0;
+
+                /*cout << "Karma is " << karma << endl;
+                cout << "Reward Stat is " << rew << endl;
+                cout << "Difficulty Stat is " << diff << endl;*/
             }
             else if(err==10) //SEE
             {
@@ -1240,16 +1250,16 @@ int menuHandler(Player &hero, Directory dir)
                     else
                     {
                         cout << "MANA COST: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getManaCost() << endl;
-                        if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU())))>0)
-                            cout << "ATK BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU()))) << endl;
-                        if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU())))>0)
-                            cout << "DEF BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU()))) << endl;
-                        if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU())))>0)
-                            cout << "CRT BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU()))) << endl;
-                        if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU())))>0)
-                            cout << "ACC BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU()))) << endl;
-                        if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU())))>0)
-                            cout << "DDG BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU()))) << endl;
+                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU()>0)
+                            cout << "ATK BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU() << endl;
+                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU()>0)
+                            cout << "DEF BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU() << endl;
+                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU()>0)
+                            cout << "CRT BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU() << endl;
+                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU()>0)
+                            cout << "ACC BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU() << endl;
+                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU()>0)
+                            cout << "DDG BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU() << endl;
                     }
 
                     cout << endl << "What do you want to do to " << dir.getItemName(hero.spellbook[intChoice-1]) << "?" << endl;

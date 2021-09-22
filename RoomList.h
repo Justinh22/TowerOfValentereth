@@ -226,7 +226,7 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     R46.addFeat(featureDirectory[47]);
     roomDirectory.push_back(R46);
 
-    Room R47(47,"The wall to your left as you enter the room is in shambles, and through the rubble you can see the sun shining brightly in at you. You could have sworn in was nighttime when you entered...");
+    Room R47(47,"The wall to your left as you enter the room is in shambles, and through the rubble you can see the sun shining brightly in at you. You could have sworn it was nighttime when you entered...");
     R47.addFeat(featureDirectory[10]);
     R47.addFeat(featureDirectory[34]);
     roomDirectory.push_back(R47);

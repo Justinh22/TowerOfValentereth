@@ -1,3 +1,5 @@
+bool nicknameChecker(string name, Creature monster);
+
 string interactionHandler(int action, string target, Player &hero, Directory &dir, Room &currentRoom, int &pass, bool itemStatus[3])
 {
     //cout << endl << "Entered Interaction Handler!!" << endl;
@@ -32,6 +34,11 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
             lowername = "Silhouette";
         else
             lowername = currentRoom.monster.getName();
+
+        if(nicknameChecker(target,currentRoom.monster))
+            next = 1;
+        else
+            next = 0;
 
         std::transform(lowername.begin(), lowername.end(), lowername.begin(), ::tolower);
         if(target=="door"||target=="doors"||target=="tunnel"||target=="doorway"||target=="ladder"||target=="passage"||target=="passageway")
@@ -88,13 +95,13 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
             //}
             return "Unknown target.";
         }
-        else if(target==lowername||target=="enemy"||target=="monster")
+        else if(target==lowername||target=="enemy"||target=="monster"||next==1)
         {
             if(currentRoom.monster.level==-1)
                 return "No enemy present.";
             if(hero.mask.getID()==2) //Darkness
             {
-                holder = "Silhouette | Level " + std::to_string(currentRoom.monster.getLEV()) + "\n";
+                holder = "Silhouette | Level " + std::to_string(currentRoom.monster.getLEV()-2) + "\n";
                 holder += "HP: ??\n";
                 holder += "Strength: ??\n";
                 holder += "Accuracy: ??\n";
@@ -103,7 +110,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
             }
             else
             {
-                holder = currentRoom.monster.getName() + " | Level " + std::to_string(currentRoom.monster.getLEV()) + "\n";
+                holder = currentRoom.monster.getName() + " | Level " + std::to_string(currentRoom.monster.getLEV()-2) + "\n";
                 holder += "HP: " + std::to_string(currentRoom.monster.getHP()) + "\n";
                 holder += "Strength: " + std::to_string(currentRoom.monster.getSTR()) + "\n";
                 holder += "Accuracy: " + std::to_string(currentRoom.monster.getACC()) + "\n";
@@ -335,7 +342,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     {
                         if(valid==1)
                             return "Your inventory is full.";
-                        else if(valid!=2||i>=currentRoom.contents)
+                        else if(valid!=2||i<currentRoom.contents)
                         {
                             if(returner!="")
                                 returner += "\n";
@@ -422,8 +429,13 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
         else
             holder = currentRoom.monster.getName();
 
+        if(nicknameChecker(target,currentRoom.monster))
+            next = 1;
+        else
+            next = 0;
+
         std::transform(holder.begin(), holder.end(), holder.begin(), ::tolower);
-        if(target==holder||target=="enemy"||target=="monster")
+        if(target==holder||target=="enemy"||target=="monster"||next==1)
         {
             if(currentRoom.monster.getID()!=-1)
                 return "fight";
@@ -436,4 +448,36 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
         return "Unknown action.";
     }
     return "Error!";
+}
+
+bool nicknameChecker(string name, Creature monster)
+{
+    if(monster.getID()==9)
+        return name=="spider";
+    else if(monster.getID()==14)
+        return name=="armor";
+    else if(monster.getID()==16)
+        return name=="minotaur"||name=="skeleton";
+    else if(monster.getID()==14)
+        return name=="armor";
+    else if(monster.getID()==24||monster.getID()==25||monster.getID()==26||monster.getID()==27)
+        return name=="elemental";
+    else if(monster.getID()==32||monster.getID()==39||monster.getID()==45)
+        return name=="golem";
+    else if(monster.getID()==34)
+        return name=="mage";
+    else if(monster.getID()==37)
+        return name=="gladiator"||name=="phantom";
+    else if(monster.getID()==40||monster.getID()==52)
+        return name=="demon";
+    else if(monster.getID()==42)
+        return name=="giant";
+    else if(monster.getID()==43)
+        return name=="angel";
+    else if(monster.getID()==46||monster.getID()==50||monster.getID()==51)
+        return name=="dragon";
+    else if(monster.getID()==49||monster.getID()==53)
+        return name=="titan";
+    else
+        return 0;
 }

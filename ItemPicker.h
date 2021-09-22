@@ -15,7 +15,7 @@ int itemPicker(int type, int rarity)
                 id = rand() % 6 + 9;
                 break;
             case 4:
-                id = rand() % 6 + 13;
+                id = rand() % 6 + 15;
                 break;
             case 5:
                 id = rand() % 6 + 21;

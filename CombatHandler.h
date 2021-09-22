@@ -151,6 +151,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     else
                     {
                         cout << "You don't have enough mana." << endl;
+                        Sleep(2000);
                         break;
                     }
                 }
@@ -232,6 +233,8 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 if(choice<=hero.inventory.size()&&choice>0)
                 {
                     cout << dir.getItemName(hero.inventory[choice-1]) << ": " << dir.getItemDesc(hero.inventory[choice-1]) << endl;
+                    cout << "HP: " << dir.consumableDirectory[hero.inventory[choice-1]-100].getHP() << endl;
+                    cout << "MP: " << dir.consumableDirectory[hero.inventory[choice-1]-100].getMP() << endl << endl;
                     cout << "Use this? (y/n)" << endl;
                     yn = getch();
                     if(yn=='y')
