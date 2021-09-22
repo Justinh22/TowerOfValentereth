@@ -54,7 +54,9 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
             if(itemType==1)
                 amrFlag = 1;
 
-            maxRarity = adv+1;
+            maxRarity = adv;
+            if(maxRarity==1)
+                maxRarity++;
             if(maxRarity > 10)
                 maxRarity = 10;
 
@@ -329,12 +331,10 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                     itemRarity = 1;
                 else if(foo<=3)
                     itemRarity = 2;
-                else if(foo<=5)
+                else if(foo<=6)
                     itemRarity = 3;
-                else if(foo<=8)
-                    itemRarity = 4;
                 else
-                    itemRarity = 5;
+                    itemRarity = 4;
             }
             else
             {
@@ -344,7 +344,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                     itemRarity = 2;
                 else if(foo<=4)
                     itemRarity = 3;
-                else if(foo<=7)
+                else if(foo<=8)
                     itemRarity = 4;
                 else
                     itemRarity = 5;

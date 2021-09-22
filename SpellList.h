@@ -43,15 +43,15 @@ vector<HealingSpell> initHSDir(vector<HealingSpell> healingSpellDirectory)
 
     HealingSpell Minor_Heal("Minor Heal","Heals for a small amount of health.",1,215,4,10);
     healingSpellDirectory.push_back(Minor_Heal);
-    HealingSpell Heal("Heal","Heals for a moderate amount of health.",2,216,10,35);
+    HealingSpell Heal("Heal","Heals for a moderate amount of health.",2,216,10,30);
     healingSpellDirectory.push_back(Heal);
-    HealingSpell Minor_Regenerate("Minor Regenerate","Heals for a small amount of health over time.",2,217,10,6);
+    HealingSpell Minor_Regenerate("Minor Regenerate","Heals for a small amount of health over time.",2,217,12,6);
     healingSpellDirectory.push_back(Minor_Regenerate);
-    HealingSpell Regenerate("Regenerate","Heals for a moderate amount of health over time.",3,218,18,12);
+    HealingSpell Regenerate("Regenerate","Heals for a moderate amount of health over time.",3,218,24,12);
     healingSpellDirectory.push_back(Regenerate);
-    HealingSpell Major_Heal("Major Heal","Heals for a large amount of health.",4,219,20,80);
+    HealingSpell Major_Heal("Major Heal","Heals for a large amount of health.",4,219,24,60);
     healingSpellDirectory.push_back(Major_Heal);
-    HealingSpell Major_Regenerate("Major Regenerate","Heals for a large amount of health over time.",5,220,30,24);
+    HealingSpell Major_Regenerate("Major Regenerate","Heals for a large amount of health over time.",5,220,40,24);
     healingSpellDirectory.push_back(Major_Regenerate);
 
     //cout << "Spell List Initialized! (2/3)" << endl;
@@ -62,53 +62,53 @@ vector<HealingSpell> initHSDir(vector<HealingSpell> healingSpellDirectory)
 vector<BuffSpell> initBSDir(vector<BuffSpell> buffSpellDirectory)
 { //ATK DEF CRT ACC DDG
 
-    BuffSpell Rage("Rage","Increases your Atk.",1,221,6,5,0,0,0,0);
+    BuffSpell Rage("Rage","Increases your Atk.",1,221,8,5,0,0,0,0);
     buffSpellDirectory.push_back(Rage);
-    BuffSpell Brace("Brace","Increases your Def.",1,222,6,0,5,0,0,0);
+    BuffSpell Brace("Brace","Increases your Def.",1,222,8,0,5,0,0,0);
     buffSpellDirectory.push_back(Brace);
-    BuffSpell Focus("Focus","Increases your Acc.",1,223,6,0,0,0,15,0);
+    BuffSpell Focus("Focus","Increases your Acc.",1,223,8,0,0,0,15,0);
     buffSpellDirectory.push_back(Focus);
-    BuffSpell Speed("Speed","Increases your Ddg.",1,224,6,0,0,0,0,15);
+    BuffSpell Speed("Speed","Increases your Ddg.",1,224,8,0,0,0,0,15);
     buffSpellDirectory.push_back(Speed);
-    BuffSpell Luck("Luck","Increases your Crt.",1,225,6,0,0,15,0,0);
+    BuffSpell Luck("Luck","Increases your Crt.",1,225,8,0,0,15,0,0);
     buffSpellDirectory.push_back(Luck);
 
-    BuffSpell Rally("Rally","Increases your Atk and Def.",2,226,10,5,5,0,0,0);
+    BuffSpell Rally("Rally","Increases your Atk and Def.",2,226,16,5,5,0,0,0);
     buffSpellDirectory.push_back(Rally);
-    BuffSpell Wrath("Wrath","Increases your Atk and Acc.",2,227,10,5,0,0,15,0);
+    BuffSpell Wrath("Wrath","Increases your Atk and Acc.",2,227,16,5,0,0,15,0);
     buffSpellDirectory.push_back(Wrath);
-    BuffSpell Precision("Precision","Increases your Acc and Crt.",2,228,10,0,0,15,15,0);
+    BuffSpell Precision("Precision","Increases your Acc and Crt.",2,228,16,0,0,15,15,0);
     buffSpellDirectory.push_back(Precision);
-    BuffSpell Trance("Trance","Increases your Acc and Ddg.",2,229,10,0,0,0,15,15);
+    BuffSpell Trance("Trance","Increases your Acc and Ddg.",2,229,16,0,0,0,15,15);
     buffSpellDirectory.push_back(Trance);
-    BuffSpell Veil("Veil","Increases your Def and Ddg.",2,230,10,0,5,0,0,15);
+    BuffSpell Veil("Veil","Increases your Def and Ddg.",2,230,16,0,5,0,0,15);
     buffSpellDirectory.push_back(Veil);
 
-    BuffSpell Rage_II("Rage II","Increases your Atk by a great amount.",3,231,10,10,0,0,0,0);
+    BuffSpell Rage_II("Rage II","Increases your Atk by a great amount.",3,231,16,10,0,0,0,0);
     buffSpellDirectory.push_back(Rage_II);
-    BuffSpell Brace_II("Brace II","Increases your Def by a great amount.",3,232,10,0,10,0,0,0);
+    BuffSpell Brace_II("Brace II","Increases your Def by a great amount.",3,232,16,0,10,0,0,0);
     buffSpellDirectory.push_back(Brace_II);
-    BuffSpell Focus_II("Focus II","Increases your Acc by a great amount.",3,233,10,0,0,0,30,0);
+    BuffSpell Focus_II("Focus II","Increases your Acc by a great amount.",3,233,16,0,0,0,30,0);
     buffSpellDirectory.push_back(Focus_II);
-    BuffSpell Speed_II("Speed II","Increases your Ddg by a great amount.",3,234,10,0,0,0,0,30);
+    BuffSpell Speed_II("Speed II","Increases your Ddg by a great amount.",3,234,16,0,0,0,0,30);
     buffSpellDirectory.push_back(Speed_II);
-    BuffSpell Luck_II("Luck II","Increases your Crt by a great amount.",3,235,10,0,0,30,0,0);
+    BuffSpell Luck_II("Luck II","Increases your Crt by a great amount.",3,235,16,0,0,30,0,0);
     buffSpellDirectory.push_back(Speed_II);
 
-    BuffSpell Rally_II("Rally II","Increases your Atk and Def by a great amount.",4,236,16,10,10,0,0,0);
+    BuffSpell Rally_II("Rally II","Increases your Atk and Def by a great amount.",4,236,24,10,10,0,0,0);
     buffSpellDirectory.push_back(Rally_II);
-    BuffSpell Wrath_II("Wrath II","Increases your Atk and Acc by a great amount.",4,237,16,10,0,0,30,0);
+    BuffSpell Wrath_II("Wrath II","Increases your Atk and Acc by a great amount.",4,237,24,10,0,0,30,0);
     buffSpellDirectory.push_back(Wrath_II);
-    BuffSpell Precision_II("Precision II","Increases your Acc and Crt by a great amount.",4,238,16,0,0,30,30,0);
+    BuffSpell Precision_II("Precision II","Increases your Acc and Crt by a great amount.",4,238,24,0,0,30,30,0);
     buffSpellDirectory.push_back(Precision_II);
-    BuffSpell Trance_II("Trance II","Increases your Acc and Ddg by a great amount.",4,239,16,0,0,0,30,30);
+    BuffSpell Trance_II("Trance II","Increases your Acc and Ddg by a great amount.",4,239,24,0,0,0,30,30);
     buffSpellDirectory.push_back(Trance_II);
-    BuffSpell Veil_II("Veil II","Increases your Def and Ddg by a great amount.",4,240,16,0,10,0,0,30);
+    BuffSpell Veil_II("Veil II","Increases your Def and Ddg by a great amount.",4,240,24,0,10,0,0,30);
     buffSpellDirectory.push_back(Veil_II);
-    BuffSpell Spectrum("Spectrum","Increases all your stats.",4,241,20,5,5,15,15,15);
+    BuffSpell Spectrum("Spectrum","Increases all your stats.",4,241,30,5,5,15,15,15);
     buffSpellDirectory.push_back(Spectrum);
 
-    BuffSpell Spectrum_II("Spectrum II","Increases all your stats by a great amount.",5,242,36,10,10,30,30,30);
+    BuffSpell Spectrum_II("Spectrum II","Increases all your stats by a great amount.",5,242,50,10,10,30,30,30);
     buffSpellDirectory.push_back(Spectrum_II);
     //cout << "Spell List Initialized! (3/3)" << endl;
 

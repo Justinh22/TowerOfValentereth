@@ -244,7 +244,7 @@ void roomLogic(int &diff, int &rew, int &karma, int adv, Player hero)
                 diff = 3;
                 karma += 2;
             }
-            else if(chance<=8)
+            else if(chance<=9)
             {
                 diff = 4;
                 karma += 4;
@@ -298,7 +298,7 @@ void roomLogic(int &diff, int &rew, int &karma, int adv, Player hero)
             }
             else if(chance<=10)
             {
-                diff = 5;
+                diff = 4;
                 karma += 6;
             }
             chance = rand() % 10 + 1;

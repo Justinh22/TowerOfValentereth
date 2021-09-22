@@ -410,8 +410,8 @@ int main()
                     for(int i=0;i<3;i++)
                         itemStatus[i] = 0;
 
-                    /*cout << "Karma is " << karma << endl;
-                    cout << "Reward Stat is " << rew << endl;
+                    cout << "Karma: " << karma << endl;
+                    /*cout << "Reward Stat is " << rew << endl;
                     cout << "Difficulty Stat is " << diff << endl;*/
                     //THIS CODE WORKS FOR IDENTIFYING WHERE ITEMS ARE LOCATED
                     //
@@ -477,6 +477,7 @@ int main()
                         for(int i=0;i<3;i++)
                             itemStatus[i] = 0;
                         continue;
+                        cout << "Karma: " << karma << endl;
                     }
                     pass = 1;
                     if(boss==1)
@@ -730,6 +731,7 @@ int main()
                                 boss = 2;
                             for(int i=0;i<3;i++)
                                 itemStatus[i] = 0;
+                            cout << "Karma: " << karma << endl;
                         }
                     }
                 }
@@ -1248,16 +1250,16 @@ int menuHandler(Player &hero, Directory dir)
                     else
                     {
                         cout << "MANA COST: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getManaCost() << endl;
-                        if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU())))>0)
-                            cout << "ATK BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU())+((static_cast<float>(hero.getMA())/100)*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU()))) << endl;
-                        if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU())))>0)
-                            cout << "DEF BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU())+((static_cast<float>(hero.getMA())/100)*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU()))) << endl;
-                        if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU())))>0)
-                            cout << "CRT BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU())+((static_cast<float>(hero.getMA())/100)*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU()))) << endl;
-                        if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU())))>0)
-                            cout << "ACC BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU())+((static_cast<float>(hero.getMA())/100)*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU()))) << endl;
-                        if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU())+(hero.getMA()*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU())))>0)
-                            cout << "DDG BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU())+((static_cast<float>(hero.getMA())/100)*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU()))) << endl;
+                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU()>0)
+                            cout << "ATK BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU() << endl;
+                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU()>0)
+                            cout << "DEF BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU() << endl;
+                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU()>0)
+                            cout << "CRT BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU() << endl;
+                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU()>0)
+                            cout << "ACC BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU() << endl;
+                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU()>0)
+                            cout << "DDG BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU() << endl;
                     }
 
                     cout << endl << "What do you want to do to " << dir.getItemName(hero.spellbook[intChoice-1]) << "?" << endl;

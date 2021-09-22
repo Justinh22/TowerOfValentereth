@@ -30,9 +30,9 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     weaponDirectory.push_back(Iron_Spear);
     Weapon Iron_Dagger("Iron Dagger","A sturdy iron dagger.",3,12,6,90,10,0);
     weaponDirectory.push_back(Iron_Dagger);
-    Weapon Woven_Staff("Woven Staff","A tall mahogany staff, woven around a sapphire.",3,13,6,80,0,15);
+    Weapon Woven_Staff("Woven Staff","A tall mahogany staff, woven around a sapphire.",3,13,5,80,0,15);
     weaponDirectory.push_back(Woven_Staff);
-    Weapon Mana_Club("Mana Club","An iron club, with a sapphire embedded in its handle.",3,14,7,70,0,5);
+    Weapon Mana_Club("Mana Club","An iron club, with a sapphire embedded in its handle.",3,14,8,70,0,5);
     weaponDirectory.push_back(Mana_Club);
     //4
     Weapon Steel_Axe("Steel Axe","A sharp, shining steel axe.",4,15,13,70,5,0);
@@ -43,7 +43,7 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     weaponDirectory.push_back(Steel_Spear);
     Weapon Steel_Dagger("Steel Dagger","A sharp, shining steel dagger.",4,18,8,90,15,0);
     weaponDirectory.push_back(Steel_Dagger);
-    Weapon Steel_Wand("Steel Wand","A long, shining steel wand.",4,19,7,80,0,25);
+    Weapon Steel_Wand("Steel Wand","A long, shining steel wand.",4,19,7,80,0,20);
     weaponDirectory.push_back(Steel_Wand);
     Weapon Casters_Sword("Caster's Sword","A long, shining steel blade with an amethyst embedded in the hilt.",4,20,10,75,0,10);
     weaponDirectory.push_back(Casters_Sword);
@@ -56,9 +56,9 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     weaponDirectory.push_back(Dark_Steel_Spear);
     Weapon Dark_Steel_Dagger("Dark Steel Dagger","A dagger made of a dark, menacing steel, emanating an evil aura.",5,24,10,80,25,0);
     weaponDirectory.push_back(Dark_Steel_Dagger);
-    Weapon Dark_Sceptre("Dark Sceptre","A long, menacing sceptre made of a dark black metal.",5,25,7,75,10,40);
+    Weapon Dark_Sceptre("Dark Sceptre","A long, menacing sceptre made of a dark black metal.",5,25,7,75,10,25);
     weaponDirectory.push_back(Dark_Sceptre);
-    Weapon Mana_Cleaver("Mana Cleaver","A massive dark blade with a ruby core, emanating an evil aura.",5,26,14,60,15,20);
+    Weapon Mana_Cleaver("Mana Cleaver","A massive dark blade with a ruby core, emanating an evil aura.",5,26,14,60,10,15);
     weaponDirectory.push_back(Mana_Cleaver);
     //6
     Weapon Golden_Axe("Golden Axe","An axe made of shimmering gold.",6,27,20,75,10,0);
@@ -69,9 +69,9 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     weaponDirectory.push_back(Golden_Spear);
     Weapon Golden_Dagger("Golden Dagger","A dagger made of shimmering gold.",6,30,13,95,20,0);
     weaponDirectory.push_back(Golden_Dagger);
-    Weapon Golden_Staff("Golden Staff","A shining, golden staff, radiating magical energy.",6,31,12,85,0,50);
+    Weapon Golden_Staff("Golden Staff","A shining, golden staff, radiating magical energy.",6,31,10,85,0,30);
     weaponDirectory.push_back(Golden_Staff);
-    Weapon Enchanted_Knife("Enchanted Knife","A shimmering, enchanted knife, radiating magical energy.",6,32,15,75,20,25);
+    Weapon Enchanted_Knife("Enchanted Knife","A shimmering, enchanted knife, radiating magical energy.",6,32,12,90,20,15);
     weaponDirectory.push_back(Enchanted_Knife);
     //7
     Weapon Jeweled_Axe("Jeweled Axe","An axe made of shining gold, with bright gemstones embedded into it.",7,33,32,55,10,0);
@@ -82,22 +82,22 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     weaponDirectory.push_back(Jeweled_Spear);
     Weapon Jeweled_Dagger("Jeweled Dagger","A dagger made of shining gold, with bright gemstones embedded into it.",7,36,22,75,20,0);
     weaponDirectory.push_back(Jeweled_Dagger);
-    Weapon Jeweled_Wand("Jeweled Wand","A golden wand, encrusted with bright gemstones.",7,37,16,75,5,65);
+    Weapon Jeweled_Wand("Jeweled Wand","A golden wand, encrusted with bright gemstones.",7,37,14,75,5,35);
     weaponDirectory.push_back(Jeweled_Wand);
-    Weapon Magic_Gauntlet("Magic Gauntlet","A shining metal gauntlet, with a bright diamond on the back of the palm.",7,38,30,50,10,35);
+    Weapon Magic_Gauntlet("Magic Gauntlet","A shining metal gauntlet, with a bright diamond on the back of the palm.",7,38,30,60,10,20);
     weaponDirectory.push_back(Magic_Gauntlet);
     //8
-    Weapon Valentium_Axe("Valentium Axe","An axe made of a magical, indestructable metal.",8,39,30,80,15,10);
+    Weapon Valentium_Axe("Valentium Axe","An axe made of a magical, indestructable metal.",8,39,30,80,15,5);
     weaponDirectory.push_back(Valentium_Axe);
-    Weapon Valentium_Sword("Valentium Sword","A sword made of a magical, indestructable metal.",8,40,26,90,10,10);
+    Weapon Valentium_Sword("Valentium Sword","A sword made of a magical, indestructable metal.",8,40,26,90,10,5);
     weaponDirectory.push_back(Valentium_Sword);
-    Weapon Valentium_Spear("Valentium Spear","A spear made of a magical, indestructable metal.",8,41,23,95,15,10);
+    Weapon Valentium_Spear("Valentium Spear","A spear made of a magical, indestructable metal.",8,41,23,95,15,5);
     weaponDirectory.push_back(Valentium_Spear);
-    Weapon Valentium_Dagger("Valentium Dagger","An dagger made of a magical, indestructable metal.",8,42,20,100,25,10);
+    Weapon Valentium_Dagger("Valentium Dagger","An dagger made of a magical, indestructable metal.",8,42,20,100,25,5);
     weaponDirectory.push_back(Valentium_Dagger);
-    Weapon Valentium_Sceptre("Valentium Sceptre","A sceptre made of a magical, indestructable metal.",8,43,18,90,10,75);
+    Weapon Valentium_Sceptre("Valentium Sceptre","A sceptre made of a magical, indestructable metal.",8,43,16,90,10,40);
     weaponDirectory.push_back(Valentium_Sceptre);
-    Weapon Arcane_Axe("Arcane Axe","A massive axe made of a magical, indestructable metal, emanating a powerful aura.",8,44,28,75,15,45);
+    Weapon Arcane_Axe("Arcane Axe","A massive axe made of a magical, indestructable metal, emanating a powerful aura.",8,44,26,70,15,25);
     weaponDirectory.push_back(Arcane_Axe);
     //9
     Weapon Mechanical_Axe("Mechanical Axe","An axe covered in whirring gears, arcing with electricity.",9,45,28,80,35,0);
@@ -108,9 +108,9 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     weaponDirectory.push_back(Mechanical_Spear);
     Weapon Mechanical_Dagger("Mechanical Dagger","A dagger covered in whirring gears, arcing with electricity.",9,48,18,100,45,0);
     weaponDirectory.push_back(Mechanical_Dagger);
-    Weapon Rod_of_Order("Rod of Order","A magic staff, covered in spinning gears.",9,49,20,90,20,90);
+    Weapon Rod_of_Order("Rod of Order","A magic staff, covered in spinning gears.",9,49,18,90,20,45);
     weaponDirectory.push_back(Rod_of_Order);
-    Weapon Spear_of_Storms("Spear of Storms","A spear covered in whirring gears, with an electrical core brimming with power.",9,50,25,85,30,60);
+    Weapon Spear_of_Storms("Spear of Storms","A spear covered in whirring gears, with an electrical core brimming with power.",9,50,23,90,30,30);
     weaponDirectory.push_back(Spear_of_Storms);
     //10
     Weapon Teratra("Teratra","A mythical axe of legend, raised from the earth.",10,51,42,75,20,5);
@@ -121,9 +121,9 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     weaponDirectory.push_back(Hyliat);
     Weapon Aerolinde("Aerolinde","A mythical dagger of legend, formed from the raging winds.",10,54,32,100,35,10);
     weaponDirectory.push_back(Aerolinde);
-    Weapon Ordointh("Ordointh","A magical staff of legend, formed from the forces of balance and order.",10,55,25,90,10,100);
+    Weapon Ordointh("Ordointh","A magical staff of legend, formed from the forces of balance and order.",10,55,20,90,10,50);
     weaponDirectory.push_back(Ordointh);
-    Weapon Chaotrix("Chaotrix","A magical warhammer of legend, formed from the forces of entropy and chaos.",10,56,36,85,20,75);
+    Weapon Chaotrix("Chaotrix","A magical warhammer of legend, formed from the forces of entropy and chaos.",10,56,34,85,20,35);
     weaponDirectory.push_back(Chaotrix);
 
     //cout << "Weapon Directory Initialized!" << endl;
@@ -146,21 +146,21 @@ vector<Armor> initADir(vector<Armor> armorDirectory)
     armorDirectory.push_back(Leather_Armor);
     Armor Rusty_Iron_Armor("Rusty Iron Armor","A suit of rusted iron armor.",2,61,3,0,0);
     armorDirectory.push_back(Rusty_Iron_Armor);
-    Armor Silk_Robe("Silk Robe","A soft, silk robe.",2,62,1,5,2);
+    Armor Silk_Robe("Silk Robe","A soft, silk robe.",2,62,2,5,1);
     armorDirectory.push_back(Silk_Robe);
     //3
     Armor Hide_Armor("Hide Armor","A suit of armor made from tough animal hides.",3,63,4,10,0);
     armorDirectory.push_back(Hide_Armor);
     Armor Chainmail("Chainmail","A suit of armor made from intertwined links of chains.",3,64,5,0,0);
     armorDirectory.push_back(Chainmail);
-    Armor Shimmering_Robe("Shimmering Robe","A long velvet robe, that seems to shimmer magically.",3,65,2,10,3);
+    Armor Shimmering_Robe("Shimmering Robe","A long velvet robe, that seems to shimmer magically.",3,65,2,10,2);
     armorDirectory.push_back(Shimmering_Robe);
     //4
     Armor Studded_Leather_Armor("Studded Leather Armor","A suit of leather armor, studded with steel.",4,66,6,15,0);
     armorDirectory.push_back(Studded_Leather_Armor);
     Armor Iron_Armor("Iron Armor","A suit of solid iron armor.",4,67,7,0,0);
     armorDirectory.push_back(Iron_Armor);
-    Armor Enchanted_Robe("Enchanted Robe","An enchanted robe, which glows magically.",4,68,4,10,4);
+    Armor Enchanted_Robe("Enchanted Robe","An enchanted robe, which glows magically.",4,68,4,10,2);
     armorDirectory.push_back(Enchanted_Robe);
     //5
     Armor Light_Steel_Armor("Light Steel Armor","A suit of lightweight steel armor.",5,69,7,15,0);
@@ -169,9 +169,9 @@ vector<Armor> initADir(vector<Armor> armorDirectory)
     armorDirectory.push_back(Steel_Armor);
     Armor Heavy_Steel_Armor("Heavy Steel Armor","A suit of heavy steel armor.",5,71,9,0,0);
     armorDirectory.push_back(Heavy_Steel_Armor);
-    Armor Amethyst_Robe("Amethyst Robe","A bright purple robe, pulsing with arcane energy.",5,72,5,10,5);
+    Armor Amethyst_Robe("Amethyst Robe","A bright purple robe, pulsing with arcane energy.",5,72,5,10,3);
     armorDirectory.push_back(Amethyst_Robe);
-    Armor Steel_Arcanist_Armor("Steel Arcanist Armor","A set of steel battlemage armor, with magical capabilities.",6,73,7,5,2);
+    Armor Steel_Arcanist_Armor("Steel Arcanist Armor","A set of steel battlemage armor, with magical capabilities.",6,73,7,5,1);
     armorDirectory.push_back(Steel_Arcanist_Armor);
     //6
     Armor Light_Golden_Armor("Light Golden Armor","A suit of lightweight golden armor.",6,74,8,20,0);
@@ -180,9 +180,9 @@ vector<Armor> initADir(vector<Armor> armorDirectory)
     armorDirectory.push_back(Golden_Armor);
     Armor Heavy_Golden_Armor("Heavy Golden Armor","A suit of heavy golden armor.",6,76,12,0,0);
     armorDirectory.push_back(Heavy_Golden_Armor);
-    Armor Gilded_Robe("Gilded Robe","A flowing robe sewn from golden threads, imbued with magical power.",6,77,6,15,6);
+    Armor Gilded_Robe("Gilded Robe","A flowing robe sewn from golden threads, imbued with magical power.",6,77,6,15,3);
     armorDirectory.push_back(Gilded_Robe);
-    Armor Golden_Arcanist_Armor("Golden Arcanist Armor","A set of golden battlemage armor, with magical capabilities.",6,78,8,10,3);
+    Armor Golden_Arcanist_Armor("Golden Arcanist Armor","A set of golden battlemage armor, with magical capabilities.",6,78,8,10,1);
     armorDirectory.push_back(Golden_Arcanist_Armor);
     //7
     Armor Light_Jeweled_Armor("Light Jeweled Armor","A suit of lightweight golden armor embedded with shining gemstones.",7,79,10,25,0);
@@ -191,9 +191,9 @@ vector<Armor> initADir(vector<Armor> armorDirectory)
     armorDirectory.push_back(Jeweled_Armor);
     Armor Heavy_Jeweled_Armor("Heavy Jeweled Armor","A suit of heavy golden armor embedded with shining gemstones.",7,81,14,0,0);
     armorDirectory.push_back(Heavy_Jeweled_Armor);
-    Armor Jeweled_Robe("Jeweled Robe","A flowing robe sewn from golden threads, with arcane gemstones embedded at the base.",8,82,8,20,7);
+    Armor Jeweled_Robe("Jeweled Robe","A flowing robe sewn from golden threads, with arcane gemstones embedded at the base.",8,82,7,20,4);
     armorDirectory.push_back(Jeweled_Robe);
-    Armor Jeweled_Arcanist_Armor("Jeweled Arcanist Armor","A suit of jeweled golden armor, embedded with arcane gemstones.",8,83,10,15,3);
+    Armor Jeweled_Arcanist_Armor("Jeweled Arcanist Armor","A suit of jeweled golden armor, embedded with arcane gemstones.",8,83,10,15,2);
     armorDirectory.push_back(Jeweled_Arcanist_Armor);
     //8
     Armor Light_Valentium_Armor("Light Valentium Armor","A suit of lightweight Valentium armor, which pulses with magical energy.",8,84,12,30,2);
@@ -202,9 +202,9 @@ vector<Armor> initADir(vector<Armor> armorDirectory)
     armorDirectory.push_back(Valentium_Armor);
     Armor Heavy_Valentium_Armor("Heavy Valentium Armor","A suit of heavy Valentium armor, which pulses with magical energy.",8,86,18,0,2);
     armorDirectory.push_back(Heavy_Valentium_Armor);
-    Armor Valentium_Robe("Valentium Robe","A robe sewn from threads of Valentium, which pulses with magical energy.",8,87,10,25,8);
+    Armor Valentium_Robe("Valentium Robe","A robe sewn from threads of Valentium, which pulses with magical energy.",8,87,8,25,4);
     armorDirectory.push_back(Valentium_Robe);
-    Armor Valentium_Arcanist_Armor("Valentium Arcanist Armor","A set of Valentium battlemage armor, which pulses with unbridled magical energy.",8,88,12,15,4);
+    Armor Valentium_Arcanist_Armor("Valentium Arcanist Armor","A set of Valentium battlemage armor, which pulses with unbridled magical energy.",8,88,12,15,2);
     armorDirectory.push_back(Valentium_Arcanist_Armor);
     //9
     Armor Light_Mechanical_Armor("Light Mechanical Armor","A suit of lightweight armor with cogs and pipes whirring along it.",9,89,13,45,0);
@@ -213,9 +213,9 @@ vector<Armor> initADir(vector<Armor> armorDirectory)
     armorDirectory.push_back(Mechanical_Armor);
     Armor Heavy_Mechanical_Armor("Heavy Mechanical Armor","A suit of heavy armor with cogs and pipes whirring along it.",9,91,19,15,0);
     armorDirectory.push_back(Heavy_Mechanical_Armor);
-    Armor Clockwork_Robe("Clockwork Robe","A robe sewn from threads of time itself.",9,92,11,30,10);
+    Armor Clockwork_Robe("Clockwork Robe","A robe sewn from threads of time itself.",9,92,10,30,5);
     armorDirectory.push_back(Clockwork_Robe);
-    Armor Clockwork_Arcanist_Armor("Clockwork Arcanist Armor","A set of clockwork battlemage armor, with magical energy flowing through it like time itself.",9,93,13,30,4);
+    Armor Clockwork_Arcanist_Armor("Clockwork Arcanist Armor","A set of clockwork battlemage armor, with magical energy flowing through it like time itself.",9,93,13,30,3);
     armorDirectory.push_back(Clockwork_Arcanist_Armor);
     //10
     Armor Cloak_of_the_Whisper("Cloak of the Whisper","A cloak that envelops its wearer in shadow.",10,94,13,60,0);
@@ -224,9 +224,9 @@ vector<Armor> initADir(vector<Armor> armorDirectory)
     armorDirectory.push_back(Plate_of_the_Vanguard);
     Armor Shield_of_the_Conquerer("Shield of the Conquerer","A massive suit of heavy armor once worn by the ruler of an ancient kingdom.",10,96,24,0,0);
     armorDirectory.push_back(Shield_of_the_Conquerer);
-    Armor Robe_of_the_Archmage("Robe of the Archmage","A robe that harnesses the magical power of the world.",10,97,13,30,12);
-    armorDirectory.push_back(Amethyst_Robe);
-    Armor Helm_of_the_Ancients("Helm of the Ancients","A regal suit of armor, passed down from an ancient kingdom of magic.",10,98,16,25,6);
+    Armor Robe_of_the_Archmage("Robe of the Archmage","A robe that harnesses the magical power of the world.",10,97,12,30,7);
+    armorDirectory.push_back(Robe_of_the_Archmage);
+    Armor Helm_of_the_Ancients("Helm of the Ancients","A regal suit of armor, passed down from an ancient kingdom of magic.",10,98,16,25,5);
     armorDirectory.push_back(Helm_of_the_Ancients);
 
     //cout << "Armor Directory Initialized!" << endl;
