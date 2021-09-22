@@ -110,15 +110,15 @@ vector<Creature> initCDir(vector<Creature> creatureDirectory)
     Creature Duskwalker("Duskwalker",14,47,50,52,100,14,35);
     creatureDirectory.push_back(Duskwalker);
     //15
-    Creature Valentereth("Valentereth, the Tyrant",15,48,100,54,100,24,15); //36
+    Creature Valentereth("Valentereth, the Tyrant",15,48,100,54,100,24,15); //48
     creatureDirectory.push_back(Valentereth);
     //16
     Creature Valentium_Titan("Valentium Titan",16,49,84,38,90,32,0);
     creatureDirectory.push_back(Valentium_Titan);
     Creature Gold_Dragon("Gold Dragon",16,50,70,56,105,24,15);
     creatureDirectory.push_back(Gold_Dragon);
-    Creature Angel_of_Death("Angel of Death",16,51,62,52,120,15,20);
-    creatureDirectory.push_back(Angel_of_Death);
+    Creature Silver_Dragon("Silver Dragon",16,51,70,52,120,18,20);
+    creatureDirectory.push_back(Silver_Dragon);
     Creature Demon_King("Demon King",16,52,70,46,110,19,20);
     creatureDirectory.push_back(Demon_King);
     Creature Elemental_Titan("Elemental Titan",16,53,64,50,100,20,15);
@@ -128,7 +128,7 @@ vector<Creature> initCDir(vector<Creature> creatureDirectory)
     Creature Hydra("Hydra",16,55,80,50,100,30,10);
     creatureDirectory.push_back(Hydra);
     //17
-    Creature Termineth("Termineth",17,56,100,80,145,60,35); //43
+    Creature Termineth("Termineth",17,56,100,80,145,60,35); //56
     creatureDirectory.push_back(Termineth);
 
     //cout << "Creature List Initialized!" << endl;
