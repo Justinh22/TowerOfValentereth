@@ -147,7 +147,7 @@ int main()
 
     string name;
     string filename;
-    int saveStats[16];
+    int saveStats[17];
     int depth = 1;
     string save;
     string saveName;
@@ -177,9 +177,10 @@ int main()
         saveStats[10] = 0;
         saveStats[11] = 1;
         saveStats[12] = 0;
-        saveStats[13] = -1;
+        saveStats[13] = 0;
         saveStats[14] = -1;
         saveStats[15] = -1;
+        saveStats[16] = -1;
     }
     else if(intChoice==2)
     {
@@ -199,7 +200,7 @@ int main()
                 {
                     std::stringstream data(save);
                     saveFound = 1;
-                    for(int i=0;i<16;i++)
+                    for(int i=0;i<17;i++)
                         data >> saveStats[i];
                     for(int i=0;i<6;i++)
                     {
@@ -236,8 +237,8 @@ int main()
                 cout << "DDG: " << saveStats[10] << endl;
                 cout << "DEPTH: " << saveStats[11] << endl;
                 cout << "KEYS: " << saveStats[12] << endl;
-                if(saveStats[13]>=0)
-                    cout << "MASK: " << dir.maskDirectory[saveStats[13]].getName() << endl << endl;
+                if(saveStats[14]>=0)
+                    cout << "MASK: " << dir.maskDirectory[saveStats[14]].getName() << endl << endl;
                 cout << "Continue with this character? (y/n)" << endl;
                 load = getch();
                 if(load=="y")
@@ -262,9 +263,10 @@ int main()
                     saveStats[10] = 0;
                     saveStats[11] = 1;
                     saveStats[12] = 0;
-                    saveStats[13] = -1;
+                    saveStats[13] = 0;
                     saveStats[14] = -1;
                     saveStats[15] = -1;
+                    saveStats[16] = -1;
                     good = 1;
                 }
                 else
@@ -281,8 +283,8 @@ int main()
     hero.setEXPGoal(20*hero.level);
     hero.setHP(saveStats[3]);
     hero.setMP(saveStats[5]);
-    if(saveStats[13]>=0)
-        mask = saveStats[13];
+    if(saveStats[14]>=0)
+        mask = saveStats[14];
     if(intChoice==2)
     {
         hero.equipment = equipSave;
@@ -292,10 +294,10 @@ int main()
     depth = saveStats[11];
     if((depth/5)+2>11)
         hero.empowered = 1;
-    if(saveStats[14]!=-1)
-        hero.equipWpn(dir.weaponDirectory[saveStats[14]]);
     if(saveStats[15]!=-1)
-        hero.equipAmr(dir.armorDirectory[saveStats[15]-57]);
+        hero.equipWpn(dir.weaponDirectory[saveStats[15]]);
+    if(saveStats[16]!=-1)
+        hero.equipAmr(dir.armorDirectory[saveStats[16]-100]);
 
     if(mask>=0)
     {
@@ -327,11 +329,13 @@ int main()
 
     Room currentRoom;
     bool itemStatus[6] = {0,0,0,0,0,0};
+    bool minibossStatus[6] = {0,0,0,0,0,0};
     int boss = 0;
     bool win = 0;
     bool lvup = 0;
     char yn;
     bool manSave = 0;
+    bool dev=0;
 
     int egStrBuff;
     int egAccBuff;
@@ -339,7 +343,7 @@ int main()
     int egDdgBuff;
 
     cout << "Floor " << depth << endl;
-    currentRoom = roomGenerator(diff,rew,adv,dir,hero);
+    currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
 
     while(end==0)
     {
@@ -389,7 +393,12 @@ int main()
                         diff = 6;
                     else if(depth>=80)
                         diff = 7;
-                    currentRoom = roomGenerator(diff,rew,adv,dir,hero);
+                    if(dev==1)
+                    {
+                        dev = 0;
+                        diff = 8;
+                    }
+                    currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
                     //cout << "Karma: " << karma << endl;
                     if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
                     {
@@ -426,6 +435,11 @@ int main()
                 {
                     gd = goldPicker(currentRoom.monster.getLEV());
                     ex = expPicker(currentRoom.monster.getLEV());
+                    if(currentRoom.monster.getID()>=57) //Miniboss
+                    {
+                        gd = goldPicker(adv+3)*2;
+                        ex = expPicker(adv+3)*2;
+                    }
                     if(hero.mask.getID()==7) //Souls
                         ex = ex*3;
                     pass = combatHandler(hero,currentRoom.monster,dir,gd,ex);
@@ -456,7 +470,12 @@ int main()
                             diff = 6;
                         else if(depth>=80)
                             diff = 7;
-                        currentRoom = roomGenerator(diff,rew,adv,dir,hero);
+                        if(dev==1)
+                        {
+                            dev = 0;
+                            diff = 8;
+                        }
+                        currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
                         //cout << "Karma: " << karma << endl;
                         if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
                         {
@@ -479,7 +498,6 @@ int main()
                         continue;
                         //cout << "Karma: " << karma << endl;
                     }
-                    pass = 1;
                     if(boss==1)
                     {
                         win = 1;
@@ -518,7 +536,29 @@ int main()
                         win = 1;
                         break;
                     }
-                    currentRoom.creatDesc = "";
+
+                    if(pass==4)
+                    {
+                        if(currentRoom.monster.getID()==57)
+                        {
+                            currentRoom.creatDesc = "One of Ozkoroth's fangs lie in a pool of ooze on the floor...";
+                            currentRoom.addItem(57);
+                        }
+                        else if(currentRoom.monster.getID()==59)
+                        {
+                            currentRoom.creatDesc = "Emeritus' sceptre lies on the floor, pulsing with energy.";
+                            currentRoom.addItem(58);
+                        }
+                        else if(currentRoom.monster.getID()==60)
+                        {
+                            currentRoom.creatDesc = "Stiran's shield lies on the floor next to you.";
+                            currentRoom.addItem(142);
+                        }
+                    }
+                    else
+                        currentRoom.creatDesc = "";
+
+                    pass = 1;
                     cout << "Floor " << depth << endl;
                     cout << currentRoom.getDesc() << endl;
                     for(int i=0;i<currentRoom.getLDescList().size();i++)
@@ -711,7 +751,12 @@ int main()
                                 diff = 6;
                             else if(depth>=80)
                                 diff = 7;
-                            currentRoom = roomGenerator(diff,rew,adv,dir,hero);
+                            if(dev==1)
+                            {
+                                dev = 0;
+                                diff = 8;
+                            }
+                            currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
                             //cout << "Karma: " << karma << endl;
                             if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
                             {
@@ -875,7 +920,12 @@ int main()
                     diff = 6;
                 else if(depth>=80)
                     diff = 7;
-                currentRoom = roomGenerator(diff,rew,adv,dir,hero);
+                if(dev==1)
+                {
+                    dev = 0;
+                    diff = 8;
+                }
+                currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
                 //cout << "Karma: " << karma << endl;
                 if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
                 {
@@ -915,6 +965,11 @@ int main()
                 cout << "Inside of: " << endl;
                 for(int i=0;i<currentRoom.getBList().size();i++)
                     cout << currentRoom.getBList()[i] << "." << endl;
+            }
+            else if(err==11) //MINIBOSS
+            {
+                cout << "You hear noises coming from the next room..." << endl;
+                dev = 1;
             }
         }
         else
@@ -1006,10 +1061,10 @@ int actionHandler(string act)
     {
         return 8;
     }
-    /*else if(act=="debug_go")
+    else if(act=="debug_go")
     {
         return 6;
-    }*/
+    }
     /*else if(act=="room")
     {
         return 5;
@@ -1019,10 +1074,14 @@ int actionHandler(string act)
         cout << "Exiting..." << endl;
         return -1;
     }*/
-    /*else if(act=="see")
+    else if(act=="see")
     {
         return 10;
-    }*/
+    }
+    else if(act=="miniboss")
+    {
+        return 11;
+    }
     else
     {
         cout << "Unknown command." << endl;
@@ -1080,7 +1139,7 @@ int menuHandler(Player &hero, Directory dir)
                 {
                     if(intChoice==0)
                         break;
-                    if(hero.equipment[intChoice-1]<57)
+                    if(hero.equipment[intChoice-1]<100)
                     {
                         cout << dir.getItemName(hero.equipment[intChoice-1]) << " | " << dir.getItemDesc(hero.equipment[intChoice-1]) << endl;
                         cout << "RARITY: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getRarity() << endl;
@@ -1093,11 +1152,11 @@ int menuHandler(Player &hero, Directory dir)
                     else
                     {
                         cout << dir.getItemName(hero.equipment[intChoice-1]) << " | " << dir.getItemDesc(hero.equipment[intChoice-1]) << endl;
-                        cout << "RARITY: " << dir.armorDirectory[hero.equipment[intChoice-1]-57].getRarity() << endl;
-                        cout << "DEF: " << dir.armorDirectory[hero.equipment[intChoice-1]-57].getDef() << endl;
-                        cout << "DDG: " << dir.armorDirectory[hero.equipment[intChoice-1]-57].getDdg() << endl;
-                        if(dir.armorDirectory[hero.equipment[intChoice-1]-57].getMG()!=0)
-                            cout << "MANA REGEN: " << dir.armorDirectory[hero.equipment[intChoice-1]-57].getMG()  << endl;
+                        cout << "RARITY: " << dir.armorDirectory[hero.equipment[intChoice-1]-100].getRarity() << endl;
+                        cout << "DEF: " << dir.armorDirectory[hero.equipment[intChoice-1]-100].getDef() << endl;
+                        cout << "DDG: " << dir.armorDirectory[hero.equipment[intChoice-1]-100].getDdg() << endl;
+                        if(dir.armorDirectory[hero.equipment[intChoice-1]-100].getMG()!=0)
+                            cout << "MANA REGEN: " << dir.armorDirectory[hero.equipment[intChoice-1]-100].getMG()  << endl;
                     }
                     cout << endl << "What do you want to do to " << dir.getItemName(hero.equipment[intChoice-1]) << "?" << endl;
                     cout << "1) EQUIP" << endl;
@@ -1106,7 +1165,7 @@ int menuHandler(Player &hero, Directory dir)
                     strChoice = getch();
                     if(strChoice=="1")
                     {
-                        if(hero.equipment[intChoice-1]<57)
+                        if(hero.equipment[intChoice-1]<100)
                         {
                             hero.equipWpn(dir.weaponDirectory[hero.equipment[intChoice-1]]);
                             cout << "Equipped " << dir.getItemName(hero.equipment[intChoice-1]);
@@ -1121,7 +1180,7 @@ int menuHandler(Player &hero, Directory dir)
                             }
                             else
                             {
-                                hero.equipAmr(dir.armorDirectory[hero.equipment[intChoice-1]-57]);
+                                hero.equipAmr(dir.armorDirectory[hero.equipment[intChoice-1]-100]);
                                 cout << "Equipped " << dir.getItemName(hero.equipment[intChoice-1]);
                                 Sleep(2000);
                             }
@@ -1166,10 +1225,10 @@ int menuHandler(Player &hero, Directory dir)
                 {
                     if(intChoice==0)
                         break;
-                    cout << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getName() << " | " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getDesc() << endl;
-                    cout << "RARITY: " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getRarity() << endl;
-                    cout << "HP: " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getHP() << endl;
-                    cout << "MP: " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getMP() << endl << endl;
+                    cout << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getName() << " | " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getDesc() << endl;
+                    cout << "RARITY: " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getRarity() << endl;
+                    cout << "HP: " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getHP() << endl;
+                    cout << "MP: " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getMP() << endl << endl;
                     cout << "What do you want to do to " << dir.getItemName(hero.inventory[intChoice-1]) << "?" << endl;
                     cout << "1) USE" << endl;
                     cout << "2) DROP" << endl;
@@ -1177,20 +1236,20 @@ int menuHandler(Player &hero, Directory dir)
                     strChoice = getch();
                     if(strChoice=="1")
                     {
-                        if(dir.consumableDirectory[hero.inventory[intChoice-1]-100].getHP()>0)
+                        if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getHP()>0)
                         {
-                            hero.changeHP(dir.consumableDirectory[hero.inventory[intChoice-1]-100].getHP());
+                            hero.changeHP(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getHP());
                             if(hero.getHP()>hero.getMHP())
                                 hero.setHP(hero.getMHP());
-                            cout << "You regained " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getHP() << " HP!" << endl;
+                            cout << "You regained " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getHP() << " HP!" << endl;
                             Sleep(2000);
                         }
-                        if(dir.consumableDirectory[hero.inventory[intChoice-1]-100].getMP()>0)
+                        if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getMP()>0)
                         {
-                            hero.changeMP(dir.consumableDirectory[hero.inventory[intChoice-1]-100].getMP());
+                            hero.changeMP(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getMP());
                             if(hero.getMP()>hero.getMMP())
                                 hero.setMP(hero.getMMP());
-                            cout << "You regained " << dir.consumableDirectory[hero.inventory[intChoice-1]-100].getMP() << " MP!" << endl;
+                            cout << "You regained " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getMP() << " MP!" << endl;
                             Sleep(2000);
                         }
                         hero.inventory.erase(hero.inventory.begin()+intChoice-1);
@@ -1237,45 +1296,45 @@ int menuHandler(Player &hero, Directory dir)
                         break;
                     cout << dir.getItemName(hero.spellbook[intChoice-1]) << " | " << dir.getItemDesc(hero.spellbook[intChoice-1]) << endl;
                     cout << "RARITY: " << dir.getItemRarity(hero.spellbook[intChoice-1]) << endl;
-                    if(hero.spellbook[intChoice-1]<=214)
+                    if(hero.spellbook[intChoice-1]<=314)
                     {
-                        cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-200].getManaCost() << endl;
-                        cout << "DAMAGE: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-200].getDMG() << endl;
+                        cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-300].getManaCost() << endl;
+                        cout << "DAMAGE: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-300].getDMG() << endl;
                     }
-                    else if(hero.spellbook[intChoice-1]<=220)
+                    else if(hero.spellbook[intChoice-1]<=320)
                     {
-                        cout << "MANA COST: " << dir.healingSpellDirectory[hero.spellbook[intChoice-1]-215].getManaCost() << endl;
-                        cout << "HEALING: " << dir.healingSpellDirectory[hero.spellbook[intChoice-1]-215].getHPR() << endl;
+                        cout << "MANA COST: " << dir.healingSpellDirectory[hero.spellbook[intChoice-1]-315].getManaCost() << endl;
+                        cout << "HEALING: " << dir.healingSpellDirectory[hero.spellbook[intChoice-1]-315].getHPR() << endl;
                     }
                     else
                     {
-                        cout << "MANA COST: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getManaCost() << endl;
-                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU()>0)
-                            cout << "ATK BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getATKU() << endl;
-                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU()>0)
-                            cout << "DEF BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDEFU() << endl;
-                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU()>0)
-                            cout << "CRT BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getCRTU() << endl;
-                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU()>0)
-                            cout << "ACC BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getACCU() << endl;
-                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU()>0)
-                            cout << "DDG BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-221].getDDGU() << endl;
+                        cout << "MANA COST: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-321].getManaCost() << endl;
+                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-321].getATKU()>0)
+                            cout << "ATK BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-321].getATKU() << endl;
+                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-321].getDEFU()>0)
+                            cout << "DEF BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-321].getDEFU() << endl;
+                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-321].getCRTU()>0)
+                            cout << "CRT BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-321].getCRTU() << endl;
+                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-321].getACCU()>0)
+                            cout << "ACC BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-321].getACCU() << endl;
+                        if(dir.buffSpellDirectory[hero.spellbook[intChoice-1]-321].getDDGU()>0)
+                            cout << "DDG BUFF: " << dir.buffSpellDirectory[hero.spellbook[intChoice-1]-321].getDDGU() << endl;
                     }
 
                     cout << endl << "What do you want to do to " << dir.getItemName(hero.spellbook[intChoice-1]) << "?" << endl;
-                    if(hero.spellbook[intChoice-1]==215||hero.spellbook[intChoice-1]==216||hero.spellbook[intChoice-1]==219)
+                    if(hero.spellbook[intChoice-1]==315||hero.spellbook[intChoice-1]==316||hero.spellbook[intChoice-1]==319)
                         cout << "1) USE" << endl;
                     cout << "0) RETURN" << endl;
                     strChoice = getch();
-                    if(strChoice=="1"&&(hero.spellbook[intChoice-1]==215||hero.spellbook[intChoice-1]==216||hero.spellbook[intChoice-1]==219))
+                    if(strChoice=="1"&&(hero.spellbook[intChoice-1]==315||hero.spellbook[intChoice-1]==316||hero.spellbook[intChoice-1]==319))
                     {
-                        if(hero.getMP()>=dir.healingSpellDirectory[hero.spellbook[intChoice-1]-215].getManaCost())
+                        if(hero.getMP()>=dir.healingSpellDirectory[hero.spellbook[intChoice-1]-315].getManaCost())
                         {
-                            hero.changeHP(dir.healingSpellDirectory[hero.spellbook[intChoice-1]-215].getHPR());
-                            hero.changeMP(-(dir.healingSpellDirectory[hero.spellbook[intChoice-1]-215].getManaCost()));
+                            hero.changeHP(dir.healingSpellDirectory[hero.spellbook[intChoice-1]-315].getHPR());
+                            hero.changeMP(-(dir.healingSpellDirectory[hero.spellbook[intChoice-1]-315].getManaCost()));
                             if(hero.getHP()>hero.getMHP())
                                 hero.setHP(hero.getMHP());
-                            cout << "You regained " << dir.healingSpellDirectory[hero.spellbook[intChoice-1]-215].getHPR() << " HP!" << endl;
+                            cout << "You regained " << dir.healingSpellDirectory[hero.spellbook[intChoice-1]-315].getHPR() << " HP!" << endl;
                             Sleep(2000);
                         }
                         else
@@ -1335,7 +1394,7 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
             instore = 0;
         else if(intChoice>0&&intChoice<=currentRoom.store.storeInventory.size())
         {
-            if(currentRoom.store.storeInventory[intChoice-1]<57)
+            if(currentRoom.store.storeInventory[intChoice-1]<100)
             {
                 cout << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << " | " << dir.getItemDesc(currentRoom.store.storeInventory[intChoice-1]) << endl;
                 cout << "RARITY: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getRarity() << endl;
@@ -1344,37 +1403,37 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                 cout << "CRIT: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getCrt() << endl;
 
             }
-            else if(currentRoom.store.storeInventory[intChoice-1]<99)
-            {
-                cout << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << " | " << dir.getItemDesc(currentRoom.store.storeInventory[intChoice-1]) << endl;
-                cout << "RARITY: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-57].getRarity() << endl;
-                cout << "DEF: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-57].getDef() << endl;
-                cout << "DDG: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-57].getDdg() << endl;
-            }
             else if(currentRoom.store.storeInventory[intChoice-1]<200)
             {
-                cout << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getName() << " | " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-99].getDesc() << endl;
-                cout << "RARITY: " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getRarity() << endl;
-                cout << "HP: " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getHP() << endl;
-                cout << "MP: " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getMP() << endl;
+                cout << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << " | " << dir.getItemDesc(currentRoom.store.storeInventory[intChoice-1]) << endl;
+                cout << "RARITY: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getRarity() << endl;
+                cout << "DEF: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getDef() << endl;
+                cout << "DDG: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getDdg() << endl;
+            }
+            else if(currentRoom.store.storeInventory[intChoice-1]<300)
+            {
+                cout << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getName() << " | " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-99].getDesc() << endl;
+                cout << "RARITY: " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getRarity() << endl;
+                cout << "HP: " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getHP() << endl;
+                cout << "MP: " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getMP() << endl;
             }
             else
             {
                 cout << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << " | " << dir.getItemDesc(currentRoom.store.storeInventory[intChoice-1]) << endl;
                 cout << "RARITY: " << dir.getItemRarity(currentRoom.store.storeInventory[intChoice-1]) << endl;
-                if(currentRoom.store.storeInventory[intChoice-1]<=214)
+                if(currentRoom.store.storeInventory[intChoice-1]<315)
                 {
-                    cout << "MANA COST: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getManaCost() << endl;
-                    cout << "DAMAGE: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getDMG() << endl;
+                    cout << "MANA COST: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getManaCost() << endl;
+                    cout << "DAMAGE: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getDMG() << endl;
                 }
-                else if(currentRoom.store.storeInventory[intChoice-1]<=220)
+                else if(currentRoom.store.storeInventory[intChoice-1]<321)
                 {
-                    cout << "MANA COST: " << dir.healingSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-215].getManaCost() << endl;
-                    cout << "HEALING: " << dir.healingSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-215].getHPR() << endl;
+                    cout << "MANA COST: " << dir.healingSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-315].getManaCost() << endl;
+                    cout << "HEALING: " << dir.healingSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-315].getHPR() << endl;
                 }
                 else
                 {
-                    cout << "MANA COST: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-221].getManaCost() << endl;
+                    cout << "MANA COST: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getManaCost() << endl;
                 }
             }
             cout << "PRICE: " << currentRoom.store.storeCost[intChoice-1] << endl << endl;
@@ -1387,7 +1446,7 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                     cout << "You cannot afford this item." << endl;
                     Sleep(2000);
                 }
-                else if(currentRoom.store.storeInventory[intChoice-1]<99)
+                else if(currentRoom.store.storeInventory[intChoice-1]<200)
                 {
                     if(hero.equipment.size()>=6)
                     {
@@ -1404,7 +1463,7 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                         Sleep(2000);
                     }
                 }
-                else if(currentRoom.store.storeInventory[intChoice-1]<200)
+                else if(currentRoom.store.storeInventory[intChoice-1]<300)
                 {
                     if(hero.inventory.size()>=6)
                     {
@@ -1459,7 +1518,7 @@ void saveFunc(Player &hero,string filename, int depth)
     saveFile.open(filename);
     saveFile << hero.level << " " << hero.exp << " " << hero.gold << " " << hero.getHP() << " " << hero.getMHP() << " " << hero.getMP() << " "
              << hero.getMMP() << " " << hero.getNSTR() << " " << hero.getNCRT() << " " << hero.getNDEF() << " " << hero.getNDDG() << " " << depth
-             << " " << hero.keys << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID();
+             << " " << hero.keys << " " << hero.growth << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID();
     for(int i=0;i<hero.equipment.size();i++)
     {
         saveFile << " " << hero.equipment[i];

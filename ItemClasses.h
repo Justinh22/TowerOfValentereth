@@ -315,7 +315,7 @@ class Player: public Creature
 public:
     Player(string n, int l, int i, int h, int m, int s, int a, int c, int df, int dg, int g, int k, int e): Creature(n,l,i,h,s,a,df,dg)
     {
-        hp = h;mhp=hp;mp = m;mmp = mp;nstr = s;nacc = a;crit = c;ncrit = c;ndef = df;nddg = dg;level = l;gold = g;keys = k;exp=e;expGoal=20;empowered=0;
+        hp = h;mhp=hp;mp = m;mmp = mp;nstr = s;nacc = a;crit = c;ncrit = c;ndef = df;nddg = dg;level = l;gold = g;keys = k;exp=e;expGoal=20;empowered=0;growth=0;
     }
     void changeMP(int delta){mp+=delta;}
     void setMP(int m){mp=m;}
@@ -331,9 +331,12 @@ public:
     void setNDDG(int d){nddg=d;}
     int getMG()
     {
+        int gain=0;
         if(mask.getID()==3)
-            return eqpAmr.getMG()+5;
-        return eqpAmr.getMG();
+            gain+=5;
+        if(growth)
+            gain+=2;
+        return eqpAmr.getMG()+gain;
     }
     int getMA()
     {
@@ -372,6 +375,7 @@ public:
     int gold;
     int exp;
     int keys;
+    bool growth;
     bool empowered;
     Item mask;
     Weapon eqpWpn;
@@ -455,6 +459,15 @@ public:
         }
         empowered = 1;
     }
+    void Boost()
+    {
+        mhp += 2;
+        mmp += 2;
+        nstr += 2;
+        ncrit += 2;
+        ndef += 2;
+        nddg += 2;
+    }
 protected:
     int mhp;
     int mp;
@@ -485,52 +498,52 @@ public:
     {weaponDirectory=w;armorDirectory=a;consumableDirectory=c;maskDirectory=m;attackSpellDirectory=as;healingSpellDirectory=hs;buffSpellDirectory=bs;creatureDirectory=cr;featureDirectory=f;roomDirectory=r;}
     string getItemName(int i)
     {
-        if(i<=56)
+        if(i<100)
             return weaponDirectory[i].getName();
-        else if(i<=98)
-            return armorDirectory[i-57].getName();
-        else if(i<=112)
-            return consumableDirectory[i-100].getName();
-        else if(i<=214)
-            return attackSpellDirectory[i-200].getName();
-        else if(i<=220)
-            return healingSpellDirectory[i-215].getName();
-        else if(i<=242)
-            return buffSpellDirectory[i-221].getName();
+        else if(i<200)
+            return armorDirectory[i-100].getName();
+        else if(i<300)
+            return consumableDirectory[i-200].getName();
+        else if(i<315)
+            return attackSpellDirectory[i-300].getName();
+        else if(i<321)
+            return healingSpellDirectory[i-315].getName();
+        else if(i<=343)
+            return buffSpellDirectory[i-321].getName();
         else
             return "Error";
     }
     string getItemDesc(int i)
     {
-        if(i<=56)
+        if(i<100)
             return weaponDirectory[i].getDesc();
-        else if(i<=98)
-            return armorDirectory[i-57].getDesc();
-        else if(i<=112)
-            return consumableDirectory[i-100].getDesc();
-        else if(i<=214)
-            return attackSpellDirectory[i-200].getDesc();
-        else if(i<=220)
-            return healingSpellDirectory[i-215].getDesc();
-        else if(i<=242)
-            return buffSpellDirectory[i-221].getDesc();
+        else if(i<200)
+            return armorDirectory[i-100].getDesc();
+        else if(i<300)
+            return consumableDirectory[i-200].getDesc();
+        else if(i<315)
+            return attackSpellDirectory[i-300].getDesc();
+        else if(i<321)
+            return healingSpellDirectory[i-315].getDesc();
+        else if(i<=343)
+            return buffSpellDirectory[i-321].getDesc();
         else
             return "Error";
     }
     int getItemRarity(int i)
     {
-        if(i<=56)
+        if(i<100)
             return weaponDirectory[i].getRarity();
-        else if(i<=98)
-            return armorDirectory[i-57].getRarity();
-        else if(i<=112)
-            return consumableDirectory[i-100].getRarity();
-        else if(i<=214)
-            return attackSpellDirectory[i-200].getRarity();
-        else if(i<=220)
-            return healingSpellDirectory[i-215].getRarity();
-        else if(i<=242)
-            return buffSpellDirectory[i-221].getRarity();
+        else if(i<200)
+            return armorDirectory[i-100].getRarity();
+        else if(i<300)
+            return consumableDirectory[i-200].getRarity();
+        else if(i<315)
+            return attackSpellDirectory[i-300].getRarity();
+        else if(i<321)
+            return healingSpellDirectory[i-315].getRarity();
+        else if(i<=343)
+            return buffSpellDirectory[i-321].getRarity();
         else
             return 0;
     }

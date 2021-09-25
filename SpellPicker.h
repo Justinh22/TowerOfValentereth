@@ -8,19 +8,19 @@ int spellPicker(int rarity)
         switch(rarity)
         {
             case 1:
-                sid = rand() % 3 + 200;
+                sid = rand() % 3 + 300;
                 break;
             case 2:
-                sid = rand() % 3 + 203;
+                sid = rand() % 3 + 303;
                 break;
             case 3:
-                sid = rand() % 3 + 206;
+                sid = rand() % 3 + 306;
                 break;
             case 4:
-                sid = rand() % 3 + 209;
+                sid = rand() % 3 + 309;
                 break;
             case 5:
-                sid = rand() % 3 + 212;
+                sid = rand() % 3 + 312;
                 break;
         }
     }
@@ -29,19 +29,19 @@ int spellPicker(int rarity)
         switch(rarity)
         {
             case 1:
-                sid = 215;
+                sid = 315;
                 break;
             case 2:
-                sid = rand() % 2 + 216;
+                sid = rand() % 2 + 316;
                 break;
             case 3:
-                sid = 218;
+                sid = 318;
                 break;
             case 4:
-                sid = 219;
+                sid = 319;
                 break;
             case 5:
-                sid = 220;
+                sid = 320;
                 break;
         }
     }
@@ -50,19 +50,19 @@ int spellPicker(int rarity)
         switch(rarity)
         {
             case 1:
-                sid = rand() % 5 + 221;
+                sid = rand() % 5 + 321;
                 break;
             case 2:
-                sid = rand() % 5 + 226;
+                sid = rand() % 5 + 326;
                 break;
             case 3:
-                sid = rand() % 5 + 231;
+                sid = rand() % 5 + 331;
                 break;
             case 4:
-                sid = rand() % 6 + 236;
+                sid = rand() % 6 + 336;
                 break;
             case 5:
-                sid = 242;
+                sid = 342;
                 break;
         }
     }

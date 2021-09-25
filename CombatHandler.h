@@ -3,6 +3,8 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
     int end = 0;
     bool win;
     bool confirm;
+    bool parry=0; //Stiran
+    bool full=0;
     char yn;
     string action;
     string strChoice;
@@ -19,6 +21,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
     int crtBuff=0;
     int hpBuff=0;
     float amp;
+    float red;
     int monHP = monster.getHP();
     vector<Buff> buffCounter;
 
@@ -47,8 +50,10 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         {
             if(hero.mask.getID()==6)
                 cout << "You lunge at the " << monName << " ferociously!" << endl;
-            else
+            else if(parry==0)
                 cout << "You attack the " << monName << "!" << endl;
+            else
+                cout << "You strike at the " << monName << "'s weak point!" << endl;
             Sleep(1000);
             hit = rand() % 100 + 1;
             //cout << hit+monster.getDDG() << ", " << hero.getACC()+accBuff << endl;
@@ -60,12 +65,21 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     cout << "Critical Hit!" << endl;
                     Sleep(1000);
                     dmg = (hero.getSTR()+atkBuff - monster.getDEF())*2;
-                    if(hero.mask.getID()==0) //Glass
+                    if(hero.eqpWpn.getID()==57) //Ozkoroth's Fang
+                        dmg = (ceil(static_cast<float>(monster.getHP())*.25))*2;
+                    if(hero.eqpWpn.getID()==58) //Energy Siphon
+                    {
+                        dmg = ((hero.getSTR()*2)+atkBuff - monster.getDEF())*2;
+                        hero.changeMP(5);
+                    }
+                    if(hero.mask.getID()==0||parry) //Glass
                         dmg = dmg*2;
                     if(hero.mask.getID()==3) //Arcana
                         dmg = dmg/2;
                     if(hero.mask.getID()==6) //Beasts
                         dmg = dmg + (dmg/2);
+                    if(monster.getID()==61) //?????
+                        dmg = static_cast<float>(dmg)*.7;
                     monHP -= dmg;
                     cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
                     Sleep(2000);
@@ -75,12 +89,21 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     cout << "Hit!" << endl;
                     Sleep(1000);
                     dmg = hero.getSTR()+atkBuff - monster.getDEF();
-                    if(hero.mask.getID()==0) //Glass
+                    if(hero.eqpWpn.getID()==57) //Ozkoroth's Fang
+                        dmg = ceil(static_cast<float>(monster.getHP())*.25);
+                    if(hero.eqpWpn.getID()==58) //Energy Siphon
+                    {
+                        dmg = (hero.getSTR()*2)+atkBuff - monster.getDEF();
+                        hero.changeMP(5);
+                    }
+                    if(hero.mask.getID()==0||parry) //Glass
                         dmg = dmg*2;
                     if(hero.mask.getID()==3) //Arcana
                         dmg = dmg/2;
                     if(hero.mask.getID()==6) //Beasts
                         dmg = dmg + (dmg/2);
+                    if(monster.getID()==61) //?????
+                        dmg = static_cast<float>(dmg)*.7;
                     monHP -= dmg;
                     cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
                     Sleep(2000);
@@ -89,8 +112,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
             else
             {
                 cout << "You missed..." << endl;
+                if(monster.getID()==60)
+                    parry = 1;
                 Sleep(2000);
             }
+            if(hero.eqpAmr.getID()==142)
+                parry = 0;
         }
         else if(action=="k")
         {
@@ -110,38 +137,38 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 if(choice<=hero.spellbook.size()&&choice>0)
                 {
                     int manacost;
-                    if(hero.spellbook[choice-1]<=214)
-                        manacost = dir.attackSpellDirectory[hero.spellbook[choice-1]-200].getManaCost();
-                    else if(hero.spellbook[choice-1]<=220)
-                        manacost = dir.healingSpellDirectory[hero.spellbook[choice-1]-215].getManaCost();
+                    if(hero.spellbook[choice-1]<=314)
+                        manacost = dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getManaCost();
+                    else if(hero.spellbook[choice-1]<=320)
+                        manacost = dir.healingSpellDirectory[hero.spellbook[choice-1]-315].getManaCost();
                     else
-                        manacost = dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getManaCost();
+                        manacost = dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getManaCost();
                     if(hero.getMP()>=manacost)
                     {
                         cout << dir.getItemName(hero.spellbook[choice-1]) << ": " << dir.getItemDesc(hero.spellbook[choice-1]) << endl;
-                        if(hero.spellbook[choice-1]<=214)
+                        if(hero.spellbook[choice-1]<=314)
                         {
-                            cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[choice-1]-200].getManaCost() << endl;
-                            cout << "DAMAGE: " << ceil(static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-200].getDMG())+(amp*static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-200].getDMG()))) << endl;
+                            cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getManaCost() << endl;
+                            cout << "DAMAGE: " << ceil(static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getDMG())+(amp*static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getDMG()))) << endl;
                         }
-                        else if(hero.spellbook[choice-1]<=220)
+                        else if(hero.spellbook[choice-1]<=320)
                         {
-                            cout << "MANA COST: " << dir.healingSpellDirectory[hero.spellbook[choice-1]-215].getManaCost() << endl;
-                            cout << "HEALING: " << ceil(static_cast<float>(dir.healingSpellDirectory[hero.spellbook[choice-1]-215].getHPR())+(amp*static_cast<float>(dir.healingSpellDirectory[hero.spellbook[choice-1]-215].getHPR()))) << endl;
+                            cout << "MANA COST: " << dir.healingSpellDirectory[hero.spellbook[choice-1]-315].getManaCost() << endl;
+                            cout << "HEALING: " << ceil(static_cast<float>(dir.healingSpellDirectory[hero.spellbook[choice-1]-315].getHPR())+(amp*static_cast<float>(dir.healingSpellDirectory[hero.spellbook[choice-1]-315].getHPR()))) << endl;
                         }
                         else
                         {
-                            cout << "MANA COST: " << dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getManaCost() << endl;
-                            if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getATKU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getATKU())))>0)
-                                cout << "ATK BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getATKU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getATKU()))) << endl;
-                            if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDEFU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDEFU())))>0)
-                                cout << "DEF BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDEFU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDEFU()))) << endl;
-                            if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getCRTU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getCRTU())))>0)
-                                cout << "CRT BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getCRTU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getCRTU()))) << endl;
-                            if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getACCU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getACCU())))>0)
-                                cout << "ACC BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getACCU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getACCU()))) << endl;
-                            if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDDGU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDDGU())))>0)
-                                cout << "DDG BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDDGU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDDGU()))) << endl;
+                            cout << "MANA COST: " << dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getManaCost() << endl;
+                            if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getATKU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getATKU())))>0)
+                                cout << "ATK BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getATKU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getATKU()))) << endl;
+                            if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getDEFU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getDEFU())))>0)
+                                cout << "DEF BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getDEFU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getDEFU()))) << endl;
+                            if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getCRTU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getCRTU())))>0)
+                                cout << "CRT BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getCRTU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getCRTU()))) << endl;
+                            if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getACCU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getACCU())))>0)
+                                cout << "ACC BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getACCU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getACCU()))) << endl;
+                            if(ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getDDGU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getDDGU())))>0)
+                                cout << "DDG BUFF: " << ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getDDGU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getDDGU()))) << endl;
                         }
                         cout << "Cast? (y/n)" << endl;
                         yn = getch();
@@ -169,34 +196,36 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 continue;
             if(confirm==1)
             {
-                if(hero.spellbook[choice-1]<=214)
+                if(hero.spellbook[choice-1]<=314)
                 {
                     //cout << "Attack Spell!" << endl;
-                    fdmg = static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-200].getDMG());
+                    fdmg = static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getDMG());
                     dmg = ceil(fdmg+(amp*fdmg));
                     //cout << dmg << " = " << fdmg << " + (" << amp << " * " << fdmg << ")" << endl;
-                    if(monster.getID()==43)
+                    if(monster.getID()==48) //Valentereth
                         dmg = dmg/2;
+                    if(monster.getID()==61) //?????
+                        dmg = static_cast<float>(dmg)*.7;
                     monHP -= dmg;
                     cout << hero.getName() << " cast " << dir.getItemName(hero.spellbook[choice-1]) << "!" << endl;
                     cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
-                    hero.changeMP(-(dir.attackSpellDirectory[hero.spellbook[choice-1]-200].getManaCost()));
+                    hero.changeMP(-(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getManaCost()));
                     Sleep(2000);
                 }
-                else if(hero.spellbook[choice-1]<=220)
+                else if(hero.spellbook[choice-1]<=320)
                 {
                     //cout << "Healing Spell!" << endl;
 
                     cout << hero.getName() << " cast " << dir.getItemName(hero.spellbook[choice-1]) << "!" << endl;
-                    hero.changeMP(-(dir.healingSpellDirectory[hero.spellbook[choice-1]-215].getManaCost()));
-                    if(hero.spellbook[choice-1]==217||hero.spellbook[choice-1]==218||hero.spellbook[choice-1]==220)
+                    hero.changeMP(-(dir.healingSpellDirectory[hero.spellbook[choice-1]-315].getManaCost()));
+                    if(hero.spellbook[choice-1]==317||hero.spellbook[choice-1]==318||hero.spellbook[choice-1]==320)
                     {
-                        Buff regen(dir.getItemName(hero.spellbook[choice-1]),0,0,0,0,0,ceil(static_cast<float>(dir.healingSpellDirectory[hero.spellbook[choice-1]-215].getHPR())+(amp*static_cast<float>(dir.healingSpellDirectory[hero.spellbook[choice-1]-215].getHPR()))));
+                        Buff regen(dir.getItemName(hero.spellbook[choice-1]),0,0,0,0,0,ceil(static_cast<float>(dir.healingSpellDirectory[hero.spellbook[choice-1]-315].getHPR())+(amp*static_cast<float>(dir.healingSpellDirectory[hero.spellbook[choice-1]-315].getHPR()))));
                         buffCounter.push_back(regen);
                     }
                     else
                     {
-                        fdmg = static_cast<float>(dir.healingSpellDirectory[hero.spellbook[choice-1]-215].getHPR());
+                        fdmg = static_cast<float>(dir.healingSpellDirectory[hero.spellbook[choice-1]-315].getHPR());
                         dmg = ceil(fdmg+(amp*fdmg));
                         cout << "Restored " << dmg << " HP!" << endl;
                         hero.changeHP(dmg);
@@ -209,14 +238,14 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 {
                     //cout << "Buff Spell!" << endl;
                     Buff newBuff(dir.getItemName(hero.spellbook[choice-1]),
-                        ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getATKU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getATKU()))),
-                        ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDEFU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDEFU()))),
-                        ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getCRTU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getCRTU()))),
-                        ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getACCU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getACCU()))),
-                        ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDDGU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getDDGU()))), 0);
+                        ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getATKU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getATKU()))),
+                        ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getDEFU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getDEFU()))),
+                        ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getCRTU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getCRTU()))),
+                        ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getACCU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getACCU()))),
+                        ceil(static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getDDGU())+(amp*static_cast<float>(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getDDGU()))), 0);
                     buffCounter.push_back(newBuff);
                     cout << hero.getName() << " cast " << dir.getItemName(hero.spellbook[choice-1]) << "!" << endl;
-                    hero.changeMP(-(dir.buffSpellDirectory[hero.spellbook[choice-1]-221].getManaCost()));
+                    hero.changeMP(-(dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getManaCost()));
                     Sleep(2000);
                 }
             }
@@ -233,8 +262,8 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 if(choice<=hero.inventory.size()&&choice>0)
                 {
                     cout << dir.getItemName(hero.inventory[choice-1]) << ": " << dir.getItemDesc(hero.inventory[choice-1]) << endl;
-                    cout << "HP: " << dir.consumableDirectory[hero.inventory[choice-1]-100].getHP() << endl;
-                    cout << "MP: " << dir.consumableDirectory[hero.inventory[choice-1]-100].getMP() << endl << endl;
+                    cout << "HP: " << dir.consumableDirectory[hero.inventory[choice-1]-200].getHP() << endl;
+                    cout << "MP: " << dir.consumableDirectory[hero.inventory[choice-1]-200].getMP() << endl << endl;
                     cout << "Use this? (y/n)" << endl;
                     yn = getch();
                     if(yn=='y')
@@ -253,15 +282,15 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
             if(confirm==1)
             {
                 cout << hero.getName() << " used " << dir.getItemName(hero.inventory[choice-1]) << "!" << endl;
-                if(dir.consumableDirectory[hero.inventory[choice-1]-100].getHP()!=0)
+                if(dir.consumableDirectory[hero.inventory[choice-1]-200].getHP()!=0)
                 {
-                    hero.changeHP(dir.consumableDirectory[hero.inventory[choice-1]-100].getHP());
-                    cout << "Restored " << dir.consumableDirectory[hero.inventory[choice-1]-100].getHP() << " HP!" << endl;
+                    hero.changeHP(dir.consumableDirectory[hero.inventory[choice-1]-200].getHP());
+                    cout << "Restored " << dir.consumableDirectory[hero.inventory[choice-1]-200].getHP() << " HP!" << endl;
                 }
-                if(dir.consumableDirectory[hero.inventory[choice-1]-100].getMP()!=0)
+                if(dir.consumableDirectory[hero.inventory[choice-1]-200].getMP()!=0)
                 {
-                    hero.changeMP(dir.consumableDirectory[hero.inventory[choice-1]-100].getMP());
-                    cout << "Restored " << dir.consumableDirectory[hero.inventory[choice-1]-100].getMP() << " MP!" << endl;
+                    hero.changeMP(dir.consumableDirectory[hero.inventory[choice-1]-200].getMP());
+                    cout << "Restored " << dir.consumableDirectory[hero.inventory[choice-1]-200].getMP() << " MP!" << endl;
                 }
                 hero.inventory.erase(hero.inventory.begin()+choice-1);
             }
@@ -283,7 +312,13 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     {
                         cout << "The enemy attacks as you escape!" << endl;
                         Sleep(2000);
-                        dmg = monster.getSTR() - hero.getDEF();
+                        if(monster.getID()!=57)
+                            dmg = monster.getSTR() - hero.getDEF() - defBuff;
+                        else //Ozkoroth
+                        {
+                            red = .7;
+                            dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
+                        }
                         if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
                             dmg = dmg*2;
                         if(hero.mask.getID()==4) //Steel
@@ -305,11 +340,19 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     {
                         cout << "The enemy knocks you back into the room, blocking your way!" << endl;
                         Sleep(2000);
-                        dmg = monster.getSTR() - hero.getDEF();
+                        if(monster.getID()!=57)
+                            dmg = monster.getSTR() - hero.getDEF() - defBuff;
+                        else //Ozkoroth
+                        {
+                            red = .7;
+                            dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
+                        }
                         if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
                             dmg = dmg*2;
                         if(hero.mask.getID()==4) //Steel
                             dmg = dmg/2;
+                        if(hero.eqpAmr.getID()==142) //Mercenary's Shield
+                            dmg -= dmg/4;
                         if(dmg<0)
                             dmg = 0;
                         hero.changeHP(-dmg);
@@ -330,11 +373,19 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     {
                         cout << "The enemy attacks as you escape!" << endl;
                         Sleep(2000);
-                        dmg = monster.getSTR() - hero.getDEF();
+                        if(monster.getID()!=57)
+                            dmg = monster.getSTR() - hero.getDEF() - defBuff;
+                        else //Ozkoroth
+                        {
+                            red = .7;
+                            dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
+                        }
                         if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
                             dmg = dmg*2;
                         if(hero.mask.getID()==4) //Steel
                             dmg = dmg/2;
+                        if(hero.eqpAmr.getID()==142) //Mercenary's Shield
+                            dmg -= dmg/4;
                         if(dmg<0)
                             dmg = 0;
                         hero.changeHP(-dmg);
@@ -352,11 +403,19 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     {
                         cout << "The enemy knocks you back into the room, blocking your way!" << endl;
                         Sleep(2000);
-                        dmg = monster.getSTR() - hero.getDEF();
+                        if(monster.getID()!=57)
+                            dmg = monster.getSTR() - hero.getDEF() - defBuff;
+                        else //Ozkoroth
+                        {
+                            red = .7;
+                            dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
+                        }
                         if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
                             dmg = dmg*2;
                         if(hero.mask.getID()==4) //Steel
                             dmg = dmg/2;
+                        if(hero.eqpAmr.getID()==142) //Mercenary's Shield
+                            dmg -= dmg/4;
                         if(dmg<0)
                             dmg = 0;
                         hero.changeHP(-dmg);
@@ -419,22 +478,58 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         //Sleep(1000);
         cout << monName << "'s Turn!" << endl;
         Sleep(1000);
-        cout << monName << " attacks!" << endl;
+        if(monster.getID()<57)
+            cout << monName << " attacks!" << endl;
+        else
+        {
+            switch(monster.getID())
+            {
+                case 57:
+                    cout << monName << " swipes at you with its claws!" << endl;
+                break;
+                case 58:
+                    cout << monName << " lashes a long vine at you!" << endl;
+                break;
+                case 59:
+                    cout << monName << " hurls flame at you!" << endl;
+                break;
+                case 60:
+                    if(parry==0)
+                        cout << monName << " swings at you with his greatsword!" << endl;
+                    else
+                        cout << monName << " parries, and strikes while your guard is down!" << endl;
+                break;
+                case 61:
+                    cout << monName << " unleashes a splitting wail!" << endl;
+                break;
+                case 62:
+                    cout << monName << " fires dark energy from her tome!" << endl;
+                break;
+            }
+        }
         Sleep(1000);
         hit = rand() % 100 + 1;
 
         if(hero.mask.getID()==4) //Steel
             hit = -1000;
 
-        if(hit+hero.getDDG()+ddgBuff<=monster.getACC())
+        if(hit+hero.getDDG()+ddgBuff<=monster.getACC()||monster.getID()==59) //Emeritus
         {
             cout << monName << " hits!" << endl;
             Sleep(1000);
-            dmg = monster.getSTR() - hero.getDEF() - defBuff;
-            if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whispers
+            if(monster.getID()!=57)
+                dmg = monster.getSTR() - hero.getDEF() - defBuff;
+            else //Ozkoroth
+            {
+                red = .7;
+                dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
+            }
+            if(hero.mask.getID()==0||hero.mask.getID()==5||parry==1) //Glass, Whispers, Stiran
                 dmg = dmg*2;
             if(hero.mask.getID()==4) //Steel
                 dmg = dmg/2;
+            if(hero.eqpAmr.getID()==142) //Mercenary's Shield
+                dmg -= dmg/4;
             if(dmg<0)
                 dmg = 0;
             hero.changeHP(-dmg);
@@ -444,12 +539,31 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         else
         {
             cout << monName << " misses!" << endl;
+            if(hero.eqpAmr.getID()==142)
+                parry = 1;
+            Sleep(2000);
+        }
+        if(monster.getID()==60)
+            parry = 0;
+        if(monster.getID()==62) //Byralt
+        {
+            hero.changeHP(-hero.getLEV());
+            cout << monName << "'s magic deals " << hero.getLEV() << " necrotic damage to you!" << endl;
             Sleep(2000);
         }
         if(hero.getHP()<=0)
         {
             end = 2;
             break;
+        }
+        if(monster.getID()==58) //Endrigaia
+        {
+            monHP += static_cast<float>(monster.getHP())*.15;
+            if(monHP>monster.getHP())
+                monHP = monster.getHP();
+            dmg = static_cast<float>(monster.getHP())*.15;
+            cout << monName << " recovers " << dmg << " HP!" << endl;
+            Sleep(2000);
         }
     }
 
@@ -462,7 +576,66 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         cout << "You earned " << gd << " gold!" << endl;
         cout << "You gained " << ex << " exp!" << endl;
         Sleep(2000);
+        if(monster.getID()>=57)
+        {
+            switch(monster.getID())
+            {
+                case 57:
+                    if(hero.equipment.size()<6)
+                    {
+                        hero.equipment.push_back(dir.weaponDirectory[57].getID());
+                        cout << "You got Ozkoroth's Fang!" << endl;
+                        Sleep(2000);
+                    }
+                    else
+                    {
+                        full = 1;
+                    }
+                break;
+                case 58:
+                    hero.growth = 1;
+                    cout << "You gained Endrigaia's power! Your MPG rose by 2!";
+                    Sleep(2000);
+                break;
+                case 59:
+                    if(hero.equipment.size()<6)
+                    {
+                        hero.equipment.push_back(dir.weaponDirectory[58].getID());
+                        cout << "You got the Essence Siphon!" << endl;
+                        Sleep(2000);
+                    }
+                    else
+                    {
+                        full = 1;
+                    }
+                break;
+                case 60:
+                    if(hero.equipment.size()<6)
+                    {
+                        hero.equipment.push_back(dir.armorDirectory[42].getID());
+                        cout << "You got the Mercenary's Shield!" << endl;
+                        Sleep(2000);
+                    }
+                    else
+                    {
+                        full = 1;
+                    }
+                break;
+                case 61:
+                    hero.Boost();
+                    cout << "You feel a surge of power... you gain +2 to all your stats!" << endl;
+                    Sleep(2000);
+                break;
+                case 62:
+                    hero.spellbook.push_back(dir.buffSpellDirectory[22].getID());
+                    cout << "You learned Enveloping Shadow!" << endl;
+                    Sleep(2000);
+                break;
+            }
+        }
         std::system("cls");
+        if(full==1)
+            return 4;
         return 1;
     }
     if(end==2)

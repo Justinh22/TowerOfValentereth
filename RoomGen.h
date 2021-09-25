@@ -289,7 +289,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
             }
             else
             {
-                iid = 112;
+                iid = 212;
                 loot.push_back(iid);
                 cost = 2;
             }
@@ -365,7 +365,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
     return loot;
 }
 
-int difficultyGen(int diff, int adv)
+int difficultyGen(int diff, int adv, bool mbStatus[6])
 {
 //Diff: The difficulty level of the chamber. From 1-5
 //Adv: The current level of advancement the player is at within the dungeon. From 1-10
@@ -375,10 +375,20 @@ int difficultyGen(int diff, int adv)
         return -1;
     else
     {
-        //cout << "Creature Level: " << creatureLevel << endl;
-        cid = creaturePicker(creatureLevel);
-        return cid;
+        if(diff!=8)
+        {
+            //cout << "Creature Level: " << creatureLevel << endl;
+            cid = creaturePicker(creatureLevel);
+            return cid;
+        }
+        else
+        {
+            cid = minibossPicker(mbStatus);
+            return cid;
+        }
     }
+    cout << "Creature: " << cid << endl;
+    Sleep(2000);
 }
 
 Room roomBuilder(int type, vector<int> loot, int cid, Directory dir)
@@ -388,8 +398,12 @@ Room roomBuilder(int type, vector<int> loot, int cid, Directory dir)
     Room newRoom;
     if(type==0)
     {
-        id = rand() % dir.roomDirectory.size();
+        if(cid<57) //Miniboss
+            id = rand() % (dir.roomDirectory.size()-6);
+        else
+            id = cid - 7;
         newRoom = dir.roomDirectory[id];
+
         bool crateTog = 0;
         bool chestTog = 0;
         bool barrelTog = 0;
@@ -400,33 +414,20 @@ Room roomBuilder(int type, vector<int> loot, int cid, Directory dir)
         foo = rand() % 3 + 1;
         if(foo==1)
         {
-            //cout << "Crates" << endl;
             newRoom.addBox("crates");
         }
         else if(foo==2)
         {
-            //cout << "Barrels" << endl;
             newRoom.addBox("barrels");
         }
         else if(foo==3)
         {
-            //cout << "Chest" << endl;
             newRoom.addBox("chest");
         }
-        //cout << "Handling loot; Size = " << loot.size() << endl;
         for(int i=0;i<loot.size();i++)
         {
             newRoom.addItem(loot[i]);
         }
-
-        //cout << "It contains: ";
-        /*for(int i=0;i<newRoom.getIList().size();i++)
-        {
-            cout << loot[i] << ": " << dir.getItemName(loot[i]) << ", " << type << " | ";
-            cout <<
-        }
-        cout << endl;*/
-
         //cout << "CID: " << cid << endl;
         if(cid!=-1)
             newRoom.setCreature(dir.creatureDirectory[cid]);
@@ -644,15 +645,18 @@ Merchant storeHandler(int level)
     return store;
 }
 
-Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero)
+Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, bool mbStatus[6])
 {
     vector<int> loot;
     int foo;
     loot = rewardGen(rew,adv,dir);
-    int creature = difficultyGen(diff,adv);
+    int creature = difficultyGen(diff,adv,mbStatus);
     Room currentRoom;
     //cout << "Building room..." << endl;
     currentRoom = roomBuilder(0,loot,creature,dir);
+    if(diff==8)
+        minibossStatGen(adv,currentRoom.monster);
+
     foo = rand() % 5 + 1;
     if(foo==5)
         currentRoom.setMerchant(storeHandler(adv));

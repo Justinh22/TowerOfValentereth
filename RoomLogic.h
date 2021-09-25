@@ -468,6 +468,11 @@ void roomLogic(int &diff, int &rew, int &karma, int adv, Player hero)
                 karma -= 3;
             }
         }
+        chance = rand() % 17 + 1;
+        if(chance==17) //Miniboss Trigger
+        {
+            diff = 8;
+        }
     }
     else
     {
@@ -706,6 +711,11 @@ void roomLogic(int &diff, int &rew, int &karma, int adv, Player hero)
                 rew = 8;
                 karma -= 3;
             }
+        }
+        chance = rand() % 15 + 1;
+        if(chance==15) //Miniboss Trigger
+        {
+            diff = 8;
         }
     }
 }

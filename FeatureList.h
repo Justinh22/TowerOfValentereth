@@ -1,5 +1,5 @@
 vector<Feature> initFDir(vector<Feature> featureDirectory)
-{
+{ //1: Weapon, 2: Armor, 3: Consumable, 4: Spell
     Feature Torches("torch","The torch glows brightly on the wall.",0,0); //0
     Torches.addKey("torch");
     Torches.addKey("torches");
@@ -392,6 +392,61 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
     Table.addKey("tables");
     Table.addKey("plates");
     featureDirectory.push_back(Table);
+
+    Feature RuinedPillar("pillar","Towering marble pillars, covered by a pulsing black ooze. Savage claw marks cut deep into the marble.",0,0); //51
+    RuinedPillar.addKey("pillar");
+    RuinedPillar.addKey("pillars");
+    RuinedPillar.addKey("marble pillar");
+    RuinedPillar.addKey("marble pillars");
+    featureDirectory.push_back(RuinedPillar);
+
+    Feature ClawMarks("claw marks","Massive claw marks are cut into the marble, drippning a dark black slime...",0,0); //52
+    ClawMarks.addKey("claw marks");
+    ClawMarks.addKey("claws");
+    ClawMarks.addKey("claw mark");
+    ClawMarks.addKey("claw");
+    ClawMarks.addKey("marks");
+    ClawMarks.addKey("mark");
+    featureDirectory.push_back(ClawMarks);
+
+    Feature Campfire("fire","A modest campfire, emitting a warm glow on its surroundings.",0,0); //53
+    Campfire.addKey("fire");
+    Campfire.addKey("campfire");
+    Campfire.addKey("flame");
+    featureDirectory.push_back(Campfire);
+
+    Feature MetalTable("table","A cold, metal table. It seems to have been cleaned recently...",3,1); //54
+    MetalTable.addKey("table");
+    MetalTable.addKey("tables");
+    MetalTable.addKey("metal table");
+    MetalTable.addKey("metal tables");
+    featureDirectory.push_back(MetalTable);
+
+    Feature MetalShelf("shelf","A clean, metal shelf, filled with pieces of lab equipment.",1,1); //55
+    MetalShelf.addKey("shelf");
+    MetalShelf.addKey("shelves");
+    MetalShelf.addKey("metal shelf");
+    MetalShelf.addKey("metal shelves");
+    featureDirectory.push_back(MetalShelf);
+
+    Feature Equipment("equipment","Various pieces of equipment, most of which unfamiliar to you.",1,2); //56
+    Equipment.addKey("equipment");
+    Equipment.addKey("lab equipment");
+    Equipment.addKey("stuff");
+    Equipment.addKey("tools");
+    featureDirectory.push_back(Equipment);
+
+    Feature Bed("bed","A rather uncomforable bed, with torn sheets.",3,1); //57
+    Bed.addKey("bed");
+    Bed.addKey("beds");
+    featureDirectory.push_back(Bed);
+
+    Feature Dresser("dresser","An old, wooden dresser, filled with clothes and books",3,1); //58
+    Dresser.addKey("dresser");
+    Dresser.addKey("dressers");
+    Dresser.addKey("wardrobe");
+    Dresser.addKey("wardrobes");
+    featureDirectory.push_back(Dresser);
 
     //cout << "Feature List Initialized!" << endl;
 

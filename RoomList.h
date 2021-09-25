@@ -244,5 +244,42 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     roomDirectory.push_back(R49);
     //cout << "Room List Initialized!" << endl;
 
+    //MINIBOSS LAIRS
+    Room R50(50,"Black slime covers every surface of a grand hall, pulsing as if it were alive... long pillars reach toward the ceilings, decorated by savage claw marks on their surface.");
+    R50.addFeat(featureDirectory[22]); //OZKOROTH
+    R50.addFeat(featureDirectory[51]);
+    R50.addFeat(featureDirectory[52]);
+    roomDirectory.push_back(R50);
+
+    Room R51(51,"The room is covered with interwoven vines, racing out of a hole in the the ceiling... You can see them growing before your very eyes...");
+    R51.addFeat(featureDirectory[30]); //ENDRIGAIA
+    R51.addFeat(featureDirectory[49]);
+    roomDirectory.push_back(R51);
+
+    Room R52(52,"You find yourself in a cramped, sprawling library, with bookshelves impossibly tall scattered about the room. Papers and books litter the floor.");
+    R52.addFeat(featureDirectory[17]); //EMERITUS
+    R52.addFeat(featureDirectory[35]);
+    R52.addFeat(featureDirectory[36]);
+    R52.addFeat(featureDirectory[rand()%4+37]);
+    roomDirectory.push_back(R52);
+
+    Room R53(53,"You enter what looks like a small haven, with a light fire burning in the corner next to a long table.");
+    R53.addFeat(featureDirectory[50]); //STIRAN
+    R53.addFeat(featureDirectory[53]);
+    roomDirectory.push_back(R53);
+
+    Room R54(54,"The atmosphere of the room is chilling as you enter; cold, metal tables and shelves lie at the perimeter of the room, with pieces of equipment lying about.");
+    R54.addFeat(featureDirectory[54]); //?????
+    R54.addFeat(featureDirectory[55]);
+    R54.addFeat(featureDirectory[56]);
+    roomDirectory.push_back(R54);
+
+    Room R55(55,"You step into what seems to be a quarters, with a small bed in the corner, with a dresser beside it. There is also a wooden table surrounded by chairs.");
+    R55.addFeat(featureDirectory[rand()%4+37]); //BYRALT
+    R55.addFeat(featureDirectory[50]);
+    R55.addFeat(featureDirectory[57]);
+    R55.addFeat(featureDirectory[58]);
+    roomDirectory.push_back(R55);
+
     return roomDirectory;
 }
