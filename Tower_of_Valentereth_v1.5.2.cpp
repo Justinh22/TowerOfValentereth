@@ -283,6 +283,8 @@ int main()
     hero.setEXPGoal(20*hero.level);
     hero.setHP(saveStats[3]);
     hero.setMP(saveStats[5]);
+    if(saveStats[13]==1)
+        hero.growth = 1;
     if(saveStats[14]>=0)
         mask = saveStats[14];
     if(intChoice==2)
