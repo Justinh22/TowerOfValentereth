@@ -613,7 +613,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     if(hero.equipment.size()<6)
                     {
                         hero.equipment.push_back(dir.armorDirectory[42].getID());
-                        cout << "You got the Mercenary's Shield!" << endl;
+                        cout << "You got the " << dir.getItemName(142) << "!" << endl;
                         Sleep(2000);
                     }
                     else

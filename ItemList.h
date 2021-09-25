@@ -237,6 +237,7 @@ vector<Armor> initADir(vector<Armor> armorDirectory)
 
     //11
     Armor Mercenarys_Shield("Mercenary's Shield","Stiran's shield. Reduces incoming damage by 25%. If an enemy misses their attack against you, your next attack has the potential to deal double damage.",11,142,3,30,0);
+    armorDirectory.push_back(Mercenarys_Shield);
 
     //cout << "Armor Directory Initialized!" << endl;
 

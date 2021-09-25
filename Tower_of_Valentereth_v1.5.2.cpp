@@ -336,6 +336,7 @@ int main()
     char yn;
     bool manSave = 0;
     bool dev=0;
+    bool itemDrop=0;
 
     int egStrBuff;
     int egAccBuff;
@@ -355,6 +356,15 @@ int main()
             hero.setMP(hero.getMMP());
         if(hero.exp>=hero.getEXPGoal())
             hero.levelUp();
+        if(itemDrop)
+        {
+            itemDrop = 0;
+            for(int i=0;i<currentRoom.getIList().size();i++)
+                if(currentRoom.getIList()[i]==57||currentRoom.getIList()[i]==58||currentRoom.getIList()[i]==142)
+                    itemDrop = 1;
+            if(!itemDrop)
+                currentRoom.creatDesc = "";
+        }
         cout << endl << "What do you do?" << endl;
         cin >> action;
         err = actionHandler(action);
@@ -375,6 +385,7 @@ int main()
                 if(text=="next")
                 {
                     depth++;
+                    itemDrop = 0;
                     if(depth%5==0)
                     {
                         if(adv<10)
@@ -452,6 +463,7 @@ int main()
                     {
                         pass = 1;
                         depth++;
+                        itemDrop = 0;
                         if(depth%5==0)
                         {
                             if(adv<10)
@@ -554,6 +566,7 @@ int main()
                             currentRoom.creatDesc = "Stiran's shield lies on the floor next to you.";
                             currentRoom.addItem(142);
                         }
+                        itemDrop = 1;
                     }
                     else
                         currentRoom.creatDesc = "";
@@ -733,6 +746,7 @@ int main()
                         if(good==1)
                         {
                             depth++;
+                            itemDrop = 0;
                             if(depth%5==0)
                             {
                                 if(adv<10)
