@@ -238,7 +238,10 @@ int main()
                 cout << "DEPTH: " << saveStats[11] << endl;
                 cout << "KEYS: " << saveStats[12] << endl;
                 if(saveStats[14]>=0)
+                {
+                    cout << "check" << endl;
                     cout << "MASK: " << dir.maskDirectory[saveStats[14]].getName() << endl << endl;
+                }
                 cout << "Continue with this character? (y/n)" << endl;
                 load = getch();
                 if(load=="y")
@@ -808,29 +811,7 @@ int main()
                 if(menuval==-1) //Writing Save File
                 {
                     cout << "Quitting..." << endl;
-
-                    std::ofstream saveFile;
-                    saveFile.open(filename);
-                    saveFile << hero.level << " " << hero.exp << " " << hero.gold << " " << hero.getHP() << " " << hero.getMHP() << " " << hero.getMP() << " "
-                             << hero.getMMP() << " " << hero.getNSTR() << " " << hero.getNCRT() << " " << hero.getNDEF() << " " << hero.getNDDG() << " " << depth
-                             << " " << hero.keys << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID();
-                    for(int i=0;i<hero.equipment.size();i++)
-                    {
-                        saveFile << " " << hero.equipment[i];
-                    }
-                    if(hero.equipment.size()!=6)
-                        saveFile << " " << -1;
-                    for(int i=0;i<hero.inventory.size();i++)
-                    {
-                        saveFile << " " << hero.inventory[i];
-                    }
-                    if(hero.inventory.size()!=6)
-                        saveFile << " " << -1;
-                    for(int i=0;i<hero.spellbook.size();i++)
-                        saveFile << " " << hero.spellbook[i];
-                    saveFile << " " << -1;
-                    saveFile.close();
-
+                    saveFunc(hero,filename,depth);
                     end = 1;
                 }
                 else
@@ -1428,7 +1409,7 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
             }
             else if(currentRoom.store.storeInventory[intChoice-1]<300)
             {
-                cout << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getName() << " | " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-99].getDesc() << endl;
+                cout << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getName() << " | " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getDesc() << endl;
                 cout << "RARITY: " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getRarity() << endl;
                 cout << "HP: " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getHP() << endl;
                 cout << "MP: " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getMP() << endl;
