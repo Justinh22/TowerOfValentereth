@@ -37,6 +37,7 @@ int menuHandler(Player &hero,Directory dir); //Done!
 int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom);
 void saveFunc(Player &hero, string filename, int depth);
 bool hiscores(Player &hero, int depth);
+Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &iStatus, bool &dev);
 
 void clear()
 {
@@ -333,8 +334,8 @@ int main()
     string text;
 
     Room currentRoom;
-    bool itemStatus[6] = {0,0,0,0,0,0};
-    bool minibossStatus[6] = {0,0,0,0,0,0};
+    vector<bool> itemStatus{0,0,0,0,0,0};
+    vector<bool> minibossStatus{0,0,0,0,0,0};
     int boss = 0;
     bool win = 0;
     bool lvup = 0;
@@ -342,11 +343,6 @@ int main()
     bool manSave = 0;
     bool dev=0;
     bool itemDrop=0;
-
-    int egStrBuff;
-    int egAccBuff;
-    int egDefBuff;
-    int egDdgBuff;
 
     cout << "Floor " << depth << endl;
     currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
@@ -389,53 +385,7 @@ int main()
                 text = interactionHandler(err,target,hero,dir,currentRoom,pass,itemStatus);
                 if(text=="next")
                 {
-                    depth++;
-                    itemDrop = 0;
-                    if(depth%5==0)
-                    {
-                        if(adv<10)
-                            adv++;
-                    }
-                    roomLogic(diff,rew,karma,adv,hero);
-                    if(diff==0)
-                        pass = 1;
-                    else
-                        pass = 0;
-                    std::system("cls");
-                    cout << "Floor " << depth << endl;
-                    if(depth==55&&win==0)
-                        diff = 5;
-                    else if(depth>55&&depth<80)
-                        diff = 6;
-                    else if(depth>=80)
-                        diff = 7;
-                    if(dev==1)
-                    {
-                        dev = 0;
-                        diff = 8;
-                    }
-                    currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
-                    //cout << "Karma: " << karma << endl;
-                    if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
-                    {
-                        egStrBuff = ((depth/5)-11)*4;
-                        egAccBuff = ((depth/5)-11)*3;
-                        egDefBuff = ((depth/5)-11)*4;
-                        egDdgBuff = ((depth/5)-11)*2;
-
-                        currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
-                        currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
-                        currentRoom.monster.setDEF(currentRoom.monster.getDEF()+egDefBuff);
-                        currentRoom.monster.setDDG(currentRoom.monster.getDDG()+egDdgBuff);
-                    }
-                    if(diff==5&&adv==10&&win==0)
-                        boss = 1;
-                    if(diff==7)
-                        boss = 2;
-                    for(int i=0;i<3;i++)
-                        itemStatus[i] = 0;
-
-                    //cout << "Karma: " << karma << endl;
+                    currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,itemStatus,dev);
                     /*cout << "Reward Stat is " << rew << endl;
                     cout << "Difficulty Stat is " << diff << endl;*/
                     //THIS CODE WORKS FOR IDENTIFYING WHERE ITEMS ARE LOCATED
@@ -467,53 +417,7 @@ int main()
                     if(pass==3)
                     {
                         pass = 1;
-                        depth++;
-                        itemDrop = 0;
-                        if(depth%5==0)
-                        {
-                            if(adv<10)
-                                adv++;
-                        }
-                        roomLogic(diff,rew,karma,adv,hero);
-                        if(diff==0)
-                            pass = 1;
-                        else
-                            pass = 0;
-                        std::system("cls");
-                        cout << "Floor " << depth << endl;
-                        if(depth==55&&win==0)
-                            diff = 5;
-                        else if(depth>55&&depth<80)
-                            diff = 6;
-                        else if(depth>=80)
-                            diff = 7;
-                        if(dev==1)
-                        {
-                            dev = 0;
-                            diff = 8;
-                        }
-                        currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
-                        //cout << "Karma: " << karma << endl;
-                        if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
-                        {
-                            egStrBuff = ((depth/5)-11)*4;
-                            egAccBuff = ((depth/5)-11)*3;
-                            egDefBuff = ((depth/5)-11)*4;
-                            egDdgBuff = ((depth/5)-11)*2;
-
-                            currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
-                            currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
-                            currentRoom.monster.setDEF(currentRoom.monster.getDEF()+egDefBuff);
-                            currentRoom.monster.setDDG(currentRoom.monster.getDDG()+egDdgBuff);
-                        }
-                        if(diff==5&&adv==10&&win==0)
-                            boss = 1;
-                        if(diff==7)
-                            boss = 2;
-                        for(int i=0;i<3;i++)
-                            itemStatus[i] = 0;
-                        continue;
-                        //cout << "Karma: " << karma << endl;
+                        currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,itemStatus,dev);
                     }
                     if(boss==1)
                     {
@@ -750,52 +654,7 @@ int main()
                         }
                         if(good==1)
                         {
-                            depth++;
-                            itemDrop = 0;
-                            if(depth%5==0)
-                            {
-                                if(adv<10)
-                                    adv++;
-                            }
-                            roomLogic(diff,rew,karma,adv,hero);
-                            if(diff==0)
-                                pass = 1;
-                            else
-                                pass = 0;
-                            std::system("cls");
-                            cout << "Floor " << depth << endl;
-                            if(depth==55&&win==0)
-                                diff = 5;
-                            else if(depth>55&&depth<80)
-                                diff = 6;
-                            else if(depth>=80)
-                                diff = 7;
-                            if(dev==1)
-                            {
-                                dev = 0;
-                                diff = 8;
-                            }
-                            currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
-                            //cout << "Karma: " << karma << endl;
-                            if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
-                            {
-                                egStrBuff = ((depth/5)-11)*4;
-                                egAccBuff = ((depth/5)-11)*3;
-                                egDefBuff = ((depth/5)-11)*4;
-                                egDdgBuff = ((depth/5)-11)*2;
-
-                                currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
-                                currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
-                                currentRoom.monster.setDEF(currentRoom.monster.getDEF()+egDefBuff);
-                                currentRoom.monster.setDDG(currentRoom.monster.getDDG()+egDdgBuff);
-                            }
-                            if(diff==5&&adv==10&&win==0)
-                                boss = 1;
-                            if(diff==7)
-                                boss = 2;
-                            for(int i=0;i<3;i++)
-                                itemStatus[i] = 0;
-                            //cout << "Karma: " << karma << endl;
+                            currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,itemStatus,dev);
                         }
                     }
                 }
@@ -898,54 +757,7 @@ int main()
             }*/
             else if(err==6) //DEBUG_GO
             {
-                depth++;
-                if(depth%5==0)
-                {
-                    if(adv<10)
-                        adv++;
-                }
-                roomLogic(diff,rew,karma,adv,hero);
-                if(diff==0)
-                    pass = 1;
-                else
-                    pass = 0;
-                std::system("cls");
-                cout << "Floor " << depth << endl;
-                if(depth==55&&win==0)
-                    diff = 5;
-                else if(depth>55&&depth<80)
-                    diff = 6;
-                else if(depth>=80)
-                    diff = 7;
-                if(dev==1)
-                {
-                    dev = 0;
-                    diff = 8;
-                }
-                currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
-                //cout << "Karma: " << karma << endl;
-                if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
-                {
-                    egStrBuff = ((depth/5)-11)*4;
-                    egAccBuff = ((depth/5)-11)*3;
-                    egDefBuff = ((depth/5)-11)*4;
-                    egDdgBuff = ((depth/5)-11)*2;
-
-                    currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
-                    currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
-                    currentRoom.monster.setDEF(currentRoom.monster.getDEF()+egDefBuff);
-                    currentRoom.monster.setDDG(currentRoom.monster.getDDG()+egDdgBuff);
-                }
-                if(diff==5&&adv==10&&win==0)
-                    boss = 1;
-                if(diff==7)
-                    boss = 2;
-                for(int i=0;i<3;i++)
-                    itemStatus[i] = 0;
-
-                /*cout << "Karma is " << karma << endl;
-                cout << "Reward Stat is " << rew << endl;
-                cout << "Difficulty Stat is " << diff << endl;*/
+                currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,itemStatus,dev);
             }
             else if(err==10) //SEE
             {
@@ -1058,10 +870,10 @@ int actionHandler(string act)
     {
         return 8;
     }
-    else if(act=="debug_go")
+    /*else if(act=="debug_go")
     {
         return 6;
-    }
+    }*/
     /*else if(act=="room")
     {
         return 5;
@@ -1071,14 +883,14 @@ int actionHandler(string act)
         cout << "Exiting..." << endl;
         return -1;
     }*/
-    else if(act=="see")
+    /*else if(act=="see")
     {
         return 10;
-    }
-    else if(act=="miniboss")
+    }*/
+    /*else if(act=="miniboss")
     {
         return 11;
-    }
+    }*/
     else
     {
         cout << "Unknown command." << endl;
@@ -1582,4 +1394,57 @@ bool hiscores(Player &hero, int depth)
     }
     writeFile.close();
     return 1;
+}
+
+Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &iStatus, bool &dev)
+{
+    depth++;
+    itemDrop = 0;
+    if(depth%5==0)
+    {
+        if(adv<10)
+            adv++;
+    }
+    roomLogic(diff,rew,karma,adv,hero);
+    if(diff==0)
+        pass = 1;
+    else
+        pass = 0;
+    std::system("cls");
+    cout << "Floor " << depth << endl;
+    if(depth==55&&win==0)
+        diff = 5;
+    else if(depth>55&&depth<80)
+        diff = 6;
+    else if(depth>=80)
+        diff = 7;
+    if(dev==1)
+    {
+        dev = 0;
+        diff = 8;
+    }
+    Room currentRoom;
+    currentRoom = roomGenerator(diff,rew,adv,dir,hero,mStatus);
+    //cout << "Karma: " << karma << endl;
+    if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
+    {
+        int egStrBuff = ((depth/5)-11)*4;
+        int egAccBuff = ((depth/5)-11)*3;
+        int egDefBuff = ((depth/5)-11)*4;
+        int egDdgBuff = ((depth/5)-11)*2;
+
+        currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
+        currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
+        currentRoom.monster.setDEF(currentRoom.monster.getDEF()+egDefBuff);
+        currentRoom.monster.setDDG(currentRoom.monster.getDDG()+egDdgBuff);
+    }
+    if(diff==5&&adv==10&&win==0)
+        boss = 1;
+    if(diff==7)
+        boss = 2;
+    for(int i=0;i<iStatus.size();i++)
+        iStatus[i] = 0;
+
+    //cout << "Karma: " << karma << endl;
+    return currentRoom;
 }

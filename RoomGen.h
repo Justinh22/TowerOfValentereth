@@ -365,7 +365,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
     return loot;
 }
 
-int difficultyGen(int diff, int adv, bool mbStatus[6])
+int difficultyGen(int diff, int adv, vector<bool> &mbStatus)
 {
 //Diff: The difficulty level of the chamber. From 1-5
 //Adv: The current level of advancement the player is at within the dungeon. From 1-10
@@ -401,7 +401,7 @@ Room roomBuilder(int type, vector<int> loot, int cid, Directory dir)
         if(cid<57) //Miniboss
             id = rand() % (dir.roomDirectory.size()-6);
         else
-            id = cid - 7;
+            id = cid + 17;
         newRoom = dir.roomDirectory[id];
 
         bool crateTog = 0;
@@ -645,7 +645,7 @@ Merchant storeHandler(int level)
     return store;
 }
 
-Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, bool mbStatus[6])
+Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vector<bool> &mbStatus)
 {
     vector<int> loot;
     int foo;

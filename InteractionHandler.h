@@ -1,6 +1,6 @@
 bool nicknameChecker(string name, Creature monster);
 
-string interactionHandler(int action, string target, Player &hero, Directory &dir, Room &currentRoom, int &pass, bool itemStatus[6])
+string interactionHandler(int action, string target, Player &hero, Directory &dir, Room &currentRoom, int &pass, vector<bool> &itemStatus)
 {
     //cout << endl << "Entered Interaction Handler!!" << endl;
     string holder = "";

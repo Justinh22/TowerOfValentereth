@@ -54,6 +54,7 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
     Silhouette.addKey("shadows");
     Silhouette.addKey("figure");
     Silhouette.addKey("figures");
+    Silhouette.addKey("woman");
     featureDirectory.push_back(Silhouette);
 
     Feature Voice("voice","The voice sounds like that of a deity, booming down from above.",0,0); //7
@@ -276,7 +277,7 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
     Scroll.addKey("parchment");
     featureDirectory.push_back(Scroll);
 
-    Feature Bookshelf("bookshelf","A rustic-looking bookshelf.",3,1); //36
+    Feature Bookshelf("bookshelf","A rustic-looking bookshelf. Some random junk sits on the shelves.",3,1); //36
     Bookshelf.addKey("bookshelf");
     Bookshelf.addKey("bookshelves");
     Bookshelf.addKey("shelf");
@@ -436,7 +437,7 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
     Equipment.addKey("tools");
     featureDirectory.push_back(Equipment);
 
-    Feature Bed("bed","A rather uncomforable bed, with torn sheets.",3,1); //57
+    Feature Bed("bed","A rather uncomforable bed, with ragged sheets.",3,1); //57
     Bed.addKey("bed");
     Bed.addKey("beds");
     featureDirectory.push_back(Bed);
@@ -447,6 +448,105 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
     Dresser.addKey("wardrobe");
     Dresser.addKey("wardrobes");
     featureDirectory.push_back(Dresser);
+
+    Feature BloodThreat("message","A message is written in blood on the wall: 'THE TOWER BELONGS TO STIRAN'",0,0); //59
+    BloodThreat.addKey("message");
+    BloodThreat.addKey("blood");
+    BloodThreat.addKey("threat");
+    BloodThreat.addKey("blood message");
+    BloodThreat.addKey("bloody message");
+    featureDirectory.push_back(BloodThreat);
+
+    Feature StiranMessage("carving","STIRAN is carved into the stone here, which you know to be the name of an infamous bounty hunter.",0,0); //60
+    StiranMessage.addKey("carving");
+    StiranMessage.addKey("stiran carving");
+    StiranMessage.addKey("stiran");
+    StiranMessage.addKey("message");
+    StiranMessage.addKey("writing");
+    StiranMessage.addKey("stiran message");
+    StiranMessage.addKey("name");
+    featureDirectory.push_back(StiranMessage);
+
+    Feature Rubble("rubble","A pile of useless rubble.",3,1); //61
+    Rubble.addKey("rubble");
+    Rubble.addKey("stones");
+    Rubble.addKey("stone");
+    featureDirectory.push_back(Rubble);
+
+    Feature Spear("spear","An old, rusty spear, stained with blood.",0,0); //62
+    Spear.addKey("spear");
+    featureDirectory.push_back(Spear);
+
+    Feature BurnedBody("burned body","A charred body, burned beyond recognition. You notice a message written in ink on the wall behind it: 'BEWARE OF BYRALT'.",3,1); //63
+    BurnedBody.addKey("burned body");
+    BurnedBody.addKey("body");
+    BurnedBody.addKey("burned corpse");
+    BurnedBody.addKey("corpse");
+    BurnedBody.addKey("charred body");
+    BurnedBody.addKey("charred corpse");
+    featureDirectory.push_back(BurnedBody);
+
+    Feature Fire("fire","A massive, roaring flame.",0,0); //64
+    Fire.addKey("fire");
+    Fire.addKey("flame");
+    Fire.addKey("flames");
+    Fire.addKey("inferno");
+    featureDirectory.push_back(Fire);
+
+    Feature Blueprints("blueprints","Various drawings of unnerving and unnatural, almost patchwork, creatures. You get the feeling this is some form of recipe...",0,0); //65
+    Blueprints.addKey("blueprints");
+    Blueprints.addKey("blueprint");
+    Blueprints.addKey("drawing");
+    Blueprints.addKey("drawings");
+    featureDirectory.push_back(Blueprints);
+
+    Feature Eyes("eyes","Magic, spectral eyes. As you move, they follow your movements silently, giving you an uneasy feeling...",0,0); //66
+    Eyes.addKey("eyes");
+    Eyes.addKey("eye");
+    Eyes.addKey("spectral eyes");
+    Eyes.addKey("floating eyes");
+    Eyes.addKey("spectral eye");
+    Eyes.addKey("floating eye");
+    featureDirectory.push_back(Eyes);
+
+    Feature Desk("desk","A small wooden desk.",1,1); //67
+    Desk.addKey("desk");
+    Desk.addKey("wooden desk");
+    featureDirectory.push_back(Desk);
+
+    Feature BottomlessPit("pit","A dark pit, which you can't see the bottom of...",0,0); //68
+    BottomlessPit.addKey("pit");
+    BottomlessPit.addKey("bottomless pit");
+    BottomlessPit.addKey("hole");
+    featureDirectory.push_back(BottomlessPit);
+
+    Feature SlimeTracks("tracks","Massive tracks of black ooze. From the size of them, whatever left them must be massive...",0,0); //69
+    SlimeTracks.addKey("tracks");
+    SlimeTracks.addKey("ooze tracks");
+    SlimeTracks.addKey("slime tracks");
+    SlimeTracks.addKey("slimy tracks");
+    SlimeTracks.addKey("black slime tracks");
+    SlimeTracks.addKey("prints");
+    SlimeTracks.addKey("ooze prints");
+    SlimeTracks.addKey("slime prints");
+    SlimeTracks.addKey("slimy prints");
+    SlimeTracks.addKey("black slime prints");
+    featureDirectory.push_back(SlimeTracks);
+
+    Feature Fog("fog","A cold, dense fog. Coming in contact with it makes your head spin...",4,1); //70
+    Fog.addKey("fog");
+    Fog.addKey("mist");
+    Fog.addKey("smoke");
+    featureDirectory.push_back(Fog);
+
+    Feature Pantry("pantry","A group of shelves, full of food and items. Sadly, most of it has gone bad...",3,3); //71
+    Pantry.addKey("pantry");
+    Pantry.addKey("shelves");
+    Pantry.addKey("cabinet");
+    featureDirectory.push_back(Pantry);
+
+
+
 
     //cout << "Feature List Initialized!" << endl;
 
