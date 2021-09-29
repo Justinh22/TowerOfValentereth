@@ -126,6 +126,12 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     Weapon Chaotrix("Chaotrix","A magical warhammer of legend, formed from the forces of entropy and chaos.",10,56,34,85,20,35);
     weaponDirectory.push_back(Chaotrix);
 
+    //11: Unique
+    Weapon Ozkoroths_Fang("Ozkoroth's Fang","Fang of a ravenous beast, this dagger cuts through armor. Deals damage equal to 25% of the target's max HP.",11,57,0,95,20,0);
+    weaponDirectory.push_back(Ozkoroths_Fang);
+    Weapon Essence_Siphon("Essence Siphon","Sceptre of an archmage. Its power is equal to your STR. Whenever damage is dealt with this weapon, the wielder gains 5 MP.",11,58,0,80,10,25);
+    weaponDirectory.push_back(Essence_Siphon);
+
     //cout << "Weapon Directory Initialized!" << endl;
 
     return weaponDirectory;
@@ -135,99 +141,103 @@ vector<Armor> initADir(vector<Armor> armorDirectory)
 {
     //ARMOR// --DEF, DDG, MPG--
     //1
-    Armor Leather_Breastplate("Leather Breastplate","A tough, leather breastplate.",1,57,1,5,0);
+    Armor Leather_Breastplate("Leather Breastplate","A tough, leather breastplate.",1,100,1,5,0);
     armorDirectory.push_back(Leather_Breastplate);
-    Armor Rusty_Iron_Breastplate("Rusty Iron Breastplate","A rusted iron breastplate.",1,58,2,0,0);
+    Armor Rusty_Iron_Breastplate("Rusty Iron Breastplate","A rusted iron breastplate.",1,101,2,0,0);
     armorDirectory.push_back(Rusty_Iron_Breastplate);
-    Armor Tattered_Robe("Tattered Robe","A tattered, cloth robe.",1,59,0,5,1);
+    Armor Tattered_Robe("Tattered Robe","A tattered, cloth robe.",1,102,0,5,1);
     armorDirectory.push_back(Tattered_Robe);
     //2
-    Armor Leather_Armor("Leather Armor","A suit of sturdy leather armor.",2,60,2,10,0);
+    Armor Leather_Armor("Leather Armor","A suit of sturdy leather armor.",2,103,2,10,0);
     armorDirectory.push_back(Leather_Armor);
-    Armor Rusty_Iron_Armor("Rusty Iron Armor","A suit of rusted iron armor.",2,61,3,0,0);
+    Armor Rusty_Iron_Armor("Rusty Iron Armor","A suit of rusted iron armor.",2,104,3,0,0);
     armorDirectory.push_back(Rusty_Iron_Armor);
-    Armor Silk_Robe("Silk Robe","A soft, silk robe.",2,62,2,5,1);
+    Armor Silk_Robe("Silk Robe","A soft, silk robe.",2,105,2,5,1);
     armorDirectory.push_back(Silk_Robe);
     //3
-    Armor Hide_Armor("Hide Armor","A suit of armor made from tough animal hides.",3,63,4,10,0);
+    Armor Hide_Armor("Hide Armor","A suit of armor made from tough animal hides.",3,106,4,10,0);
     armorDirectory.push_back(Hide_Armor);
-    Armor Chainmail("Chainmail","A suit of armor made from intertwined links of chains.",3,64,5,0,0);
+    Armor Chainmail("Chainmail","A suit of armor made from intertwined links of chains.",3,107,5,0,0);
     armorDirectory.push_back(Chainmail);
-    Armor Shimmering_Robe("Shimmering Robe","A long velvet robe, that seems to shimmer magically.",3,65,2,10,2);
+    Armor Shimmering_Robe("Shimmering Robe","A long velvet robe, that seems to shimmer magically.",3,108,2,10,2);
     armorDirectory.push_back(Shimmering_Robe);
     //4
-    Armor Studded_Leather_Armor("Studded Leather Armor","A suit of leather armor, studded with steel.",4,66,6,15,0);
+    Armor Studded_Leather_Armor("Studded Leather Armor","A suit of leather armor, studded with steel.",4,109,6,15,0);
     armorDirectory.push_back(Studded_Leather_Armor);
-    Armor Iron_Armor("Iron Armor","A suit of solid iron armor.",4,67,7,0,0);
+    Armor Iron_Armor("Iron Armor","A suit of solid iron armor.",4,110,7,0,0);
     armorDirectory.push_back(Iron_Armor);
-    Armor Enchanted_Robe("Enchanted Robe","An enchanted robe, which glows magically.",4,68,4,10,2);
+    Armor Enchanted_Robe("Enchanted Robe","An enchanted robe, which glows magically.",4,111,4,10,2);
     armorDirectory.push_back(Enchanted_Robe);
     //5
-    Armor Light_Steel_Armor("Light Steel Armor","A suit of lightweight steel armor.",5,69,7,15,0);
+    Armor Light_Steel_Armor("Light Steel Armor","A suit of lightweight steel armor.",5,112,7,15,0);
     armorDirectory.push_back(Light_Steel_Armor);
-    Armor Steel_Armor("Steel Armor","A suit of standard steel armor.",5,70,8,5,0);
+    Armor Steel_Armor("Steel Armor","A suit of standard steel armor.",5,113,8,5,0);
     armorDirectory.push_back(Steel_Armor);
-    Armor Heavy_Steel_Armor("Heavy Steel Armor","A suit of heavy steel armor.",5,71,9,0,0);
+    Armor Heavy_Steel_Armor("Heavy Steel Armor","A suit of heavy steel armor.",5,114,9,0,0);
     armorDirectory.push_back(Heavy_Steel_Armor);
-    Armor Amethyst_Robe("Amethyst Robe","A bright purple robe, pulsing with arcane energy.",5,72,5,10,3);
+    Armor Amethyst_Robe("Amethyst Robe","A bright purple robe, pulsing with arcane energy.",5,115,5,10,3);
     armorDirectory.push_back(Amethyst_Robe);
-    Armor Steel_Arcanist_Armor("Steel Arcanist Armor","A set of steel battlemage armor, with magical capabilities.",6,73,7,5,1);
+    Armor Steel_Arcanist_Armor("Steel Arcanist Armor","A set of steel battlemage armor, with magical capabilities.",6,116,7,5,1);
     armorDirectory.push_back(Steel_Arcanist_Armor);
     //6
-    Armor Light_Golden_Armor("Light Golden Armor","A suit of lightweight golden armor.",6,74,8,20,0);
+    Armor Light_Golden_Armor("Light Golden Armor","A suit of lightweight golden armor.",6,117,8,20,0);
     armorDirectory.push_back(Light_Golden_Armor);
-    Armor Golden_Armor("Golden Armor","A suit of standard golden armor.",6,75,10,10,0);
+    Armor Golden_Armor("Golden Armor","A suit of standard golden armor.",6,118,10,10,0);
     armorDirectory.push_back(Golden_Armor);
-    Armor Heavy_Golden_Armor("Heavy Golden Armor","A suit of heavy golden armor.",6,76,12,0,0);
+    Armor Heavy_Golden_Armor("Heavy Golden Armor","A suit of heavy golden armor.",6,119,12,0,0);
     armorDirectory.push_back(Heavy_Golden_Armor);
-    Armor Gilded_Robe("Gilded Robe","A flowing robe sewn from golden threads, imbued with magical power.",6,77,6,15,3);
+    Armor Gilded_Robe("Gilded Robe","A flowing robe sewn from golden threads, imbued with magical power.",6,120,6,15,3);
     armorDirectory.push_back(Gilded_Robe);
-    Armor Golden_Arcanist_Armor("Golden Arcanist Armor","A set of golden battlemage armor, with magical capabilities.",6,78,8,10,1);
+    Armor Golden_Arcanist_Armor("Golden Arcanist Armor","A set of golden battlemage armor, with magical capabilities.",6,121,8,10,1);
     armorDirectory.push_back(Golden_Arcanist_Armor);
     //7
-    Armor Light_Jeweled_Armor("Light Jeweled Armor","A suit of lightweight golden armor embedded with shining gemstones.",7,79,10,25,0);
+    Armor Light_Jeweled_Armor("Light Jeweled Armor","A suit of lightweight golden armor embedded with shining gemstones.",7,122,10,25,0);
     armorDirectory.push_back(Light_Jeweled_Armor);
-    Armor Jeweled_Armor("Jeweled Armor","A suit of standard golden armor embedded with shining gemstones.",7,80,12,15,0);
+    Armor Jeweled_Armor("Jeweled Armor","A suit of standard golden armor embedded with shining gemstones.",7,123,12,15,0);
     armorDirectory.push_back(Jeweled_Armor);
-    Armor Heavy_Jeweled_Armor("Heavy Jeweled Armor","A suit of heavy golden armor embedded with shining gemstones.",7,81,14,0,0);
+    Armor Heavy_Jeweled_Armor("Heavy Jeweled Armor","A suit of heavy golden armor embedded with shining gemstones.",7,124,14,0,0);
     armorDirectory.push_back(Heavy_Jeweled_Armor);
-    Armor Jeweled_Robe("Jeweled Robe","A flowing robe sewn from golden threads, with arcane gemstones embedded at the base.",8,82,7,20,4);
+    Armor Jeweled_Robe("Jeweled Robe","A flowing robe sewn from golden threads, with arcane gemstones embedded at the base.",8,125,7,20,4);
     armorDirectory.push_back(Jeweled_Robe);
-    Armor Jeweled_Arcanist_Armor("Jeweled Arcanist Armor","A suit of jeweled golden armor, embedded with arcane gemstones.",8,83,10,15,2);
+    Armor Jeweled_Arcanist_Armor("Jeweled Arcanist Armor","A suit of jeweled golden armor, embedded with arcane gemstones.",8,126,10,15,2);
     armorDirectory.push_back(Jeweled_Arcanist_Armor);
     //8
-    Armor Light_Valentium_Armor("Light Valentium Armor","A suit of lightweight Valentium armor, which pulses with magical energy.",8,84,12,30,2);
+    Armor Light_Valentium_Armor("Light Valentium Armor","A suit of lightweight Valentium armor, which pulses with magical energy.",8,127,12,30,2);
     armorDirectory.push_back(Light_Valentium_Armor);
-    Armor Valentium_Armor("Valentium Armor","A suit of Valentium armor, which pulses with magical energy.",8,85,15,15,2);
+    Armor Valentium_Armor("Valentium Armor","A suit of Valentium armor, which pulses with magical energy.",8,128,15,15,2);
     armorDirectory.push_back(Valentium_Armor);
-    Armor Heavy_Valentium_Armor("Heavy Valentium Armor","A suit of heavy Valentium armor, which pulses with magical energy.",8,86,18,0,2);
+    Armor Heavy_Valentium_Armor("Heavy Valentium Armor","A suit of heavy Valentium armor, which pulses with magical energy.",8,129,18,0,2);
     armorDirectory.push_back(Heavy_Valentium_Armor);
-    Armor Valentium_Robe("Valentium Robe","A robe sewn from threads of Valentium, which pulses with magical energy.",8,87,8,25,4);
+    Armor Valentium_Robe("Valentium Robe","A robe sewn from threads of Valentium, which pulses with magical energy.",8,130,8,25,4);
     armorDirectory.push_back(Valentium_Robe);
-    Armor Valentium_Arcanist_Armor("Valentium Arcanist Armor","A set of Valentium battlemage armor, which pulses with unbridled magical energy.",8,88,12,15,2);
+    Armor Valentium_Arcanist_Armor("Valentium Arcanist Armor","A set of Valentium battlemage armor, which pulses with unbridled magical energy.",8,131,12,15,2);
     armorDirectory.push_back(Valentium_Arcanist_Armor);
     //9
-    Armor Light_Mechanical_Armor("Light Mechanical Armor","A suit of lightweight armor with cogs and pipes whirring along it.",9,89,13,45,0);
+    Armor Light_Mechanical_Armor("Light Mechanical Armor","A suit of lightweight armor with cogs and pipes whirring along it.",9,132,13,45,0);
     armorDirectory.push_back(Light_Mechanical_Armor);
-    Armor Mechanical_Armor("Mechanical Armor","A suit of armor with cogs and pipes whirring along it.",9,90,16,30,0);
+    Armor Mechanical_Armor("Mechanical Armor","A suit of armor with cogs and pipes whirring along it.",9,133,16,30,0);
     armorDirectory.push_back(Mechanical_Armor);
-    Armor Heavy_Mechanical_Armor("Heavy Mechanical Armor","A suit of heavy armor with cogs and pipes whirring along it.",9,91,19,15,0);
+    Armor Heavy_Mechanical_Armor("Heavy Mechanical Armor","A suit of heavy armor with cogs and pipes whirring along it.",9,134,19,15,0);
     armorDirectory.push_back(Heavy_Mechanical_Armor);
-    Armor Clockwork_Robe("Clockwork Robe","A robe sewn from threads of time itself.",9,92,10,30,5);
+    Armor Clockwork_Robe("Clockwork Robe","A robe sewn from threads of time itself.",9,135,10,30,5);
     armorDirectory.push_back(Clockwork_Robe);
-    Armor Clockwork_Arcanist_Armor("Clockwork Arcanist Armor","A set of clockwork battlemage armor, with magical energy flowing through it like time itself.",9,93,13,30,3);
+    Armor Clockwork_Arcanist_Armor("Clockwork Arcanist Armor","A set of clockwork battlemage armor, with magical energy flowing through it like time itself.",9,136,13,30,3);
     armorDirectory.push_back(Clockwork_Arcanist_Armor);
     //10
-    Armor Cloak_of_the_Whisper("Cloak of the Whisper","A cloak that envelops its wearer in shadow.",10,94,13,60,0);
+    Armor Cloak_of_the_Whisper("Cloak of the Whisper","A cloak that envelops its wearer in shadow.",10,137,13,60,0);
     armorDirectory.push_back(Cloak_of_the_Whisper);
-    Armor Plate_of_the_Vanguard("Plate of the Vanguard","A suit of regal armor worn by a hero of legend.",10,95,18,30,0);
+    Armor Plate_of_the_Vanguard("Plate of the Vanguard","A suit of regal armor worn by a hero of legend.",10,138,18,30,0);
     armorDirectory.push_back(Plate_of_the_Vanguard);
-    Armor Shield_of_the_Conquerer("Shield of the Conquerer","A massive suit of heavy armor once worn by the ruler of an ancient kingdom.",10,96,24,0,0);
+    Armor Shield_of_the_Conquerer("Shield of the Conquerer","A massive suit of heavy armor once worn by the ruler of an ancient kingdom.",10,139,24,0,0);
     armorDirectory.push_back(Shield_of_the_Conquerer);
-    Armor Robe_of_the_Archmage("Robe of the Archmage","A robe that harnesses the magical power of the world.",10,97,12,30,7);
+    Armor Robe_of_the_Archmage("Robe of the Archmage","A robe that harnesses the magical power of the world.",10,140,12,30,7);
     armorDirectory.push_back(Robe_of_the_Archmage);
-    Armor Helm_of_the_Ancients("Helm of the Ancients","A regal suit of armor, passed down from an ancient kingdom of magic.",10,98,16,25,5);
+    Armor Helm_of_the_Ancients("Helm of the Ancients","A regal suit of armor, passed down from an ancient kingdom of magic.",10,141,16,25,5);
     armorDirectory.push_back(Helm_of_the_Ancients);
+
+    //11
+    Armor Mercenarys_Shield("Mercenary's Shield","Stiran's shield. Reduces incoming damage by 25%. If an enemy misses their attack against you, your next attack has the potential to deal double damage.",11,142,3,30,0);
+    armorDirectory.push_back(Mercenarys_Shield);
 
     //cout << "Armor Directory Initialized!" << endl;
 
@@ -239,36 +249,36 @@ vector<Consumable> initCDir(vector<Consumable> consumableDirectory)
 {
     //CONSUMABLES// --HP, MP--
     //1
-    Consumable Bread("Bread","A small loaf of stale bread.",1,100,10,0);
+    Consumable Bread("Bread","A small loaf of stale bread.",1,200,10,0);
     consumableDirectory.push_back(Bread);
-    Consumable Manaberry("Mana Berry","A tiny berry, pulsing with a dim blue glow.",1,101,0,10);
+    Consumable Manaberry("Mana Berry","A tiny berry, pulsing with a dim blue glow.",1,201,0,10);
     consumableDirectory.push_back(Manaberry);
     //2
-    Consumable Ration("Ration","A preserved ration of food.",2,102,20,0);
+    Consumable Ration("Ration","A preserved ration of food.",2,202,20,0);
     consumableDirectory.push_back(Ration);
-    Consumable Mana_Gem("Mana Gem","A small violet gemstone, holding potent magical energy.",2,103,0,20);
+    Consumable Mana_Gem("Mana Gem","A small violet gemstone, holding potent magical energy.",2,203,0,20);
     consumableDirectory.push_back(Mana_Gem);
     //3
-    Consumable Potion_of_Healing("Potion of Healing","A potion capable of restoring life.",3,104,30,0);
+    Consumable Potion_of_Healing("Potion of Healing","A potion capable of restoring life.",3,204,30,0);
     consumableDirectory.push_back(Potion_of_Healing);
-    Consumable Potion_of_Calming("Potion of Calming","A potion capable of restoring magical ability.",3,105,0,30);
+    Consumable Potion_of_Calming("Potion of Calming","A potion capable of restoring magical ability.",3,205,0,30);
     consumableDirectory.push_back(Potion_of_Calming);
     //4
-    Consumable Greater_Potion_of_Healing("Greater Potion of Healing","A potion capable of restoring a great amount of life.",4,106,50,0);
+    Consumable Greater_Potion_of_Healing("Greater Potion of Healing","A potion capable of restoring a great amount of life.",4,206,50,0);
     consumableDirectory.push_back(Greater_Potion_of_Healing);
-    Consumable Greater_Potion_of_Calming("Greater Potion of Calming","A potion capable of restoring a great amount of magical ability.",4,107,0,50);
+    Consumable Greater_Potion_of_Calming("Greater Potion of Calming","A potion capable of restoring a great amount of magical ability.",4,207,0,50);
     consumableDirectory.push_back(Greater_Potion_of_Calming);
-    Consumable Potion_of_Replenishment("Potion of Replenishment","A potion capable of restoring both life and magical ability.",4,108,30,30);
+    Consumable Potion_of_Replenishment("Potion of Replenishment","A potion capable of restoring both life and magical ability.",4,208,30,30);
     consumableDirectory.push_back(Potion_of_Replenishment);
     //5
-    Consumable Potion_of_Full_Healing("Potion of Full Healing","A potion capable of restoring all life.",5,109,100,0);
+    Consumable Potion_of_Full_Healing("Potion of Full Healing","A potion capable of restoring all life.",5,209,100,0);
     consumableDirectory.push_back(Potion_of_Full_Healing);
-    Consumable Potion_of_Full_Calming("Potion of Full Calming","A potion capable of restoring all magical ability.",5,110,0,100);
+    Consumable Potion_of_Full_Calming("Potion of Full Calming","A potion capable of restoring all magical ability.",5,210,0,100);
     consumableDirectory.push_back(Potion_of_Full_Calming);
-    Consumable Greater_Potion_of_Replenishment("Greater Potion of Replenishment","A potion capable of restoring both life and magical ability.",5,111,50,50);
+    Consumable Greater_Potion_of_Replenishment("Greater Potion of Replenishment","A potion capable of restoring both life and magical ability.",5,211,50,50);
     consumableDirectory.push_back(Greater_Potion_of_Replenishment);
     //Key
-    Consumable Key("Key","A small, silver key.",0,112,0,0);
+    Consumable Key("Key","A small, silver key.",0,212,0,0);
     consumableDirectory.push_back(Key);
 
     //cout << "Consumable List Initialized!" << endl;

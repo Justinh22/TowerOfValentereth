@@ -42,34 +42,34 @@ int itemPicker(int type, int rarity)
         switch(rarity)
         {
             case 1:
-                id = rand() % 3 + 57;
+                id = rand() % 3 + 100;
                 break;
             case 2:
-                id = rand() % 3 + 60;
+                id = rand() % 3 + 103;
                 break;
             case 3:
-                id = rand() % 3 + 63;
+                id = rand() % 3 + 106;
                 break;
             case 4:
-                id = rand() % 3 + 66;
+                id = rand() % 3 + 109;
                 break;
             case 5:
-                id = rand() % 5 + 69;
+                id = rand() % 5 + 112;
                 break;
             case 6:
-                id = rand() % 5 + 74;
+                id = rand() % 5 + 117;
                 break;
             case 7:
-                id = rand() % 5 + 79;
+                id = rand() % 5 + 122;
                 break;
             case 8:
-                id = rand() % 5 + 84;
+                id = rand() % 5 + 127;
                 break;
             case 9:
-                id = rand() % 5 + 89;
+                id = rand() % 5 + 132;
                 break;
             case 10:
-                id = rand() % 5 + 94;
+                id = rand() % 5 + 137;
                 break;
         }
     }
@@ -78,19 +78,19 @@ int itemPicker(int type, int rarity)
         switch(rarity)
         {
             case 1:
-                id = rand() % 2 + 100;
+                id = rand() % 2 + 200;
                 break;
             case 2:
-                id = rand() % 2 + 102;
+                id = rand() % 2 + 202;
                 break;
             case 3:
-                id = rand() % 2 + 104;
+                id = rand() % 2 + 204;
                 break;
             case 4:
-                id = rand() % 3 + 106;
+                id = rand() % 3 + 206;
                 break;
             case 5:
-                id = rand() % 3 + 109;
+                id = rand() % 3 + 209;
                 break;
         }
     }

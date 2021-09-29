@@ -131,6 +131,36 @@ vector<Creature> initCDir(vector<Creature> creatureDirectory)
     Creature Termineth("Termineth",17,56,100,80,145,60,35); //56
     creatureDirectory.push_back(Termineth);
 
+    //Minibosses
+    /*
+        Can start to appear at depth 15. When one of the six minibosses are found,
+        they will have their own specific lair. The miniboss' power will be determined
+        by an algorithm which will scale their difficulty depending on the depth at
+        which it is found. Each will provide a unique reward for defeating it, from
+        stat boosts, to unique weapons, to unique spells.
+
+        The stats given in these blocks are the stats found at depth 15, they increase
+        at varying rates beyond this.
+    */
+    Creature Ozkoroth("Ozkoroth, the Slime-Soaked Behemoth",18,57,34,20,75,4,5);
+    creatureDirectory.push_back(Ozkoroth);
+    //ABILITY: Armor-Piercing Fangs - Player's defense is cut by 30%
+    Creature Endrigaia("Endrigaia, the Ever-Growing",18,58,34,18,85,1,5);
+    creatureDirectory.push_back(Endrigaia);
+    //ABILITY: Regrowth - Endrigaia will regenerate 15% of her HP every turn
+    Creature Emeritus("Emeritus, the Enlightened Sorcerer",18,59,26,22,80,2,20);
+    creatureDirectory.push_back(Emeritus);
+    //ABILITY: Archmage - Emeritus never misses with his spells
+    Creature Stiran("Stiran, the Famed Bounty-Hunter",18,60,34,20,70,4,10);
+    creatureDirectory.push_back(Stiran);
+    //ABILITY: Parry - If the player misses an attack, Stiran will parry, dealing double damage if he hits
+    Creature Question("?????, the Cursed Amalgamation",18,61,42,17,70,1,20);
+    creatureDirectory.push_back(Question);
+    //ABILITY: Absorb - Damage dealt to ????? will be reduced by 30%
+    Creature Byralt("Byralt, Valentereth's Scion",18,62,30,20,90,2,30);
+    creatureDirectory.push_back(Byralt);
+    //ABILITY: Dark Magic - The player will lose HP equal to their level every turn in combat
+
     //cout << "Creature List Initialized!" << endl;
 
     return creatureDirectory;

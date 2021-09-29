@@ -54,3 +54,108 @@ int creaturePicker(int level)
     }
     return id;
 }
+
+int minibossPicker(vector<bool> mbStatus)
+{
+    int id;
+    do{
+        id = rand() % 6;
+    }while(mbStatus[id]==1);
+    mbStatus[id] = 1;
+    return id+57;
+}
+
+void minibossStatGen(int adv, Creature &mon)
+{
+    adv--;
+    int hpBuff;
+    int strBuff;
+    int accBuff;
+    int defBuff;
+    int ddgBuff;
+
+    if(mon.getID()==57) //Ozkoroth
+    {
+        hpBuff = (adv-3)*4;
+        strBuff = (adv-3)*4;
+        accBuff = (adv-3)*3;
+        defBuff = (adv-3)*3;
+        ddgBuff = (adv-3)*2;
+
+        mon.setHP(mon.getHP()+hpBuff);
+        mon.setSTR(mon.getSTR()+strBuff);
+        mon.setACC(mon.getACC()+accBuff);
+        mon.setDEF(mon.getDEF()+defBuff);
+        mon.setDDG(mon.getDDG()+ddgBuff);
+    }
+    else if(mon.getID()==58) // Endrigaia
+    {
+        hpBuff = (adv-3)*5;
+        strBuff = (adv-3)*3;
+        accBuff = (adv-3)*4;
+        defBuff = (adv-3)*2;
+        ddgBuff = (adv-3)*2;
+
+        mon.setHP(mon.getHP()+hpBuff);
+        mon.setSTR(mon.getSTR()+strBuff);
+        mon.setACC(mon.getACC()+accBuff);
+        mon.setDEF(mon.getDEF()+defBuff);
+        mon.setDDG(mon.getDDG()+ddgBuff);
+    }
+    else if(mon.getID()==59) //Emeritus
+    {
+        hpBuff = (adv-3)*3;
+        strBuff = (adv-3)*5;
+        accBuff = (adv-3)*3;
+        defBuff = (adv-3)*2;
+        ddgBuff = (adv-3)*3;
+
+        mon.setHP(mon.getHP()+hpBuff);
+        mon.setSTR(mon.getSTR()+strBuff);
+        mon.setACC(mon.getACC()+accBuff);
+        mon.setDEF(mon.getDEF()+defBuff);
+        mon.setDDG(mon.getDDG()+ddgBuff);
+    }
+    else if(mon.getID()==60) //Stiran
+    {
+        hpBuff = (adv-3)*4;
+        strBuff = (adv-3)*4;
+        accBuff = (adv-3)*2;
+        defBuff = (adv-3)*3;
+        ddgBuff = (adv-3)*3;
+
+        mon.setHP(mon.getHP()+hpBuff);
+        mon.setSTR(mon.getSTR()+strBuff);
+        mon.setACC(mon.getACC()+accBuff);
+        mon.setDEF(mon.getDEF()+defBuff);
+        mon.setDDG(mon.getDDG()+ddgBuff);
+    }
+    else if(mon.getID()==61) //?????
+    {
+        hpBuff = (adv-3)*5;
+        strBuff = (adv-3)*3;
+        accBuff = (adv-3)*2;
+        defBuff = (adv-3)*3;
+        ddgBuff = (adv-3)*3;
+
+        mon.setHP(mon.getHP()+hpBuff);
+        mon.setSTR(mon.getSTR()+strBuff);
+        mon.setACC(mon.getACC()+accBuff);
+        mon.setDEF(mon.getDEF()+defBuff);
+        mon.setDDG(mon.getDDG()+ddgBuff);
+    }
+    else if(mon.getID()==62) //Byralt
+    {
+        hpBuff = (adv-3)*3;
+        strBuff = (adv-3)*3;
+        accBuff = (adv-3)*4;
+        defBuff = (adv-3)*2;
+        ddgBuff = (adv-3)*4;
+
+        mon.setHP(mon.getHP()+hpBuff);
+        mon.setSTR(mon.getSTR()+strBuff);
+        mon.setACC(mon.getACC()+accBuff);
+        mon.setDEF(mon.getDEF()+defBuff);
+        mon.setDDG(mon.getDDG()+ddgBuff);
+    }
+}

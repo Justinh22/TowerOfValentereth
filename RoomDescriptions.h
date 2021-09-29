@@ -122,9 +122,33 @@ string creatureDesc(int cid, vector<Creature> creatureDirectory, Player &hero)
     {
         return "The light escapes from the room; the voices in your head become deafening, and from the shadows in front of you, you see a figure appear, axe in hand. It is Valentereth, the Tyrant. The voices beg you to leave, but you seem to be caught in a trance... Valentereth's eyes seem almost glazed over as she calls you to battle.";
     }
-    if(cid==56)
+    else if(cid==56)
     {
         return "This is the end. Before you, stands its guardian. Termineth stands at the tower's apex.";
+    }
+    else if(cid==57)
+    {
+        return "Prowling around the hall is a massive behemoth, completely entombed in black slime aside from its razor-sharp claws, and piercing yellow eyes. Upon seeing you enter, it lets out a deafening roar.";
+    }
+    else if(cid==58)
+    {
+        return "The vines rushing from the ceiling wind together to form a figure at their center, with two long arms stretching out from its sides, and long, glowing yellow antlers to match its eyes, which lock onto you as it sees you enter.";
+    }
+    else if(cid==59)
+    {
+        return "At the back of the room, shuffling through papers and books on the floor, is a tall, lanky man. As he hears you come in he turns to face you, with a long, dark sceptre in hand. When you see his face, you notice dark violet veins coursing under his skin, to match his dark sunken eyes...";
+    }
+    else if(cid==60)
+    {
+        return "Sitting at the fire in a small stool is a burly-looking man, who looks up at you and gives you a sneer as you enter. \"Ah, I was beginning to think I was the only one lootin' this hell hole. Well, unfortunately for you, there's barely enough in here for the one of us, let alone two.\" He stands up from his stool, and picks up a massive greatsword and shield at his side, and readies for battle.";
+    }
+    else if(cid==61)
+    {
+        return "Although your vision can't quite lock onto it, you see a figure darting around the room, bumping into tables... Something about this creature's form makes it imperceivable, but you can see a horrid combination of parts, forming an a vaguely humanoid form. You hear a cacophony of voices in your mind as the creature barrels toward you...";
+    }
+    else if(cid==62)
+    {
+        return "A short woman is startled from your entrance, jumping up from her chair at the table. She turns to grab a tome off of the table, and as she does you see Valentereth's sigil on the back of her robes. The woman whirls back around and shouts an incantation, as the room is filled with an inky-black smoke...";
     }
     switch(choice)
     {

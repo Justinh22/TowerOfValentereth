@@ -229,6 +229,7 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     Room R47(47,"The wall to your left as you enter the room is in shambles, and through the rubble you can see the sun shining brightly in at you. You could have sworn it was nighttime when you entered...");
     R47.addFeat(featureDirectory[10]);
     R47.addFeat(featureDirectory[34]);
+    R47.addFeat(featureDirectory[61]);
     roomDirectory.push_back(R47);
 
     Room R48(48,"A single torch illuminates a long wooden table, upon which you see a number of scrolls and books.");
@@ -242,7 +243,187 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     R49.addFeat(featureDirectory[17]);
     R49.addFeat(featureDirectory[22]);
     roomDirectory.push_back(R49);
-    //cout << "Room List Initialized!" << endl;
+
+    Room R50(50,"A body has been affixed to the rugged stone wall of the chamber, by a spear through its center. A message has been written in blood on the wall.");
+    R50.addFeat(featureDirectory[rand()%3+42]);
+    R50.addFeat(featureDirectory[10]);
+    R50.addFeat(featureDirectory[59]);
+    R50.addFeat(featureDirectory[62]);
+    roomDirectory.push_back(R50);
+
+    Room R51(51,"The room seems ruined, with rubble covering the coarse dirt floor... at the back of the room, 'STIRAN' has been carved into the wall.");
+    R51.addFeat(featureDirectory[3]);
+    R51.addFeat(featureDirectory[60]);
+    R51.addFeat(featureDirectory[61]);
+    roomDirectory.push_back(R51);
+
+    Room R52(52,"The room is filled with metal tables, with strange pieces of equipment upon them. There are puddles of blood on the floor...");
+    R52.addFeat(featureDirectory[14]);
+    R52.addFeat(featureDirectory[54]);
+    R52.addFeat(featureDirectory[56]);
+    roomDirectory.push_back(R52);
+
+    Room R53(53,"A roaring fire engulfs the room, filling your eyes and lungs with smoke. A burned body lies in the corner.");
+    R53.addFeat(featureDirectory[63]);
+    R53.addFeat(featureDirectory[64]);
+    roomDirectory.push_back(R53);
+
+    Room R54(54,"You find a room with walls covered with drawings and blueprints, as you hear the whispers in your mind growing louder...");
+    R54.addFeat(featureDirectory[5]);
+    R54.addFeat(featureDirectory[65]);
+    roomDirectory.push_back(R54);
+
+    Room R55(55,"A figure was looking at something on a cluttered bookshelf, but when they see you enter they bolt before you can say anything, nearly tripping on a table as they dash out of the room.");
+    R55.addFeat(featureDirectory[6]);
+    R55.addFeat(featureDirectory[36]);
+    R55.addFeat(featureDirectory[50]);
+    roomDirectory.push_back(R55);
+
+    Room R56(56,"You step into a narrow, circular room. The smooth stone walls are filled with glowing runes, stretching up for as long as you can see...");
+    R56.addFeat(featureDirectory[15]);
+    R56.addFeat(featureDirectory[29]);
+    roomDirectory.push_back(R56);
+
+    Room R57(57,"You stumble into what looks like it was once a hideout, with a campfire still lit. A wooden table sits with a book open atop it, and a body sits slumped over in a chair next to it.");
+    R57.addFeat(featureDirectory[rand()%4+37]);
+    R57.addFeat(featureDirectory[rand()%3+42]);
+    R57.addFeat(featureDirectory[50]);
+    R57.addFeat(featureDirectory[53]);
+    roomDirectory.push_back(R57);
+
+    Room R58(58,"You step into a long, narrow hallway. On either side of the hall, you see floating, spectral eyes that follow your movements as you make your way through the chamber...");
+    R58.addFeat(featureDirectory[66]);
+    roomDirectory.push_back(R58);
+
+    Room R59(59,"You enter a small, dark study. A small desk sits in the center of the room, lit dimly from floating candles around it. You see various books, papers, and drawings on the desk");
+    R59.addFeat(featureDirectory[9]);
+    R59.addFeat(featureDirectory[rand()%4+37]);
+    R59.addFeat(featureDirectory[35]);
+    R59.addFeat(featureDirectory[65]);
+    R59.addFeat(featureDirectory[67]);
+    roomDirectory.push_back(R59);
+
+    Room R60(60,"You have to catch yourself as you enter a wide circular room, with most the floor missing apart from awalkway around the outer stone wall. The pit in the center of the room seems to have no bottom...");
+    R60.addFeat(featureDirectory[10]);
+    R60.addFeat(featureDirectory[68]);
+    roomDirectory.push_back(R60);
+
+    Room R61(61,"You step into... your room. You can't tell if it's an illusion, but you see your own desk, and a few spare books lying open on your bed. You feel uneasy in here...");
+    R61.addFeat(featureDirectory[rand()%4+37]);
+    R61.addFeat(featureDirectory[57]);
+    R61.addFeat(featureDirectory[67]);
+    roomDirectory.push_back(R61);
+
+    Room R62(62,"The room is lit dimly by the soft glow of a single torch. Something has clearly happened here, but it seems you're too late; a burned body lies in the corner, next to several piles of charred rubble. Several weapon racks lie at the other end of the room.");
+    R62.addFeat(featureDirectory[0]);
+    R62.addFeat(featureDirectory[47]);
+    R62.addFeat(featureDirectory[61]);
+    R62.addFeat(featureDirectory[63]);
+    roomDirectory.push_back(R62);
+
+    Room R63(63,"The side wall of this room is destroyed, revealing the night sky through the rubble. Leading from the remains of the wall are tracks of black ooze, leading out of the room...");
+    R63.addFeat(featureDirectory[10]);
+    R63.addFeat(featureDirectory[22]);
+    R63.addFeat(featureDirectory[61]);
+    R63.addFeat(featureDirectory[69]);
+    roomDirectory.push_back(R63);
+
+    Room R64(64,"The doorway leads to a cascading staircase, hugging the marble walls and leading downward in the chamber, circling a massive statue of a figure holding an axe.");
+    R64.addFeat(featureDirectory[26]);
+    R64.addFeat(featureDirectory[31]);
+    roomDirectory.push_back(R64);
+
+    Room R65(65,"Through the dim light that this room is blanketed in from a number of floating candles, you can see that the floor of this room is covered in piles upon piles of bones.");
+    R65.addFeat(featureDirectory[9]);
+    R65.addFeat(featureDirectory[20]);
+    roomDirectory.push_back(R65);
+
+    Room R66(66,"You can't quite tell if this room is a lab, or a ritual site... metal tables and shelves line the walls, but in the center of the room is an altar soaked in blood, bathed in the light of a magic sigil on the ceiling above it.");
+    R66.addFeat(featureDirectory[13]);
+    R66.addFeat(featureDirectory[14]);
+    R66.addFeat(featureDirectory[17]);
+    R66.addFeat(featureDirectory[54]);
+    R66.addFeat(featureDirectory[55]);
+    R66.addFeat(featureDirectory[56]);
+    roomDirectory.push_back(R66);
+
+    Room R67(67,"In the middle of the room is a massive cage, coated in dark black ooze. The door of the cage is hanging open...");
+    R67.addFeat(featureDirectory[22]);
+    R67.addFeat(featureDirectory[48]);
+    roomDirectory.push_back(R67);
+
+    Room R68(68,"It seems like somebody was collecting things in this room... There are small piles of bones, scrap, and pieces of equipment scattered around the dirt floor of the room.");
+    R68.addFeat(featureDirectory[3]);
+    R68.addFeat(featureDirectory[20]);
+    R68.addFeat(featureDirectory[45]);
+    R68.addFeat(featureDirectory[56]);
+    roomDirectory.push_back(R68);
+
+    Room R69(69,"The cobblestone floor beneath your feet is cold and damp, and at the side of the room falls off into a deep pond.");
+    R69.addFeat(featureDirectory[2]);
+    R69.addFeat(featureDirectory[41]);
+    roomDirectory.push_back(R69);
+
+    Room R70(70,"The whole room is filled with a peculiar fog, making it difficult to step over the rubble scattered over the floor...");
+    R70.addFeat(featureDirectory[61]);
+    R70.addFeat(featureDirectory[70]);
+    roomDirectory.push_back(R70);
+
+    Room R71(71,"A single statue of a beast protrudes from a pond in the center of the room, producing an unusual fog...");
+    R71.addFeat(featureDirectory[21]);
+    R71.addFeat(featureDirectory[41]);
+    R71.addFeat(featureDirectory[70]);
+    roomDirectory.push_back(R71);
+
+    Room R72(72,"A sigil is carved into the center of the floor of a dark, dome-shaped room, emitting an amber light onto the walls. The light reveals countless runes and symbols, resembling an ancient language...");
+    R72.addFeat(featureDirectory[15]);
+    R72.addFeat(featureDirectory[17]);
+    roomDirectory.push_back(R72);
+
+    Room R73(73,"On the eastern wall you see a roaring campfire built atop the dirt, with a table set up next to it. A pantry is settled beside them.");
+    R73.addFeat(featureDirectory[3]);
+    R73.addFeat(featureDirectory[50]);
+    R73.addFeat(featureDirectory[53]);
+    R73.addFeat(featureDirectory[71]);
+    roomDirectory.push_back(R73);
+
+
+    //MINIBOSS LAIRS
+    Room R74(74,"Black slime covers every surface of a grand hall, pulsing as if it were alive... long pillars reach toward the ceilings, decorated by savage claw marks on their surface.");
+    R74.addFeat(featureDirectory[22]); //OZKOROTH
+    R74.addFeat(featureDirectory[51]);
+    R74.addFeat(featureDirectory[52]);
+    roomDirectory.push_back(R74);
+
+    Room R75(75,"The room is covered with interwoven vines, racing out of a hole in the the ceiling... You can see them growing before your very eyes...");
+    R75.addFeat(featureDirectory[30]); //ENDRIGAIA
+    R75.addFeat(featureDirectory[49]);
+    roomDirectory.push_back(R75);
+
+    Room R76(76,"You find yourself in a cramped, sprawling library, with bookshelves impossibly tall scattered about the room. Papers and books litter the floor.");
+    R76.addFeat(featureDirectory[17]); //EMERITUS
+    R76.addFeat(featureDirectory[35]);
+    R76.addFeat(featureDirectory[36]);
+    R76.addFeat(featureDirectory[rand()%4+37]);
+    roomDirectory.push_back(R76);
+
+    Room R77(77,"You enter what looks like a small haven, with a light fire burning in the corner next to a long table.");
+    R77.addFeat(featureDirectory[50]); //STIRAN
+    R77.addFeat(featureDirectory[53]);
+    roomDirectory.push_back(R77);
+
+    Room R78(78,"The atmosphere of the room is chilling as you enter; cold, metal tables and shelves lie at the perimeter of the room, with pieces of equipment lying about.");
+    R78.addFeat(featureDirectory[54]); //?????
+    R78.addFeat(featureDirectory[55]);
+    R78.addFeat(featureDirectory[56]);
+    roomDirectory.push_back(R78);
+
+    Room R79(79,"You step into what seems to be a quarters, with a small bed in the corner, with a dresser beside it. There is also a wooden table surrounded by chairs.");
+    R79.addFeat(featureDirectory[rand()%4+37]); //BYRALT
+    R79.addFeat(featureDirectory[50]);
+    R79.addFeat(featureDirectory[57]);
+    R79.addFeat(featureDirectory[58]);
+    roomDirectory.push_back(R79);
 
     return roomDirectory;
 }

@@ -20,7 +20,7 @@ void titleScreen()
     cout << " |     2) Load Game                                                                                                   | " << endl;
     cout << " |     3) Leaderboard                                                                                                 | " << endl;
     cout << " |     4) Masks                                                                                                       | " << endl;
-    cout << " |                                                                                                             v1.5.2 | " << endl;
+    cout << " |                                                                                                             v1.5.3 | " << endl;
     cout << " |____________________________________________________________________________________________________________________| " << endl;
     cout << "                                                                                                                        " << endl;
 }
