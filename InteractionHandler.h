@@ -245,6 +245,8 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                         cout << "STR " << dir.weaponDirectory[currentRoom.getIList()[i]].getStr() << endl;
                         cout << "ACC " << dir.weaponDirectory[currentRoom.getIList()[i]].getAcc() << endl;
                         cout << "CRIT " << dir.weaponDirectory[currentRoom.getIList()[i]].getCrt() << endl;
+                        if(dir.weaponDirectory[currentRoom.getIList()[i]].getMA()!=0)
+                            cout << "MAGIC AMP: +" << dir.weaponDirectory[currentRoom.getIList()[i]].getMA() << "%" << endl;
                     }
                     else if(currentRoom.getIList()[i]<200)
                     {
@@ -252,6 +254,8 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                         cout << "RARITY: " << dir.armorDirectory[currentRoom.getIList()[i]-100].getRarity() << endl;
                         cout << "DEF " << dir.armorDirectory[currentRoom.getIList()[i]-100].getDef() << endl;
                         cout << "DDG " << dir.armorDirectory[currentRoom.getIList()[i]-100].getDdg() << endl;
+                        if(dir.armorDirectory[currentRoom.getIList()[i]-100].getMG()!=0)
+                            cout << "MANA REGEN: " << dir.armorDirectory[currentRoom.getIList()[i]-100].getMG()  << endl;
                     }
                     else if(currentRoom.getIList()[i]<300)
                     {
@@ -284,6 +288,16 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                         else
                         {
                             cout << "MANA COST: " << dir.buffSpellDirectory[currentRoom.getIList()[i]-321].getManaCost() << endl;
+                            if(dir.buffSpellDirectory[currentRoom.getIList()[i]-321].getATKU()>0)
+                                cout << "ATK BUFF: " << dir.buffSpellDirectory[currentRoom.getIList()[i]-321].getATKU() << endl;
+                            if(dir.buffSpellDirectory[currentRoom.getIList()[i]-321].getDEFU()>0)
+                                cout << "DEF BUFF: " << dir.buffSpellDirectory[currentRoom.getIList()[i]-321].getDEFU() << endl;
+                            if(dir.buffSpellDirectory[currentRoom.getIList()[i]-321].getCRTU()>0)
+                                cout << "CRT BUFF: " << dir.buffSpellDirectory[currentRoom.getIList()[i]-321].getCRTU() << endl;
+                            if(dir.buffSpellDirectory[currentRoom.getIList()[i]-321].getACCU()>0)
+                                cout << "ACC BUFF: " << dir.buffSpellDirectory[currentRoom.getIList()[i]-321].getACCU() << endl;
+                            if(dir.buffSpellDirectory[currentRoom.getIList()[i]-321].getDDGU()>0)
+                                cout << "DDG BUFF: " << dir.buffSpellDirectory[currentRoom.getIList()[i]-321].getDDGU() << endl;
                         }
                     }
                     return "check";

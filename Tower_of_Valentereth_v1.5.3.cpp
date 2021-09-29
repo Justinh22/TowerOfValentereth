@@ -31,7 +31,7 @@ using std::setw;
 #include "CombatHandler.h"
 #include "GoldPicker.h"
 
-int actionHandler(string act);  //Done!
+int actionHandler(string act,bool debug_opt);  //Done!
 int combatHandler(); //Done!
 int menuHandler(Player &hero,Directory dir); //Done!
 int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom);
@@ -72,6 +72,7 @@ int main()
     string strChoice;
     int intChoice;
     int mask=-1;
+    bool debug_opt=0;
     bool good=0;
     bool men;
     while(good==0)
@@ -143,6 +144,12 @@ int main()
                     Sleep(2000);
                 }
             }
+        }
+        if(intChoice==8)
+        {
+            cout << "Debug mode activated.";
+            Sleep(2000);
+            debug_opt = 1;
         }
     }
 
@@ -368,7 +375,7 @@ int main()
         }
         cout << endl << "What do you do?" << endl;
         cin >> action;
-        err = actionHandler(action);
+        err = actionHandler(action,debug_opt);
         if(err!=-1)
         {
             if(err<4)
@@ -830,7 +837,7 @@ int main()
     return 0;
 }
 
-int actionHandler(string act)
+int actionHandler(string act, bool debug_opt)
 {
     if(act=="go"||act=="move"||act=="enter"||act=="leave"||act=="walk")
     {
@@ -870,10 +877,10 @@ int actionHandler(string act)
     {
         return 8;
     }
-    /*else if(act=="debug_go")
+    else if(act=="debug_go"&&debug_opt)
     {
         return 6;
-    }*/
+    }
     /*else if(act=="room")
     {
         return 5;
@@ -883,14 +890,14 @@ int actionHandler(string act)
         cout << "Exiting..." << endl;
         return -1;
     }*/
-    /*else if(act=="see")
+    else if(act=="see"&&debug_opt)
     {
         return 10;
-    }*/
-    /*else if(act=="miniboss")
+    }
+    else if(act=="miniboss"&&debug_opt)
     {
         return 11;
-    }*/
+    }
     else
     {
         cout << "Unknown command." << endl;
@@ -1210,6 +1217,8 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                 cout << "STR: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getStr() << endl;
                 cout << "ACC: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getAcc() << endl;
                 cout << "CRIT: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getCrt() << endl;
+                if(dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getMA()!=0)
+                    cout << "MAGIC AMP: +" << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getMA() << "%" << endl;
 
             }
             else if(currentRoom.store.storeInventory[intChoice-1]<200)
@@ -1218,6 +1227,8 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                 cout << "RARITY: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getRarity() << endl;
                 cout << "DEF: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getDef() << endl;
                 cout << "DDG: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getDdg() << endl;
+                if(dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getMG()!=0)
+                    cout << "MANA REGEN: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getMG()  << endl;
             }
             else if(currentRoom.store.storeInventory[intChoice-1]<300)
             {
@@ -1243,6 +1254,16 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                 else
                 {
                     cout << "MANA COST: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getManaCost() << endl;
+                    if(dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getATKU()>0)
+                        cout << "ATK BUFF: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getATKU() << endl;
+                    if(dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getDEFU()>0)
+                        cout << "DEF BUFF: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getDEFU() << endl;
+                    if(dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getCRTU()>0)
+                        cout << "CRT BUFF: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getCRTU() << endl;
+                    if(dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getACCU()>0)
+                        cout << "ACC BUFF: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getACCU() << endl;
+                    if(dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getDDGU()>0)
+                        cout << "DDG BUFF: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getDDGU() << endl;
                 }
             }
             cout << "PRICE: " << currentRoom.store.storeCost[intChoice-1] << endl << endl;

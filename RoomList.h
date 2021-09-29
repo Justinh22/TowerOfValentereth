@@ -347,7 +347,7 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     R66.addFeat(featureDirectory[56]);
     roomDirectory.push_back(R66);
 
-    Room R67(67,"In the middle of the room is a massive cage, coated in dark black ooze. The doorof the cage is hanging open...");
+    Room R67(67,"In the middle of the room is a massive cage, coated in dark black ooze. The door of the cage is hanging open...");
     R67.addFeat(featureDirectory[22]);
     R67.addFeat(featureDirectory[48]);
     roomDirectory.push_back(R67);
