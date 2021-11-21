@@ -365,7 +365,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
     return loot;
 }
 
-int difficultyGen(int diff, int adv, vector<bool> &mbStatus)
+int difficultyGen(int &diff, int adv, vector<bool> &mbStatus)
 {
 //Diff: The difficulty level of the chamber. From 1-5
 //Adv: The current level of advancement the player is at within the dungeon. From 1-10
@@ -384,6 +384,11 @@ int difficultyGen(int diff, int adv, vector<bool> &mbStatus)
         else
         {
             cid = minibossPicker(mbStatus);
+            if(cid==-1)
+            {
+                diff = 5;
+                cid = creaturePicker(diff+adv);
+            }
             return cid;
         }
     }

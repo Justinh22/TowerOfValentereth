@@ -57,7 +57,16 @@ int creaturePicker(int level)
 
 int minibossPicker(vector<bool> mbStatus)
 {
-    int id;
+    int id=-1;
+    for(int i=0;i<mbStatus.size();i++)
+        if(mbStatus[i]==0)
+        {
+            id = 0;
+            break;
+        }
+    if(id==-1)
+        return -1;
+
     do{
         id = rand() % 6;
     }while(mbStatus[id]==1);

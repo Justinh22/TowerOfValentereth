@@ -24,6 +24,7 @@ using std::setw;
 #include "SpellList.h"
 #include "FeatureList.h"
 #include "RoomList.h"
+#include "MapList.h"
 #include "RoomGen.h"
 #include "MenuIllustrations.h"
 #include "InteractionHandler.h"
@@ -56,6 +57,7 @@ int main()
     vector<Creature> creatureDirectory;
     vector<Feature> featureDirectory;
     vector<Room> roomDirectory;
+    vector<vector<vector<char>>> mapDirectory;
 
     weaponDirectory = initWDir(weaponDirectory);
     armorDirectory = initADir(armorDirectory);
@@ -67,14 +69,19 @@ int main()
     creatureDirectory = initCDir(creatureDirectory);
     featureDirectory = initFDir(featureDirectory);
     roomDirectory = initRDir(roomDirectory,featureDirectory);
+    mapDirectory = initMapDir(mapDirectory);
     Directory dir(weaponDirectory,armorDirectory,consumableDirectory,maskDirectory,attackSpellDirectory,healingSpellDirectory,buffSpellDirectory,creatureDirectory,featureDirectory,roomDirectory);
 
     string strChoice;
+    char chChoice;
     int intChoice;
     int mask=-1;
     bool debug_opt=0;
     bool good=0;
     bool men;
+    int mapx=171;
+    int mapy=39;
+    bool floorFlag=0;
     while(good==0)
     {
         clear();
@@ -151,6 +158,99 @@ int main()
             Sleep(2000);
             debug_opt = 1;
         }
+        /*if(intChoice==9)
+        { //Test sim
+            /*for(int i=0;i<mapDirectory[2].size();i++)
+            {
+                for(int j=0;j<mapDirectory[2][i].size();j++)
+                    cout << mapDirectory[2][i][j];
+                cout << endl;
+            }
+            getch();
+            while(1==1)
+            {
+                clear();
+                mapDirectory[0][mapy][mapx] = '@';
+                cout << "X----------------X" << endl;
+                for(int i=mapy-4;i<mapy+4;i++)
+                {
+                    cout << "|";
+                    for(int j=mapx-8;j<mapx+8;j++)
+                        cout << mapDirectory[0][i][j];
+                    cout << "|" << endl;
+                }
+                cout << "X----------------X" << endl << endl;
+                cout << "Navigate with arrow keys." << endl;
+                cout << "Press any key to type commands." << endl << endl;
+                chChoice = getch();
+                if(!isalpha(chChoice))
+                {
+                    switch(getch())
+                    {
+                        case 'H':    // key up
+                            if(!floorFlag)
+                                mapDirectory[0][mapy][mapx] = ' ';
+                            else
+                            {
+                                mapDirectory[0][mapy][mapx] = '_';
+                                floorFlag = 0;
+                            }
+                            if(mapDirectory[0][mapy-1][mapx] == ' ')
+                                mapy--;
+                            break;
+                        case 'P':    // key down
+                            if(!floorFlag)
+                                mapDirectory[0][mapy][mapx] = ' ';
+                            else
+                            {
+                                mapDirectory[0][mapy][mapx] = '_';
+                                floorFlag = 0;
+                            }
+                            if(mapDirectory[0][mapy+1][mapx] == ' '||mapDirectory[0][mapy+1][mapx] == '_')
+                            {
+                                if(mapDirectory[0][mapy+1][mapx] == '_')
+                                    floorFlag = 1;
+                                mapy++;
+                            }
+                            else if(mapDirectory[0][mapy][mapx] == '_')
+                                floorFlag = 1;
+                            break;
+                        case 'M':    // key right
+                            if(!floorFlag)
+                                mapDirectory[0][mapy][mapx] = ' ';
+                            else
+                            {
+                                mapDirectory[0][mapy][mapx] = '_';
+                                floorFlag = 0;
+                            }
+                            if(mapDirectory[0][mapy][mapx+1] == ' '||mapDirectory[0][mapy][mapx+1] == '_')
+                            {
+                                if(mapDirectory[0][mapy][mapx+1] == '_')
+                                    floorFlag = 1;
+                                mapx++;
+                            }
+                            break;
+                        case 'K':    // key left
+                            if(!floorFlag)
+                                mapDirectory[0][mapy][mapx] = ' ';
+                            else
+                            {
+                                mapDirectory[0][mapy][mapx] = '_';
+                                floorFlag = 0;
+                            }
+                            if(mapDirectory[0][mapy][mapx-1] == ' '||mapDirectory[0][mapy][mapx-1] == '_')
+                            {
+                                if(mapDirectory[0][mapy][mapx-1] == '_')
+                                    floorFlag = 1;
+                                mapx--;
+                            }
+                            break;
+                    }
+                }
+                else
+                    cin >> strChoice;
+            }
+        }*/
     }
 
     string name;
