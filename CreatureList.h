@@ -75,60 +75,60 @@ vector<Creature> initCDir(vector<Creature> creatureDirectory)
     //10
     Creature Stone_Golem("Stone Golem",10,32,56,28,80,14,0);
     creatureDirectory.push_back(Stone_Golem);
-    Creature Demon("Demon",10,33,32,35,90,7,15);
+    Creature Demon("Demon",10,33,40,35,90,7,15);
     creatureDirectory.push_back(Demon);
-    Creature Dark_Mage("Dark Mage",10,34,26,37,85,5,15);
+    Creature Dark_Mage("Dark Mage",10,34,32,37,85,5,15);
     creatureDirectory.push_back(Dark_Mage);
-    Creature Cyclops("Cyclops",10,35,44,34,85,11,0);
+    Creature Cyclops("Cyclops",10,35,50,34,85,11,0);
     creatureDirectory.push_back(Cyclops);
     //11
-    Creature Vampire("Vampire",11,36,36,34,95,9,15);
+    Creature Vampire("Vampire",11,36,44,34,95,9,15);
     creatureDirectory.push_back(Vampire);
-    Creature Phantom_Gladiator("Phantom Gladiator",11,37,50,32,100,10,0);
+    Creature Phantom_Gladiator("Phantom Gladiator",11,37,60,32,100,10,0);
     creatureDirectory.push_back(Phantom_Gladiator);
-    Creature Gorgon("Gorgon",11,38,64,30,85,12,0);
+    Creature Gorgon("Gorgon",11,38,74,30,85,12,0);
     creatureDirectory.push_back(Gorgon);
     //12
-    Creature Iron_Golem("Iron Golem",12,39,64,30,85,24,0);
+    Creature Iron_Golem("Iron Golem",12,39,80,30,85,24,0);
     creatureDirectory.push_back(Iron_Golem);
-    Creature Demon_Lord("Demon Lord",12,40,52,40,105,15,15);
+    Creature Demon_Lord("Demon Lord",12,40,68,40,105,15,15);
     creatureDirectory.push_back(Demon_Lord);
-    Creature Behemoth("Behemoth",12,41,60,36,90,18,10);
+    Creature Behemoth("Behemoth",12,41,76,36,90,18,10);
     creatureDirectory.push_back(Behemoth);
     //13
-    Creature Storm_Giant("Storm Giant",13,42,60,44,90,16,15);
+    Creature Storm_Giant("Storm Giant",13,42,86,44,90,16,15);
     creatureDirectory.push_back(Storm_Giant);
-    Creature Fallen_Angel("Fallen Angel",13,43,55,46,110,12,15);
+    Creature Fallen_Angel("Fallen Angel",13,43,68,46,110,12,15);
     creatureDirectory.push_back(Fallen_Angel);
-    Creature Pheonix("Pheonix",13,44,58,44,100,13,25);
+    Creature Pheonix("Pheonix",13,44,66,44,100,13,25);
     creatureDirectory.push_back(Pheonix);
     //14
-    Creature Valentium_Golem("Valentium Golem",14,45,72,34,90,30,0);
+    Creature Valentium_Golem("Valentium Golem",14,45,96,34,90,30,0);
     creatureDirectory.push_back(Valentium_Golem);
-    Creature Red_Dragon("Red Dragon",14,46,64,50,100,20,15);
+    Creature Red_Dragon("Red Dragon",14,46,80,50,100,20,15);
     creatureDirectory.push_back(Red_Dragon);
-    Creature Duskwalker("Duskwalker",14,47,50,52,100,14,35);
+    Creature Duskwalker("Duskwalker",14,47,64,52,100,14,35);
     creatureDirectory.push_back(Duskwalker);
     //15
-    Creature Valentereth("Valentereth, the Tyrant",15,48,100,54,100,24,15); //48
+    Creature Valentereth("Valentereth, the Tyrant",15,48,100,60,110,26,15); //48
     creatureDirectory.push_back(Valentereth);
     //16
-    Creature Valentium_Titan("Valentium Titan",16,49,84,38,90,32,0);
+    Creature Valentium_Titan("Valentium Titan",16,49,104,38,90,32,0);
     creatureDirectory.push_back(Valentium_Titan);
-    Creature Gold_Dragon("Gold Dragon",16,50,70,56,105,24,15);
+    Creature Gold_Dragon("Gold Dragon",16,50,86,56,105,24,15);
     creatureDirectory.push_back(Gold_Dragon);
-    Creature Silver_Dragon("Silver Dragon",16,51,70,52,120,18,20);
+    Creature Silver_Dragon("Silver Dragon",16,51,86,52,120,18,20);
     creatureDirectory.push_back(Silver_Dragon);
-    Creature Demon_King("Demon King",16,52,70,46,110,19,20);
+    Creature Demon_King("Demon King",16,52,86,46,110,19,20);
     creatureDirectory.push_back(Demon_King);
-    Creature Elemental_Titan("Elemental Titan",16,53,64,50,100,20,15);
+    Creature Elemental_Titan("Elemental Titan",16,53,80,50,100,20,15);
     creatureDirectory.push_back(Elemental_Titan);
-    Creature Hero("Hero",16,54,84,54,100,26,20);
+    Creature Hero("Hero",16,54,90,54,100,26,20);
     creatureDirectory.push_back(Hero);
-    Creature Hydra("Hydra",16,55,80,50,100,30,10);
+    Creature Hydra("Hydra",16,55,90,50,100,30,10);
     creatureDirectory.push_back(Hydra);
     //17
-    Creature Termineth("Termineth",17,56,100,80,145,60,35); //56
+    Creature Termineth("Termineth",17,56,200,80,145,50,35); //56
     creatureDirectory.push_back(Termineth);
 
     //Minibosses
@@ -148,16 +148,16 @@ vector<Creature> initCDir(vector<Creature> creatureDirectory)
     Creature Endrigaia("Endrigaia, the Ever-Growing",18,58,34,18,85,1,5);
     creatureDirectory.push_back(Endrigaia);
     //ABILITY: Regrowth - Endrigaia will regenerate 15% of her HP every turn
-    Creature Emeritus("Emeritus, the Enlightened Sorcerer",18,59,26,22,80,2,20);
+    Creature Emeritus("Emeritus, the Enlightened Sorcerer",18,59,26,22,80,2,15);
     creatureDirectory.push_back(Emeritus);
     //ABILITY: Archmage - Emeritus never misses with his spells
     Creature Stiran("Stiran, the Famed Bounty-Hunter",18,60,34,20,70,4,10);
     creatureDirectory.push_back(Stiran);
     //ABILITY: Parry - If the player misses an attack, Stiran will parry, dealing double damage if he hits
-    Creature Question("?????, the Cursed Amalgamation",18,61,42,17,70,1,20);
+    Creature Question("?????, the Cursed Amalgamation",18,61,42,17,70,1,15);
     creatureDirectory.push_back(Question);
     //ABILITY: Absorb - Damage dealt to ????? will be reduced by 30%
-    Creature Byralt("Byralt, Valentereth's Scion",18,62,30,20,90,2,30);
+    Creature Byralt("Byralt, Valentereth's Scion",18,62,30,20,90,2,20);
     creatureDirectory.push_back(Byralt);
     //ABILITY: Dark Magic - The player will lose HP equal to their level every turn in combat
 

@@ -18,6 +18,8 @@ using std::string;
 using std::cin;
 using std::vector;
 using std::setw;
+#include "AchievementHandler.h"
+Achievements ach;
 #include "ItemClasses.h"
 #include "ItemList.h"
 #include "CreatureList.h"
@@ -32,7 +34,7 @@ using std::setw;
 #include "CombatHandler.h"
 #include "GoldPicker.h"
 
-int actionHandler(string act,bool debug_opt);  //Done!
+int actionHandler(string act,bool debug_opt, int gankTracker);  //Done!
 int combatHandler(); //Done!
 int menuHandler(Player &hero,Directory dir); //Done!
 int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom);
@@ -107,6 +109,19 @@ int main()
             }
         }
         if(intChoice==4)
+        {
+            men = 0;
+            while(men==0)
+            {
+                achievementMenu();
+                strChoice = getch();
+                std::stringstream stoi(strChoice);
+                stoi >> intChoice;
+                if(intChoice==0)
+                    men = 1;
+            }
+        }
+        if(intChoice==5)
         {
             men = 0;
             while(men==0)
@@ -347,7 +362,6 @@ int main()
                 cout << "KEYS: " << saveStats[12] << endl;
                 if(saveStats[14]>=0)
                 {
-                    cout << "check" << endl;
                     cout << "MASK: " << dir.maskDirectory[saveStats[14]].getName() << endl << endl;
                 }
                 cout << "Continue with this character? (y/n)" << endl;
@@ -419,7 +433,8 @@ int main()
 
     if(hero.getNDDG()==0&&hero.mask.getID()==5) //Whispers
         hero.setNDDG(25);
-
+    if(hero.mask.getID()==1) //Wrath
+        hero.setACC(hero.getACC()-10);
     srand(time(NULL));
     string action;
     string target;
@@ -450,6 +465,7 @@ int main()
     bool manSave = 0;
     bool dev=0;
     bool itemDrop=0;
+    bool gankTracker=1;
 
     cout << "Floor " << depth << endl;
     currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
@@ -475,7 +491,7 @@ int main()
         }
         cout << endl << "What do you do?" << endl;
         cin >> action;
-        err = actionHandler(action,debug_opt);
+        err = actionHandler(action,debug_opt,gankTracker);
         if(err!=-1)
         {
             if(err<4)
@@ -525,11 +541,33 @@ int main()
                     {
                         pass = 1;
                         currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,itemStatus,dev);
+                        continue;
                     }
                     if(boss==1)
                     {
                         win = 1;
                         std::system("cls");
+                        ach.Tyrant = 1;
+                        if(hero.mask.getID()==0)
+                            ach.GlassTriumph = 1;
+                        if(hero.mask.getID()==1)
+                            ach.WrathTriumph = 1;
+                        if(hero.mask.getID()==2)
+                            ach.DarknessTriumph = 1;
+                        if(hero.mask.getID()==3)
+                            ach.ArcanaTriumph = 1;
+                        if(hero.mask.getID()==4)
+                            ach.SteelTriumph = 1;
+                        if(hero.mask.getID()==5)
+                            ach.WhispersTriumph = 1;
+                        if(hero.mask.getID()==6)
+                            ach.BeastsTriumph = 1;
+                        if(hero.mask.getID()==7)
+                            ach.SoulsTriumph = 1;
+                        if(ach.GlassTriumph==1&&ach.WrathTriumph==1&&ach.DarknessTriumph==1&&ach.ArcanaTriumph==1&&ach.SteelTriumph==1&&ach.WhispersTriumph==1&&ach.BeastsTriumph==1&&ach.SoulsTriumph==1)
+                            ach.SpectrumTriumph = 1;
+                        if(gankTracker==1)
+                            ach.Gank = 1;
                         cout << "Valentereth falls to the ground, motionless. She is defeated." << endl;
                         Sleep(2000);
                         cout << "As she lay there, the same energy that had hold of her rushes from her body, and into yours." << endl;
@@ -560,6 +598,7 @@ int main()
                     }
                     if(boss==2)
                     {
+                        ach.Truth = 1;
                         end = 1;
                         win = 1;
                         break;
@@ -669,23 +708,25 @@ int main()
                     if(yn=='y')
                     {
                         foo = rand() % 100 + 1;
-                        if(hero.getDDG()>=15)
+                        if(hero.getDDG()>=currentRoom.monster.getLEV()*3)
                         {
-                            if(foo>50) //pass
+                            if(foo>25) //pass
                             {
                                 cout << "You escape successfully!" << endl;
                                 Sleep(2000);
                                 good = 1;
                             }
-                            else if(foo>25) //pass, but damage
+                            else if(foo>10) //pass, but damage
                             {
                                 cout << "The enemy attacks as you escape!" << endl;
                                 Sleep(2000);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
-                                if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
+                                if(hero.mask.getID()==0) //Glass
                                     dmg = dmg*2;
+                                if(hero.mask.getID()==5) //Whispers
+                                    dmg = static_cast<float>(dmg)*1.5;
                                 if(hero.mask.getID()==4) //Steel
-                                    dmg = dmg/2;
+                                    dmg = static_cast<float>(dmg)*.7;
                                 if(dmg<0)
                                     dmg = 0;
                                 hero.changeHP(-dmg);
@@ -698,10 +739,12 @@ int main()
                                 cout << "The enemy knocks you back into the room, blocking your way!" << endl;
                                 Sleep(2000);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
-                                if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
+                                if(hero.mask.getID()==0) //Glass
                                     dmg = dmg*2;
+                                if(hero.mask.getID()==5) //Whispers
+                                    dmg = static_cast<float>(dmg)*1.5;
                                 if(hero.mask.getID()==4) //Steel
-                                    dmg = dmg/2;
+                                    dmg = static_cast<float>(dmg)*.7;
                                 if(dmg<0)
                                     dmg = 0;
                                 hero.changeHP(-dmg);
@@ -712,21 +755,23 @@ int main()
                         }
                         else
                         {
-                            if(foo>66) //pass
+                            if(foo>40) //pass
                             {
                                 cout << "You escape successfully!" << endl;
                                 Sleep(2000);
                                 good = 1;
                             }
-                            else if(foo>33) //pass, but damage
+                            else if(foo>20) //pass, but damage
                             {
                                 cout << "The enemy attacks as you escape!" << endl;
                                 Sleep(2000);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
-                                if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
+                                if(hero.mask.getID()==0) //Glass
                                     dmg = dmg*2;
+                                if(hero.mask.getID()==5) //Whispers
+                                    dmg = static_cast<float>(dmg)*1.5;
                                 if(hero.mask.getID()==4) //Steel
-                                    dmg = dmg/2;
+                                    dmg = static_cast<float>(dmg)*.7;
                                 if(dmg<0)
                                     dmg = 0;
                                 hero.changeHP(-dmg);
@@ -739,10 +784,12 @@ int main()
                                 cout << "The enemy knocks you back into the room, blocking your way!" << endl;
                                 Sleep(2000);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
-                                if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
+                                if(hero.mask.getID()==0) //Glass
                                     dmg = dmg*2;
+                                if(hero.mask.getID()==5) //Whispers
+                                    dmg = static_cast<float>(dmg)*1.5;
                                 if(hero.mask.getID()==4) //Steel
-                                    dmg = dmg/2;
+                                    dmg = static_cast<float>(dmg)*.7;
                                 if(dmg<0)
                                     dmg = 0;
                                 hero.changeHP(-dmg);
@@ -826,11 +873,11 @@ int main()
                 cout << endl;
                 cout << "Actions:" << endl;
                 cout << "    MOVE: move <target>" << endl;
-                cout << "        -Synonyms: Go, Enter, Leave, Walk" << endl;
+                cout << "        -Synonyms: Go, Enter, Leave, Walk, Next" << endl;
                 cout << "        -Meaning: Used to enter a new area." << endl;
                 cout << "        -EG: enter door" << endl;
                 cout << "    LOOK: look <target>" << endl;
-                cout << "        -Synonyms: Check, Examine" << endl;
+                cout << "        -Synonyms: Check, Examine, See" << endl;
                 cout << "        -Meaning: Used to examine a feature in the room." << endl;
                 cout << "        -EG: check crates" << endl;
                 cout << "    GET: get <target>" << endl;
@@ -838,11 +885,11 @@ int main()
                 cout << "        -Meaning: Used to acquire a new item." << endl;
                 cout << "        -EG: get wooden sword" << endl;
                 cout << "    ATTACK: attack <target>" << endl;
-                cout << "        -Synonyms: Fight, Gank, Strike, Kill" << endl;
+                cout << "        -Synonyms: Fight, Strike, Kill" << endl;
                 cout << "        -Meaning: Used to engage in combat with a creature." << endl;
                 cout << "        -EG: attack ogre" << endl;
                 cout << "    MENU: menu" << endl;
-                cout << "        -Synonyms: Inventory, Pause, M" << endl;
+                cout << "        -Synonyms: Inventory, Pause, M, Items" << endl;
                 cout << "        -Meaning: Opens up your menu." << endl;
                 cout << "        -EG: menu" << endl;
                 cout << "    SAVE: save" << endl;
@@ -850,7 +897,7 @@ int main()
                 cout << "        -Meaning: Enables/Disables manual saving (Autosave enabled by default)." << endl;
                 cout << "        -EG: save" << endl;
                 cout << "    HELP: help" << endl;
-                cout << "        -Synonyms: Manual" << endl;
+                cout << "        -Synonyms: Manual, H, Guide" << endl;
                 cout << "        -Meaning: Opens a guide to actions." << endl;
                 cout << "        -EG: help" << endl;
                 cout << endl;
@@ -899,6 +946,8 @@ int main()
             cout <<"GAME OVER!" << endl;
             cout << "You conquered the Tower of Valentereth after " << depth << " floors!" << endl;
             remove(filename.c_str());
+            ach.WakeUp++;
+            ach.RiseAndShine++;
             Sleep(2000);
             if(hiscores(hero,depth))
             {
@@ -923,6 +972,8 @@ int main()
     {
         clear();
         remove(filename.c_str());
+        ach.WakeUp++;
+        ach.RiseAndShine++;
         cout << "GAME OVER!" << endl;
         cout << "You made it to floor " << depth << "!" << endl;
         Sleep(2000);
@@ -934,37 +985,35 @@ int main()
     }
     else
         Sleep(2000);
+    ach.writeAchievements();
     return 0;
 }
 
-int actionHandler(string act, bool debug_opt)
+int actionHandler(string act, bool debug_opt, int gankTracker)
 {
-    if(act=="go"||act=="move"||act=="enter"||act=="leave"||act=="walk")
+    if(act=="go"||act=="move"||act=="enter"||act=="leave"||act=="walk"||act=="next")
     {
         //cout << "You go to the ";
         return 0;
     }
-    else if(act=="look"||act=="check"||act=="examine")
+    else if(act=="look"||act=="check"||act=="examine"||act=="see")
     {
         //cout << "You look at the ";
         return 1;
     }
-    /*else if(act=="use"||act=="try")
-    {
-        cout << "You use the ";
-        return 0;
-    }*/
-    else if(act=="take"||act=="get"||act=="grab"||act=="add")
+    else if(act=="take"||act=="get"||act=="grab"||act=="add"||act=="yoink"||act=="pickup")
     {
         //cout << "You take the ";
         return 2;
     }
-    else if(act=="attack"||act=="fight"||act=="gank"||act=="strike"||act=="kill")
+    else if(act=="attack"||act=="fight"||act=="gank"||act=="strike"||act=="kill"||act=="murder")
     {
+        if(act!="gank")
+            gankTracker = 0;
         //cout << "You attack the ";
         return 3;
     }
-    else if(act=="menu"||act=="inventory"||act=="pause"||act=="m")
+    else if(act=="menu"||act=="inventory"||act=="pause"||act=="m"||act=="items")
     {
         //cout << "You open your menu." << endl;
         return 4;
@@ -973,28 +1022,19 @@ int actionHandler(string act, bool debug_opt)
     {
         return 7;
     }
-    else if(act=="help"||act=="manual"||act=="instructions")
+    else if(act=="help"||act=="manual"||act=="instructions"||act=="guide"||act=="h")
     {
         return 8;
     }
-    else if(act=="debug_go"&&debug_opt)
+    else if((act=="debug_go"||act=="dgo")&&debug_opt)
     {
         return 6;
     }
-    /*else if(act=="room")
-    {
-        return 5;
-    }*/
-    /*else if(act=="exit")
-    {
-        cout << "Exiting..." << endl;
-        return -1;
-    }*/
-    else if(act=="see"&&debug_opt)
+    else if((act=="see"||act=="look_all")&&debug_opt)
     {
         return 10;
     }
-    else if(act=="miniboss"&&debug_opt)
+    else if((act=="miniboss"||act=="summon")&&debug_opt)
     {
         return 11;
     }
@@ -1169,6 +1209,10 @@ int menuHandler(Player &hero, Directory dir)
                             Sleep(2000);
                         }
                         hero.inventory.erase(hero.inventory.begin()+intChoice-1);
+                        if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getName()=="Bread")
+                            ach.Connoisseur++;
+                        if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getID()>=204&&dir.consumableDirectory[hero.inventory[intChoice-1]-200].getID()<=211)
+                            ach.Alchemist++;
                     }
                     else if(strChoice=="2")
                     {
@@ -1464,6 +1508,7 @@ void saveFunc(Player &hero,string filename, int depth)
     for(int i=0;i<hero.spellbook.size();i++)
         saveFile << " " << hero.spellbook[i];
     saveFile << " " << -1;
+    ach.writeAchievements();
     saveFile.close();
 }
 
@@ -1549,11 +1594,13 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
     //cout << "Karma: " << karma << endl;
     if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
     {
+        int egHPBuff = ((depth/5)-11)*6;
         int egStrBuff = ((depth/5)-11)*4;
         int egAccBuff = ((depth/5)-11)*3;
         int egDefBuff = ((depth/5)-11)*4;
         int egDdgBuff = ((depth/5)-11)*2;
 
+        currentRoom.monster.setHP(currentRoom.monster.getHP()+egHPBuff);
         currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
         currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
         currentRoom.monster.setDEF(currentRoom.monster.getDEF()+egDefBuff);

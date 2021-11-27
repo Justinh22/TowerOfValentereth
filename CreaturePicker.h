@@ -55,7 +55,7 @@ int creaturePicker(int level)
     return id;
 }
 
-int minibossPicker(vector<bool> mbStatus)
+int minibossPicker(vector<bool> &mbStatus)
 {
     int id=-1;
     for(int i=0;i<mbStatus.size();i++)

@@ -58,7 +58,7 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     Room R14(14,"An unnatural shade fills this room, making it difficult to see around the walls of the chamber...");
     roomDirectory.push_back(R14);
 
-    Room R15(15,"You look upon a massive room, with large niches cut into the stone walls, colding coffins.");
+    Room R15(15,"You look upon a massive room, with large niches cut into the stone walls, holding coffins.");
     R15.addFeat(featureDirectory[11]);
     roomDirectory.push_back(R15);
 
@@ -303,7 +303,7 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     R59.addFeat(featureDirectory[67]);
     roomDirectory.push_back(R59);
 
-    Room R60(60,"You have to catch yourself as you enter a wide circular room, with most the floor missing apart from awalkway around the outer stone wall. The pit in the center of the room seems to have no bottom...");
+    Room R60(60,"You have to catch yourself as you enter a wide circular room, with most the floor missing apart from a walkway around the outer stone wall. The pit in the center of the room seems to have no bottom...");
     R60.addFeat(featureDirectory[10]);
     R60.addFeat(featureDirectory[68]);
     roomDirectory.push_back(R60);

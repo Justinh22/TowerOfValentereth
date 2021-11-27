@@ -352,6 +352,17 @@ public:
             eqpAmr=amr;
         def=amr.getDef()+ndef;
         ddg=amr.getDdg()+nddg;
+
+        if(eqpWpn.getName()=="Ordointh"&&eqpAmr.getName()=="Robe of the Archmage")
+            ach.SorcererSupreme = 1;
+        if(eqpWpn.getName()=="Teratra"&&eqpAmr.getName()=="Shield of the Conquerer")
+            ach.Conquerer = 1;
+        if((eqpWpn.getName()=="Hyliat"||eqpWpn.getName()=="Pyrithia")&&eqpAmr.getName()=="Plate of the Vanguard")
+            ach.Vanguard = 1;
+        if(eqpWpn.getName()=="Aerolinde"&&eqpAmr.getName()=="Cloak of the Whisper")
+            ach.Whisper = 1;
+        if(eqpWpn.getName()=="Chaotrix"&&eqpAmr.getName()=="Helm of the Ancients")
+            ach.AncientPower = 1;
     }
     void equipWpn(Weapon wpn)
     {
@@ -359,7 +370,7 @@ public:
         if(mask.getID()==1) //Wrath
         {
             str=wpn.getStr()+(nstr+(nstr/2));
-            acc=wpn.getAcc()-20;
+            acc=wpn.getAcc()-10;
             crit=wpn.getCrt()+(ncrit+(ncrit/2));
         }
         else
@@ -368,6 +379,17 @@ public:
             acc=wpn.getAcc();
             crit=wpn.getCrt()+ncrit;
         }
+
+        if(eqpWpn.getName()=="Ordointh"&&eqpAmr.getName()=="Robe of the Archmage")
+            ach.SorcererSupreme = 1;
+        if(eqpWpn.getName()=="Teratra"&&eqpAmr.getName()=="Shield of the Conquerer")
+            ach.Conquerer = 1;
+        if((eqpWpn.getName()=="Hyliat"||eqpWpn.getName()=="Pyrithia")&&eqpAmr.getName()=="Plate of the Vanguard")
+            ach.Vanguard = 1;
+        if(eqpWpn.getName()=="Aerolinde"&&eqpAmr.getName()=="Cloak of the Whisper")
+            ach.Whisper = 1;
+        if(eqpWpn.getName()=="Chaotrix"&&eqpAmr.getName()=="Helm of the Ancients")
+            ach.AncientPower = 1;
     }
     vector<int> equipment;
     vector<int> inventory;
