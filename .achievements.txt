@@ -17,7 +17,7 @@
 0 Necromancy
 0 SorcererSupreme
 0 Conquerer
-1 Vanguard
+0 Vanguard
 0 Whisper
 0 AncientPower
 0 GlassTriumph
