@@ -102,7 +102,6 @@ public:
         ach << Scion << " Scion\n";
         ach << Archmage << " Archmage\n";
         ach << NaturesWrath << " NaturesWrath\n";
-        ach << Slayer << " Slayer\n";
         ach << Unstoppable << " Unstoppable\n";
         ach << Nuke << " Nuke\n";
         ach << Overkill << " Overkill\n";
@@ -214,7 +213,6 @@ public:
     int Scion;
     int Archmage;
     int NaturesWrath;
-    int Slayer;
     int Unstoppable;
     int Nuke;
     int Overkill;
