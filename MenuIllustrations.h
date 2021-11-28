@@ -32,23 +32,24 @@ void scores()
     string data;
     string clear;
     string nameArr[10];
+    int scoreArr[10];
     int depthArr[10];
     int i = 0;
 
     while(std::getline(readFile,data))
     {
         std::stringstream line(data);
-        line >> nameArr[i] >> depthArr[i];
+        line >> nameArr[i] >> scoreArr[i] >> depthArr[i];
         i++;
         if(i>=10)
             break;
     }
 
     std::system("cls");
-    cout << "/----------------------------------------------------\\" << endl;
-    cout << "|-                                                  -|" << endl;
-    cout << "|-                   HIGH  SCORES                   -|" << endl;
-    cout << "|-                                                  -|" << endl;
+    cout << "/----------------------------------------------------------------------\\" << endl;
+    cout << "|-                                                                    -|" << endl;
+    cout << "|-                            HIGH  SCORES                            -|" << endl;
+    cout << "|-                                                                    -|" << endl;
     for(int i=0;i<10;i++)
     {
         if(nameArr[i]=="")
@@ -64,13 +65,13 @@ void scores()
         }
         else
             clear = "     ";
-        data = std::to_string(i+1) + ") " + nameArr[i] + " | " + std::to_string(depthArr[i]) + " floors    " + clear;
-        cout << "|-      " << setw(40) << std::left << data << "    -|" << endl;
+        data = std::to_string(i+1) + ") " + nameArr[i] + " | " + std::to_string(scoreArr[i]) + " points, " + std::to_string(depthArr[i]) + " floors    " + clear;
+        cout << "|-      " << setw(58) << std::left << data << "    -|" << endl;
     }
-    cout << "|-                                                  -|" << endl;
-    cout << "|-      0) RETURN                                   -|" << endl;
-    cout << "|-                                                  -|" << endl;
-    cout << "\\----------------------------------------------------/" << endl;
+    cout << "|-                                                                    -|" << endl;
+    cout << "|-      0) RETURN                                                     -|" << endl;
+    cout << "|-                                                                    -|" << endl;
+    cout << "\\----------------------------------------------------------------------/" << endl;
 }
 
 void maskSelect()
@@ -201,6 +202,7 @@ void statMenu(Player hero, Directory dir)
     cout << "|-                                                  -|" << endl;
     cout << "|-      " << setw(20) << std::left << hero.getName() << "           LEVEL " << setw(2) << std::left << hero.level << "     -|" << endl;
     cout << "|-      EXP: " << setw(7) << std::left << std::to_string(hero.exp) + "/" + std::to_string(hero.getEXPGoal()) << "                   GOLD: " << setw(5) << std::left << hero.gold << "  -|" << endl;
+    cout << "|-      SCORE: " << setw(6) << std::left << score << "                               -|" << endl;
     cout << "|-      HP: " << setw(3) << std::right << hero.getHP() << "/" << setw(3) << std::left << hero.getMHP() << "                 MP: " << setw(3) << std::right << hero.getMP() << "/" << setw(3) << std::left << hero.getMMP() << "     -|" << endl;
     cout << "|-                                                  -|" << endl;
     cout << "|-      WPN: " << setw(36) << std::left << hero.eqpWpn.getName() << "   -|" << endl;

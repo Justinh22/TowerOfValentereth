@@ -613,10 +613,14 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         hero.exp += ex;
         cout << "You earned " << gd << " gold!" << endl;
         cout << "You gained " << ex << " exp!" << endl;
+        score += 10*monster.getLEV();
+        score += gd;
         ach.Expert++;
+        ach.Unstoppable++;
         Sleep(2000);
         if(monster.getID()>=57)
         {
+            score += 100;
             switch(monster.getID())
             {
                 case 57:
@@ -692,6 +696,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
     }
     if(end==3)
     {
+        score += 10;
         std::system("cls");
         return 3;
     }

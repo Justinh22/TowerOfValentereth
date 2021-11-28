@@ -20,6 +20,7 @@ using std::vector;
 using std::setw;
 #include "AchievementHandler.h"
 Achievements ach;
+int score = 0;
 #include "ItemClasses.h"
 #include "ItemList.h"
 #include "CreatureList.h"
@@ -270,7 +271,7 @@ int main()
 
     string name;
     string filename;
-    int saveStats[17];
+    int saveStats[18];
     int depth = 1;
     string save;
     string saveName;
@@ -304,6 +305,7 @@ int main()
         saveStats[14] = -1;
         saveStats[15] = -1;
         saveStats[16] = -1;
+        saveStats[17] = 0;
     }
     else if(intChoice==2)
     {
@@ -323,7 +325,7 @@ int main()
                 {
                     std::stringstream data(save);
                     saveFound = 1;
-                    for(int i=0;i<17;i++)
+                    for(int i=0;i<18;i++)
                         data >> saveStats[i];
                     for(int i=0;i<6;i++)
                     {
@@ -360,6 +362,7 @@ int main()
                 cout << "DDG: " << saveStats[10] << endl;
                 cout << "DEPTH: " << saveStats[11] << endl;
                 cout << "KEYS: " << saveStats[12] << endl;
+                cout << "SCORE: " << saveStats[17] << endl;
                 if(saveStats[14]>=0)
                 {
                     cout << "MASK: " << dir.maskDirectory[saveStats[14]].getName() << endl << endl;
@@ -392,6 +395,7 @@ int main()
                     saveStats[14] = -1;
                     saveStats[15] = -1;
                     saveStats[16] = -1;
+                    saveStats[17] = 0;
                     good = 1;
                 }
                 else
@@ -419,6 +423,7 @@ int main()
         hero.spellbook = spellSave;
     }
     depth = saveStats[11];
+    score = saveStats[17];
     if((depth/5)+2>11)
         hero.empowered = 1;
     if(saveStats[15]!=-1)
@@ -547,6 +552,7 @@ int main()
                     {
                         win = 1;
                         std::system("cls");
+                        score += 500;
                         ach.Tyrant = 1;
                         if(hero.mask.getID()==0)
                             ach.GlassTriumph = 1;
@@ -599,6 +605,7 @@ int main()
                     if(boss==2)
                     {
                         ach.Truth = 1;
+                        score += 1000;
                         end = 1;
                         win = 1;
                         break;
@@ -808,6 +815,7 @@ int main()
                         }
                         if(good==1)
                         {
+                            score += 10;
                             currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,itemStatus,dev);
                         }
                     }
@@ -1492,7 +1500,8 @@ void saveFunc(Player &hero,string filename, int depth)
     saveFile.open(filename);
     saveFile << hero.level << " " << hero.exp << " " << hero.gold << " " << hero.getHP() << " " << hero.getMHP() << " " << hero.getMP() << " "
              << hero.getMMP() << " " << hero.getNSTR() << " " << hero.getNCRT() << " " << hero.getNDEF() << " " << hero.getNDDG() << " " << depth
-             << " " << hero.keys << " " << hero.growth << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID();
+             << " " << hero.keys << " " << hero.growth << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID() <<
+             " " << score;
     for(int i=0;i<hero.equipment.size();i++)
     {
         saveFile << " " << hero.equipment[i];
@@ -1517,10 +1526,12 @@ bool hiscores(Player &hero, int depth)
     std::ifstream readFile("HighScores.txt");
     string data;
     string nameArr[10];
+    int scoreArr[10];
     int depthArr[10];
     int i = 0;
     int flag=-1;
     string nameHold;
+    int scoreHold;
     int depthHold;
 
     while(std::getline(readFile,data))
@@ -1533,16 +1544,16 @@ bool hiscores(Player &hero, int depth)
     }
 
     for(i=9;i>=0;i--) //Determining if the score is on the leaderboard, and its position
-        if(depth>=depthArr[i])
+        if(score>=scoreArr[i])
             flag = i;
     if(flag==-1)
         return 0;
 
     for(i=9;i>=0;i--) //Inserting it into the leaderboard
         if(i>flag)
-            depthArr[i] = depthArr[i-1];
+            scoreArr[i] = scoreArr[i-1];
         else if(i==flag)
-            depthArr[i] = depth;
+            scoreArr[i] = score;
 
     for(i=9;i>=0;i--) //Inserting name into the leaderboard
         if(i>flag)
@@ -1550,12 +1561,18 @@ bool hiscores(Player &hero, int depth)
         else if(i==flag)
             nameArr[i] = hero.getName();
 
+    for(i=9;i>=0;i--) //Inserting name into the leaderboard
+        if(i>flag)
+            depthArr[i] = depthArr[i-1];
+        else if(i==flag)
+            depthArr[i] = depth;
+
     readFile.close();
 
     std::ofstream writeFile("HighScores.txt");
     for(i=0;i<10;i++)
     {
-        data = nameArr[i] + " " + std::to_string(depthArr[i]);
+        data = nameArr[i] + " " + std::to_string(scoreArr[i]) + " " + std::to_string(depthArr[i]);
         writeFile << data << endl;
     }
     writeFile.close();
@@ -1564,6 +1581,7 @@ bool hiscores(Player &hero, int depth)
 
 Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &iStatus, bool &dev)
 {
+    score += 100;
     depth++;
     itemDrop = 0;
     if(depth%5==0)

@@ -405,6 +405,7 @@ public:
     void levelUp()
     {
         int boost;
+        score += 100;
         cout << endl << "Level Up!!" << endl;
         boost = rand() % 5 + 2;
         mhp += boost;
