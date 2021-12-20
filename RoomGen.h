@@ -392,7 +392,7 @@ int difficultyGen(int &diff, int adv, vector<bool> &mbStatus)
             return cid;
         }
     }
-    cout << "Creature: " << cid << endl;
+    //cout << "Creature: " << cid << endl;
     Sleep(2000);
 }
 
@@ -406,7 +406,8 @@ Room roomBuilder(int type, vector<int> loot, int cid, Directory dir)
         if(cid<57) //Miniboss
             id = rand() % (dir.roomDirectory.size()-6);
         else
-            id = cid + 17;
+            id = cid + 25;
+        cout << id << endl;
         newRoom = dir.roomDirectory[id];
 
         bool crateTog = 0;
