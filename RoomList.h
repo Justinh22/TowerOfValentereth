@@ -419,7 +419,7 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     R78.addFeat(featureDirectory[76]);
     roomDirectory.push_back(R78);
 
-    Room R79(79,"On a pedestal in the middle of the room, you see a tool lying in a puddle of blood. The floor is etched with runes in a circle around the pedestal.");
+    Room R79(79,"On a pedestal in the middle of the room, you see some tools lying in a puddle of blood. The floor is etched with runes in a circle around the pedestal.");
     R79.addFeat(featureDirectory[19]);
     R79.addFeat(featureDirectory[14]);
     R79.addFeat(featureDirectory[15]);
@@ -436,6 +436,7 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     Room R81(81,"A scorched body hangs from the ceiling by chains. Skulls litter the stone floor beneath it.");
     R81.addFeat(featureDirectory[2]);
     R81.addFeat(featureDirectory[28]);
+    R81.addFeat(featureDirectory[63]);
     R81.addFeat(featureDirectory[75]);
     roomDirectory.push_back(R81);
 

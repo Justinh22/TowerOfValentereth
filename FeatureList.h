@@ -435,6 +435,7 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
     Equipment.addKey("lab equipment");
     Equipment.addKey("stuff");
     Equipment.addKey("tools");
+    Equipment.addKey("tool");
     featureDirectory.push_back(Equipment);
 
     Feature Bed("bed","A rather uncomforable bed, with ragged sheets.",3,1); //57
@@ -554,6 +555,7 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
 
     Feature Grave("grave","A grave filled with soft dirt. It appears to have been filled in recently...",3,1); //73
     Grave.addKey("grave");
+    Grave.addKey("graves");
     featureDirectory.push_back(Grave);
 
     Feature Sand("sand","Dry, coarse sand.",3,2); //74

@@ -407,7 +407,6 @@ Room roomBuilder(int type, vector<int> loot, int cid, Directory dir)
             id = rand() % (dir.roomDirectory.size()-6);
         else
             id = cid + 25;
-        cout << id << endl;
         newRoom = dir.roomDirectory[id];
 
         bool crateTog = 0;

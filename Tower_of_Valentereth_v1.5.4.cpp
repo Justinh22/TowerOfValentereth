@@ -1537,7 +1537,7 @@ bool hiscores(Player &hero, int depth)
     while(std::getline(readFile,data))
     {
         std::stringstream line(data);
-        line >> nameArr[i] >> depthArr[i];
+        line >> nameArr[i] >> scoreArr[i] >> depthArr[i];
         i++;
         if(i>=10)
             break;
