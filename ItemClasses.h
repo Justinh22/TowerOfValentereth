@@ -161,20 +161,87 @@ class Merchant
 protected:
     int level;
     bool unlocked;
+    int type; //0 = Shop, 1 = Stat Swap
+    int statCount;
+    int statUp;
+    int statDown;
 public:
-    Merchant(){level=-1;unlocked=0;}
-    Merchant(int lv){level = lv;unlocked = 0;}
+    Merchant(){level=-1;unlocked=0;type=0;}
+    Merchant(int lv,int tp){level = lv;unlocked = 0;type = tp;statCount = 0;statUp = 0;statDown = 1;}
     vector<int> storeInventory;
     vector<int> storeCost;
     int getLevel(){return level;}
     bool isUnlocked(){return unlocked;}
     void setUnlocked(bool u){unlocked=u;}
+    int getType(){return type;}
+    void incStatCount(){statCount++;}
+    int getStatCount(){return statCount;}
+    int getStatUp(){return statUp;}
+    int getStatDown(){return statDown;}
+    int getSwapCost()
+    {
+        if(statCount<5)
+        {
+            switch(statCount)
+            {
+                case 0:
+                    return 10;
+                break;
+                case 1:
+                    return 25;
+                break;
+                case 2:
+                    return 50;
+                break;
+                case 3:
+                    return 100;
+                break;
+                case 4:
+                    return 150;
+                break;
+                case 5:
+                    return 300;
+                break;
+                case 6:
+                    return 500;
+                break;
+                case 7:
+                    return 800;
+                break;
+                case 8:
+                    return 1000;
+                break;
+                case 9:
+                    return 1250;
+                break;
+                default:
+                    return -1;
+                break;
+            }
+        }
+        else
+            return -1;
+        return -1;
+    }
+    void setStatSwap()
+    {
+        //0 = ATK, 1 = DEF, 2 = CRT, 3 = DDG, 4 = MHP, 5 = MMP
+        statUp = rand() % 6;
+        do {
+            statDown = rand() % 6;
+        } while(statUp==statDown);
+        statCount = 0;
+    }
     Merchant operator=(Merchant m)
     {
         this->storeInventory = m.storeInventory;
         this->storeCost = m.storeCost;
         this->level = m.getLevel();
         this->unlocked = m.isUnlocked();
+        this->type = m.getType();
+        this->statUp = m.getStatUp();
+        this->statDown = m.getStatDown();
+        this->statCount = m.getStatCount();
         return *this;
     }
 };
@@ -328,6 +395,11 @@ public:
     int getNCRT(){return ncrit;}
     int getNDEF(){return ndef;}
     int getNDDG(){return nddg;}
+    void setMMP(int m){mmp=m;}
+    void setMHP(int m){mhp=m;}
+    void setNSTR(int s){nstr=s;}
+    void setNCRT(int c){ncrit=c;}
+    void setNDEF(int d){ndef=d;}
     void setNDDG(int d){nddg=d;}
     int getMG()
     {

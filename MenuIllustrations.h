@@ -295,6 +295,86 @@ void storeMenu(Player hero, Merchant store, Directory dir)
     cout << "\\-------------------------------------------------------------/" << endl;
 }
 
+void diviningMenu(Player hero, Merchant store, Directory dir)
+{
+    std::system("cls");
+    int i;
+    string statUp;
+    int curStatUp;
+    string statDown;
+    int curStatDown;
+    switch(store.getStatDown())
+    {
+        case 0:
+            statDown = "ATK";
+            curStatDown = hero.getNSTR();
+        break;
+        case 1:
+            statDown = "DEF";
+            curStatDown = hero.getNDEF();
+        break;
+        case 2:
+            statDown = "CRT";
+            curStatDown = hero.getNCRT();
+        break;
+        case 3:
+            statDown = "DDG";
+            curStatDown = hero.getNDDG();
+        break;
+        case 4:
+            statDown = "MHP";
+            curStatDown = hero.getMHP();
+        break;
+        case 5:
+            statDown = "MMP";
+            curStatDown = hero.getMMP();
+        break;
+    }
+    switch(store.getStatUp())
+    {
+        case 0:
+            statUp = "ATK";
+            curStatUp = hero.getNSTR();
+        break;
+        case 1:
+            statUp = "DEF";
+            curStatUp = hero.getNDEF();
+        break;
+        case 2:
+            statUp = "CRT";
+            curStatUp = hero.getNCRT();
+        break;
+        case 3:
+            statUp = "DDG";
+            curStatUp = hero.getNDDG();
+        break;
+        case 4:
+            statUp = "MHP";
+            curStatUp = hero.getMHP();
+        break;
+        case 5:
+            statUp = "MMP";
+            curStatUp = hero.getMMP();
+        break;
+    }
+    cout << "/--------------------------------------------------------------\\" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-                          DIVINING                          -|" << endl;
+    cout << "|-             --------------------------------               -|" << endl;
+    cout << "|-               (2) " << statDown << "  ---------->  (1) " << statUp << "                -|" << endl;
+    cout << "|-             --------------------------------               -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-   CURRENT " << statDown << ": " << setw(3) << std::left << curStatDown << "                                         -|" << endl;
+    cout << "|-   CURRENT " << statUp << ": " << setw(3) << std::left << curStatUp << "                                         -|" << endl;
+    cout << "|-   COST: " << setw(3) << std::left << store.getSwapCost() << "                                                -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-   1) DIVINE                                                -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-   0) RETURN                                 GOLD: " << setw(5) << std::left << hero.gold << "    -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "\\-------------------------------------------------------------/" << endl;
+}
+
 void combatMain(Player hero, Creature monster, int monCHP)
 {//111 Long
     string monName;
