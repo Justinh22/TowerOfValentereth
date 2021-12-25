@@ -55,11 +55,11 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
             else
                 cout << "You strike at the " << monName << "'s weak point!" << endl;
             Sleep(1000);
-            hit = rand() % 100 + 1;
+            hit = ((rand() % 100) + (rand() % 100) + 2) / 2;
             //cout << hit+monster.getDDG() << ", " << hero.getACC()+accBuff << endl;
             if(hit+monster.getDDG()<=hero.getACC()+accBuff)
             {
-                crit = rand() % 100 + 1;
+                crit = ((rand() % 100) + (rand() % 100) + 2) / 2;
                 if(crit<=hero.getCRT()+crtBuff)
                 {
                     cout << "Critical Hit!" << endl;
@@ -108,6 +108,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
                     Sleep(2000);
                 }
+                if(dmg>=50)
+                    ach.Powerhouse = 1;
+                if(dmg>=100)
+                    ach.Overkill = 1;
+                if(dmg>=100&&monster.getName()=="Valentereth, the Tyrant")
+                    ach.TrueHeir = 1;
             }
             else
             {
@@ -209,6 +215,8 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     monHP -= dmg;
                     cout << hero.getName() << " cast " << dir.getItemName(hero.spellbook[choice-1]) << "!" << endl;
                     cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
+                    if(dmg>=50)
+                        ach.Nuke = 1;
                     hero.changeMP(-(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getManaCost()));
                     Sleep(2000);
                 }
@@ -293,22 +301,26 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     cout << "Restored " << dir.consumableDirectory[hero.inventory[choice-1]-200].getMP() << " MP!" << endl;
                 }
                 hero.inventory.erase(hero.inventory.begin()+choice-1);
+                if(dir.consumableDirectory[hero.inventory[choice-1]-200].getName()=="Bread")
+                    ach.Connoisseur++;
+                if(dir.consumableDirectory[hero.inventory[choice-1]-200].getID()>=204&&dir.consumableDirectory[hero.inventory[choice-1]-200].getID()<=211)
+                    ach.Alchemist++;
             }
         }
         else if(action==";")
         {
             {
-                hit = rand() % 100 + 1;
-                if(hero.getDDG()>=15)
+                hit = ((rand() % 100) + (rand() % 100) + 2) / 2;
+                if(hero.getDDG()>=monster.getLEV()*3)
                 {
-                    if(hit>50) //pass
+                    if(hit>25) //pass
                     {
                         cout << "You escape successfully!" << endl;
                         Sleep(2000);
                         end = 3;
                         break;
                     }
-                    else if(hit>25) //pass, but damage
+                    else if(hit>10) //pass, but damage
                     {
                         cout << "The enemy attacks as you escape!" << endl;
                         Sleep(2000);
@@ -319,10 +331,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                             red = .7;
                             dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
                         }
-                        if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
+                        if(hero.mask.getID()==0) //Glass
                             dmg = dmg*2;
+                        if(hero.mask.getID()==5) //Whispers
+                            dmg = static_cast<float>(dmg)*1.5;
                         if(hero.mask.getID()==4) //Steel
-                            dmg = dmg/2;
+                            dmg = static_cast<float>(dmg)*.7;
                         if(dmg<0)
                             dmg = 0;
                         hero.changeHP(-dmg);
@@ -347,10 +361,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                             red = .7;
                             dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
                         }
-                        if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
+                        if(hero.mask.getID()==0) //Glass
                             dmg = dmg*2;
+                        if(hero.mask.getID()==5) //Whispers
+                            dmg = static_cast<float>(dmg)*1.5;
                         if(hero.mask.getID()==4) //Steel
-                            dmg = dmg/2;
+                            dmg = static_cast<float>(dmg)*.7;
                         if(hero.eqpAmr.getID()==142) //Mercenary's Shield
                             dmg -= dmg/4;
                         if(dmg<0)
@@ -362,14 +378,14 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 }
                 else
                 {
-                    if(hit>66) //pass
+                    if(hit>40) //pass
                     {
                         cout << "You escape successfully!" << endl;
                         Sleep(2000);
                         end = 3;
                         break;
                     }
-                    else if(hit>33) //pass, but damage
+                    else if(hit>20) //pass, but damage
                     {
                         cout << "The enemy attacks as you escape!" << endl;
                         Sleep(2000);
@@ -380,10 +396,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                             red = .7;
                             dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
                         }
-                        if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
+                        if(hero.mask.getID()==0) //Glass
                             dmg = dmg*2;
+                        if(hero.mask.getID()==5) //Whispers
+                            dmg = static_cast<float>(dmg)*1.5;
                         if(hero.mask.getID()==4) //Steel
-                            dmg = dmg/2;
+                            dmg = static_cast<float>(dmg)*.7;
                         if(hero.eqpAmr.getID()==142) //Mercenary's Shield
                             dmg -= dmg/4;
                         if(dmg<0)
@@ -410,10 +428,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                             red = .7;
                             dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
                         }
-                        if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
+                        if(hero.mask.getID()==0) //Glass
                             dmg = dmg*2;
+                        if(hero.mask.getID()==5) //Whispers
+                            dmg = static_cast<float>(dmg)*1.5;
                         if(hero.mask.getID()==4) //Steel
-                            dmg = dmg/2;
+                            dmg = static_cast<float>(dmg)*.7;
                         if(hero.eqpAmr.getID()==142) //Mercenary's Shield
                             dmg -= dmg/4;
                         if(dmg<0)
@@ -458,14 +478,30 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         ddgBuff = 0;
         crtBuff = 0;
         hpBuff = 0;
+        dmg = 0;
         for(int i=0;i<buffCounter.size();i++)
         {
+            if(buffCounter[i].getName()=="Enveloping Shadow")
+                dmg += 5;
             atkBuff += buffCounter[i].getATKU();
             defBuff += buffCounter[i].getDEFU();
             accBuff += buffCounter[i].getACCU();
             ddgBuff += buffCounter[i].getDDGU();
             crtBuff += buffCounter[i].getCRTU();
             hpBuff += buffCounter[i].getHPU();
+        }
+        if(dmg>0)
+        {
+            monHP -= dmg;
+            cout << hero.getName() << " dealt " << dmg << " necrotic damage to " << monName << "!" << endl;
+            if(dmg>=20)
+                ach.Necromancy = 1;
+            Sleep(1000);
+        }
+        if(monHP<=0)
+        {
+            end = 1;
+            break;
         }
         /*cout << "Attack Buff: " << atkBuff << endl;
         cout << "Defense Buff: " << defBuff << endl;
@@ -508,7 +544,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
             }
         }
         Sleep(1000);
-        hit = rand() % 100 + 1;
+        hit = (rand() % 100) + 1;
 
         if(hero.mask.getID()==4) //Steel
             hit = -1000;
@@ -524,10 +560,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 red = .7;
                 dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
             }
-            if(hero.mask.getID()==0||hero.mask.getID()==5||parry==1) //Glass, Whispers, Stiran
+            if(hero.mask.getID()==0||parry) //Glass
                 dmg = dmg*2;
+            if(hero.mask.getID()==5) //Whispers
+                dmg = static_cast<float>(dmg)*1.5;
             if(hero.mask.getID()==4) //Steel
-                dmg = dmg/2;
+                dmg = static_cast<float>(dmg)*.7;
             if(hero.eqpAmr.getID()==142) //Mercenary's Shield
                 dmg -= dmg/4;
             if(dmg<0)
@@ -575,9 +613,14 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         hero.exp += ex;
         cout << "You earned " << gd << " gold!" << endl;
         cout << "You gained " << ex << " exp!" << endl;
+        score += 10*monster.getLEV();
+        score += gd;
+        ach.Expert++;
+        ach.Unstoppable++;
         Sleep(2000);
         if(monster.getID()>=57)
         {
+            score += 100;
             switch(monster.getID())
             {
                 case 57:
@@ -591,10 +634,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     {
                         full = 1;
                     }
+                    ach.Beast = 1;
                 break;
                 case 58:
                     hero.growth = 1;
                     cout << "You gained Endrigaia's power! Your MPG rose by 2!";
+                    ach.NaturesWrath = 1;
                     Sleep(2000);
                 break;
                 case 59:
@@ -608,6 +653,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     {
                         full = 1;
                     }
+                    ach.Archmage = 1;
                 break;
                 case 60:
                     if(hero.equipment.size()<6)
@@ -620,15 +666,18 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     {
                         full = 1;
                     }
+                    ach.Mercenary = 1;
                 break;
                 case 61:
                     hero.Boost();
                     cout << "You feel a surge of power... you gain +2 to all your stats!" << endl;
+                    ach.Horror = 1;
                     Sleep(2000);
                 break;
                 case 62:
                     hero.spellbook.push_back(dir.buffSpellDirectory[22].getID());
                     cout << "You learned Enveloping Shadow!" << endl;
+                    ach.Scion = 1;
                     Sleep(2000);
                 break;
             }
@@ -647,6 +696,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
     }
     if(end==3)
     {
+        score += 10;
         std::system("cls");
         return 3;
     }

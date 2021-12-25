@@ -435,6 +435,7 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
     Equipment.addKey("lab equipment");
     Equipment.addKey("stuff");
     Equipment.addKey("tools");
+    Equipment.addKey("tool");
     featureDirectory.push_back(Equipment);
 
     Feature Bed("bed","A rather uncomforable bed, with ragged sheets.",3,1); //57
@@ -545,6 +546,50 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
     Pantry.addKey("cabinet");
     featureDirectory.push_back(Pantry);
 
+    Feature Tombstone("tombstone","An old tombstone, with illegible writing on it...",0,0); //72
+    Tombstone.addKey("tombstone");
+    Tombstone.addKey("gravestone");
+    Tombstone.addKey("headstone");
+    Tombstone.addKey("epitaph");
+    featureDirectory.push_back(Tombstone);
+
+    Feature Grave("grave","A grave filled with soft dirt. It appears to have been filled in recently...",3,1); //73
+    Grave.addKey("grave");
+    Grave.addKey("graves");
+    featureDirectory.push_back(Grave);
+
+    Feature Sand("sand","Dry, coarse sand.",3,2); //74
+    Sand.addKey("sand");
+    Sand.addKey("pile");
+    Sand.addKey("piles");
+    Sand.addKey("sand piles");
+    Sand.addKey("pile of sand");
+    Sand.addKey("piles of sand");
+    Sand.addKey("sand pile");
+    featureDirectory.push_back(Sand);
+
+    Feature HumanSkull("skull","An old human skull, with a long crack running from the eye socket down to the mouth.",0,0); //75
+    HumanSkull.addKey("skull");
+    HumanSkull.addKey("human skull");
+    HumanSkull.addKey("old skull");
+    HumanSkull.addKey("cracked skull");
+    HumanSkull.addKey("skulls");
+    HumanSkull.addKey("human skulls");
+    featureDirectory.push_back(HumanSkull);
+
+    Feature BeastSkull("skull","The skull of a beast, which sends a chill down your spine...",0,0); //76
+    BeastSkull.addKey("skull");
+    BeastSkull.addKey("skulls");
+    BeastSkull.addKey("beast skull");
+    BeastSkull.addKey("beast skulls");
+    featureDirectory.push_back(BeastSkull);
+
+    Feature Flowers("flowers","Decorative flowers, in an array of colors.",0,0); //77
+    Flowers.addKey("flowers");
+    Flowers.addKey("flower");
+    Flowers.addKey("roses");
+    Flowers.addKey("rose");
+    featureDirectory.push_back(Flowers);
 
 
 

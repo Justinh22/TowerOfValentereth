@@ -335,7 +335,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 valid = 1;
             else if((target=="dagger"||target=="knife")&&((currentRoom.getIList()[i]%6==0&&currentRoom.getIList()[i]>6)||currentRoom.getIList()[i]==2||currentRoom.getIList()[i]==7||currentRoom.getIList()[i]==32)&&currentRoom.getIList()[i]<=56)
                 valid = 1;
-            else if((target=="staff"||target=="rod"||target=="sceptre"||target=="wand")&&((currentRoom.getIList()[i]%6==1&&currentRoom.getIList()[i]>7)||currentRoom.getIList()[i]==3||currentRoom.getIList()[i]==8)&&currentRoom.getIList()[i]<56)
+            else if((target=="staff"||target=="rod"||target=="sceptre"||target=="wand")&&((currentRoom.getIList()[i]%6==1&&currentRoom.getIList()[i]>7)||currentRoom.getIList()[i]==3||currentRoom.getIList()[i]==8)&&currentRoom.getIList()[i]<=56)
                 valid = 1;
             else if(target=="club"&&currentRoom.getIList()[i]==14)
                 valid = 1;
@@ -349,7 +349,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 valid = 1;
             else if(target=="armor"&&currentRoom.getIList()[i]>=100&&currentRoom.getIList()[i]<200)
                 valid = 1;
-            else if(target=="robe"&&((currentRoom.getIList()[i]%5==0&&currentRoom.getIList()[i]>111)||currentRoom.getIList()[i]==102||currentRoom.getIList()[i]==105||currentRoom.getIList()[i]==108||currentRoom.getIList()[i]==111)&&currentRoom.getIList()[i]<=200)
+            else if(target=="robe"&&((currentRoom.getIList()[i]%5==0&&currentRoom.getIList()[i]>111)||currentRoom.getIList()[i]==102||currentRoom.getIList()[i]==105||currentRoom.getIList()[i]==108||currentRoom.getIList()[i]==111)&&currentRoom.getIList()[i]<200)
                 valid = 1;
             else if(target=="food"&&currentRoom.getIList()[i]>=200&&currentRoom.getIList()[i]<=203)
                 valid = 1;

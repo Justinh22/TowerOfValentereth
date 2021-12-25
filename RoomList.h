@@ -58,7 +58,7 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     Room R14(14,"An unnatural shade fills this room, making it difficult to see around the walls of the chamber...");
     roomDirectory.push_back(R14);
 
-    Room R15(15,"You look upon a massive room, with large niches cut into the stone walls, colding coffins.");
+    Room R15(15,"You look upon a massive room, with large niches cut into the stone walls, holding coffins.");
     R15.addFeat(featureDirectory[11]);
     roomDirectory.push_back(R15);
 
@@ -303,7 +303,7 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     R59.addFeat(featureDirectory[67]);
     roomDirectory.push_back(R59);
 
-    Room R60(60,"You have to catch yourself as you enter a wide circular room, with most the floor missing apart from awalkway around the outer stone wall. The pit in the center of the room seems to have no bottom...");
+    Room R60(60,"You have to catch yourself as you enter a wide circular room, with most the floor missing apart from a walkway around the outer stone wall. The pit in the center of the room seems to have no bottom...");
     R60.addFeat(featureDirectory[10]);
     R60.addFeat(featureDirectory[68]);
     roomDirectory.push_back(R60);
@@ -387,43 +387,96 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     R73.addFeat(featureDirectory[71]);
     roomDirectory.push_back(R73);
 
-
-    //MINIBOSS LAIRS
-    Room R74(74,"Black slime covers every surface of a grand hall, pulsing as if it were alive... long pillars reach toward the ceilings, decorated by savage claw marks on their surface.");
-    R74.addFeat(featureDirectory[22]); //OZKOROTH
-    R74.addFeat(featureDirectory[51]);
-    R74.addFeat(featureDirectory[52]);
+    Room R74(74,"The dirt floor of this room is covered in tombstones. You can't even walk through without having to step over them...");
+    R74.addFeat(featureDirectory[3]);
+    R74.addFeat(featureDirectory[72]);
     roomDirectory.push_back(R74);
 
-    Room R75(75,"The room is covered with interwoven vines, racing out of a hole in the the ceiling... You can see them growing before your very eyes...");
-    R75.addFeat(featureDirectory[30]); //ENDRIGAIA
-    R75.addFeat(featureDirectory[49]);
+    Room R75(75,"All of the sudden, you find yourself in a massive graveyard. Fog covers obscures your vision, but you can make out rows upon rows of tombstones over graves, with bones littering the field...");
+    R75.addFeat(featureDirectory[3]);
+    R75.addFeat(featureDirectory[20]);
+    R75.addFeat(featureDirectory[70]);
+    R75.addFeat(featureDirectory[72]);
+    R75.addFeat(featureDirectory[73]);
     roomDirectory.push_back(R75);
 
-    Room R76(76,"You find yourself in a cramped, sprawling library, with bookshelves impossibly tall scattered about the room. Papers and books litter the floor.");
-    R76.addFeat(featureDirectory[17]); //EMERITUS
-    R76.addFeat(featureDirectory[35]);
-    R76.addFeat(featureDirectory[36]);
-    R76.addFeat(featureDirectory[rand()%4+37]);
+    Room R76(76,"The room is nearly pitch-black, with the only light coming from a crack in the stone wall to your left. The light shines onto a grave, with flowers sitting beside the headstone.");
+    R76.addFeat(featureDirectory[3]);
+    R76.addFeat(featureDirectory[10]);
+    R76.addFeat(featureDirectory[72]);
+    R76.addFeat(featureDirectory[73]);
+    R76.addFeat(featureDirectory[77]);
     roomDirectory.push_back(R76);
 
-    Room R77(77,"You enter what looks like a small haven, with a light fire burning in the corner next to a long table.");
-    R77.addFeat(featureDirectory[50]); //STIRAN
-    R77.addFeat(featureDirectory[53]);
+    Room R77(77,"You step onto a pile of bones, the floor beneath them not even visible. You can't begin to fathom how many people may have died here...");
+    R77.addFeat(featureDirectory[20]);
+    R77.addFeat(featureDirectory[75]);
     roomDirectory.push_back(R77);
 
-    Room R78(78,"The atmosphere of the room is chilling as you enter; cold, metal tables and shelves lie at the perimeter of the room, with pieces of equipment lying about.");
-    R78.addFeat(featureDirectory[54]); //?????
-    R78.addFeat(featureDirectory[55]);
-    R78.addFeat(featureDirectory[56]);
+    Room R78(78,"You step onto a large pile of sand, and as you look around the rest of the room you see various bones and skulls buried in the sand.");
+    R78.addFeat(featureDirectory[20]);
+    R78.addFeat(featureDirectory[74]);
+    R78.addFeat(featureDirectory[76]);
     roomDirectory.push_back(R78);
 
-    Room R79(79,"You step into what seems to be a quarters, with a small bed in the corner, with a dresser beside it. There is also a wooden table surrounded by chairs.");
-    R79.addFeat(featureDirectory[rand()%4+37]); //BYRALT
-    R79.addFeat(featureDirectory[50]);
-    R79.addFeat(featureDirectory[57]);
-    R79.addFeat(featureDirectory[58]);
+    Room R79(79,"On a pedestal in the middle of the room, you see some tools lying in a puddle of blood. The floor is etched with runes in a circle around the pedestal.");
+    R79.addFeat(featureDirectory[19]);
+    R79.addFeat(featureDirectory[14]);
+    R79.addFeat(featureDirectory[15]);
+    R79.addFeat(featureDirectory[56]);
     roomDirectory.push_back(R79);
+
+    Room R80(80,"Hanging from the ceiling of this room are human skulls, suspended by chains. The stone room is illuminated by a single torch at the back of the room.");
+    R80.addFeat(featureDirectory[10]);
+    R80.addFeat(featureDirectory[28]);
+    R80.addFeat(featureDirectory[0]);
+    R80.addFeat(featureDirectory[75]);
+    roomDirectory.push_back(R80);
+
+    Room R81(81,"A scorched body hangs from the ceiling by chains. Skulls litter the stone floor beneath it.");
+    R81.addFeat(featureDirectory[2]);
+    R81.addFeat(featureDirectory[28]);
+    R81.addFeat(featureDirectory[63]);
+    R81.addFeat(featureDirectory[75]);
+    roomDirectory.push_back(R81);
+
+
+    //MINIBOSS LAIRS
+    Room R82(82,"Black slime covers every surface of a grand hall, pulsing as if it were alive... long pillars reach toward the ceilings, decorated by savage claw marks on their surface.");
+    R82.addFeat(featureDirectory[22]); //OZKOROTH
+    R82.addFeat(featureDirectory[51]);
+    R82.addFeat(featureDirectory[52]);
+    roomDirectory.push_back(R82);
+
+    Room R83(83,"The room is covered with interwoven vines, racing out of a hole in the the ceiling... You can see them growing before your very eyes...");
+    R83.addFeat(featureDirectory[30]); //ENDRIGAIA
+    R83.addFeat(featureDirectory[49]);
+    roomDirectory.push_back(R83);
+
+    Room R84(84,"You find yourself in a cramped, sprawling library, with bookshelves impossibly tall scattered about the room. Papers and books litter the floor.");
+    R84.addFeat(featureDirectory[17]); //EMERITUS
+    R84.addFeat(featureDirectory[35]);
+    R84.addFeat(featureDirectory[36]);
+    R84.addFeat(featureDirectory[rand()%4+37]);
+    roomDirectory.push_back(R84);
+
+    Room R85(85,"You enter what looks like a small haven, with a light fire burning in the corner next to a long table.");
+    R85.addFeat(featureDirectory[50]); //STIRAN
+    R85.addFeat(featureDirectory[53]);
+    roomDirectory.push_back(R85);
+
+    Room R86(86,"The atmosphere of the room is chilling as you enter; cold, metal tables and shelves lie at the perimeter of the room, with pieces of equipment lying about.");
+    R86.addFeat(featureDirectory[54]); //?????
+    R86.addFeat(featureDirectory[55]);
+    R86.addFeat(featureDirectory[56]);
+    roomDirectory.push_back(R86);
+
+    Room R87(87,"You step into what seems to be a quarters, with a small bed in the corner, with a dresser beside it. There is also a wooden table surrounded by chairs.");
+    R87.addFeat(featureDirectory[rand()%4+37]); //BYRALT
+    R87.addFeat(featureDirectory[50]);
+    R87.addFeat(featureDirectory[57]);
+    R87.addFeat(featureDirectory[58]);
+    roomDirectory.push_back(R87);
 
     return roomDirectory;
 }

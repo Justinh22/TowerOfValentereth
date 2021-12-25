@@ -232,7 +232,7 @@ vector<Armor> initADir(vector<Armor> armorDirectory)
     armorDirectory.push_back(Shield_of_the_Conquerer);
     Armor Robe_of_the_Archmage("Robe of the Archmage","A robe that harnesses the magical power of the world.",10,140,12,30,7);
     armorDirectory.push_back(Robe_of_the_Archmage);
-    Armor Helm_of_the_Ancients("Helm of the Ancients","A regal suit of armor, passed down from an ancient kingdom of magic.",10,141,16,25,5);
+    Armor Helm_of_the_Ancients("Helm of the Ancients","A demigod's suit of armor, passed down from an ancient kingdom of magic.",10,141,16,25,5);
     armorDirectory.push_back(Helm_of_the_Ancients);
 
     //11
@@ -291,7 +291,7 @@ vector<Item> initMDir(vector<Item> maskDirectory)
     Item Mask_of_Glass("Mask of Glass","A smiling mask made of shimmering glass. When worn, doubles the damage dealt with strikes, but doubles the damage dealt to the wearer.",10,0);
     maskDirectory.push_back(Mask_of_Glass);
 
-    Item Mask_of_Wrath("Mask of Wrath","An enraged mask made of searing hot stone. When worn, raises strength and crit chance by 50%, but lowers accuracy by 33%.",10,1);
+    Item Mask_of_Wrath("Mask of Wrath","An enraged mask made of searing hot stone. When worn, raises strength and crit chance by 50%, but lowers accuracy by 10.",10,1);
     maskDirectory.push_back(Mask_of_Wrath);
 
     Item Mask_of_Darkness("Mask of Darkness","A screaming mask made of dark obsidian. When worn, spells are amplified by 50%, but enemies cannot be identified.",10,2);
@@ -300,10 +300,10 @@ vector<Item> initMDir(vector<Item> maskDirectory)
     Item Mask_of_Arcana("Mask of Arcana","A peaceful mask made of smooth marble. When worn, increases mana regeneration by 5, but all strikes deal half damage.",10,3);
     maskDirectory.push_back(Mask_of_Arcana);
 
-    Item Mask_of_Steel("Mask of Steel","A stoic mask made of hardened metal. When worn, halves damage taken from attacks, but enemies never miss.",10,4);
+    Item Mask_of_Steel("Mask of Steel","A stoic mask made of hardened metal. When worn, reduces damage taken from attacks by 30%, but enemies never miss.",10,4);
     maskDirectory.push_back(Mask_of_Steel);
 
-    Item Mask_of_Whispers("Mask of Whispers","A transparent mask made of invisible threads. When worn, increases chance to dodge by 25% and increases dodge gained on level up, but enemies deal double damage to the wearer.",10,5);
+    Item Mask_of_Whispers("Mask of Whispers","A transparent mask made of invisible threads. When worn, increases chance to dodge by 25% and increases dodge gained on level up, but enemies deal 150% damage to the wearer.",10,5);
     maskDirectory.push_back(Mask_of_Whispers);
 
     Item Mask_of_Beasts("Mask of Beasts","A ravenous mask made of bloodied pelts. When worn, increases strength by 50%, but the wearer must strike each round of combat.",10,6);

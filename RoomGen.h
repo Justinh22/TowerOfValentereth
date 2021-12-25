@@ -249,7 +249,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
         else if(itemType==2)
         {
             conFlag = 1;
-            foo = rand() % 12 + 1; //DEBUG | Original is 12
+            foo = rand() % 13 + 1; //DEBUG | Original is 12
             if(foo>10)
             {
                 keyFlag = 1;
@@ -365,7 +365,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
     return loot;
 }
 
-int difficultyGen(int diff, int adv, vector<bool> &mbStatus)
+int difficultyGen(int &diff, int adv, vector<bool> &mbStatus)
 {
 //Diff: The difficulty level of the chamber. From 1-5
 //Adv: The current level of advancement the player is at within the dungeon. From 1-10
@@ -384,10 +384,15 @@ int difficultyGen(int diff, int adv, vector<bool> &mbStatus)
         else
         {
             cid = minibossPicker(mbStatus);
+            if(cid==-1)
+            {
+                diff = 5;
+                cid = creaturePicker(diff+adv);
+            }
             return cid;
         }
     }
-    cout << "Creature: " << cid << endl;
+    //cout << "Creature: " << cid << endl;
     Sleep(2000);
 }
 
@@ -401,7 +406,7 @@ Room roomBuilder(int type, vector<int> loot, int cid, Directory dir)
         if(cid<57) //Miniboss
             id = rand() % (dir.roomDirectory.size()-6);
         else
-            id = cid + 17;
+            id = cid + 25;
         newRoom = dir.roomDirectory[id];
 
         bool crateTog = 0;
@@ -443,204 +448,212 @@ Merchant storeHandler(int level)
     int id;
     if(level>10)
         level = 10;
-    Merchant store(level);
+    Merchant store(level,rand()%2);
     int itemType;
     int itemRarity;
     int itemCost;
-    for(int i=0;i<5;i++)
+    if(store.getType()==0)
     {
-        itemType = rand() % 4 + 1;
-        if(itemType<=2)
+        for(int i=0;i<5;i++)
         {
-            if(level==1)
-                itemRarity = 1;
-            else if(level==2)
-                itemRarity = rand() % 2 + 1;
-            else if(level>=3)
+            itemType = rand() % 4 + 1;
+            if(itemType<=2)
+            {
+                if(level==1)
+                    itemRarity = 1;
+                else if(level==2)
+                    itemRarity = rand() % 2 + 1;
+                else if(level>=3)
+                {
+                    foo = rand() % 10 + 1;
+                    if(foo<3)
+                        itemRarity = level - 2;
+                    else if(foo<6)
+                        itemRarity = level - 1;
+                    else
+                        itemRarity = level;
+                }
+                id = itemPicker(itemType-1,itemRarity);
+                store.storeInventory.push_back(id);
+                switch(itemRarity)
+                {
+                    case 1:
+                        itemCost = 8;
+                        break;
+                    case 2:
+                        itemCost = 15;
+                        break;
+                    case 3:
+                        itemCost = 25;
+                        break;
+                    case 4:
+                        itemCost = 40;
+                        break;
+                    case 5:
+                        itemCost = 60;
+                        break;
+                    case 6:
+                        itemCost = 85;
+                        break;
+                    case 7:
+                        itemCost = 115;
+                        break;
+                    case 8:
+                        itemCost = 150;
+                        break;
+                    case 9:
+                        itemCost = 190;
+                        break;
+                    case 10:
+                        itemCost = 250;
+                        break;
+                }
+                store.storeCost.push_back(itemCost);
+            }
+            else if(itemType==3)
+            {
+                if(level<=2)
+                    itemRarity = rand() % 2 + 1;
+                else if(level<=4)
+                {
+                    foo = rand() % 10 + 1;
+                    if(foo<3)
+                        itemRarity = 1;
+                    else if(foo<7)
+                        itemRarity = 2;
+                    else
+                        itemRarity = 3;
+                }
+                else if(level<=7)
+                {
+                    foo = rand() % 10 + 1;
+                    if(foo<2)
+                        itemRarity = 1;
+                    else if(foo<4)
+                        itemRarity = 2;
+                    else if(foo<7)
+                        itemRarity = 3;
+                    else
+                        itemRarity = 4;
+                }
+                else
+                {
+                    foo = rand() % 10 + 1;
+                    if(foo<2)
+                        itemRarity = 2;
+                    else if(foo<4)
+                        itemRarity = 3;
+                    else if(foo<7)
+                        itemRarity = 4;
+                    else
+                        itemRarity = 5;
+                }
+                id = itemPicker(itemType-1,itemRarity);
+                store.storeInventory.push_back(id);
+                switch(itemRarity)
+                {
+                    case 1:
+                        itemCost = 8;
+                        break;
+                    case 2:
+                        itemCost = 25;
+                        break;
+                    case 3:
+                        itemCost = 60;
+                        break;
+                    case 4:
+                        itemCost = 115;
+                        break;
+                    case 5:
+                        itemCost = 190;
+                        break;
+                }
+                store.storeCost.push_back(itemCost);
+            }
+            else if(itemType==4)
             {
                 foo = rand() % 10 + 1;
-                if(foo<3)
-                    itemRarity = level - 2;
-                else if(foo<6)
-                    itemRarity = level - 1;
+                if(level < 3)
+                {
+                    if(foo<=7)
+                        itemRarity = 1;
+                    else
+                        itemRarity = 2;
+                }
+                else if(level < 5)
+                {
+                    if(foo<=3)
+                        itemRarity = 1;
+                    else if(foo<=7)
+                        itemRarity = 2;
+                    else
+                        itemRarity = 3;
+                }
+                else if(level < 7)
+                {
+                    if(foo<=2)
+                        itemRarity = 1;
+                    else if(foo<=4)
+                        itemRarity = 2;
+                    else if(foo<=7)
+                        itemRarity = 3;
+                    else
+                        itemRarity = 4;
+                }
+                else if(level < 9)
+                {
+                    if(foo<=1)
+                        itemRarity = 1;
+                    else if(foo<=3)
+                        itemRarity = 2;
+                    else if(foo<=4)
+                        itemRarity = 3;
+                    else if(foo<=7)
+                        itemRarity = 4;
+                    else
+                        itemRarity = 5;
+                }
                 else
-                    itemRarity = level;
+                {
+                    if(foo<=1)
+                        itemRarity = 1;
+                    else if(foo<=2)
+                        itemRarity = 2;
+                    else if(foo<=4)
+                        itemRarity = 3;
+                    else if(foo<=7)
+                        itemRarity = 4;
+                    else
+                        itemRarity = 5;
+                }
+                id = spellPicker(itemRarity);
+                store.storeInventory.push_back(id);
+                switch(itemRarity)
+                {
+                    case 1:
+                        itemCost = 8;
+                        break;
+                    case 2:
+                        itemCost = 25;
+                        break;
+                    case 3:
+                        itemCost = 60;
+                        break;
+                    case 4:
+                        itemCost = 115;
+                        break;
+                    case 5:
+                        itemCost = 190;
+                        break;
+                }
+                store.storeCost.push_back(itemCost);
             }
-            id = itemPicker(itemType-1,itemRarity);
-            store.storeInventory.push_back(id);
-            switch(itemRarity)
-            {
-                case 1:
-                    itemCost = 8;
-                    break;
-                case 2:
-                    itemCost = 15;
-                    break;
-                case 3:
-                    itemCost = 25;
-                    break;
-                case 4:
-                    itemCost = 40;
-                    break;
-                case 5:
-                    itemCost = 60;
-                    break;
-                case 6:
-                    itemCost = 85;
-                    break;
-                case 7:
-                    itemCost = 115;
-                    break;
-                case 8:
-                    itemCost = 150;
-                    break;
-                case 9:
-                    itemCost = 190;
-                    break;
-                case 10:
-                    itemCost = 250;
-                    break;
-            }
-            store.storeCost.push_back(itemCost);
         }
-        else if(itemType==3)
-        {
-            if(level<=2)
-                itemRarity = rand() % 2 + 1;
-            else if(level<=4)
-            {
-                foo = rand() % 10 + 1;
-                if(foo<3)
-                    itemRarity = 1;
-                else if(foo<7)
-                    itemRarity = 2;
-                else
-                    itemRarity = 3;
-            }
-            else if(level<=7)
-            {
-                foo = rand() % 10 + 1;
-                if(foo<2)
-                    itemRarity = 1;
-                else if(foo<4)
-                    itemRarity = 2;
-                else if(foo<7)
-                    itemRarity = 3;
-                else
-                    itemRarity = 4;
-            }
-            else
-            {
-                foo = rand() % 10 + 1;
-                if(foo<2)
-                    itemRarity = 2;
-                else if(foo<4)
-                    itemRarity = 3;
-                else if(foo<7)
-                    itemRarity = 4;
-                else
-                    itemRarity = 5;
-            }
-            id = itemPicker(itemType-1,itemRarity);
-            store.storeInventory.push_back(id);
-            switch(itemRarity)
-            {
-                case 1:
-                    itemCost = 8;
-                    break;
-                case 2:
-                    itemCost = 25;
-                    break;
-                case 3:
-                    itemCost = 60;
-                    break;
-                case 4:
-                    itemCost = 115;
-                    break;
-                case 5:
-                    itemCost = 190;
-                    break;
-            }
-            store.storeCost.push_back(itemCost);
-        }
-        else if(itemType==4)
-        {
-            foo = rand() % 10 + 1;
-            if(level < 3)
-            {
-                if(foo<=7)
-                    itemRarity = 1;
-                else
-                    itemRarity = 2;
-            }
-            else if(level < 5)
-            {
-                if(foo<=3)
-                    itemRarity = 1;
-                else if(foo<=7)
-                    itemRarity = 2;
-                else
-                    itemRarity = 3;
-            }
-            else if(level < 7)
-            {
-                if(foo<=2)
-                    itemRarity = 1;
-                else if(foo<=4)
-                    itemRarity = 2;
-                else if(foo<=7)
-                    itemRarity = 3;
-                else
-                    itemRarity = 4;
-            }
-            else if(level < 9)
-            {
-                if(foo<=1)
-                    itemRarity = 1;
-                else if(foo<=3)
-                    itemRarity = 2;
-                else if(foo<=4)
-                    itemRarity = 3;
-                else if(foo<=7)
-                    itemRarity = 4;
-                else
-                    itemRarity = 5;
-            }
-            else
-            {
-                if(foo<=1)
-                    itemRarity = 1;
-                else if(foo<=2)
-                    itemRarity = 2;
-                else if(foo<=4)
-                    itemRarity = 3;
-                else if(foo<=7)
-                    itemRarity = 4;
-                else
-                    itemRarity = 5;
-            }
-            id = spellPicker(itemRarity);
-            store.storeInventory.push_back(id);
-            switch(itemRarity)
-            {
-                case 1:
-                    itemCost = 8;
-                    break;
-                case 2:
-                    itemCost = 25;
-                    break;
-                case 3:
-                    itemCost = 60;
-                    break;
-                case 4:
-                    itemCost = 115;
-                    break;
-                case 5:
-                    itemCost = 190;
-                    break;
-            }
-            store.storeCost.push_back(itemCost);
-        }
+    }
+    else if(store.getType()==1)
+    {
+        store.setStatSwap();
+        cout << "Divining alert!" << endl;
     }
     return store;
 }
@@ -657,8 +670,8 @@ Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vect
     if(diff==8)
         minibossStatGen(adv,currentRoom.monster);
 
-    foo = rand() % 5 + 1;
-    if(foo==5)
+    foo = rand() % 4 + 1;
+    if(foo==4)
         currentRoom.setMerchant(storeHandler(adv));
     //cout << "Room built!" << endl;
     cout << endl << currentRoom.getDesc() << endl;

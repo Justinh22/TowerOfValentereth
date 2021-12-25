@@ -18,12 +18,16 @@ using std::string;
 using std::cin;
 using std::vector;
 using std::setw;
+#include "AchievementHandler.h"
+Achievements ach;
+int score = 0;
 #include "ItemClasses.h"
 #include "ItemList.h"
 #include "CreatureList.h"
 #include "SpellList.h"
 #include "FeatureList.h"
 #include "RoomList.h"
+#include "MapList.h"
 #include "RoomGen.h"
 #include "MenuIllustrations.h"
 #include "InteractionHandler.h"
@@ -31,7 +35,7 @@ using std::setw;
 #include "CombatHandler.h"
 #include "GoldPicker.h"
 
-int actionHandler(string act,bool debug_opt);  //Done!
+int actionHandler(string act,bool debug_opt, int gankTracker);  //Done!
 int combatHandler(); //Done!
 int menuHandler(Player &hero,Directory dir); //Done!
 int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom);
@@ -56,6 +60,7 @@ int main()
     vector<Creature> creatureDirectory;
     vector<Feature> featureDirectory;
     vector<Room> roomDirectory;
+    vector<vector<vector<char>>> mapDirectory;
 
     weaponDirectory = initWDir(weaponDirectory);
     armorDirectory = initADir(armorDirectory);
@@ -67,14 +72,19 @@ int main()
     creatureDirectory = initCDir(creatureDirectory);
     featureDirectory = initFDir(featureDirectory);
     roomDirectory = initRDir(roomDirectory,featureDirectory);
+    mapDirectory = initMapDir(mapDirectory);
     Directory dir(weaponDirectory,armorDirectory,consumableDirectory,maskDirectory,attackSpellDirectory,healingSpellDirectory,buffSpellDirectory,creatureDirectory,featureDirectory,roomDirectory);
 
     string strChoice;
+    char chChoice;
     int intChoice;
     int mask=-1;
     bool debug_opt=0;
     bool good=0;
     bool men;
+    int mapx=171;
+    int mapy=39;
+    bool floorFlag=0;
     while(good==0)
     {
         clear();
@@ -100,6 +110,19 @@ int main()
             }
         }
         if(intChoice==4)
+        {
+            men = 0;
+            while(men==0)
+            {
+                achievementMenu();
+                strChoice = getch();
+                std::stringstream stoi(strChoice);
+                stoi >> intChoice;
+                if(intChoice==0)
+                    men = 1;
+            }
+        }
+        if(intChoice==5)
         {
             men = 0;
             while(men==0)
@@ -151,11 +174,104 @@ int main()
             Sleep(2000);
             debug_opt = 1;
         }
+        /*if(intChoice==9)
+        { //Test sim
+            /*for(int i=0;i<mapDirectory[2].size();i++)
+            {
+                for(int j=0;j<mapDirectory[2][i].size();j++)
+                    cout << mapDirectory[2][i][j];
+                cout << endl;
+            }
+            getch();
+            while(1==1)
+            {
+                clear();
+                mapDirectory[0][mapy][mapx] = '@';
+                cout << "X----------------X" << endl;
+                for(int i=mapy-4;i<mapy+4;i++)
+                {
+                    cout << "|";
+                    for(int j=mapx-8;j<mapx+8;j++)
+                        cout << mapDirectory[0][i][j];
+                    cout << "|" << endl;
+                }
+                cout << "X----------------X" << endl << endl;
+                cout << "Navigate with arrow keys." << endl;
+                cout << "Press any key to type commands." << endl << endl;
+                chChoice = getch();
+                if(!isalpha(chChoice))
+                {
+                    switch(getch())
+                    {
+                        case 'H':    // key up
+                            if(!floorFlag)
+                                mapDirectory[0][mapy][mapx] = ' ';
+                            else
+                            {
+                                mapDirectory[0][mapy][mapx] = '_';
+                                floorFlag = 0;
+                            }
+                            if(mapDirectory[0][mapy-1][mapx] == ' ')
+                                mapy--;
+                            break;
+                        case 'P':    // key down
+                            if(!floorFlag)
+                                mapDirectory[0][mapy][mapx] = ' ';
+                            else
+                            {
+                                mapDirectory[0][mapy][mapx] = '_';
+                                floorFlag = 0;
+                            }
+                            if(mapDirectory[0][mapy+1][mapx] == ' '||mapDirectory[0][mapy+1][mapx] == '_')
+                            {
+                                if(mapDirectory[0][mapy+1][mapx] == '_')
+                                    floorFlag = 1;
+                                mapy++;
+                            }
+                            else if(mapDirectory[0][mapy][mapx] == '_')
+                                floorFlag = 1;
+                            break;
+                        case 'M':    // key right
+                            if(!floorFlag)
+                                mapDirectory[0][mapy][mapx] = ' ';
+                            else
+                            {
+                                mapDirectory[0][mapy][mapx] = '_';
+                                floorFlag = 0;
+                            }
+                            if(mapDirectory[0][mapy][mapx+1] == ' '||mapDirectory[0][mapy][mapx+1] == '_')
+                            {
+                                if(mapDirectory[0][mapy][mapx+1] == '_')
+                                    floorFlag = 1;
+                                mapx++;
+                            }
+                            break;
+                        case 'K':    // key left
+                            if(!floorFlag)
+                                mapDirectory[0][mapy][mapx] = ' ';
+                            else
+                            {
+                                mapDirectory[0][mapy][mapx] = '_';
+                                floorFlag = 0;
+                            }
+                            if(mapDirectory[0][mapy][mapx-1] == ' '||mapDirectory[0][mapy][mapx-1] == '_')
+                            {
+                                if(mapDirectory[0][mapy][mapx-1] == '_')
+                                    floorFlag = 1;
+                                mapx--;
+                            }
+                            break;
+                    }
+                }
+                else
+                    cin >> strChoice;
+            }
+        }*/
     }
 
     string name;
     string filename;
-    int saveStats[17];
+    int saveStats[18];
     int depth = 1;
     string save;
     string saveName;
@@ -189,6 +305,7 @@ int main()
         saveStats[14] = -1;
         saveStats[15] = -1;
         saveStats[16] = -1;
+        saveStats[17] = 0;
     }
     else if(intChoice==2)
     {
@@ -208,7 +325,7 @@ int main()
                 {
                     std::stringstream data(save);
                     saveFound = 1;
-                    for(int i=0;i<17;i++)
+                    for(int i=0;i<18;i++)
                         data >> saveStats[i];
                     for(int i=0;i<6;i++)
                     {
@@ -245,9 +362,9 @@ int main()
                 cout << "DDG: " << saveStats[10] << endl;
                 cout << "DEPTH: " << saveStats[11] << endl;
                 cout << "KEYS: " << saveStats[12] << endl;
+                cout << "SCORE: " << saveStats[17] << endl;
                 if(saveStats[14]>=0)
                 {
-                    cout << "check" << endl;
                     cout << "MASK: " << dir.maskDirectory[saveStats[14]].getName() << endl << endl;
                 }
                 cout << "Continue with this character? (y/n)" << endl;
@@ -278,6 +395,7 @@ int main()
                     saveStats[14] = -1;
                     saveStats[15] = -1;
                     saveStats[16] = -1;
+                    saveStats[17] = 0;
                     good = 1;
                 }
                 else
@@ -305,6 +423,7 @@ int main()
         hero.spellbook = spellSave;
     }
     depth = saveStats[11];
+    score = saveStats[17];
     if((depth/5)+2>11)
         hero.empowered = 1;
     if(saveStats[15]!=-1)
@@ -319,7 +438,8 @@ int main()
 
     if(hero.getNDDG()==0&&hero.mask.getID()==5) //Whispers
         hero.setNDDG(25);
-
+    if(hero.mask.getID()==1) //Wrath
+        hero.setACC(hero.getACC()-10);
     srand(time(NULL));
     string action;
     string target;
@@ -350,6 +470,7 @@ int main()
     bool manSave = 0;
     bool dev=0;
     bool itemDrop=0;
+    bool gankTracker=1;
 
     cout << "Floor " << depth << endl;
     currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
@@ -375,7 +496,7 @@ int main()
         }
         cout << endl << "What do you do?" << endl;
         cin >> action;
-        err = actionHandler(action,debug_opt);
+        err = actionHandler(action,debug_opt,gankTracker);
         if(err!=-1)
         {
             if(err<4)
@@ -425,11 +546,34 @@ int main()
                     {
                         pass = 1;
                         currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,itemStatus,dev);
+                        continue;
                     }
                     if(boss==1)
                     {
                         win = 1;
                         std::system("cls");
+                        score += 500;
+                        ach.Tyrant = 1;
+                        if(hero.mask.getID()==0)
+                            ach.GlassTriumph = 1;
+                        if(hero.mask.getID()==1)
+                            ach.WrathTriumph = 1;
+                        if(hero.mask.getID()==2)
+                            ach.DarknessTriumph = 1;
+                        if(hero.mask.getID()==3)
+                            ach.ArcanaTriumph = 1;
+                        if(hero.mask.getID()==4)
+                            ach.SteelTriumph = 1;
+                        if(hero.mask.getID()==5)
+                            ach.WhispersTriumph = 1;
+                        if(hero.mask.getID()==6)
+                            ach.BeastsTriumph = 1;
+                        if(hero.mask.getID()==7)
+                            ach.SoulsTriumph = 1;
+                        if(ach.GlassTriumph==1&&ach.WrathTriumph==1&&ach.DarknessTriumph==1&&ach.ArcanaTriumph==1&&ach.SteelTriumph==1&&ach.WhispersTriumph==1&&ach.BeastsTriumph==1&&ach.SoulsTriumph==1)
+                            ach.SpectrumTriumph = 1;
+                        if(gankTracker==1)
+                            ach.Gank = 1;
                         cout << "Valentereth falls to the ground, motionless. She is defeated." << endl;
                         Sleep(2000);
                         cout << "As she lay there, the same energy that had hold of her rushes from her body, and into yours." << endl;
@@ -460,6 +604,8 @@ int main()
                     }
                     if(boss==2)
                     {
+                        ach.Truth = 1;
+                        score += 1000;
                         end = 1;
                         win = 1;
                         break;
@@ -569,23 +715,25 @@ int main()
                     if(yn=='y')
                     {
                         foo = rand() % 100 + 1;
-                        if(hero.getDDG()>=15)
+                        if(hero.getDDG()>=currentRoom.monster.getLEV()*3)
                         {
-                            if(foo>50) //pass
+                            if(foo>25) //pass
                             {
                                 cout << "You escape successfully!" << endl;
                                 Sleep(2000);
                                 good = 1;
                             }
-                            else if(foo>25) //pass, but damage
+                            else if(foo>10) //pass, but damage
                             {
                                 cout << "The enemy attacks as you escape!" << endl;
                                 Sleep(2000);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
-                                if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
+                                if(hero.mask.getID()==0) //Glass
                                     dmg = dmg*2;
+                                if(hero.mask.getID()==5) //Whispers
+                                    dmg = static_cast<float>(dmg)*1.5;
                                 if(hero.mask.getID()==4) //Steel
-                                    dmg = dmg/2;
+                                    dmg = static_cast<float>(dmg)*.7;
                                 if(dmg<0)
                                     dmg = 0;
                                 hero.changeHP(-dmg);
@@ -598,10 +746,12 @@ int main()
                                 cout << "The enemy knocks you back into the room, blocking your way!" << endl;
                                 Sleep(2000);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
-                                if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
+                                if(hero.mask.getID()==0) //Glass
                                     dmg = dmg*2;
+                                if(hero.mask.getID()==5) //Whispers
+                                    dmg = static_cast<float>(dmg)*1.5;
                                 if(hero.mask.getID()==4) //Steel
-                                    dmg = dmg/2;
+                                    dmg = static_cast<float>(dmg)*.7;
                                 if(dmg<0)
                                     dmg = 0;
                                 hero.changeHP(-dmg);
@@ -612,21 +762,23 @@ int main()
                         }
                         else
                         {
-                            if(foo>66) //pass
+                            if(foo>40) //pass
                             {
                                 cout << "You escape successfully!" << endl;
                                 Sleep(2000);
                                 good = 1;
                             }
-                            else if(foo>33) //pass, but damage
+                            else if(foo>20) //pass, but damage
                             {
                                 cout << "The enemy attacks as you escape!" << endl;
                                 Sleep(2000);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
-                                if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
+                                if(hero.mask.getID()==0) //Glass
                                     dmg = dmg*2;
+                                if(hero.mask.getID()==5) //Whispers
+                                    dmg = static_cast<float>(dmg)*1.5;
                                 if(hero.mask.getID()==4) //Steel
-                                    dmg = dmg/2;
+                                    dmg = static_cast<float>(dmg)*.7;
                                 if(dmg<0)
                                     dmg = 0;
                                 hero.changeHP(-dmg);
@@ -639,10 +791,12 @@ int main()
                                 cout << "The enemy knocks you back into the room, blocking your way!" << endl;
                                 Sleep(2000);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
-                                if(hero.mask.getID()==0||hero.mask.getID()==5) //Glass, Whisper
+                                if(hero.mask.getID()==0) //Glass
                                     dmg = dmg*2;
+                                if(hero.mask.getID()==5) //Whispers
+                                    dmg = static_cast<float>(dmg)*1.5;
                                 if(hero.mask.getID()==4) //Steel
-                                    dmg = dmg/2;
+                                    dmg = static_cast<float>(dmg)*.7;
                                 if(dmg<0)
                                     dmg = 0;
                                 hero.changeHP(-dmg);
@@ -661,6 +815,7 @@ int main()
                         }
                         if(good==1)
                         {
+                            score += 10;
                             currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,itemStatus,dev);
                         }
                     }
@@ -726,11 +881,11 @@ int main()
                 cout << endl;
                 cout << "Actions:" << endl;
                 cout << "    MOVE: move <target>" << endl;
-                cout << "        -Synonyms: Go, Enter, Leave, Walk" << endl;
+                cout << "        -Synonyms: Go, Enter, Leave, Walk, Next" << endl;
                 cout << "        -Meaning: Used to enter a new area." << endl;
                 cout << "        -EG: enter door" << endl;
                 cout << "    LOOK: look <target>" << endl;
-                cout << "        -Synonyms: Check, Examine" << endl;
+                cout << "        -Synonyms: Check, Examine, See" << endl;
                 cout << "        -Meaning: Used to examine a feature in the room." << endl;
                 cout << "        -EG: check crates" << endl;
                 cout << "    GET: get <target>" << endl;
@@ -738,11 +893,11 @@ int main()
                 cout << "        -Meaning: Used to acquire a new item." << endl;
                 cout << "        -EG: get wooden sword" << endl;
                 cout << "    ATTACK: attack <target>" << endl;
-                cout << "        -Synonyms: Fight, Gank, Strike, Kill" << endl;
+                cout << "        -Synonyms: Fight, Strike, Kill" << endl;
                 cout << "        -Meaning: Used to engage in combat with a creature." << endl;
                 cout << "        -EG: attack ogre" << endl;
                 cout << "    MENU: menu" << endl;
-                cout << "        -Synonyms: Inventory, Pause, M" << endl;
+                cout << "        -Synonyms: Inventory, Pause, M, Items" << endl;
                 cout << "        -Meaning: Opens up your menu." << endl;
                 cout << "        -EG: menu" << endl;
                 cout << "    SAVE: save" << endl;
@@ -750,7 +905,7 @@ int main()
                 cout << "        -Meaning: Enables/Disables manual saving (Autosave enabled by default)." << endl;
                 cout << "        -EG: save" << endl;
                 cout << "    HELP: help" << endl;
-                cout << "        -Synonyms: Manual" << endl;
+                cout << "        -Synonyms: Manual, H, Guide" << endl;
                 cout << "        -Meaning: Opens a guide to actions." << endl;
                 cout << "        -EG: help" << endl;
                 cout << endl;
@@ -796,9 +951,11 @@ int main()
         clear();
         if(pass==2)
         {
-            cout <<"GAME OVER!" << endl;
+            cout << "GAME OVER!" << endl;
             cout << "You conquered the Tower of Valentereth after " << depth << " floors!" << endl;
             remove(filename.c_str());
+            ach.WakeUp++;
+            ach.RiseAndShine++;
             Sleep(2000);
             if(hiscores(hero,depth))
             {
@@ -823,6 +980,8 @@ int main()
     {
         clear();
         remove(filename.c_str());
+        ach.WakeUp++;
+        ach.RiseAndShine++;
         cout << "GAME OVER!" << endl;
         cout << "You made it to floor " << depth << "!" << endl;
         Sleep(2000);
@@ -834,37 +993,35 @@ int main()
     }
     else
         Sleep(2000);
+    ach.writeAchievements();
     return 0;
 }
 
-int actionHandler(string act, bool debug_opt)
+int actionHandler(string act, bool debug_opt, int gankTracker)
 {
-    if(act=="go"||act=="move"||act=="enter"||act=="leave"||act=="walk")
+    if(act=="go"||act=="move"||act=="enter"||act=="leave"||act=="walk"||act=="next")
     {
         //cout << "You go to the ";
         return 0;
     }
-    else if(act=="look"||act=="check"||act=="examine")
+    else if(act=="look"||act=="check"||act=="examine"||act=="see")
     {
         //cout << "You look at the ";
         return 1;
     }
-    /*else if(act=="use"||act=="try")
-    {
-        cout << "You use the ";
-        return 0;
-    }*/
-    else if(act=="take"||act=="get"||act=="grab"||act=="add")
+    else if(act=="take"||act=="get"||act=="grab"||act=="add"||act=="yoink"||act=="pickup")
     {
         //cout << "You take the ";
         return 2;
     }
-    else if(act=="attack"||act=="fight"||act=="gank"||act=="strike"||act=="kill")
+    else if(act=="attack"||act=="fight"||act=="gank"||act=="strike"||act=="kill"||act=="murder")
     {
+        if(act!="gank")
+            gankTracker = 0;
         //cout << "You attack the ";
         return 3;
     }
-    else if(act=="menu"||act=="inventory"||act=="pause"||act=="m")
+    else if(act=="menu"||act=="inventory"||act=="pause"||act=="m"||act=="items")
     {
         //cout << "You open your menu." << endl;
         return 4;
@@ -873,28 +1030,19 @@ int actionHandler(string act, bool debug_opt)
     {
         return 7;
     }
-    else if(act=="help"||act=="manual"||act=="instructions")
+    else if(act=="help"||act=="manual"||act=="instructions"||act=="guide"||act=="h")
     {
         return 8;
     }
-    else if(act=="debug_go"&&debug_opt)
+    else if((act=="debug_go"||act=="dgo")&&debug_opt)
     {
         return 6;
     }
-    /*else if(act=="room")
-    {
-        return 5;
-    }*/
-    /*else if(act=="exit")
-    {
-        cout << "Exiting..." << endl;
-        return -1;
-    }*/
-    else if(act=="see"&&debug_opt)
+    else if((act=="see"||act=="look_all")&&debug_opt)
     {
         return 10;
     }
-    else if(act=="miniboss"&&debug_opt)
+    else if((act=="miniboss"||act=="summon")&&debug_opt)
     {
         return 11;
     }
@@ -1069,6 +1217,10 @@ int menuHandler(Player &hero, Directory dir)
                             Sleep(2000);
                         }
                         hero.inventory.erase(hero.inventory.begin()+intChoice-1);
+                        if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getName()=="Bread")
+                            ach.Connoisseur++;
+                        if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getID()>=204&&dir.consumableDirectory[hero.inventory[intChoice-1]-200].getID()<=211)
+                            ach.Alchemist++;
                     }
                     else if(strChoice=="2")
                     {
@@ -1198,145 +1350,348 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
     int intChoice;
     int chck;
     string strChoice;
+    vector<string> statDown;
+    vector<string> statUp;
+    vector<int> curStatDown;
+    vector<int> curStatUp;
     while(instore==1)
     {
-        storeMenu(hero,currentRoom.store,dir);
-        chck = 0;
-        cout << "MENU: ";
-        strChoice = getch();
-        std::stringstream stoi(strChoice);
-        stoi >> intChoice;
-        if(intChoice==0)
-            instore = 0;
-        else if(intChoice>0&&intChoice<=currentRoom.store.storeInventory.size())
+        if(currentRoom.store.getType()==0)
         {
-            if(currentRoom.store.storeInventory[intChoice-1]<100)
-            {
-                cout << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << " | " << dir.getItemDesc(currentRoom.store.storeInventory[intChoice-1]) << endl;
-                cout << "RARITY: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getRarity() << endl;
-                cout << "STR: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getStr() << endl;
-                cout << "ACC: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getAcc() << endl;
-                cout << "CRIT: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getCrt() << endl;
-                if(dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getMA()!=0)
-                    cout << "MAGIC AMP: +" << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getMA() << "%" << endl;
-
-            }
-            else if(currentRoom.store.storeInventory[intChoice-1]<200)
-            {
-                cout << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << " | " << dir.getItemDesc(currentRoom.store.storeInventory[intChoice-1]) << endl;
-                cout << "RARITY: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getRarity() << endl;
-                cout << "DEF: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getDef() << endl;
-                cout << "DDG: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getDdg() << endl;
-                if(dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getMG()!=0)
-                    cout << "MANA REGEN: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getMG()  << endl;
-            }
-            else if(currentRoom.store.storeInventory[intChoice-1]<300)
-            {
-                cout << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getName() << " | " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getDesc() << endl;
-                cout << "RARITY: " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getRarity() << endl;
-                cout << "HP: " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getHP() << endl;
-                cout << "MP: " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getMP() << endl;
-            }
-            else
-            {
-                cout << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << " | " << dir.getItemDesc(currentRoom.store.storeInventory[intChoice-1]) << endl;
-                cout << "RARITY: " << dir.getItemRarity(currentRoom.store.storeInventory[intChoice-1]) << endl;
-                if(currentRoom.store.storeInventory[intChoice-1]<315)
-                {
-                    cout << "MANA COST: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getManaCost() << endl;
-                    cout << "DAMAGE: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getDMG() << endl;
-                }
-                else if(currentRoom.store.storeInventory[intChoice-1]<321)
-                {
-                    cout << "MANA COST: " << dir.healingSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-315].getManaCost() << endl;
-                    cout << "HEALING: " << dir.healingSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-315].getHPR() << endl;
-                }
-                else
-                {
-                    cout << "MANA COST: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getManaCost() << endl;
-                    if(dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getATKU()>0)
-                        cout << "ATK BUFF: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getATKU() << endl;
-                    if(dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getDEFU()>0)
-                        cout << "DEF BUFF: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getDEFU() << endl;
-                    if(dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getCRTU()>0)
-                        cout << "CRT BUFF: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getCRTU() << endl;
-                    if(dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getACCU()>0)
-                        cout << "ACC BUFF: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getACCU() << endl;
-                    if(dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getDDGU()>0)
-                        cout << "DDG BUFF: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getDDGU() << endl;
-                }
-            }
-            cout << "PRICE: " << currentRoom.store.storeCost[intChoice-1] << endl << endl;
-            cout << "Would you like to purchase this item? (y/n)" << endl;
+            storeMenu(hero,currentRoom.store,dir);
+            chck = 0;
+            cout << "MENU: ";
             strChoice = getch();
-            if(strChoice=="y"||strChoice=="Y")
+            std::stringstream stoi(strChoice);
+            stoi >> intChoice;
+            if(intChoice==0)
+                instore = 0;
+            else if(intChoice>0&&intChoice<=currentRoom.store.storeInventory.size())
             {
-                if(hero.gold<currentRoom.store.storeCost[intChoice-1])
+                if(currentRoom.store.storeInventory[intChoice-1]<100)
                 {
-                    cout << "You cannot afford this item." << endl;
-                    Sleep(2000);
+                    cout << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << " | " << dir.getItemDesc(currentRoom.store.storeInventory[intChoice-1]) << endl;
+                    cout << "RARITY: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getRarity() << endl;
+                    cout << "STR: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getStr() << endl;
+                    cout << "ACC: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getAcc() << endl;
+                    cout << "CRIT: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getCrt() << endl;
+                    if(dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getMA()!=0)
+                        cout << "MAGIC AMP: +" << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getMA() << "%" << endl;
+
                 }
                 else if(currentRoom.store.storeInventory[intChoice-1]<200)
                 {
-                    if(hero.equipment.size()>=6)
-                    {
-                        cout << "Your inventory is full." << endl;
-                        Sleep(2000);
-                    }
-                    else
-                    {
-                        hero.equipment.push_back(currentRoom.store.storeInventory[intChoice-1]);
-                        cout << "You got the " << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << "!" << endl;
-                        hero.gold -= currentRoom.store.storeCost[intChoice-1];
-                        currentRoom.store.storeInventory.erase(currentRoom.store.storeInventory.begin()+intChoice-1);
-                        currentRoom.store.storeCost.erase(currentRoom.store.storeCost.begin()+intChoice-1);
-                        Sleep(2000);
-                    }
+                    cout << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << " | " << dir.getItemDesc(currentRoom.store.storeInventory[intChoice-1]) << endl;
+                    cout << "RARITY: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getRarity() << endl;
+                    cout << "DEF: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getDef() << endl;
+                    cout << "DDG: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getDdg() << endl;
+                    if(dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getMG()!=0)
+                        cout << "MANA REGEN: " << dir.armorDirectory[currentRoom.store.storeInventory[intChoice-1]-100].getMG()  << endl;
                 }
                 else if(currentRoom.store.storeInventory[intChoice-1]<300)
                 {
-                    if(hero.inventory.size()>=6)
-                    {
-                        cout << "Your inventory is full." << endl;
-                        Sleep(2000);
-                    }
-                    else
-                    {
-                        hero.inventory.push_back(currentRoom.store.storeInventory[intChoice-1]);
-                        cout << "You got the " << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << "!" << endl;
-                        hero.gold -= currentRoom.store.storeCost[intChoice-1];
-                        currentRoom.store.storeInventory.erase(currentRoom.store.storeInventory.begin()+intChoice-1);
-                        currentRoom.store.storeCost.erase(currentRoom.store.storeCost.begin()+intChoice-1);
-                        Sleep(2000);
-                    }
+                    cout << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getName() << " | " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getDesc() << endl;
+                    cout << "RARITY: " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getRarity() << endl;
+                    cout << "HP: " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getHP() << endl;
+                    cout << "MP: " << dir.consumableDirectory[currentRoom.store.storeInventory[intChoice-1]-200].getMP() << endl;
                 }
                 else
                 {
-                    for(int i=0;i<hero.spellbook.size();i++)
+                    cout << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << " | " << dir.getItemDesc(currentRoom.store.storeInventory[intChoice-1]) << endl;
+                    cout << "RARITY: " << dir.getItemRarity(currentRoom.store.storeInventory[intChoice-1]) << endl;
+                    if(currentRoom.store.storeInventory[intChoice-1]<315)
                     {
-                        if(hero.spellbook[i]==currentRoom.store.storeInventory[intChoice-1])
+                        cout << "MANA COST: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getManaCost() << endl;
+                        cout << "DAMAGE: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getDMG() << endl;
+                    }
+                    else if(currentRoom.store.storeInventory[intChoice-1]<321)
+                    {
+                        cout << "MANA COST: " << dir.healingSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-315].getManaCost() << endl;
+                        cout << "HEALING: " << dir.healingSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-315].getHPR() << endl;
+                    }
+                    else
+                    {
+                        cout << "MANA COST: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getManaCost() << endl;
+                        if(dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getATKU()>0)
+                            cout << "ATK BUFF: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getATKU() << endl;
+                        if(dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getDEFU()>0)
+                            cout << "DEF BUFF: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getDEFU() << endl;
+                        if(dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getCRTU()>0)
+                            cout << "CRT BUFF: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getCRTU() << endl;
+                        if(dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getACCU()>0)
+                            cout << "ACC BUFF: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getACCU() << endl;
+                        if(dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getDDGU()>0)
+                            cout << "DDG BUFF: " << dir.buffSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-321].getDDGU() << endl;
+                    }
+                }
+                cout << "PRICE: " << currentRoom.store.storeCost[intChoice-1] << endl << endl;
+                cout << "Would you like to purchase this item? (y/n)" << endl;
+                strChoice = getch();
+                if(strChoice=="y"||strChoice=="Y")
+                {
+                    if(hero.gold<currentRoom.store.storeCost[intChoice-1])
+                    {
+                        cout << "You cannot afford this item." << endl;
+                        Sleep(2000);
+                    }
+                    else if(currentRoom.store.storeInventory[intChoice-1]<200)
+                    {
+                        if(hero.equipment.size()>=6)
                         {
-                            cout << "You already know this spell." << endl;
+                            cout << "Your inventory is full." << endl;
                             Sleep(2000);
-                            chck = 1;
+                        }
+                        else
+                        {
+                            hero.equipment.push_back(currentRoom.store.storeInventory[intChoice-1]);
+                            cout << "You got the " << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << "!" << endl;
+                            hero.gold -= currentRoom.store.storeCost[intChoice-1];
+                            currentRoom.store.storeInventory.erase(currentRoom.store.storeInventory.begin()+intChoice-1);
+                            currentRoom.store.storeCost.erase(currentRoom.store.storeCost.begin()+intChoice-1);
+                            Sleep(2000);
                         }
                     }
-                    if(chck==0)
+                    else if(currentRoom.store.storeInventory[intChoice-1]<300)
                     {
-                        hero.spellbook.push_back(currentRoom.store.storeInventory[intChoice-1]);
-                        cout << "You got the " << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << "!" << endl;
-                        hero.gold -= currentRoom.store.storeCost[intChoice-1];
-                        currentRoom.store.storeInventory.erase(currentRoom.store.storeInventory.begin()+intChoice-1);
-                        currentRoom.store.storeCost.erase(currentRoom.store.storeCost.begin()+intChoice-1);
-                        Sleep(2000);
+                        if(hero.inventory.size()>=6)
+                        {
+                            cout << "Your inventory is full." << endl;
+                            Sleep(2000);
+                        }
+                        else
+                        {
+                            hero.inventory.push_back(currentRoom.store.storeInventory[intChoice-1]);
+                            cout << "You got the " << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << "!" << endl;
+                            hero.gold -= currentRoom.store.storeCost[intChoice-1];
+                            currentRoom.store.storeInventory.erase(currentRoom.store.storeInventory.begin()+intChoice-1);
+                            currentRoom.store.storeCost.erase(currentRoom.store.storeCost.begin()+intChoice-1);
+                            Sleep(2000);
+                        }
+                    }
+                    else
+                    {
+                        for(int i=0;i<hero.spellbook.size();i++)
+                        {
+                            if(hero.spellbook[i]==currentRoom.store.storeInventory[intChoice-1])
+                            {
+                                cout << "You already know this spell." << endl;
+                                Sleep(2000);
+                                chck = 1;
+                            }
+                        }
+                        if(chck==0)
+                        {
+                            hero.spellbook.push_back(currentRoom.store.storeInventory[intChoice-1]);
+                            cout << "You got the " << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << "!" << endl;
+                            hero.gold -= currentRoom.store.storeCost[intChoice-1];
+                            currentRoom.store.storeInventory.erase(currentRoom.store.storeInventory.begin()+intChoice-1);
+                            currentRoom.store.storeCost.erase(currentRoom.store.storeCost.begin()+intChoice-1);
+                            Sleep(2000);
+                        }
                     }
                 }
             }
+            else
+            {
+                cout << "Invalid choice." << endl;
+                Sleep(2000);
+            }
         }
-        else
+        else if(currentRoom.store.getType()==1)
         {
-            cout << "Invalid choice." << endl;
-            Sleep(2000);
+            diviningMenu(hero,currentRoom.store,dir);
+            for(int i=0;i<2;i++)
+            {
+                statDown.push_back("");
+                statUp.push_back("");
+                curStatUp.push_back(0);
+                curStatDown.push_back(0);
+                switch(currentRoom.store.getStatDown()[i])
+                {
+                    case 0:
+                        statDown[i] = "ATK";
+                        curStatDown[i] = hero.getNSTR();
+                    break;
+                    case 1:
+                        statDown[i] = "DEF";
+                        curStatDown[i] = hero.getNDEF();
+                    break;
+                    case 2:
+                        statDown[i] = "CRT";
+                        curStatDown[i] = hero.getNCRT();
+                    break;
+                    case 3:
+                        statDown[i] = "DDG";
+                        curStatDown[i] = hero.getNDDG();
+                    break;
+                    case 4:
+                        statDown[i] = "MHP";
+                        curStatDown[i] = hero.getMHP();
+                    break;
+                    case 5:
+                        statDown[i] = "MMP";
+                        curStatDown[i] = hero.getMMP();
+                    break;
+                }
+                switch(currentRoom.store.getStatUp()[i])
+                {
+                    case 0:
+                        statUp[i] = "ATK";
+                        curStatUp[i] = hero.getNSTR();
+                    break;
+                    case 1:
+                        statUp[i] = "DEF";
+                        curStatUp[i] = hero.getNDEF();
+                    break;
+                    case 2:
+                        statUp[i] = "CRT";
+                        curStatUp[i] = hero.getNCRT();
+                    break;
+                    case 3:
+                        statUp[i] = "DDG";
+                        curStatUp[i] = hero.getNDDG();
+                    break;
+                    case 4:
+                        statUp[i] = "MHP";
+                        curStatUp[i] = hero.getMHP();
+                    break;
+                    case 5:
+                        statUp[i] = "MMP";
+                        curStatUp[i] = hero.getMMP();
+                    break;
+                }
+            }
+            chck = 0;
+            cout << "MENU: ";
+            strChoice = getch();
+            std::stringstream stoi(strChoice);
+            stoi >> intChoice;
+            if(intChoice==0)
+                instore = 0;
+            if(intChoice==1)
+            {
+                if(hero.gold<currentRoom.store.getSwapCost())
+                {
+                    cout << "You cannot afford to divine." << endl;
+                    Sleep(2000);
+                }
+                else if(curStatDown[0]<2)
+                {
+                    cout << "You don't have enough " << statDown[0] << "." << endl;
+                    Sleep(2000);
+                }
+                else
+                {
+                    switch(currentRoom.store.getStatDown()[0])
+                    {
+                        case 0:
+                            hero.setNSTR(curStatDown[0]-2);
+                        break;
+                        case 1:
+                            hero.setNDEF(curStatDown[0]-2);
+                        break;
+                        case 2:
+                            hero.setNCRT(curStatDown[0]-2);
+                        break;
+                        case 3:
+                            hero.setNDDG(curStatDown[0]-2);
+                        break;
+                        case 4:
+                            hero.setMHP(curStatDown[0]-2);
+                        break;
+                        case 5:
+                            hero.setMMP(curStatDown[0]-2);
+                        break;
+                    }
+                    switch(currentRoom.store.getStatUp()[0])
+                    {
+                        case 0:
+                            hero.setNSTR(curStatUp[0]+1);
+                        break;
+                        case 1:
+                            hero.setNDEF(curStatUp[0]+1);
+                        break;
+                        case 2:
+                            hero.setNCRT(curStatUp[0]+1);
+                        break;
+                        case 3:
+                            hero.setNDDG(curStatUp[0]+1);
+                        break;
+                        case 4:
+                            hero.setMHP(curStatUp[0]+1);
+                        break;
+                        case 5:
+                            hero.setMMP(curStatUp[0]+1);
+                        break;
+                    }
+                    hero.gold -= currentRoom.store.getSwapCost();
+                    currentRoom.store.incStatCount();
+                    cout << "Reduced " << statDown[0] << " by 2, and raised " << statUp[0] << " by 1!" << endl;
+                }
+                Sleep(2000);
+            }
+            if(intChoice==2)
+            {
+                if(hero.gold<currentRoom.store.getSwapCost())
+                {
+                    cout << "You cannot afford to divine." << endl;
+                    Sleep(2000);
+                }
+                else if(curStatDown[1]<2)
+                {
+                    cout << "You don't have enough " << statDown[1] << "." << endl;
+                    Sleep(2000);
+                }
+                else
+                {
+                    switch(currentRoom.store.getStatDown()[1])
+                    {
+                        case 0:
+                            hero.setNSTR(curStatDown[1]-2);
+                        break;
+                        case 1:
+                            hero.setNDEF(curStatDown[1]-2);
+                        break;
+                        case 2:
+                            hero.setNCRT(curStatDown[1]-2);
+                        break;
+                        case 3:
+                            hero.setNDDG(curStatDown[1]-2);
+                        break;
+                        case 4:
+                            hero.setMHP(curStatDown[1]-2);
+                        break;
+                        case 5:
+                            hero.setMMP(curStatDown[1]-2);
+                        break;
+                    }
+                    switch(currentRoom.store.getStatUp()[1])
+                    {
+                        case 0:
+                            hero.setNSTR(curStatUp[1]+1);
+                        break;
+                        case 1:
+                            hero.setNDEF(curStatUp[1]+1);
+                        break;
+                        case 2:
+                            hero.setNCRT(curStatUp[1]+1);
+                        break;
+                        case 3:
+                            hero.setNDDG(curStatUp[1]+1);
+                        break;
+                        case 4:
+                            hero.setMHP(curStatUp[1]+1);
+                        break;
+                        case 5:
+                            hero.setMMP(curStatUp[1]+1);
+                        break;
+                    }
+                    hero.gold -= currentRoom.store.getSwapCost();
+                    currentRoom.store.incStatCount();
+                    cout << "Reduced " << statDown[1] << " by 2, and raised " << statUp[1] << " by 1!" << endl;
+                }
+                Sleep(2000);
+            }
         }
     }
     return 0;
@@ -1348,7 +1703,8 @@ void saveFunc(Player &hero,string filename, int depth)
     saveFile.open(filename);
     saveFile << hero.level << " " << hero.exp << " " << hero.gold << " " << hero.getHP() << " " << hero.getMHP() << " " << hero.getMP() << " "
              << hero.getMMP() << " " << hero.getNSTR() << " " << hero.getNCRT() << " " << hero.getNDEF() << " " << hero.getNDDG() << " " << depth
-             << " " << hero.keys << " " << hero.growth << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID();
+             << " " << hero.keys << " " << hero.growth << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID() <<
+             " " << score;
     for(int i=0;i<hero.equipment.size();i++)
     {
         saveFile << " " << hero.equipment[i];
@@ -1364,6 +1720,7 @@ void saveFunc(Player &hero,string filename, int depth)
     for(int i=0;i<hero.spellbook.size();i++)
         saveFile << " " << hero.spellbook[i];
     saveFile << " " << -1;
+    ach.writeAchievements();
     saveFile.close();
 }
 
@@ -1372,32 +1729,34 @@ bool hiscores(Player &hero, int depth)
     std::ifstream readFile("HighScores.txt");
     string data;
     string nameArr[10];
+    int scoreArr[10];
     int depthArr[10];
     int i = 0;
     int flag=-1;
     string nameHold;
+    int scoreHold;
     int depthHold;
 
     while(std::getline(readFile,data))
     {
         std::stringstream line(data);
-        line >> nameArr[i] >> depthArr[i];
+        line >> nameArr[i] >> scoreArr[i] >> depthArr[i];
         i++;
         if(i>=10)
             break;
     }
 
     for(i=9;i>=0;i--) //Determining if the score is on the leaderboard, and its position
-        if(depth>=depthArr[i])
+        if(score>=scoreArr[i])
             flag = i;
     if(flag==-1)
         return 0;
 
     for(i=9;i>=0;i--) //Inserting it into the leaderboard
         if(i>flag)
-            depthArr[i] = depthArr[i-1];
+            scoreArr[i] = scoreArr[i-1];
         else if(i==flag)
-            depthArr[i] = depth;
+            scoreArr[i] = score;
 
     for(i=9;i>=0;i--) //Inserting name into the leaderboard
         if(i>flag)
@@ -1405,12 +1764,18 @@ bool hiscores(Player &hero, int depth)
         else if(i==flag)
             nameArr[i] = hero.getName();
 
+    for(i=9;i>=0;i--) //Inserting name into the leaderboard
+        if(i>flag)
+            depthArr[i] = depthArr[i-1];
+        else if(i==flag)
+            depthArr[i] = depth;
+
     readFile.close();
 
     std::ofstream writeFile("HighScores.txt");
     for(i=0;i<10;i++)
     {
-        data = nameArr[i] + " " + std::to_string(depthArr[i]);
+        data = nameArr[i] + " " + std::to_string(scoreArr[i]) + " " + std::to_string(depthArr[i]);
         writeFile << data << endl;
     }
     writeFile.close();
@@ -1419,6 +1784,7 @@ bool hiscores(Player &hero, int depth)
 
 Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &iStatus, bool &dev)
 {
+    score += 100;
     depth++;
     itemDrop = 0;
     if(depth%5==0)
@@ -1449,11 +1815,13 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
     //cout << "Karma: " << karma << endl;
     if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
     {
+        int egHPBuff = ((depth/5)-11)*6;
         int egStrBuff = ((depth/5)-11)*4;
         int egAccBuff = ((depth/5)-11)*3;
         int egDefBuff = ((depth/5)-11)*4;
         int egDdgBuff = ((depth/5)-11)*2;
 
+        currentRoom.monster.setHP(currentRoom.monster.getHP()+egHPBuff);
         currentRoom.monster.setSTR(currentRoom.monster.getSTR()+egStrBuff);
         currentRoom.monster.setACC(currentRoom.monster.getACC()+egAccBuff);
         currentRoom.monster.setDEF(currentRoom.monster.getDEF()+egDefBuff);

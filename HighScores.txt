@@ -1,10 +1,10 @@
-BigBoi 30
-StrongBoi 25
-HeftyBoi 20
-SizableBoi 15
-NormalBoi 10
-testboi 8
-LankyBoi 8
-FrailBoi 6
-testboi 4
-LilBoi 4
+BigBoi 10000 30
+StrongBoi 7500 25
+HeftyBoi 5000 20
+SizableBoi 3000 15
+NormalBoi 2000 10
+testboi 1500 8
+LankyBoi 1400 8
+FrailBoi 1000 6
+testboi 600 4
+LilBoi 500 4
