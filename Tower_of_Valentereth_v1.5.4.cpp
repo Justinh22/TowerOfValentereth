@@ -1350,10 +1350,10 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
     int intChoice;
     int chck;
     string strChoice;
-    string statDown;
-    string statUp;
-    int curStatDown;
-    int curStatUp;
+    vector<string> statDown;
+    vector<string> statUp;
+    vector<int> curStatDown;
+    vector<int> curStatUp;
     while(instore==1)
     {
         if(currentRoom.store.getType()==0)
@@ -1500,59 +1500,66 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
         else if(currentRoom.store.getType()==1)
         {
             diviningMenu(hero,currentRoom.store,dir);
-            switch(currentRoom.store.getStatDown())
+            for(int i=0;i<2;i++)
             {
-                case 0:
-                    statDown = "ATK";
-                    curStatDown = hero.getNSTR();
-                break;
-                case 1:
-                    statDown = "DEF";
-                    curStatDown = hero.getNDEF();
-                break;
-                case 2:
-                    statDown = "CRT";
-                    curStatDown = hero.getNCRT();
-                break;
-                case 3:
-                    statDown = "DDG";
-                    curStatDown = hero.getNDDG();
-                break;
-                case 4:
-                    statDown = "MHP";
-                    curStatDown = hero.getMHP();
-                break;
-                case 5:
-                    statDown = "MMP";
-                    curStatDown = hero.getMMP();
-                break;
-            }
-            switch(currentRoom.store.getStatUp())
-            {
-                case 0:
-                    statUp = "ATK";
-                    curStatUp = hero.getNSTR();
-                break;
-                case 1:
-                    statUp = "DEF";
-                    curStatUp = hero.getNDEF();
-                break;
-                case 2:
-                    statUp = "CRT";
-                    curStatUp = hero.getNCRT();
-                break;
-                case 3:
-                    statUp = "DDG";
-                    curStatUp = hero.getNDDG();
-                break;
-                case 4:
-                    statUp = "MHP";
-                    curStatUp = hero.getMHP();
-                break;
-                case 5:
-                    statUp = "MMP";
-                    curStatUp = hero.getMMP();
-                break;
+                statDown.push_back("");
+                statUp.push_back("");
+                curStatUp.push_back(0);
+                curStatDown.push_back(0);
+                switch(currentRoom.store.getStatDown()[i])
+                {
+                    case 0:
+                        statDown[i] = "ATK";
+                        curStatDown[i] = hero.getNSTR();
+                    break;
+                    case 1:
+                        statDown[i] = "DEF";
+                        curStatDown[i] = hero.getNDEF();
+                    break;
+                    case 2:
+                        statDown[i] = "CRT";
+                        curStatDown[i] = hero.getNCRT();
+                    break;
+                    case 3:
+                        statDown[i] = "DDG";
+                        curStatDown[i] = hero.getNDDG();
+                    break;
+                    case 4:
+                        statDown[i] = "MHP";
+                        curStatDown[i] = hero.getMHP();
+                    break;
+                    case 5:
+                        statDown[i] = "MMP";
+                        curStatDown[i] = hero.getMMP();
+                    break;
+                }
+                switch(currentRoom.store.getStatUp()[i])
+                {
+                    case 0:
+                        statUp[i] = "ATK";
+                        curStatUp[i] = hero.getNSTR();
+                    break;
+                    case 1:
+                        statUp[i] = "DEF";
+                        curStatUp[i] = hero.getNDEF();
+                    break;
+                    case 2:
+                        statUp[i] = "CRT";
+                        curStatUp[i] = hero.getNCRT();
+                    break;
+                    case 3:
+                        statUp[i] = "DDG";
+                        curStatUp[i] = hero.getNDDG();
+                    break;
+                    case 4:
+                        statUp[i] = "MHP";
+                        curStatUp[i] = hero.getMHP();
+                    break;
+                    case 5:
+                        statUp[i] = "MMP";
+                        curStatUp[i] = hero.getMMP();
+                    break;
+                }
             }
             chck = 0;
             cout << "MENU: ";
@@ -1568,58 +1575,120 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                     cout << "You cannot afford to divine." << endl;
                     Sleep(2000);
                 }
-                else if(curStatDown<2)
+                else if(curStatDown[0]<2)
                 {
-                    cout << "You don't have enough " << statDown << "." << endl;
+                    cout << "You don't have enough " << statDown[0] << "." << endl;
                     Sleep(2000);
                 }
                 else
                 {
-                    switch(currentRoom.store.getStatDown())
+                    switch(currentRoom.store.getStatDown()[0])
                     {
                         case 0:
-                            hero.setNSTR(curStatDown-2);
+                            hero.setNSTR(curStatDown[0]-2);
                         break;
                         case 1:
-                            hero.setNDEF(curStatDown-2);
+                            hero.setNDEF(curStatDown[0]-2);
                         break;
                         case 2:
-                            hero.setNCRT(curStatDown-2);
+                            hero.setNCRT(curStatDown[0]-2);
                         break;
                         case 3:
-                            hero.setNDDG(curStatDown-2);
+                            hero.setNDDG(curStatDown[0]-2);
                         break;
                         case 4:
-                            hero.setMHP(curStatDown-2);
+                            hero.setMHP(curStatDown[0]-2);
                         break;
                         case 5:
-                            hero.setMMP(curStatDown-2);
+                            hero.setMMP(curStatDown[0]-2);
                         break;
                     }
-                    switch(currentRoom.store.getStatUp())
+                    switch(currentRoom.store.getStatUp()[0])
                     {
                         case 0:
-                            hero.setNSTR(curStatUp+1);
+                            hero.setNSTR(curStatUp[0]+1);
                         break;
                         case 1:
-                            hero.setNDEF(curStatUp+1);
+                            hero.setNDEF(curStatUp[0]+1);
                         break;
                         case 2:
-                            hero.setNCRT(curStatUp+1);
+                            hero.setNCRT(curStatUp[0]+1);
                         break;
                         case 3:
-                            hero.setNDDG(curStatUp+1);
+                            hero.setNDDG(curStatUp[0]+1);
                         break;
                         case 4:
-                            hero.setMHP(curStatUp+1);
+                            hero.setMHP(curStatUp[0]+1);
                         break;
                         case 5:
-                            hero.setMMP(curStatUp+1);
+                            hero.setMMP(curStatUp[0]+1);
                         break;
                     }
                     hero.gold -= currentRoom.store.getSwapCost();
                     currentRoom.store.incStatCount();
-                    cout << "Reduced " << statDown << " by 2, and raised " << statUp << " by 1!" << endl;
+                    cout << "Reduced " << statDown[0] << " by 2, and raised " << statUp[0] << " by 1!" << endl;
+                }
+                Sleep(2000);
+            }
+            if(intChoice==2)
+            {
+                if(hero.gold<currentRoom.store.getSwapCost())
+                {
+                    cout << "You cannot afford to divine." << endl;
+                    Sleep(2000);
+                }
+                else if(curStatDown[1]<2)
+                {
+                    cout << "You don't have enough " << statDown[1] << "." << endl;
+                    Sleep(2000);
+                }
+                else
+                {
+                    switch(currentRoom.store.getStatDown()[1])
+                    {
+                        case 0:
+                            hero.setNSTR(curStatDown[1]-2);
+                        break;
+                        case 1:
+                            hero.setNDEF(curStatDown[1]-2);
+                        break;
+                        case 2:
+                            hero.setNCRT(curStatDown[1]-2);
+                        break;
+                        case 3:
+                            hero.setNDDG(curStatDown[1]-2);
+                        break;
+                        case 4:
+                            hero.setMHP(curStatDown[1]-2);
+                        break;
+                        case 5:
+                            hero.setMMP(curStatDown[1]-2);
+                        break;
+                    }
+                    switch(currentRoom.store.getStatUp()[1])
+                    {
+                        case 0:
+                            hero.setNSTR(curStatUp[1]+1);
+                        break;
+                        case 1:
+                            hero.setNDEF(curStatUp[1]+1);
+                        break;
+                        case 2:
+                            hero.setNCRT(curStatUp[1]+1);
+                        break;
+                        case 3:
+                            hero.setNDDG(curStatUp[1]+1);
+                        break;
+                        case 4:
+                            hero.setMHP(curStatUp[1]+1);
+                        break;
+                        case 5:
+                            hero.setMMP(curStatUp[1]+1);
+                        break;
+                    }
+                    hero.gold -= currentRoom.store.getSwapCost();
+                    currentRoom.store.incStatCount();
+                    cout << "Reduced " << statDown[1] << " by 2, and raised " << statUp[1] << " by 1!" << endl;
                 }
                 Sleep(2000);
             }

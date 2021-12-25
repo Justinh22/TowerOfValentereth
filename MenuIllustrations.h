@@ -299,76 +299,89 @@ void diviningMenu(Player hero, Merchant store, Directory dir)
 {
     std::system("cls");
     int i;
-    string statUp;
-    int curStatUp;
-    string statDown;
-    int curStatDown;
-    switch(store.getStatDown())
+    vector<string> statUp;
+    vector<int> curStatUp;
+    vector<string> statDown;
+    vector<int> curStatDown;
+    for(int i=0;i<2;i++)
     {
-        case 0:
-            statDown = "ATK";
-            curStatDown = hero.getNSTR();
-        break;
-        case 1:
-            statDown = "DEF";
-            curStatDown = hero.getNDEF();
-        break;
-        case 2:
-            statDown = "CRT";
-            curStatDown = hero.getNCRT();
-        break;
-        case 3:
-            statDown = "DDG";
-            curStatDown = hero.getNDDG();
-        break;
-        case 4:
-            statDown = "MHP";
-            curStatDown = hero.getMHP();
-        break;
-        case 5:
-            statDown = "MMP";
-            curStatDown = hero.getMMP();
-        break;
-    }
-    switch(store.getStatUp())
-    {
-        case 0:
-            statUp = "ATK";
-            curStatUp = hero.getNSTR();
-        break;
-        case 1:
-            statUp = "DEF";
-            curStatUp = hero.getNDEF();
-        break;
-        case 2:
-            statUp = "CRT";
-            curStatUp = hero.getNCRT();
-        break;
-        case 3:
-            statUp = "DDG";
-            curStatUp = hero.getNDDG();
-        break;
-        case 4:
-            statUp = "MHP";
-            curStatUp = hero.getMHP();
-        break;
-        case 5:
-            statUp = "MMP";
-            curStatUp = hero.getMMP();
-        break;
+        statDown.push_back("");
+        statUp.push_back("");
+        curStatDown.push_back(0);
+        curStatUp.push_back(0);
+        switch(store.getStatDown()[i])
+        {
+            case 0:
+                statDown[i] = "ATK";
+                curStatDown[i] = hero.getNSTR();
+            break;
+            case 1:
+                statDown[i] = "DEF";
+                curStatDown[i] = hero.getNDEF();
+            break;
+            case 2:
+                statDown[i] = "CRT";
+                curStatDown[i] = hero.getNCRT();
+            break;
+            case 3:
+                statDown[i] = "DDG";
+                curStatDown[i] = hero.getNDDG();
+            break;
+            case 4:
+                statDown[i] = "MHP";
+                curStatDown[i] = hero.getMHP();
+            break;
+            case 5:
+                statDown[i] = "MMP";
+                curStatDown[i] = hero.getMMP();
+            break;
+        }
+        switch(store.getStatUp()[i])
+        {
+            case 0:
+                statUp[i] = "ATK";
+                curStatUp[i] = hero.getNSTR();
+            break;
+            case 1:
+                statUp[i] = "DEF";
+                curStatUp[i] = hero.getNDEF();
+            break;
+            case 2:
+                statUp[i] = "CRT";
+                curStatUp[i] = hero.getNCRT();
+            break;
+            case 3:
+                statUp[i] = "DDG";
+                curStatUp[i] = hero.getNDDG();
+            break;
+            case 4:
+                statUp[i] = "MHP";
+                curStatUp[i] = hero.getMHP();
+            break;
+            case 5:
+                statUp[i] = "MMP";
+                curStatUp[i] = hero.getMMP();
+            break;
+        }
     }
     cout << "/--------------------------------------------------------------\\" << endl;
     cout << "|-                                                            -|" << endl;
     cout << "|-                          DIVINING                          -|" << endl;
     cout << "|-             --------------------------------               -|" << endl;
-    cout << "|-               (2) " << statDown << "  ---------->  (1) " << statUp << "                -|" << endl;
+    for(int i=0;i<2;i++)
+        cout << "|-         " << i+1 << ")     (2) " << statDown[i] << "  ---------->  (1) " << statUp[i] << "               -|" << endl;
     cout << "|-             --------------------------------               -|" << endl;
     cout << "|-                                                            -|" << endl;
-    cout << "|-   CURRENT " << statDown << ": " << setw(3) << std::left << curStatDown << "                                         -|" << endl;
-    cout << "|-   CURRENT " << statUp << ": " << setw(3) << std::left << curStatUp << "                                         -|" << endl;
+    for(int i=0;i<2;i++)
+    {
+        cout << "|-   CURRENT " << statDown[i] << ": " << setw(3) << std::left << curStatDown[i] << "                                         -|" << endl;
+        cout << "|-   CURRENT " << statUp[i] << ": " << setw(3) << std::left << curStatUp[i] << "                                         -|" << endl;
+        cout << "|-                                                            -|" << endl;
+    }
     cout << "|-   COST: " << setw(3) << std::left << store.getSwapCost() << "                                                -|" << endl;
     cout << "|-                                                            -|" << endl;
-    cout << "|-   1) DIVINE                                                -|" << endl;
+    cout << "|-   1) DIVINE 1                                              -|" << endl;
+    cout << "|-   2) DIVINE 2                                              -|" << endl;
     cout << "|-                                                            -|" << endl;
     cout << "|-   0) RETURN                                 GOLD: " << setw(5) << std::left << hero.gold << "    -|" << endl;
     cout << "|-                                                            -|" << endl;
