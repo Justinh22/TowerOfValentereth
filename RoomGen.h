@@ -653,7 +653,7 @@ Merchant storeHandler(int level)
     else if(store.getType()==1)
     {
         store.setStatSwap();
-        cout << "Divining alert!" << endl;
+        //cout << "Divining alert!" << endl;
     }
     return store;
 }

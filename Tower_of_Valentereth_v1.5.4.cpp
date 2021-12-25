@@ -27,7 +27,7 @@ int score = 0;
 #include "SpellList.h"
 #include "FeatureList.h"
 #include "RoomList.h"
-#include "MapList.h"
+//#include "MapList.h"
 #include "RoomGen.h"
 #include "MenuIllustrations.h"
 #include "InteractionHandler.h"
@@ -60,7 +60,7 @@ int main()
     vector<Creature> creatureDirectory;
     vector<Feature> featureDirectory;
     vector<Room> roomDirectory;
-    vector<vector<vector<char>>> mapDirectory;
+    //vector<vector<vector<char>>> mapDirectory;
 
     weaponDirectory = initWDir(weaponDirectory);
     armorDirectory = initADir(armorDirectory);
@@ -72,7 +72,7 @@ int main()
     creatureDirectory = initCDir(creatureDirectory);
     featureDirectory = initFDir(featureDirectory);
     roomDirectory = initRDir(roomDirectory,featureDirectory);
-    mapDirectory = initMapDir(mapDirectory);
+    //mapDirectory = initMapDir(mapDirectory);
     Directory dir(weaponDirectory,armorDirectory,consumableDirectory,maskDirectory,attackSpellDirectory,healingSpellDirectory,buffSpellDirectory,creatureDirectory,featureDirectory,roomDirectory);
 
     string strChoice;
@@ -82,8 +82,8 @@ int main()
     bool debug_opt=0;
     bool good=0;
     bool men;
-    int mapx=171;
-    int mapy=39;
+    //int mapx=171;
+    //int mapy=39;
     bool floorFlag=0;
     while(good==0)
     {
