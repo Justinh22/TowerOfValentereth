@@ -1,4 +1,4 @@
-int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex)
+int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex, bool debug)
 {
     int end = 0;
     bool win;
@@ -23,6 +23,9 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
     float amp;
     float red;
     int monHP = monster.getHP();
+    int furyDmg=0;
+    bool miracleFlag=0;
+    int manacost;
     vector<Buff> buffCounter;
 
     if(hero.mask.getID()==2) //Darkness
@@ -57,14 +60,49 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
             Sleep(1000);
             hit = ((rand() % 100) + (rand() % 100) + 2) / 2;
             //cout << hit+monster.getDDG() << ", " << hero.getACC()+accBuff << endl;
+            if(hero.eqpRng.getID()==405||hero.eqpRng.getID()==415||hero.eqpRng.getID()==427) //SIGHT
+            {
+                if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
+                {
+                    cout << hero.eqpRng.getName() << " activated!" << endl;
+                    hit = -100;
+                    Sleep(1000);
+                }
+            }
             if(hit+monster.getDDG()<=hero.getACC()+accBuff)
             {
+                if(hero.eqpRng.getID()==409||hero.eqpRng.getID()==419||hero.eqpRng.getID()==431) //FURY
+                {
+                    cout << hero.eqpRng.getName() << " activated!" << endl;
+                    switch(hero.eqpRng.getID())
+                    {
+                        case 431:
+                            furyDmg += 3;
+                            break;
+                        case 419:
+                            furyDmg += 2;
+                            break;
+                        case 409:
+                            furyDmg += 1;
+                            break;
+                    }
+                    Sleep(1000);
+                }
                 crit = ((rand() % 100) + (rand() % 100) + 2) / 2;
                 if(crit<=hero.getCRT()+crtBuff)
                 {
                     cout << "Critical Hit!" << endl;
                     Sleep(1000);
                     dmg = (hero.getSTR()+atkBuff - monster.getDEF())*2;
+                    if(hero.eqpRng.getID()==406||hero.eqpRng.getID()==416||hero.eqpRng.getID()==428) //PIERCING
+                    {
+                        if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
+                        {
+                            cout << hero.eqpRng.getName() << " activated!" << endl;
+                            dmg = (hero.getSTR()+atkBuff - (static_cast<float>(monster.getDEF())*.5))*2;
+                            Sleep(1000);
+                        }
+                    }
                     if(hero.eqpWpn.getID()==57) //Ozkoroth's Fang
                         dmg = (ceil(static_cast<float>(monster.getHP())*.25))*2;
                     if(hero.eqpWpn.getID()==58) //Energy Siphon
@@ -80,6 +118,24 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         dmg = dmg + (dmg/2);
                     if(monster.getID()==61) //?????
                         dmg = static_cast<float>(dmg)*.7;
+                    if(hero.eqpRng.getID()==404||hero.eqpRng.getID()==414||hero.eqpRng.getID()==426) //VENGEANCE
+                    {
+                        switch(hero.eqpRng.getID())
+                        {
+                            case 404:
+                                dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.15;
+                                break;
+                            case 414:
+                                dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.3;
+                                break;
+                            case 426:
+                                dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.5;
+                                break;
+                        }
+                    }
+                    dmg += furyDmg;
+                    if(dmg<0)
+                        dmg = 0;
                     monHP -= dmg;
                     cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
                     Sleep(2000);
@@ -89,6 +145,15 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     cout << "Hit!" << endl;
                     Sleep(1000);
                     dmg = hero.getSTR()+atkBuff - monster.getDEF();
+                    if(hero.eqpRng.getID()==406||hero.eqpRng.getID()==416||hero.eqpRng.getID()==428) //PIERCING
+                    {
+                        if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
+                        {
+                            cout << hero.eqpRng.getName() << " activated!" << endl;
+                            dmg = hero.getSTR()+atkBuff - (static_cast<float>(monster.getDEF())*.5);
+                            Sleep(1000);
+                        }
+                    }
                     if(hero.eqpWpn.getID()==57) //Ozkoroth's Fang
                         dmg = ceil(static_cast<float>(monster.getHP())*.25);
                     if(hero.eqpWpn.getID()==58) //Energy Siphon
@@ -104,6 +169,24 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         dmg = dmg + (dmg/2);
                     if(monster.getID()==61) //?????
                         dmg = static_cast<float>(dmg)*.7;
+                    if(hero.eqpRng.getID()==404||hero.eqpRng.getID()==414||hero.eqpRng.getID()==426) //VENGEANCE
+                    {
+                        switch(hero.eqpRng.getID())
+                        {
+                            case 404:
+                                dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.15;
+                                break;
+                            case 414:
+                                dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.3;
+                                break;
+                            case 426:
+                                dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.5;
+                                break;
+                        }
+                    }
+                    dmg += furyDmg;
+                    if(dmg<0)
+                        dmg = 0;
                     monHP -= dmg;
                     cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
                     Sleep(2000);
@@ -114,10 +197,26 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     ach.Overkill = 1;
                 if(dmg>=100&&monster.getName()=="Valentereth, the Tyrant")
                     ach.TrueHeir = 1;
+                if(hero.eqpRng.getID()==403||hero.eqpRng.getID()==413||hero.eqpRng.getID()==425) //LEECHING
+                {
+                    if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
+                    {
+                        cout << hero.eqpRng.getName() << " activated!" << endl;
+                        Sleep(1000);
+                        hero.changeHP(dmg);
+                        cout << "Recovered " << dmg << " HP!" << endl;
+                        Sleep(1000);
+                    }
+                }
             }
             else
             {
                 cout << "You missed..." << endl;
+                if(hero.eqpRng.getID()==409||hero.eqpRng.getID()==419||hero.eqpRng.getID()==431) //FURY
+                {
+                    cout << hero.eqpRng.getName() << " streak broken!" << endl;
+                    furyDmg = 0;
+                }
                 if(monster.getID()==60)
                     parry = 1;
                 Sleep(2000);
@@ -142,13 +241,13 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     continue;
                 if(choice<=hero.spellbook.size()&&choice>0)
                 {
-                    int manacost;
                     if(hero.spellbook[choice-1]<=314)
                         manacost = dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getManaCost();
                     else if(hero.spellbook[choice-1]<=320)
                         manacost = dir.healingSpellDirectory[hero.spellbook[choice-1]-315].getManaCost();
                     else
                         manacost = dir.buffSpellDirectory[hero.spellbook[choice-1]-321].getManaCost();
+
                     if(hero.getMP()>=manacost)
                     {
                         cout << dir.getItemName(hero.spellbook[choice-1]) << ": " << dir.getItemDesc(hero.spellbook[choice-1]) << endl;
@@ -202,6 +301,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 continue;
             if(confirm==1)
             {
+                if(hero.eqpRng.getID()==401||hero.eqpRng.getID()==411||hero.eqpRng.getID()==423) //CONSERVATION
+                {
+                    cout << hero.eqpRng.getName() << " activated!" << endl;
+                    hero.changeMP(manacost);
+                    Sleep(1000);
+                }
                 if(hero.spellbook[choice-1]<=314)
                 {
                     //cout << "Attack Spell!" << endl;
@@ -212,9 +317,29 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         dmg = dmg/2;
                     if(monster.getID()==61) //?????
                         dmg = static_cast<float>(dmg)*.7;
-                    monHP -= dmg;
                     cout << hero.getName() << " cast " << dir.getItemName(hero.spellbook[choice-1]) << "!" << endl;
+                    if(hero.eqpRng.getID()==407||hero.eqpRng.getID()==417||hero.eqpRng.getID()==429) //OVERCHARGING
+                    {
+                        if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
+                        {
+                            cout << hero.eqpRng.getName() << " activated!" << endl;
+                            dmg += static_cast<float>(dmg)*.5;
+                            Sleep(1000);
+                        }
+                    }
+                    monHP -= dmg;
                     cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
+                    if(hero.eqpRng.getID()==403||hero.eqpRng.getID()==413||hero.eqpRng.getID()==425) //LEECHING
+                    {
+                        if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
+                        {
+                            cout << hero.eqpRng.getName() << " activated!" << endl;
+                            Sleep(1000);
+                            hero.changeHP(dmg);
+                            cout << "Recovered " << dmg << " HP!" << endl;
+                            Sleep(1000);
+                        }
+                    }
                     if(dmg>=50)
                         ach.Nuke = 1;
                     hero.changeMP(-(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getManaCost()));
@@ -344,8 +469,18 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         Sleep(2000);
                         if(hero.getHP()<=0)
                         {
-                            end = 2;
-                            break;
+                            if(hero.eqpRng.getID()==434&&!miracleFlag) //MIRACLE
+                            {
+                                cout << hero.eqpRng.getName() << " activated!" << endl;
+                                hero.setHP(1);
+                                miracleFlag = 1;
+                                Sleep(2000);
+                            }
+                            else
+                            {
+                                end = 2;
+                                break;
+                            }
                         }
                         end = 3;
                         break;
@@ -374,6 +509,21 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         hero.changeHP(-dmg);
                         cout << "Dealt " << dmg << " damage!" << endl;
                         Sleep(2000);
+                        if(hero.getHP()<=0)
+                        {
+                            if(hero.eqpRng.getID()==434&&!miracleFlag) //MIRACLE
+                            {
+                                cout << hero.eqpRng.getName() << " activated!" << endl;
+                                hero.setHP(1);
+                                miracleFlag = 1;
+                                Sleep(2000);
+                            }
+                            else
+                            {
+                                end = 2;
+                                break;
+                            }
+                        }
                     }
                 }
                 else
@@ -411,8 +561,18 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         Sleep(2000);
                         if(hero.getHP()<=0)
                         {
-                            end = 2;
-                            break;
+                            if(hero.eqpRng.getID()==434&&!miracleFlag) //MIRACLE
+                            {
+                                cout << hero.eqpRng.getName() << " activated!" << endl;
+                                hero.setHP(1);
+                                miracleFlag = 1;
+                                Sleep(2000);
+                            }
+                            else
+                            {
+                                end = 2;
+                                break;
+                            }
                         }
                         end = 3;
                         break;
@@ -441,9 +601,29 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         hero.changeHP(-dmg);
                         cout << "Dealt " << dmg << " damage!" << endl;
                         Sleep(2000);
+                        if(hero.getHP()<=0)
+                        {
+                            if(hero.eqpRng.getID()==434&&!miracleFlag) //MIRACLE
+                            {
+                                cout << hero.eqpRng.getName() << " activated!" << endl;
+                                hero.setHP(1);
+                                miracleFlag = 1;
+                                Sleep(2000);
+                            }
+                            else
+                            {
+                                end = 2;
+                                break;
+                            }
+                        }
                     }
                 }
             }
+        }
+        else if(action=="w"&&debug)
+        {
+            cout << "Waiting..." << endl;
+            Sleep(1000);
         }
         else
         {
@@ -458,8 +638,18 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         }
         if(hero.getHP()<=0)
         {
-            end = 2;
-            break;
+            if(hero.eqpRng.getID()==434&&!miracleFlag) //MIRACLE
+            {
+                cout << hero.eqpRng.getName() << " activated!" << endl;
+                hero.setHP(1);
+                miracleFlag = 1;
+                Sleep(2000);
+            }
+            else
+            {
+                end = 2;
+                break;
+            }
         }
 
         for(int i=0;i<buffCounter.size();i++)
@@ -511,6 +701,18 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         cout << "HP Buff: " << hpBuff << endl;*/
         hero.changeHP(hpBuff);
         hero.changeMP(hero.getMG());
+
+        if(hero.eqpRng.getID()==421||hero.eqpRng.getID()==433) //BLITZING
+        {
+            if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
+            {
+                cout << hero.eqpRng.getName() << " activated!" << endl;
+                Sleep(2000);
+                continue;
+            }
+        }
+
+        //--------------------------ENEMY TURN-------------------------
         //Sleep(1000);
         cout << monName << "'s Turn!" << endl;
         Sleep(1000);
@@ -570,8 +772,28 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 dmg -= dmg/4;
             if(dmg<0)
                 dmg = 0;
+            if(hero.eqpRng.getID()==402||hero.eqpRng.getID()==412||hero.eqpRng.getID()==424) //BRAVERY
+            {
+                if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
+                {
+                    cout << hero.eqpRng.getName() << " activated!" << endl;
+                    dmg = 0;
+                    Sleep(1000);
+                }
+            }
             hero.changeHP(-dmg);
             cout << "Dealt " << dmg << " damage!" << endl;
+            if(hero.eqpRng.getID()==408||hero.eqpRng.getID()==418||hero.eqpRng.getID()==430) //REFLECTION
+            {
+                if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
+                {
+                    Sleep(1000);
+                    cout << hero.eqpRng.getName() << " activated!" << endl;
+                    Sleep(1000);
+                    cout << "Reflected " << dmg << " back to " << monName << "!" << endl;
+                    monHP -= dmg;
+                }
+            }
             Sleep(2000);
         }
         else
@@ -580,6 +802,11 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
             if(hero.eqpAmr.getID()==142)
                 parry = 1;
             Sleep(2000);
+        }
+        if(monHP<=0)
+        {
+            end = 1;
+            break;
         }
         if(monster.getID()==60)
             parry = 0;
@@ -591,8 +818,18 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         }
         if(hero.getHP()<=0)
         {
-            end = 2;
-            break;
+            if(hero.eqpRng.getID()==434&&!miracleFlag) //MIRACLE
+            {
+                cout << hero.eqpRng.getName() << " activated!" << endl;
+                hero.setHP(1);
+                miracleFlag = 1;
+                Sleep(2000);
+            }
+            else
+            {
+                end = 2;
+                break;
+            }
         }
         if(monster.getID()==58) //Endrigaia
         {
@@ -601,6 +838,22 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 monHP = monster.getHP();
             dmg = static_cast<float>(monster.getHP())*.15;
             cout << monName << " recovers " << dmg << " HP!" << endl;
+            Sleep(2000);
+        }
+        if(hero.eqpRng.getID()==400||hero.eqpRng.getID()==410||hero.eqpRng.getID()==422) //REGENERATION
+        {
+            cout << hero.eqpRng.getName() << " activated!" << endl;
+            Sleep(1000);
+            hero.changeHP(hero.eqpRng.getHPR());
+            cout << "Restored " << hero.eqpRng.getHPR() << " HP!" << endl;
+            Sleep(2000);
+        }
+        if(hero.eqpRng.getID()==420||hero.eqpRng.getID()==432) //MANA REGENERATION
+        {
+            cout << hero.eqpRng.getName() << " activated!" << endl;
+            Sleep(1000);
+            hero.changeMP(hero.eqpRng.getMPR());
+            cout << "Restored " << hero.eqpRng.getMPR() << " MP!" << endl;
             Sleep(2000);
         }
     }

@@ -21,7 +21,7 @@ void titleScreen()
     cout << " |     3) Leaderboard                                                                                                 | " << endl;
     cout << " |     4) Achievements                                                                                                | " << endl;
     cout << " |     5) Masks                                                                                                       | " << endl;
-    cout << " |                                                                                                             v1.5.4 | " << endl;
+    cout << " |                                                                                                             v1.6.0 | " << endl;
     cout << " |____________________________________________________________________________________________________________________| " << endl;
     cout << "                                                                                                                        " << endl;
 }
@@ -207,6 +207,7 @@ void statMenu(Player hero, Directory dir)
     cout << "|-                                                  -|" << endl;
     cout << "|-      WPN: " << setw(36) << std::left << hero.eqpWpn.getName() << "   -|" << endl;
     cout << "|-      AMR: " << setw(36) << std::left << hero.eqpAmr.getName() << "   -|" << endl;
+    cout << "|-      RNG: " << setw(36) << std::left << hero.eqpRng.getName() << "   -|" << endl;
     if(hero.mask.getID()>=0)
     {
     cout << "|-                                                  -|" << endl;
@@ -215,7 +216,7 @@ void statMenu(Player hero, Directory dir)
     cout << "|-                                                  -|" << endl;
     cout << "|-      ATK: " << setw(8) << std::left << strString << "             DEF: " << setw(8) << std::left << std::to_string(hero.getNDEF()) + " (+" + std::to_string(hero.eqpAmr.getDef()) + ")" << "     -|" << endl;
     cout << "|-      CRT: " << setw(8) << std::left << crtString << "             DDG: " << setw(8) << std::left << std::to_string(hero.getNDDG()) + " (+" + std::to_string(hero.eqpAmr.getDdg()) + ")" << "     -|" << endl;
-    cout << "|-      ACC: " << setw(8) << std::left << accString << "                               -|" << endl;
+    cout << "|-      ACC: " << setw(8) << std::left << accString << "             LCK: " << setw(8) << std::left << std::to_string(hero.getLCK()) << "     -|" << endl;
     cout << "|-      AMP: " << setw(4) << std::left << std::to_string(hero.getMA()) + "%" << "                 MPG: " << setw(2) << std::left << hero.getMG() << "           -|" << endl;
     cout << "|-                                                  -|" << endl;
     cout << "|-      0) RETURN                                   -|" << endl;
@@ -369,7 +370,7 @@ void diviningMenu(Player hero, Merchant store, Directory dir)
     cout << "|-                          DIVINING                          -|" << endl;
     cout << "|-             --------------------------------               -|" << endl;
     for(int i=0;i<2;i++)
-        cout << "|-         " << i+1 << ")     (2) " << statDown[i] << "  ---------->  (1) " << statUp[i] << "               -|" << endl;
+        cout << "|-               (2) " << statDown[i] << "  ---------->  (1) " << statUp[i] << "                -|" << endl;
     cout << "|-             --------------------------------               -|" << endl;
     cout << "|-                                                            -|" << endl;
     for(int i=0;i<2;i++)

@@ -156,6 +156,41 @@ protected:
     int mprestored;
 };
 
+class Ring: public Item
+{
+public:
+    Ring(string n,string d,int r,int i,int a,int h,int m):Item(n,d,r,i)
+    {
+        activation = a;
+        hpr = h;
+        mpr = m;
+    }
+    Ring():Item()
+    {hpr=0;mpr=0;activation=0;}
+    int getAct(){return activation;}
+    int getHPR(){return hpr;}
+    int getMPR(){return mpr;}
+    int activate(int luck)
+    {
+        return activation+luck;
+    }
+    Ring operator=(Ring r)
+    {
+        this->name = r.getName();
+        this->description = r.getDesc();
+        this->rarity = r.getRarity();
+        this->id = r.getID();
+        this->hpr = r.getHPR();
+        this->mpr = r.getMPR();
+        this->activation = r.getAct();
+        return *this;
+    }
+private:
+    int activation;
+    int hpr;
+    int mpr;
+};
+
 class Merchant
 {
 protected:
@@ -380,9 +415,9 @@ protected:
 class Player: public Creature
 {
 public:
-    Player(string n, int l, int i, int h, int m, int s, int a, int c, int df, int dg, int g, int k, int e): Creature(n,l,i,h,s,a,df,dg)
+    Player(string n, int l, int i, int h, int m, int s, int a, int c, int df, int dg, int lk, int g, int k, int e): Creature(n,l,i,h,s,a,df,dg)
     {
-        hp = h;mhp=hp;mp = m;mmp = mp;nstr = s;nacc = a;crit = c;ncrit = c;ndef = df;nddg = dg;level = l;gold = g;keys = k;exp=e;expGoal=20;empowered=0;growth=0;
+        hp = h;mhp=hp;mp = m;mmp = mp;nstr = s;nacc = a;crit = c;ncrit = c;ndef = df;nddg = dg;level = l;gold = g;keys = k;exp=e;expGoal=20;empowered=0;growth=0;lck=lk;
     }
     void changeMP(int delta){mp+=delta;}
     void setMP(int m){mp=m;}
@@ -395,12 +430,14 @@ public:
     int getNCRT(){return ncrit;}
     int getNDEF(){return ndef;}
     int getNDDG(){return nddg;}
+    int getLCK(){return lck;}
     void setMMP(int m){mmp=m;}
     void setMHP(int m){mhp=m;}
     void setNSTR(int s){nstr=s;}
     void setNCRT(int c){ncrit=c;}
     void setNDEF(int d){ndef=d;}
     void setNDDG(int d){nddg=d;}
+    void setLCK(int l){lck=l;}
     int getMG()
     {
         int gain=0;
@@ -408,7 +445,7 @@ public:
             gain+=5;
         if(growth)
             gain+=2;
-        return eqpAmr.getMG()+gain;
+        return eqpAmr.getMG()+gain+eqpRng.getMPR();
     }
     int getMA()
     {
@@ -463,6 +500,10 @@ public:
         if(eqpWpn.getName()=="Chaotrix"&&eqpAmr.getName()=="Helm of the Ancients")
             ach.AncientPower = 1;
     }
+    void equipRng(Ring rng)
+    {
+        eqpRng = rng;
+    }
     vector<int> equipment;
     vector<int> inventory;
     vector<int> spellbook;
@@ -474,6 +515,7 @@ public:
     Item mask;
     Weapon eqpWpn;
     Armor eqpAmr;
+    Ring eqpRng;
     void levelUp()
     {
         int boost;
@@ -511,6 +553,10 @@ public:
             if(boost!=0)
                 cout << "DDG went up by " << boost << "!" << endl;
         }
+        boost = rand() % 3;
+        lck += boost;
+        if(boost!=0)
+            cout << "LCK went up by " << boost << "!" << endl;
 
         if(mask.getID()==1) //Wrath
         {
@@ -552,6 +598,8 @@ public:
             def=eqpAmr.getDef()+ndef;
             ddg=eqpAmr.getDdg()+nddg;
         }
+
+        lck += 2;
         empowered = 1;
     }
     void Boost()
@@ -562,6 +610,7 @@ public:
         ncrit += 2;
         ndef += 2;
         nddg += 2;
+        lck += 2;
     }
 protected:
     int mhp;
@@ -573,6 +622,7 @@ protected:
     int ncrit;
     int ndef;
     int nddg;
+    int lck;
     int expGoal;
 };
 
@@ -589,8 +639,9 @@ public:
     vector<Creature> creatureDirectory;
     vector<Feature> featureDirectory;
     vector<Room> roomDirectory;
-    Directory(vector<Weapon> w, vector<Armor> a, vector<Consumable> c, vector<Item> m, vector<AttackSpell> as, vector<HealingSpell> hs, vector<BuffSpell> bs, vector<Creature> cr, vector<Feature> f, vector<Room> r)
-    {weaponDirectory=w;armorDirectory=a;consumableDirectory=c;maskDirectory=m;attackSpellDirectory=as;healingSpellDirectory=hs;buffSpellDirectory=bs;creatureDirectory=cr;featureDirectory=f;roomDirectory=r;}
+    vector<Ring> ringDirectory;
+    Directory(vector<Weapon> w, vector<Armor> a, vector<Consumable> c, vector<Item> m, vector<AttackSpell> as, vector<HealingSpell> hs, vector<BuffSpell> bs, vector<Creature> cr, vector<Feature> f, vector<Room> r, vector<Ring> rn)
+    {weaponDirectory=w;armorDirectory=a;consumableDirectory=c;maskDirectory=m;attackSpellDirectory=as;healingSpellDirectory=hs;buffSpellDirectory=bs;creatureDirectory=cr;featureDirectory=f;roomDirectory=r;ringDirectory=rn;}
     string getItemName(int i)
     {
         if(i<100)
@@ -605,6 +656,8 @@ public:
             return healingSpellDirectory[i-315].getName();
         else if(i<=343)
             return buffSpellDirectory[i-321].getName();
+        else if(i<=435)
+            return ringDirectory[i-400].getName();
         else
             return "Error";
     }
@@ -622,6 +675,8 @@ public:
             return healingSpellDirectory[i-315].getDesc();
         else if(i<=343)
             return buffSpellDirectory[i-321].getDesc();
+        else if(i<=435)
+            return ringDirectory[i-400].getDesc();
         else
             return "Error";
     }
@@ -639,6 +694,8 @@ public:
             return healingSpellDirectory[i-315].getRarity();
         else if(i<=343)
             return buffSpellDirectory[i-321].getRarity();
+        else if(i<=435)
+            return ringDirectory[i-400].getRarity();
         else
             return 0;
     }

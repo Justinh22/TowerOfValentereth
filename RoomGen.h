@@ -23,6 +23,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
     bool amrFlag = 0;
     bool conFlag = 0;
     bool splFlag = 0;
+    bool rngFlag = 0;
     bool keyFlag = 0;
     cout << endl;
     while(remaining > 0)
@@ -32,7 +33,9 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
         do
         {
             change = 0;
-            itemType = rand() % 4; // 0 = Weapon, 1 = Armor, 2 = Consumable, 3 = Spell
+            itemType = rand() % 5; // 0 = Weapon, 1 = Armor, 2 = Consumable, 3 = Spell, 4 = Ring
+            if((adv<4&&itemType==4)||rand()%2==0)
+                itemType = rand() % 4;
             if(itemType==0)
                 if(wpnFlag==1)
                     change = 1;
@@ -44,6 +47,9 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                     change = 1;
             if(itemType==3)
                 if(splFlag==1)
+                    change = 1;
+            if(itemType==4)
+                if(rngFlag==1)
                     change = 1;
         }while(change==1);
         //cout << "ItemType is " << itemType << endl;
@@ -354,6 +360,30 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
             loot.push_back(iid);
             cost = itemRarity;
         }
+        else //RING
+        {
+            rngFlag = 1;
+            foo = rand() % 10 + 1;
+            if(adv<6)
+                itemRarity = 1;
+            else if(adv<8)
+            {
+                if(foo<=7)
+                    itemRarity = 1;
+                else
+                    itemRarity = 2;
+            }
+            else
+            {
+                if(foo<=8)
+                    itemRarity = 2;
+                else
+                    itemRarity = 3;
+            }
+            iid = itemPicker(itemType,itemRarity);
+            loot.push_back(iid);
+            cost = (itemRarity*2)-1;
+        }
         remaining -= cost;
 
         lootcnt++;
@@ -456,7 +486,7 @@ Merchant storeHandler(int level)
     {
         for(int i=0;i<5;i++)
         {
-            itemType = rand() % 4 + 1;
+            itemType = rand() % 5 + 1;
             if(itemType<=2)
             {
                 if(level==1)
@@ -644,6 +674,41 @@ Merchant storeHandler(int level)
                         break;
                     case 5:
                         itemCost = 190;
+                        break;
+                }
+                store.storeCost.push_back(itemCost);
+            }
+            else if(itemType==5) //RING
+            {
+                foo = rand() % 10 + 1;
+                if(level<6)
+                    itemRarity = 1;
+                else if(level<8)
+                {
+                    if(foo<=7)
+                        itemRarity = 1;
+                    else
+                        itemRarity = 2;
+                }
+                else
+                {
+                    if(foo<=8)
+                        itemRarity = 2;
+                    else
+                        itemRarity = 3;
+                }
+                id = itemPicker(3,itemRarity);
+                store.storeInventory.push_back(id);
+                switch(itemRarity)
+                {
+                    case 1:
+                        itemCost = 50;
+                        break;
+                    case 2:
+                        itemCost = 125;
+                        break;
+                    case 3:
+                        itemCost = 200;
                         break;
                 }
                 store.storeCost.push_back(itemCost);

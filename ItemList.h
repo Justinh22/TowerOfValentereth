@@ -314,3 +314,81 @@ vector<Item> initMDir(vector<Item> maskDirectory)
 
     return maskDirectory;
 }
+
+vector<Ring> initRGDir(vector<Ring> ringDirectory)
+{
+    Ring Minor_Regeneration("Ring of Minor Regeneration","A ring capable of regenerating a small amount of the wearer's vitality over time.",1,400,0,2,0);
+    ringDirectory.push_back(Minor_Regeneration);
+    Ring Minor_Conservation("Ring of Minor Conservation","A ring that grants the wearer a slight chance of conserving the mana used after casting a spell.",1,401,10,0,0);
+    ringDirectory.push_back(Minor_Conservation);
+    Ring Minor_Bravery("Ring of Minor Bravery","A ring that grants the wearer a slight chance of negating incoming damage.",1,402,10,0,0);
+    ringDirectory.push_back(Minor_Bravery);
+    Ring Minor_Leeching("Ring of Minor Leeching","A ring that grants the wearer a slight chance of recovering health equal to the amount of damage dealt.",1,403,10,0,0);
+    ringDirectory.push_back(Minor_Leeching);
+    Ring Minor_Vengeance("Ring of Minor Vengeance","A ring that deals additional damage equal to 15% of the wearer's damage taken when attacking an enemy.",1,404,0,0,0);
+    ringDirectory.push_back(Minor_Vengeance);
+    Ring Minor_Sight("Ring of Minor Sight","A ring that grants the wearer a slight chance of ensuring a successful hit when attacking.",1,405,10,0,0);
+    ringDirectory.push_back(Minor_Sight);
+    Ring Minor_Piercing("Ring of Minor Piercing","A ring that grants the wearer a slight chance of cutting a foe's defense in half.",1,406,10,0,0);
+    ringDirectory.push_back(Minor_Piercing);
+    Ring Minor_Overcharging("Ring of Minor Overcharging","A ring that grants the wearer a slight chance of increasing attack spell potency by 50%.",1,407,10,0,0);
+    ringDirectory.push_back(Minor_Overcharging);
+    Ring Minor_Reflection("Ring of Minor Reflection","A ring that grants the wearer a slight chance of dealing damage dealt to the wearer back to the enemy.",1,408,10,0,0);
+    ringDirectory.push_back(Minor_Reflection);
+    Ring Minor_Fury("Ring of Minor Fury","A ring that deals an additional 1 damage to the enemy with each consecutive hit.",1,409,0,0,0);
+    ringDirectory.push_back(Minor_Fury);
+
+    Ring Regeneration("Ring of Regeneration","A ring capable of regenerating a moderate amount of the wearer's vitality over time.",2,410,0,4,0);
+    ringDirectory.push_back(Regeneration);
+    Ring Conservation("Ring of Conservation","A ring that grants the wearer a chance of conserving the mana used after casting a spell.",2,411,20,0,0);
+    ringDirectory.push_back(Conservation);
+    Ring Bravery("Ring of Bravery","A ring that grants the wearer a chance of negating incoming damage.",2,412,20,0,0);
+    ringDirectory.push_back(Bravery);
+    Ring Leeching("Ring of Leeching","A ring that grants the wearer a chance of recovering health equal to the amount of damage dealt.",2,413,20,0,0);
+    ringDirectory.push_back(Leeching);
+    Ring Vengeance("Ring of Vengeance","A ring that deals additional damage equal to 30% of the wearer's damage taken when attacking an enemy.",2,414,0,0,0);
+    ringDirectory.push_back(Vengeance);
+    Ring Sight("Ring of Sight","A ring that grants the wearer a chance of ensuring a successful hit when attacking.",2,415,20,0,0);
+    ringDirectory.push_back(Sight);
+    Ring Piercing("Ring of Piercing","A ring that grants the wearer a chance of cutting a foe's defense in half.",2,416,20,0,0);
+    ringDirectory.push_back(Piercing);
+    Ring Overcharging("Ring of Overcharging","A ring that grants the wearer a chance of increasing attack spell potency by 50%.",2,417,20,0,0);
+    ringDirectory.push_back(Overcharging);
+    Ring Reflection("Ring of Reflection","A ring that grants the wearer a chance of dealing damage dealt to the wearer back to the enemy.",2,418,20,0,0);
+    ringDirectory.push_back(Reflection);
+    Ring Fury("Ring of Fury","A ring that deals an additional 2 damage to the enemy with each consecutive hit.",2,419,0,0,0);
+    ringDirectory.push_back(Fury);
+    Ring Mana_Regeneration("Ring of Mana Regeneration","A ring capable of regenerating a small amount of the wearer's magical ability over time.",2,420,0,0,1);
+    ringDirectory.push_back(Mana_Regeneration);
+    Ring Blitzing("Ring of Blitzing","A ring that grants the wearer a slight chance of taking a second turn in combat before the enemy can take one.",2,421,10,0,0);
+    ringDirectory.push_back(Blitzing);
+
+    Ring Major_Regeneration("Ring of Major Regeneration","A ring capable of regenerating a large amount of the wearer's vitality over time.",3,422,0,6,0);
+    ringDirectory.push_back(Major_Regeneration);
+    Ring Major_Conservation("Ring of Major Conservation","A ring that grants the wearer a significant chance of conserving the mana used after casting a spell.",3,423,30,0,0);
+    ringDirectory.push_back(Major_Conservation);
+    Ring Major_Bravery("Ring of Major Bravery","A ring that grants the wearer a significant chance of negating incoming damage.",3,424,30,0,0);
+    ringDirectory.push_back(Major_Bravery);
+    Ring Major_Leeching("Ring of Major Leeching","A ring that grants the wearer a significant chance of recovering health equal to the amount of damage dealt.",3,425,30,0,0);
+    ringDirectory.push_back(Major_Leeching);
+    Ring Major_Vengeance("Ring of Major Vengeance","A ring that deals additional damage equal to 50% of the wearer's damage taken when attacking an enemy.",3,426,0,0,0);
+    ringDirectory.push_back(Major_Vengeance);
+    Ring Major_Sight("Ring of Major Sight","A ring that grants the wearer a significant chance of ensuring a successful hit when attacking.",3,427,30,0,0);
+    ringDirectory.push_back(Major_Sight);
+    Ring Major_Piercing("Ring of Major Piercing","A ring that grants the wearer a significant chance of cutting a foe's defense in half.",3,428,30,0,0);
+    ringDirectory.push_back(Major_Piercing);
+    Ring Major_Overcharging("Ring of Major Overcharging","A ring that grants the wearer a significant chance of increasing attack spell potency by 50%.",3,429,30,0,0);
+    ringDirectory.push_back(Major_Overcharging);
+    Ring Major_Reflection("Ring of Major Reflection","A ring that grants the wearer a significant chance of dealing damage dealt to the wearer back to the enemy.",3,430,30,0,0);
+    ringDirectory.push_back(Major_Reflection);
+    Ring Major_Fury("Ring of Major Fury","A ring that deals an additional 3 damage to the enemy with each consecutive hit.",3,431,0,0,0);
+    ringDirectory.push_back(Major_Fury);
+    Ring Major_Mana_Regeneration("Ring of Major Mana Regeneration","A ring capable of regenerating a small amount of the wearer's magical ability over time.",3,432,0,0,2);
+    ringDirectory.push_back(Major_Mana_Regeneration);
+    Ring Major_Blitzing("Ring of Major Blitzing","A ring that grants the wearer a chance of taking a second turn in combat before the enemy can take one.",3,433,15,0,0);
+    ringDirectory.push_back(Major_Blitzing);
+    Ring Miracles("Ring of Miracles","A ring that will save the wearer from a killing blow once per combat, leaving them with 1 HP.",3,434,0,0,0);
+    ringDirectory.push_back(Miracles);
+
+    return ringDirectory;
+}

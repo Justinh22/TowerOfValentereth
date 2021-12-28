@@ -1,6 +1,6 @@
 bool nicknameChecker(string name, Creature monster);
 
-string interactionHandler(int action, string target, Player &hero, Directory &dir, Room &currentRoom, int &pass, vector<bool> &itemStatus)
+string interactionHandler(int action, string target, Player &hero, Directory &dir, Room &currentRoom, int &pass, vector<bool> &itemStatus,bool debug)
 {
     //cout << endl << "Entered Interaction Handler!!" << endl;
     string holder = "";
@@ -50,6 +50,11 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
         {
             return "store";
         }
+        if(target=="dstore"&&debug)
+        {
+            hero.keys++;
+            return "store";
+        }
         if(target=="room")
         {
             return "room";
@@ -79,7 +84,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 {
                     if(itemStatus[i]==0)
                     {
-                        if(currentRoom.getIList()[i]<300)
+                        if(currentRoom.getIList()[i]<300||currentRoom.getIList()[i]>=400)
                             holder += "You see a " + dir.getItemName(currentRoom.getIList()[i]) + ".";
                         else
                             holder += "You see a Scroll of " + dir.getItemName(currentRoom.getIList()[i]) + ".";
@@ -175,7 +180,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                                 {
                                     if(holder!="")
                                         holder += "\n";
-                                    if(currentRoom.getIList()[j-1+currentRoom.contents]<300)
+                                    if(currentRoom.getIList()[j-1+currentRoom.contents]<300||currentRoom.getIList()[j-1+currentRoom.contents]>=400)
                                         holder += "You find a " + dir.getItemName(currentRoom.getIList()[j-1+currentRoom.contents]) + ".";
                                     else
                                         holder += "You find a Scroll of " + dir.getItemName(currentRoom.getIList()[j-1+currentRoom.contents]) + ".";
@@ -236,6 +241,8 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     valid = 1;
                 else if((target=="spell"||target=="scroll")&&currentRoom.getIList()[i]>=300&&currentRoom.getIList()[i]<=342)
                     valid = 1;
+                else if((target=="ring")&&currentRoom.getIList()[i]>=400&&currentRoom.getIList()[i]<500)
+                    valid = 1;
                 if(valid==1)
                 {
                     if(currentRoom.getIList()[i]<100)
@@ -271,7 +278,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                             cout << "MP " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP() << endl;
                         }
                     }
-                    else
+                    else if(currentRoom.getIList()[i]<400)
                     {
                         cout << dir.getItemName(currentRoom.getIList()[i]) << " | " << dir.getItemDesc(currentRoom.getIList()[i]) << endl;
                         cout << "RARITY: " << dir.getItemRarity(currentRoom.getIList()[i]) << endl;
@@ -299,6 +306,17 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                             if(dir.buffSpellDirectory[currentRoom.getIList()[i]-321].getDDGU()>0)
                                 cout << "DDG BUFF: " << dir.buffSpellDirectory[currentRoom.getIList()[i]-321].getDDGU() << endl;
                         }
+                    }
+                    else
+                    {
+                        cout << dir.ringDirectory[currentRoom.getIList()[i]-400].getName() << " | " << dir.ringDirectory[currentRoom.getIList()[i]-400].getDesc() << endl;
+                        cout << "RARITY: " << dir.ringDirectory[currentRoom.getIList()[i]-400].getRarity() << endl;
+                        if(dir.ringDirectory[currentRoom.getIList()[i]-400].getAct()>0)
+                            cout << "ACTIVATION RATE: " << dir.ringDirectory[currentRoom.getIList()[i]-400].getAct() << "%" << endl;
+                        if(dir.ringDirectory[currentRoom.getIList()[i]-400].getHPR()>0)
+                            cout << "HP REGEN: " << dir.ringDirectory[currentRoom.getIList()[i]-400].getHPR() << endl;
+                        if(dir.ringDirectory[currentRoom.getIList()[i]-400].getMPR()>0)
+                            cout << "MP REGEN: " << dir.ringDirectory[currentRoom.getIList()[i]-400].getMPR() << endl;
                     }
                     return "check";
                 }
@@ -357,6 +375,8 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 valid = 1;
             else if((target=="spell"||target=="scroll")&&currentRoom.getIList()[i]>=300&&currentRoom.getIList()[i]<=342)
                 valid = 1;
+            else if((target=="ring")&&currentRoom.getIList()[i]>=400&&currentRoom.getIList()[i]<500)
+                valid = 1;
             else if(target=="all"||target=="everything")
                 valid = 2;
             //cout << valid << endl;
@@ -365,7 +385,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 //cout << "Match!: " << currentRoom.getIList()[i] << endl;
                 if(itemStatus[i]==1)
                     return "Empty.";
-                if(currentRoom.getIList()[i]<200)
+                if(currentRoom.getIList()[i]<200||currentRoom.getIList()[i]>=400)
                 {
                     if(hero.equipment.size()>=6)
                     {
@@ -445,7 +465,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 //currentRoom.delItem(i);
                 if(valid==1)
                 {
-                    if(currentRoom.getIList()[i]<300)
+                    if(currentRoom.getIList()[i]<300||currentRoom.getIList()[i]>=400)
                         return "You picked up the " + dir.getItemName((currentRoom.getIList())[i]) + "!";
                     else
                         return "You learned " + dir.getItemName((currentRoom.getIList())[i]) + "!";
@@ -454,7 +474,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 {
                     if(returner!="")
                         returner += "\n";
-                    if(currentRoom.getIList()[i]<300)
+                    if(currentRoom.getIList()[i]<300||currentRoom.getIList()[i]>=400)
                         returner += "You picked up the " + dir.getItemName((currentRoom.getIList())[i]) + "!";
                     else
                         returner += "You learned " + dir.getItemName((currentRoom.getIList())[i]) + "!";
