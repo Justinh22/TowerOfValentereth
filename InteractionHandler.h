@@ -12,14 +12,14 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
     if(action==0) //GO
     {
         //cout << "Command was 'GO'" << endl;
-        if(target=="door"||target=="doors"||target=="tunnel"||target=="doorway"||target=="ladder"||target=="passage"||target=="passageway"||target=="room"||target=="chamber")
+        if(target=="door"||target=="doors"||target=="tunnel"||target=="doorway"||target=="ladder"||target=="passage"||target=="passageway"||target=="chamber")
         {
             if(pass==1)
                 return "next";
             else
                 return "escape";
         }
-        if(target=="store"||target=="locked door"||target=="merchant"||target=="shop")
+        if(target=="store"||target=="locked door"||target=="merchant"||target=="shop"||target=="room")
         {
             return "store";
         }

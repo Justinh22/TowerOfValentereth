@@ -503,7 +503,7 @@ int main()
         std::system("cls");
     }
 
-    cout << "Floor " << depth << endl;
+    cout << "Floor " << depth << endl << endl;
     currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
 
     while(end==0)
@@ -635,7 +635,7 @@ int main()
                     }
                     if(boss==2)
                     {
-                        ach.Truth = 1;
+                        ach.Watcher = 1;
                         score += 1000;
                         end = 1;
                         win = 1;
@@ -686,7 +686,7 @@ int main()
                 }
                 else if(text=="room")
                 {
-                    cout << "Floor " << depth << endl;
+                    cout << endl << "Floor " << depth << endl << endl;
                     cout << currentRoom.getDesc() << endl;
                     for(int i=0;i<currentRoom.getLDescList().size();i++)
                         cout << currentRoom.getLDescList()[i] << endl;

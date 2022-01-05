@@ -106,7 +106,7 @@ void achievementMenu()
     cout << "|-                                                                                                                -|" << endl;
     cout << "|-       COMPLETION RATE: " << setw(4) << std::right << std::setprecision(3) << float(float(ach.points)/1000)*100 << "%" << " (" << setw(4) << std::right << ach.points << "/1000)                                                                       -|" << endl;
     cout << "|-                                                                                                                -|" << endl;
-    cout << "|-       (";if(ach.complete[0]) cout << "X"; else cout << " "; cout << ") Connoisseur (10pts):                    Eat 50 loaves of bread                                       -|" << endl;
+    cout << "|-       (";if(ach.complete[0]) cout << "X"; else cout << " "; cout << ") Connoisseur (10pts):                    Eat 20 loaves of bread                                       -|" << endl;
     cout << "|-       (";if(ach.complete[1]) cout << "X"; else cout << " "; cout << ") Alchemist (10pts):                      Drink 50 potions                                             -|" << endl;
     cout << "|-       (";if(ach.complete[2]) cout << "X"; else cout << " "; cout << ") Expert (10pts):                         Defeat 50 enemies                                            -|" << endl;
     cout << "|-       (";if(ach.complete[3]) cout << "X"; else cout << " "; cout << ") ...and then you wake up (10pts):        Die 10 times                                                 -|" << endl;
@@ -119,42 +119,43 @@ void achievementMenu()
     cout << "|-       (";if(ach.complete[10]) cout << "X"; else cout << " "; cout << ") The Scion (15pts):                      Defeat Byralt                                                -|" << endl;
     cout << "|-       (";if(ach.complete[11]) cout << "X"; else cout << " "; cout << ") The Archmage (15pts):                   Defeat Emeritus                                              -|" << endl;
     cout << "|-       (";if(ach.complete[12]) cout << "X"; else cout << " "; cout << ") The Nature's Wrath (15pts):             Defeat Endrigaia                                             -|" << endl;
-    cout << "|-       (";if(ach.complete[13]) cout << "X"; else cout << " "; cout << ") Unstoppable (20pts):                    Defeat 100 enemies                                           -|" << endl;
-    cout << "|-       (";if(ach.complete[14]) cout << "X"; else cout << " "; cout << ") Nuke (30pts):                           Deal 50 damage at once with a spell                          -|" << endl;
-    cout << "|-       (";if(ach.complete[15]) cout << "X"; else cout << " "; cout << ") Overkill (30pts):                       Deal 100 damage in one strike                                -|" << endl;
-    cout << "|-       (";if(ach.complete[16]) cout << "X"; else cout << " "; cout << ") Necromancy (30pts):                     Deal 20 necrotic damage in one turn                          -|" << endl;
-    cout << "|-       (";if(ach.complete[17]) cout << "X"; else cout << " "; cout << ") Sorcerer Supreme (25pts):               Obtain the equipment of the ultimate sorcerer                -|" << endl;
-    cout << "|-       (";if(ach.complete[18]) cout << "X"; else cout << " "; cout << ") Conquerer (25pts):                      Obtain the equipment of the great conquerer                  -|" << endl;
-    cout << "|-       (";if(ach.complete[19]) cout << "X"; else cout << " "; cout << ") Vanguard (25pts):                       Obtain the equipment of the unstoppable vanguard             -|" << endl;
-    cout << "|-       (";if(ach.complete[20]) cout << "X"; else cout << " "; cout << ") Whisper (25pts):                        Obtain the equipment of the silent assassin                  -|" << endl;
-    cout << "|-       (";if(ach.complete[21]) cout << "X"; else cout << " "; cout << ") Ancient Power (25pts):                  Obtain the equipment of the ancient demigod                  -|" << endl;
-    cout << "|-       (";if(ach.complete[22]) cout << "X"; else cout << " "; cout << ") Glass Triumph (40pts):                  Defeat Valentereth with the Mask of Glass                    -|" << endl;
-    cout << "|-       (";if(ach.complete[23]) cout << "X"; else cout << " "; cout << ") Wrath Triumph (40pts):                  Defeat Valentereth with the Mask of Wrath                    -|" << endl;
-    cout << "|-       (";if(ach.complete[24]) cout << "X"; else cout << " "; cout << ") Darkness Triumph (40pts):               Defeat Valentereth with the Mask of Darkness                 -|" << endl;
-    cout << "|-       (";if(ach.complete[25]) cout << "X"; else cout << " "; cout << ") Arcana Triumph (40pts):                 Defeat Valentereth with the Mask of Arcana                   -|" << endl;
-    cout << "|-       (";if(ach.complete[26]) cout << "X"; else cout << " "; cout << ") Steel Triumph (40pts):                  Defeat Valentereth with the Mask of Steel                    -|" << endl;
-    cout << "|-       (";if(ach.complete[27]) cout << "X"; else cout << " "; cout << ") Whispers Triumph (40pts):               Defeat Valentereth with the Mask of Whispers                 -|" << endl;
-    cout << "|-       (";if(ach.complete[28]) cout << "X"; else cout << " "; cout << ") Beasts Triumph (40pts):                 Defeat Valentereth with the Mask of Beasts                   -|" << endl;
-    cout << "|-       (";if(ach.complete[29]) cout << "X"; else cout << " "; cout << ") Souls Triumph (40pts):                  Defeat Valentereth with the Mask of Souls                    -|" << endl;
+    cout << "|-       (";if(ach.complete[13]) cout << "X"; else cout << " "; cout << ") The Ascended (15pts):                   Defeat Halliot                                               -|" << endl;
+    cout << "|-       (";if(ach.complete[14]) cout << "X"; else cout << " "; cout << ") Unstoppable (20pts):                    Defeat 100 enemies                                           -|" << endl;
+    cout << "|-       (";if(ach.complete[15]) cout << "X"; else cout << " "; cout << ") Nuke (30pts):                           Deal 50 damage at once with a spell                          -|" << endl;
+    cout << "|-       (";if(ach.complete[16]) cout << "X"; else cout << " "; cout << ") Overkill (30pts):                       Deal 100 damage in one strike                                -|" << endl;
+    cout << "|-       (";if(ach.complete[17]) cout << "X"; else cout << " "; cout << ") Necromancy (30pts):                     Deal 20 necrotic damage in one turn                          -|" << endl;
+    cout << "|-       (";if(ach.complete[18]) cout << "X"; else cout << " "; cout << ") Sorcerer Supreme (25pts):               Obtain the equipment of the ultimate sorcerer                -|" << endl;
+    cout << "|-       (";if(ach.complete[19]) cout << "X"; else cout << " "; cout << ") Conquerer (25pts):                      Obtain the equipment of the great conquerer                  -|" << endl;
+    cout << "|-       (";if(ach.complete[20]) cout << "X"; else cout << " "; cout << ") Vanguard (25pts):                       Obtain the equipment of the unstoppable vanguard             -|" << endl;
+    cout << "|-       (";if(ach.complete[21]) cout << "X"; else cout << " "; cout << ") Whisper (25pts):                        Obtain the equipment of the silent assassin                  -|" << endl;
+    cout << "|-       (";if(ach.complete[22]) cout << "X"; else cout << " "; cout << ") Ancient Power (25pts):                  Obtain the equipment of the ancient demigod                  -|" << endl;
+    cout << "|-       (";if(ach.complete[23]) cout << "X"; else cout << " "; cout << ") Glass Triumph (40pts):                  Defeat Valentereth with the Mask of Glass                    -|" << endl;
+    cout << "|-       (";if(ach.complete[24]) cout << "X"; else cout << " "; cout << ") Wrath Triumph (40pts):                  Defeat Valentereth with the Mask of Wrath                    -|" << endl;
+    cout << "|-       (";if(ach.complete[25]) cout << "X"; else cout << " "; cout << ") Darkness Triumph (40pts):               Defeat Valentereth with the Mask of Darkness                 -|" << endl;
+    cout << "|-       (";if(ach.complete[26]) cout << "X"; else cout << " "; cout << ") Arcana Triumph (40pts):                 Defeat Valentereth with the Mask of Arcana                   -|" << endl;
+    cout << "|-       (";if(ach.complete[27]) cout << "X"; else cout << " "; cout << ") Steel Triumph (40pts):                  Defeat Valentereth with the Mask of Steel                    -|" << endl;
+    cout << "|-       (";if(ach.complete[28]) cout << "X"; else cout << " "; cout << ") Whispers Triumph (40pts):               Defeat Valentereth with the Mask of Whispers                 -|" << endl;
+    cout << "|-       (";if(ach.complete[29]) cout << "X"; else cout << " "; cout << ") Beasts Triumph (40pts):                 Defeat Valentereth with the Mask of Beasts                   -|" << endl;
+    cout << "|-       (";if(ach.complete[30]) cout << "X"; else cout << " "; cout << ") Souls Triumph (40pts):                  Defeat Valentereth with the Mask of Souls                    -|" << endl;
     cout << "|-                                                                                                                -|" << endl;
     cout << "|-       HIDDEN ACHIEVEMENTS                                                                                      -|" << endl;
     cout << "|-                                                                                                                -|" << endl;
-    if(!ach.complete[30])
+    if(!ach.complete[31])
         cout << "|-       ( ) Gank (40pts)                                                                                         -|" << endl;
     else
         cout << "|-       (X) Gank (40pts): Defeat Valentereth on an ascent where only the word 'gank' is used to attack enemies   -|" << endl;
-    if(!ach.complete[31])
-        cout << "|-       ( ) Spectrum Triumph (80pts)                                                                             -|" << endl;
-    else
-        cout << "|-       (X) Spectrum Triumph (80pts): Defeat Valentereth once with each mask                                     -|" << endl;
     if(!ach.complete[32])
-        cout << "|-       ( ) True Heir (75pts)                                                                                    -|" << endl;
+        cout << "|-       ( ) Spectrum Triumph (75pts)                                                                             -|" << endl;
     else
-        cout << "|-       (X) True Heir (75pts): Defeat Valentereth in one strike                                                  -|" << endl;
+        cout << "|-       (X) Spectrum Triumph (75pts): Defeat Valentereth once with each mask                                     -|" << endl;
     if(!ach.complete[33])
-        cout << "|-       ( ) The Truth (50pts)                                                                                    -|" << endl;
+        cout << "|-       ( ) True Heir (65pts)                                                                                    -|" << endl;
     else
-        cout << "|-       (X) The Truth (50pts): Defeat Termineth                                                                  -|" << endl;
+        cout << "|-       (X) True Heir (65pts): Defeat Valentereth in one strike                                                  -|" << endl;
+    if(!ach.complete[34])
+        cout << "|-       ( ) The Watcher (50pts)                                                                                  -|" << endl;
+    else
+        cout << "|-       (X) The Watcher (50pts): Defeat Termineth                                                                -|" << endl;
     cout << "|-                                                                                                                -|" << endl;
     cout << "|-       0) RETURN                                                                                                -|" << endl;
     cout << "|-                                                                                                                -|" << endl;
