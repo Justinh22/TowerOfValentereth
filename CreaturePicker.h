@@ -68,7 +68,7 @@ int minibossPicker(vector<bool> &mbStatus)
         return -1;
 
     do{
-        id = rand() % 6;
+        id = rand() % 7;
     }while(mbStatus[id]==1);
     mbStatus[id] = 1;
     return id+57;
@@ -160,6 +160,20 @@ void minibossStatGen(int adv, Creature &mon)
         accBuff = (adv-3)*4;
         defBuff = (adv-3)*2;
         ddgBuff = (adv-3)*4;
+
+        mon.setHP(mon.getHP()+hpBuff);
+        mon.setSTR(mon.getSTR()+strBuff);
+        mon.setACC(mon.getACC()+accBuff);
+        mon.setDEF(mon.getDEF()+defBuff);
+        mon.setDDG(mon.getDDG()+ddgBuff);
+    }
+    else if(mon.getID()==63) //Halliot
+    {
+        hpBuff = (adv-3)*4;
+        strBuff = (adv-3)*3;
+        accBuff = (adv-3)*3;
+        defBuff = (adv-3)*4;
+        ddgBuff = (adv-3)*2;
 
         mon.setHP(mon.getHP()+hpBuff);
         mon.setSTR(mon.getSTR()+strBuff);

@@ -152,6 +152,9 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                         case 62:
                             holder += "Dark Magic - The player will lose HP equal to their level every turn in combat.";
                             break;
+                        case 63:
+                            holder += "Undying - Halliot will take a stronger form after her first death.";
+                            break;
                     }
                 }
             }
@@ -552,7 +555,7 @@ bool nicknameChecker(string name, Creature monster)
     else if(monster.getID()==49||monster.getID()==53)
         return name=="titan";
     else if(monster.getID()==56)
-        return name=="man"||name=="boss";
+        return name=="man"||name=="boss"||name=="watcher"||name=="termineth"||name=="the watcher";
     else if(monster.getID()==57)
         return name=="behemoth"||name=="beast"||name=="ozkoroth";
     else if(monster.getID()==58)
@@ -567,6 +570,8 @@ bool nicknameChecker(string name, Creature monster)
         return name=="woman"||name=="short woman"||name=="minion"||name=="scion"||name=="wizard"||name=="mage"||name=="sorcerer"||name=="byralt";
     else if(monster.getID()==48)
         return name=="valentereth"||name=="the tyrant"||name=="goddess"||name=="boss";
+    else if(monster.getID()==63)
+        return name=="halliot"||name=="woman"||name=="awakened";
     else
         return 0;
 }

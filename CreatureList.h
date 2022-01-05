@@ -128,7 +128,7 @@ vector<Creature> initCDir(vector<Creature> creatureDirectory)
     Creature Hydra("Hydra",16,55,90,50,100,30,10);
     creatureDirectory.push_back(Hydra);
     //17
-    Creature Termineth("Termineth",17,56,200,80,145,50,35); //56
+    Creature Termineth("Termineth, the Watcher",17,56,200,80,145,50,35); //56
     creatureDirectory.push_back(Termineth);
 
     //Minibosses
@@ -160,6 +160,9 @@ vector<Creature> initCDir(vector<Creature> creatureDirectory)
     Creature Byralt("Byralt, Valentereth's Scion",18,62,30,20,90,2,20);
     creatureDirectory.push_back(Byralt);
     //ABILITY: Dark Magic - The player will lose HP equal to their level every turn in combat
+    Creature Halliot("Halliot, the Ascended",18,63,38,18,80,2,5);
+    creatureDirectory.push_back(Halliot);
+    //ABILITY: Undying - Halliot will survive with 1 HP when reduced to 0 when HP is greater than 0, and will heal herself afterwards
 
     //cout << "Creature List Initialized!" << endl;
 

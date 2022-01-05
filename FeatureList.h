@@ -612,6 +612,21 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
     Sky.addKey("lightning");
     featureDirectory.push_back(Sky);
 
+    Feature Carpet("carpet","A soft, red carpet.",3,1); //81
+    Carpet.addKey("carpet");
+    Carpet.addKey("red carpet");
+    featureDirectory.push_back(Carpet);
+
+    Feature StainedGlass("stained glass","Colorful stained glass windows, depicting a large figure weilding a hammer, and another weilding an axe in chains.",0,0); //82
+    StainedGlass.addKey("stained glass");
+    StainedGlass.addKey("glass");
+    StainedGlass.addKey("stained glass window");
+    StainedGlass.addKey("stained window");
+    StainedGlass.addKey("window");
+    StainedGlass.addKey("stained glass windows");
+    StainedGlass.addKey("windows");
+    featureDirectory.push_back(StainedGlass);
+
     //cout << "Feature List Initialized!" << endl;
 
     return featureDirectory;

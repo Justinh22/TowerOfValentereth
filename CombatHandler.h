@@ -26,6 +26,8 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
     int furyDmg=0;
     bool miracleFlag=0;
     int manacost;
+    bool healFlag=0;
+    bool halliotHeal=0;
     vector<Buff> buffCounter;
 
     if(hero.mask.getID()==2) //Darkness
@@ -204,7 +206,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         cout << hero.eqpRng.getName() << " activated!" << endl;
                         Sleep(1000);
                         hero.changeHP(dmg/2);
-                        cout << "Recovered " << dmg << " HP!" << endl;
+                        cout << "Recovered " << dmg/2 << " HP!" << endl;
                         Sleep(1000);
                     }
                 }
@@ -437,191 +439,189 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         }
         else if(action==";")
         {
-            {
-                hit = ((rand() % 100) + (rand() % 100) + 2) / 2;
-                if(hero.getDDG()>=monster.getLEV()*3)
-                {
-                    if(hit>25) //pass
-                    {
-                        cout << "You escape successfully!" << endl;
-                        Sleep(2000);
-                        end = 3;
-                        break;
-                    }
-                    else if(hit>10) //pass, but damage
-                    {
-                        cout << "The enemy attacks as you escape!" << endl;
-                        Sleep(2000);
-                        if(monster.getID()!=57)
-                            dmg = monster.getSTR() - hero.getDEF() - defBuff;
-                        else //Ozkoroth
-                        {
-                            red = .7;
-                            dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
-                        }
-                        if(hero.mask.getID()==0) //Glass
-                            dmg = dmg*2;
-                        if(hero.mask.getID()==5) //Whispers
-                            dmg = static_cast<float>(dmg)*1.5;
-                        if(hero.mask.getID()==4) //Steel
-                            dmg = static_cast<float>(dmg)*.7;
-                        if(dmg<0)
-                            dmg = 0;
-                        hero.changeHP(-dmg);
-                        cout << "Dealt " << dmg << " damage!" << endl;
-                        Sleep(2000);
-                        if(hero.getHP()<=0)
-                        {
-                            if(hero.eqpRng.getID()==434&&!miracleFlag) //MIRACLE
-                            {
-                                cout << hero.eqpRng.getName() << " activated!" << endl;
-                                hero.setHP(1);
-                                miracleFlag = 1;
-                                Sleep(2000);
-                            }
-                            else
-                            {
-                                end = 2;
-                                break;
-                            }
-                        }
-                        end = 3;
-                        break;
-                    }
-                    else //no pass, damage
-                    {
-                        cout << "The enemy knocks you back into the room, blocking your way!" << endl;
-                        Sleep(2000);
-                        if(monster.getID()!=57)
-                            dmg = monster.getSTR() - hero.getDEF() - defBuff;
-                        else //Ozkoroth
-                        {
-                            red = .7;
-                            dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
-                        }
-                        if(hero.mask.getID()==0) //Glass
-                            dmg = dmg*2;
-                        if(hero.mask.getID()==5) //Whispers
-                            dmg = static_cast<float>(dmg)*1.5;
-                        if(hero.mask.getID()==4) //Steel
-                            dmg = static_cast<float>(dmg)*.7;
-                        if(hero.eqpAmr.getID()==142) //Mercenary's Shield
-                            dmg -= dmg/4;
-                        if(dmg<0)
-                            dmg = 0;
-                        hero.changeHP(-dmg);
-                        cout << "Dealt " << dmg << " damage!" << endl;
-                        Sleep(2000);
-                        if(hero.getHP()<=0)
-                        {
-                            if(hero.eqpRng.getID()==434&&!miracleFlag) //MIRACLE
-                            {
-                                cout << hero.eqpRng.getName() << " activated!" << endl;
-                                hero.setHP(1);
-                                miracleFlag = 1;
-                                Sleep(2000);
-                            }
-                            else
-                            {
-                                end = 2;
-                                break;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if(hit>40) //pass
-                    {
-                        cout << "You escape successfully!" << endl;
-                        Sleep(2000);
-                        end = 3;
-                        break;
-                    }
-                    else if(hit>20) //pass, but damage
-                    {
-                        cout << "The enemy attacks as you escape!" << endl;
-                        Sleep(2000);
-                        if(monster.getID()!=57)
-                            dmg = monster.getSTR() - hero.getDEF() - defBuff;
-                        else //Ozkoroth
-                        {
-                            red = .7;
-                            dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
-                        }
-                        if(hero.mask.getID()==0) //Glass
-                            dmg = dmg*2;
-                        if(hero.mask.getID()==5) //Whispers
-                            dmg = static_cast<float>(dmg)*1.5;
-                        if(hero.mask.getID()==4) //Steel
-                            dmg = static_cast<float>(dmg)*.7;
-                        if(hero.eqpAmr.getID()==142) //Mercenary's Shield
-                            dmg -= dmg/4;
-                        if(dmg<0)
-                            dmg = 0;
-                        hero.changeHP(-dmg);
-                        cout << "Dealt " << dmg << " damage!" << endl;
-                        Sleep(2000);
-                        if(hero.getHP()<=0)
-                        {
-                            if(hero.eqpRng.getID()==434&&!miracleFlag) //MIRACLE
-                            {
-                                cout << hero.eqpRng.getName() << " activated!" << endl;
-                                hero.setHP(1);
-                                miracleFlag = 1;
-                                Sleep(2000);
-                            }
-                            else
-                            {
-                                end = 2;
-                                break;
-                            }
-                        }
-                        end = 3;
-                        break;
-                    }
-                    else //no pass, damage
-                    {
-                        cout << "The enemy knocks you back into the room, blocking your way!" << endl;
-                        Sleep(2000);
-                        if(monster.getID()!=57)
-                            dmg = monster.getSTR() - hero.getDEF() - defBuff;
-                        else //Ozkoroth
-                        {
-                            red = .7;
-                            dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
-                        }
-                        if(hero.mask.getID()==0) //Glass
-                            dmg = dmg*2;
-                        if(hero.mask.getID()==5) //Whispers
-                            dmg = static_cast<float>(dmg)*1.5;
-                        if(hero.mask.getID()==4) //Steel
-                            dmg = static_cast<float>(dmg)*.7;
-                        if(hero.eqpAmr.getID()==142) //Mercenary's Shield
-                            dmg -= dmg/4;
-                        if(dmg<0)
-                            dmg = 0;
-                        hero.changeHP(-dmg);
-                        cout << "Dealt " << dmg << " damage!" << endl;
-                        Sleep(2000);
-                        if(hero.getHP()<=0)
-                        {
-                            if(hero.eqpRng.getID()==434&&!miracleFlag) //MIRACLE
-                            {
-                                cout << hero.eqpRng.getName() << " activated!" << endl;
-                                hero.setHP(1);
-                                miracleFlag = 1;
-                                Sleep(2000);
-                            }
-                            else
-                            {
-                                end = 2;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
+           hit = ((rand() % 100) + (rand() % 100) + 2) / 2;
+           if(hero.getDDG()>=monster.getLEV()*3)
+           {
+               if(hit>25) //pass
+               {
+                   cout << "You escape successfully!" << endl;
+                   Sleep(2000);
+                   end = 3;
+                   break;
+               }
+               else if(hit>10) //pass, but damage
+               {
+                   cout << "The enemy attacks as you escape!" << endl;
+                   Sleep(2000);
+                   if(monster.getID()!=57)
+                       dmg = monster.getSTR() - hero.getDEF() - defBuff;
+                   else //Ozkoroth
+                   {
+                       red = .7;
+                       dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
+                   }
+                   if(hero.mask.getID()==0) //Glass
+                       dmg = dmg*2;
+                   if(hero.mask.getID()==5) //Whispers
+                       dmg = static_cast<float>(dmg)*1.5;
+                   if(hero.mask.getID()==4) //Steel
+                       dmg = static_cast<float>(dmg)*.7;
+                   if(dmg<0)
+                       dmg = 0;
+                   hero.changeHP(-dmg);
+                   cout << "Dealt " << dmg << " damage!" << endl;
+                   Sleep(2000);
+                   if(hero.getHP()<=0)
+                   {
+                       if(hero.eqpRng.getID()==434&&!miracleFlag) //MIRACLE
+                       {
+                           cout << hero.eqpRng.getName() << " activated!" << endl;
+                           hero.setHP(1);
+                           miracleFlag = 1;
+                           Sleep(2000);
+                       }
+                       else
+                       {
+                           end = 2;
+                           break;
+                       }
+                   }
+                   end = 3;
+                   break;
+               }
+               else //no pass, damage
+               {
+                   cout << "The enemy knocks you back into the room, blocking your way!" << endl;
+                   Sleep(2000);
+                   if(monster.getID()!=57)
+                       dmg = monster.getSTR() - hero.getDEF() - defBuff;
+                   else //Ozkoroth
+                   {
+                       red = .7;
+                       dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
+                   }
+                   if(hero.mask.getID()==0) //Glass
+                       dmg = dmg*2;
+                   if(hero.mask.getID()==5) //Whispers
+                       dmg = static_cast<float>(dmg)*1.5;
+                   if(hero.mask.getID()==4) //Steel
+                       dmg = static_cast<float>(dmg)*.7;
+                   if(hero.eqpAmr.getID()==142) //Mercenary's Shield
+                       dmg -= dmg/4;
+                   if(dmg<0)
+                       dmg = 0;
+                   hero.changeHP(-dmg);
+                   cout << "Dealt " << dmg << " damage!" << endl;
+                   Sleep(2000);
+                   if(hero.getHP()<=0)
+                   {
+                       if(hero.eqpRng.getID()==434&&!miracleFlag) //MIRACLE
+                       {
+                           cout << hero.eqpRng.getName() << " activated!" << endl;
+                           hero.setHP(1);
+                           miracleFlag = 1;
+                           Sleep(2000);
+                       }
+                       else
+                       {
+                           end = 2;
+                           break;
+                       }
+                   }
+               }
+           }
+           else
+           {
+               if(hit>40) //pass
+               {
+                   cout << "You escape successfully!" << endl;
+                   Sleep(2000);
+                   end = 3;
+                   break;
+               }
+               else if(hit>20) //pass, but damage
+               {
+                   cout << "The enemy attacks as you escape!" << endl;
+                   Sleep(2000);
+                   if(monster.getID()!=57)
+                       dmg = monster.getSTR() - hero.getDEF() - defBuff;
+                   else //Ozkoroth
+                   {
+                       red = .7;
+                       dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
+                   }
+                   if(hero.mask.getID()==0) //Glass
+                       dmg = dmg*2;
+                   if(hero.mask.getID()==5) //Whispers
+                       dmg = static_cast<float>(dmg)*1.5;
+                   if(hero.mask.getID()==4) //Steel
+                       dmg = static_cast<float>(dmg)*.7;
+                   if(hero.eqpAmr.getID()==142) //Mercenary's Shield
+                       dmg -= dmg/4;
+                   if(dmg<0)
+                       dmg = 0;
+                   hero.changeHP(-dmg);
+                   cout << "Dealt " << dmg << " damage!" << endl;
+                   Sleep(2000);
+                   if(hero.getHP()<=0)
+                   {
+                       if(hero.eqpRng.getID()==434&&!miracleFlag) //MIRACLE
+                       {
+                           cout << hero.eqpRng.getName() << " activated!" << endl;
+                           hero.setHP(1);
+                           miracleFlag = 1;
+                           Sleep(2000);
+                       }
+                       else
+                       {
+                           end = 2;
+                           break;
+                       }
+                   }
+                   end = 3;
+                   break;
+               }
+               else //no pass, damage
+               {
+                   cout << "The enemy knocks you back into the room, blocking your way!" << endl;
+                   Sleep(2000);
+                   if(monster.getID()!=57)
+                       dmg = monster.getSTR() - hero.getDEF() - defBuff;
+                   else //Ozkoroth
+                   {
+                       red = .7;
+                       dmg = monster.getSTR() - ceil(red*(static_cast<float>(hero.getDEF()) - defBuff));
+                   }
+                   if(hero.mask.getID()==0) //Glass
+                       dmg = dmg*2;
+                   if(hero.mask.getID()==5) //Whispers
+                       dmg = static_cast<float>(dmg)*1.5;
+                   if(hero.mask.getID()==4) //Steel
+                       dmg = static_cast<float>(dmg)*.7;
+                   if(hero.eqpAmr.getID()==142) //Mercenary's Shield
+                       dmg -= dmg/4;
+                   if(dmg<0)
+                       dmg = 0;
+                   hero.changeHP(-dmg);
+                   cout << "Dealt " << dmg << " damage!" << endl;
+                   Sleep(2000);
+                   if(hero.getHP()<=0)
+                   {
+                       if(hero.eqpRng.getID()==434&&!miracleFlag) //MIRACLE
+                       {
+                           cout << hero.eqpRng.getName() << " activated!" << endl;
+                           hero.setHP(1);
+                           miracleFlag = 1;
+                           Sleep(2000);
+                       }
+                       else
+                       {
+                           end = 2;
+                           break;
+                       }
+                   }
+               }
+           }
         }
         else if(action=="w"&&debug)
         {
@@ -636,8 +636,23 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         }
         if(monHP<=0)
         {
-            end = 1;
-            break;
+            if(monster.getID()==63&&!halliotHeal) //Halliot
+            {
+                cout << monName << " endures the blow, and shimmers with arcane light!" << endl;
+                Sleep(2000);
+                halliotHeal = 1;
+                cout << monName << " is embraced in golden light, and emerges with her eyes glowing golden, and wings of mystical light at her back!" << endl;
+                monster.setSTR(static_cast<int>(monster.getSTR()*1.2));
+                monster.setDEF(static_cast<int>(monster.getDEF()*1.2));
+                monster.setHP(static_cast<int>(monster.getHP()*1.3));
+                monHP = monster.getHP();
+                Sleep(3000);
+            }
+            else
+            {
+                end = 1;
+                break;
+            }
         }
         if(hero.getHP()<=0)
         {
@@ -693,8 +708,23 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         }
         if(monHP<=0)
         {
-            end = 1;
-            break;
+            if(monster.getID()==63&&!halliotHeal) //Halliot
+            {
+                cout << monName << " endures the blow, and shimmers with arcane light!" << endl;
+                Sleep(2000);
+                halliotHeal = 1;
+                cout << monName << " is embraced in golden light, and emerges with her eyes glowing golden, and wings of mystical light at her back!" << endl;
+                monster.setSTR(static_cast<int>(monster.getSTR()*1.2));
+                monster.setDEF(static_cast<int>(monster.getDEF()*1.2));
+                monster.setHP(static_cast<int>(monster.getHP()*1.3));
+                monHP = monster.getHP();
+                Sleep(3000);
+            }
+            else
+            {
+                end = 1;
+                break;
+            }
         }
         /*cout << "Attack Buff: " << atkBuff << endl;
         cout << "Defense Buff: " << defBuff << endl;
@@ -725,6 +755,15 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         {
             switch(monster.getID())
             {
+                case 48:
+                    cout << monName << " swings her axe at you!" << endl;
+                break;
+                case 56:
+                    if(rand()%2==0)
+                        cout << monName << " smashes his warhammer down upon you!" << endl;
+                    else
+                        cout << monName << " calls down lightning to strike you!" << endl;
+                break;
                 case 57:
                     cout << monName << " swipes at you with its claws!" << endl;
                 break;
@@ -745,6 +784,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 break;
                 case 62:
                     cout << monName << " fires dark energy from her tome!" << endl;
+                break;
+                case 63:
+                    if(!halliotHeal)
+                        cout << monName << " thrusts her spear at you!" << endl;
+                    else
+                        cout << monName << " lets out a battle cry and soars toward you, her spear shining with light!" << endl;
                 break;
             }
         }
@@ -808,8 +853,23 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         }
         if(monHP<=0)
         {
-            end = 1;
-            break;
+            if(monster.getID()==63&&!halliotHeal) //Halliot
+            {
+                cout << monName << " endures the blow, and shimmers with arcane light!" << endl;
+                Sleep(2000);
+                halliotHeal = 1;
+                cout << monName << " is embraced in golden light, and emerges with her eyes glowing golden, and wings of mystical light at her back!" << endl;
+                monster.setSTR(static_cast<int>(monster.getSTR()*1.2));
+                monster.setDEF(static_cast<int>(monster.getDEF()*1.2));
+                monster.setHP(static_cast<int>(monster.getHP()*1.3));
+                monHP = monster.getHP();
+                Sleep(3000);
+            }
+            else
+            {
+                end = 1;
+                break;
+            }
         }
         if(monster.getID()==60)
             parry = 0;
@@ -927,6 +987,18 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     cout << "You learned Enveloping Shadow!" << endl;
                     ach.Scion = 1;
                     Sleep(2000);
+                break;
+                case 63:
+                    if(hero.equipment.size()<6)
+                    {
+                        hero.equipment.push_back(dir.ringDirectory[34].getID());
+                        cout << "You got the " << dir.getItemName(434) << "!" << endl;
+                        Sleep(2000);
+                    }
+                    else
+                    {
+                        full = 1;
+                    }
                 break;
             }
         }

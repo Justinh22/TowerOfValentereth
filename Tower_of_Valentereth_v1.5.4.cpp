@@ -477,7 +477,7 @@ int main()
 
     Room currentRoom;
     vector<bool> itemStatus{0,0,0,0,0,0};
-    vector<bool> minibossStatus{0,0,0,0,0,0};
+    vector<bool> minibossStatus{0,0,0,0,0,0,0};
     int boss = 0;
     bool win = 0;
     bool lvup = 0;
@@ -486,6 +486,22 @@ int main()
     bool dev=0;
     bool itemDrop=0;
     bool gankTracker=1;
+
+    if(!saveFound)
+    {
+        std::system("cls");
+        cout << "Word has been passed for centuries of a tower at the far edge of the land, filled with monsters, riches, and power unimaginable." << endl;
+        Sleep(1000);
+        cout << "At the heart of the tower waits a tyrant with god-like power, who calls themself Valentereth." << endl;
+        Sleep(1000);
+        cout << "Several people from your village have left for the tower, seeking the treasures within, but none have returned." << endl << endl;
+        Sleep(1000);
+        cout << "Now, you have gone to the tower, hoping to brave the horrors within to find the treasure and power foretold." << endl << endl;
+        Sleep(1000);
+        cout << "Press any key to begin your ascent of the tower." << endl;
+        action = getch();
+        std::system("cls");
+    }
 
     cout << "Floor " << depth << endl;
     currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
@@ -643,6 +659,11 @@ int main()
                             currentRoom.creatDesc = "Stiran's shield lies on the floor next to you.";
                             currentRoom.addItem(142);
                         }
+                        else if(currentRoom.monster.getID()==63)
+                        {
+                            currentRoom.creatDesc = "A ring lies on the floor, shimmering with the same light as Halliot.";
+                            currentRoom.addItem(434);
+                        }
                         itemDrop = 1;
                     }
                     else
@@ -725,6 +746,12 @@ int main()
                 }
                 else if(text=="escape")
                 {
+                    if(currentRoom.monster.getName()=="Valentereth, the Tyrant"||currentRoom.monster.getName()=="Termineth, the Watcher")
+                    {
+                        cout << "You cannot run from this enemy." << endl;
+                        Sleep(2000);
+                        continue;
+                    }
                     cout << "Enemy has not yet been defeated. Try to run past? (y/n)" << endl;
                     yn = getch();
                     if(yn=='y')
@@ -1231,7 +1258,7 @@ int menuHandler(Player &hero, Directory dir)
                         }
                         cout << endl << "GOLD COST: " << gCost << endl;
                         cout << "MANA COST: " << mCost << endl;
-                        cout << "ENHANCE? (y/n)" << endl;
+                        cout << "Make an offering to enhance this ring? (y/n)" << endl;
                         strChoice = getch();
                         if(strChoice=="y")
                         {

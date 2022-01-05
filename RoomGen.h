@@ -434,9 +434,9 @@ Room roomBuilder(int type, vector<int> loot, int cid, Directory dir)
     if(type==0)
     {
         if(cid==48) //Valentereth
-            id = 88;
-        else if(cid==56)
             id = 89;
+        else if(cid==56)
+            id = 90;
         else if(cid<57) //Miniboss
             id = rand() % (dir.roomDirectory.size()-6);
         else

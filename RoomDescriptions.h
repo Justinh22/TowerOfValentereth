@@ -150,6 +150,10 @@ string creatureDesc(int cid, vector<Creature> creatureDirectory, Player &hero)
     {
         return "A short woman is startled from your entrance, jumping up from her chair at the table. She turns to grab a tome off of the table, and as she does you see Valentereth's sigil on the back of her robes. The woman whirls back around and shouts an incantation, as the room is filled with an inky-black smoke...";
     }
+    else if(cid==63)
+    {
+        return "A tall woman in shining black armor stands vigilant in the center of the hall, her eyes glowing a with blinding light. 'Your seige of this place comes to an end now. In the name of the Watcher, I sentence you to death!' Pulling a long spear from her back, she charges toward you.";
+    }
     switch(choice)
     {
         case 0:
