@@ -273,7 +273,7 @@ int main()
 
     string name;
     string filename;
-    int saveStats[19];
+    int saveStats[20];
     int depth = 1;
     string save;
     string saveName;
@@ -308,7 +308,8 @@ int main()
         saveStats[15] = -1;
         saveStats[16] = -1;
         saveStats[17] = -1;
-        saveStats[18] = 0;
+        saveStats[18] = -1;
+        saveStats[19] = 0;
     }
     else if(intChoice==2)
     {
@@ -328,7 +329,7 @@ int main()
                 {
                     std::stringstream data(save);
                     saveFound = 1;
-                    for(int i=0;i<19;i++)
+                    for(int i=0;i<20;i++)
                         data >> saveStats[i];
                     for(int i=0;i<6;i++)
                     {
@@ -366,7 +367,7 @@ int main()
                 cout << "LCK: " << saveStats[11] << endl;
                 cout << "DEPTH: " << saveStats[12] << endl;
                 cout << "KEYS: " << saveStats[13] << endl;
-                cout << "SCORE: " << saveStats[18] << endl;
+                cout << "SCORE: " << saveStats[19] << endl;
                 if(saveStats[15]>=0)
                 {
                     cout << "MASK: " << dir.maskDirectory[saveStats[15]].getName() << endl << endl;
@@ -406,7 +407,8 @@ int main()
                     saveStats[15] = -1;
                     saveStats[16] = -1;
                     saveStats[17] = -1;
-                    saveStats[18] = 0;
+                    saveStats[18] = -1;
+                    saveStats[19] = 0;
                     good = 1;
                 }
                 else
@@ -434,13 +436,15 @@ int main()
         hero.spellbook = spellSave;
     }
     depth = saveStats[12];
-    score = saveStats[18];
+    score = saveStats[19];
     if((depth/5)+2>11)
         hero.empowered = 1;
     if(saveStats[16]!=-1)
         hero.equipWpn(dir.weaponDirectory[saveStats[16]]);
     if(saveStats[17]!=-1)
         hero.equipAmr(dir.armorDirectory[saveStats[17]-100]);
+    if(saveStats[18]!=-1)
+        hero.equipRng(dir.ringDirectory[saveStats[18]-400]);
 
     if(mask>=0)
     {
@@ -1069,6 +1073,8 @@ int menuHandler(Player &hero, Directory dir)
     string strChoice;
     int intChoice;
     int nav;
+    int gCost;
+    int mCost;
     do{
         nav = 0;
         mainMenu();
@@ -1147,6 +1153,8 @@ int menuHandler(Player &hero, Directory dir)
                     cout << endl << "What do you want to do to " << dir.getItemName(hero.equipment[intChoice-1]) << "?" << endl;
                     cout << "1) EQUIP" << endl;
                     cout << "2) DROP" << endl;
+                    if(hero.equipment[intChoice-1]>=400)
+                        cout << "3) ENHANCE" << endl;
                     cout << "0) RETURN" << endl;
                     strChoice = getch();
                     if(strChoice=="1")
@@ -1184,6 +1192,79 @@ int menuHandler(Player &hero, Directory dir)
                         strChoice = getch();
                         if(strChoice=="y")
                             hero.equipment.erase(hero.equipment.begin()+intChoice-1);
+                    }
+                    else if(strChoice=="3"&&hero.equipment[intChoice-1]>=400)
+                    {
+                        if(hero.equipment[intChoice-1]<=409)
+                        {
+                            gCost = 150;
+                            mCost = 50;
+                            cout << endl << dir.getItemName(hero.equipment[intChoice-1]) << " ---> " << dir.getItemName(hero.equipment[intChoice-1]+10) << endl;
+                            cout << dir.getItemName(hero.equipment[intChoice-1]+10) << " | " << dir.getItemDesc(hero.equipment[intChoice-1]+10) << endl;
+                            cout << "RARITY: " << dir.ringDirectory[hero.equipment[intChoice-1]+10-400].getRarity() << endl;
+                            if(dir.ringDirectory[hero.equipment[intChoice-1]+10-400].getAct()>0)
+                                cout << "ACTIVATION RATE: " << dir.ringDirectory[hero.equipment[intChoice-1]+10-400].getAct() << "%" << endl;
+                            if(dir.ringDirectory[hero.equipment[intChoice-1]+10-400].getHPR()>0)
+                                cout << "HP REGEN: " << dir.ringDirectory[hero.equipment[intChoice-1]+10-400].getHPR() << endl;
+                            if(dir.ringDirectory[hero.equipment[intChoice-1]+10-400].getMPR()>0)
+                                cout << "MANA REGEN: " << dir.ringDirectory[hero.equipment[intChoice-1]+10-400].getMPR() << endl;
+                        }
+                        else if(hero.equipment[intChoice-1]<=421)
+                        {
+                            gCost = 300;
+                            mCost = 75;
+                            cout << endl <<  dir.getItemName(hero.equipment[intChoice-1]) << " ---> " << dir.getItemName(hero.equipment[intChoice-1]+12) << endl;
+                            cout << dir.getItemName(hero.equipment[intChoice-1]+12) << " | " << dir.getItemDesc(hero.equipment[intChoice-1]+12) << endl;
+                            cout << "RARITY: " << dir.ringDirectory[hero.equipment[intChoice-1]+12-400].getRarity() << endl;
+                            if(dir.ringDirectory[hero.equipment[intChoice-1]+12-400].getAct()>0)
+                                cout << "ACTIVATION RATE: " << dir.ringDirectory[hero.equipment[intChoice-1]+12-400].getAct() << "%" << endl;
+                            if(dir.ringDirectory[hero.equipment[intChoice-1]+12-400].getHPR()>0)
+                                cout << "HP REGEN: " << dir.ringDirectory[hero.equipment[intChoice-1]+12-400].getHPR() << endl;
+                            if(dir.ringDirectory[hero.equipment[intChoice-1]+12-400].getMPR()>0)
+                                cout << "MANA REGEN: " << dir.ringDirectory[hero.equipment[intChoice-1]+12-400].getMPR() << endl;
+                        }
+                        else
+                        {
+                            cout << "This ring cannot be enhanced any further." << endl;
+                            Sleep(2000);
+                            continue;
+                        }
+                        cout << endl << "GOLD COST: " << gCost << endl;
+                        cout << "MANA COST: " << mCost << endl;
+                        cout << "ENHANCE? (y/n)" << endl;
+                        strChoice = getch();
+                        if(strChoice=="y")
+                        {
+                            if(hero.gold<gCost)
+                            {
+                                cout << "You cannot afford to enhance this ring." << endl;
+                                Sleep(2000);
+                                continue;
+                            }
+                            if(hero.getMP()<mCost)
+                            {
+                                cout << "You do not have enough MP to enhance this ring." << endl;
+                                Sleep(2000);
+                                continue;
+                            }
+                            hero.gold -= gCost;
+                            hero.changeMP(-mCost);
+                            if(hero.equipment[intChoice-1]<=409)
+                            {
+                                cout << dir.getItemName(hero.equipment[intChoice-1]) << " has been enhanced to " << dir.getItemName(hero.equipment[intChoice-1]+10) << "!" << endl;
+                                hero.equipment[intChoice-1] += 10;
+                                if(hero.eqpRng.getID()==hero.equipment[intChoice-1]-10)
+                                    hero.eqpRng = dir.ringDirectory[hero.equipment[intChoice-1]-400];
+                            }
+                            else
+                            {
+                                cout << dir.getItemName(hero.equipment[intChoice-1]) << " has been enhanced to " << dir.getItemName(hero.equipment[intChoice-1]+12) << "!" << endl;
+                                hero.equipment[intChoice-1] += 12;
+                                if(hero.eqpRng.getID()==hero.equipment[intChoice-1]-12)
+                                    hero.eqpRng = dir.ringDirectory[hero.equipment[intChoice-1]-400];
+                            }
+                            Sleep(2000);
+                        }
                     }
                     else if(strChoice!="0")
                     {
@@ -1742,8 +1823,8 @@ void saveFunc(Player &hero,string filename, int depth)
     saveFile.open(filename);
     saveFile << hero.level << " " << hero.exp << " " << hero.gold << " " << hero.getHP() << " " << hero.getMHP() << " " << hero.getMP() << " "
              << hero.getMMP() << " " << hero.getNSTR() << " " << hero.getNCRT() << " " << hero.getNDEF() << " " << hero.getNDDG() << " " << hero.getLCK() << " " << depth
-             << " " << hero.keys << " " << hero.growth << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID() <<
-             " " << score;
+             << " " << hero.keys << " " << hero.growth << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID() << " " << hero.eqpRng.getID()
+             << " " << score;
     for(int i=0;i<hero.equipment.size();i++)
     {
         saveFile << " " << hero.equipment[i];

@@ -34,7 +34,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
         {
             change = 0;
             itemType = rand() % 5; // 0 = Weapon, 1 = Armor, 2 = Consumable, 3 = Spell, 4 = Ring
-            if((adv<4&&itemType==4)||rand()%2==0)
+            if((adv<3&&itemType==4)||rand()%2==0)
                 itemType = rand() % 4;
             if(itemType==0)
                 if(wpnFlag==1)
@@ -368,14 +368,14 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                 itemRarity = 1;
             else if(adv<8)
             {
-                if(foo<=7)
+                if(foo<=4)
                     itemRarity = 1;
                 else
                     itemRarity = 2;
             }
             else
             {
-                if(foo<=8)
+                if(foo<=7)
                     itemRarity = 2;
                 else
                     itemRarity = 3;
@@ -433,7 +433,11 @@ Room roomBuilder(int type, vector<int> loot, int cid, Directory dir)
     Room newRoom;
     if(type==0)
     {
-        if(cid<57) //Miniboss
+        if(cid==48) //Valentereth
+            id = 88;
+        else if(cid==56)
+            id = 89;
+        else if(cid<57) //Miniboss
             id = rand() % (dir.roomDirectory.size()-6);
         else
             id = cid + 25;
@@ -775,12 +779,35 @@ Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vect
         {
             foo = rand() % 3 + 1;
             int featid;
+            int rty;
             //cout << "Chance is " << foo << ", while luck of finding is " << currentRoom.getFList()[i].getLuck() << "." << endl;
             if(currentRoom.getFList()[i].getLuck()>=foo)
             {
                 if(currentRoom.getFList()[i].getItem()<=2)
                 {
-                    featid = itemPicker(currentRoom.getFList()[i].getItem()-1,adv);
+                    if(adv>3)
+                    {
+                        foo = rand() % 10 + 1;
+                        if(adv<10)
+                        {
+                            if(foo<7)
+                                rty = adv;
+                            else
+                                rty = adv - 1;
+                        }
+                        else
+                        {
+                            if(foo<9)
+                                rty = adv - 1;
+                            else
+                                rty = adv;
+                        }
+                    }
+                    else
+                    {
+                        rty = adv;
+                    }
+                    featid = itemPicker(currentRoom.getFList()[i].getItem()-1,rty);
                     //cout << "Adding " << featid << "." << endl;
                     currentRoom.addItem(featid);
                 }

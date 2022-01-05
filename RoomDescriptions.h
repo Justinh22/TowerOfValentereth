@@ -124,7 +124,7 @@ string creatureDesc(int cid, vector<Creature> creatureDirectory, Player &hero)
     }
     else if(cid==56)
     {
-        return "This is the end. Before you, stands its guardian. Termineth stands at the tower's apex.";
+        return "The man raises his power and approaches you. 'Some curses aren't meant to be broken, fool... Those who hunger for power are all the same. Wretched, evil worms who are doomed to ruin the lives of others. This tower is all that keeps the power-hungry at bay, attracting them like moths to a flame, promising glory, riches, power beyond their wildest fantasy... You are one of them, you should know. Are these truly the ones you hope to save by defeating me? Then so be it. I will not let the world suffer for the sake of your glory.' The man raises his hammer toward the sky at the tower's apex, ready for battle.";
     }
     else if(cid==57)
     {

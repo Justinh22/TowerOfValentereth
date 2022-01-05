@@ -16,8 +16,8 @@ void titleScreen()
     cout << " |                                                                                                                    | " << endl;
     cout << " |                                                                                                                    | " << endl;
     cout << " |                                                                                                                    | " << endl;
-    cout << " |     1) New Game                                                                                                    | " << endl;
-    cout << " |     2) Load Game                                                                                                   | " << endl;
+    cout << " |     1) Ascend the Tower                                                                                            | " << endl;
+    cout << " |     2) Load Previous Ascent                                                                                        | " << endl;
     cout << " |     3) Leaderboard                                                                                                 | " << endl;
     cout << " |     4) Achievements                                                                                                | " << endl;
     cout << " |     5) Masks                                                                                                       | " << endl;

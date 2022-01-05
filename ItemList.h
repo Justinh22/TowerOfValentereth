@@ -236,7 +236,7 @@ vector<Armor> initADir(vector<Armor> armorDirectory)
     armorDirectory.push_back(Helm_of_the_Ancients);
 
     //11
-    Armor Mercenarys_Shield("Mercenary's Shield","Stiran's shield. Reduces incoming damage by 25%. If an enemy misses their attack against you, your next attack has the potential to deal double damage.",11,142,3,30,0);
+    Armor Mercenarys_Shield("Mercenary's Shield","Stiran's shield. Reduces incoming damage by 25%. If an enemy misses their attack against you, your next attack has the potential to deal double damage.",11,142,3,20,0);
     armorDirectory.push_back(Mercenarys_Shield);
 
     //cout << "Armor Directory Initialized!" << endl;
@@ -323,7 +323,7 @@ vector<Ring> initRGDir(vector<Ring> ringDirectory)
     ringDirectory.push_back(Minor_Conservation);
     Ring Minor_Bravery("Ring of Minor Bravery","A ring that grants the wearer a slight chance of negating incoming damage.",1,402,10,0,0);
     ringDirectory.push_back(Minor_Bravery);
-    Ring Minor_Leeching("Ring of Minor Leeching","A ring that grants the wearer a slight chance of recovering health equal to the amount of damage dealt.",1,403,10,0,0);
+    Ring Minor_Leeching("Ring of Minor Leeching","A ring that grants the wearer a slight chance of recovering health equal to half the amount of damage dealt.",1,403,10,0,0);
     ringDirectory.push_back(Minor_Leeching);
     Ring Minor_Vengeance("Ring of Minor Vengeance","A ring that deals additional damage equal to 15% of the wearer's damage taken when attacking an enemy.",1,404,0,0,0);
     ringDirectory.push_back(Minor_Vengeance);
@@ -344,7 +344,7 @@ vector<Ring> initRGDir(vector<Ring> ringDirectory)
     ringDirectory.push_back(Conservation);
     Ring Bravery("Ring of Bravery","A ring that grants the wearer a chance of negating incoming damage.",2,412,20,0,0);
     ringDirectory.push_back(Bravery);
-    Ring Leeching("Ring of Leeching","A ring that grants the wearer a chance of recovering health equal to the amount of damage dealt.",2,413,20,0,0);
+    Ring Leeching("Ring of Leeching","A ring that grants the wearer a chance of recovering health equal to half the amount of damage dealt.",2,413,20,0,0);
     ringDirectory.push_back(Leeching);
     Ring Vengeance("Ring of Vengeance","A ring that deals additional damage equal to 30% of the wearer's damage taken when attacking an enemy.",2,414,0,0,0);
     ringDirectory.push_back(Vengeance);
@@ -369,7 +369,7 @@ vector<Ring> initRGDir(vector<Ring> ringDirectory)
     ringDirectory.push_back(Major_Conservation);
     Ring Major_Bravery("Ring of Major Bravery","A ring that grants the wearer a significant chance of negating incoming damage.",3,424,30,0,0);
     ringDirectory.push_back(Major_Bravery);
-    Ring Major_Leeching("Ring of Major Leeching","A ring that grants the wearer a significant chance of recovering health equal to the amount of damage dealt.",3,425,30,0,0);
+    Ring Major_Leeching("Ring of Major Leeching","A ring that grants the wearer a significant chance of recovering health equal to half the amount of damage dealt.",3,425,30,0,0);
     ringDirectory.push_back(Major_Leeching);
     Ring Major_Vengeance("Ring of Major Vengeance","A ring that deals additional damage equal to 50% of the wearer's damage taken when attacking an enemy.",3,426,0,0,0);
     ringDirectory.push_back(Major_Vengeance);

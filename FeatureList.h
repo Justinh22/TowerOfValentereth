@@ -591,7 +591,26 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
     Flowers.addKey("rose");
     featureDirectory.push_back(Flowers);
 
+    Feature Pillar("pillar","A beautiful marble pillar, stretching upward toward the ceiling.",0,0); //78
+    Pillar.addKey("pillar");
+    Pillar.addKey("pillars");
+    Pillar.addKey("marble pillar");
+    Pillar.addKey("marble pillars");
+    featureDirectory.push_back(Pillar);
 
+    Feature Throne("throne","The sight of the throne sends a horrible tremor through your body... yet you can't seem to resist the urge to claim it for your own...",0,0); //79
+    Throne.addKey("throne");
+    Throne.addKey("chair");
+    Throne.addKey("valentereth's throne");
+    featureDirectory.push_back(Throne);
+
+    Feature Sky("sky","It seems like it's been ages since you've last seen the natural sky... but the horrible storm keeps you from appreciating it for very long.",0,0); //80
+    Sky.addKey("sky");
+    Sky.addKey("storm");
+    Sky.addKey("thunder");
+    Sky.addKey("rain");
+    Sky.addKey("lightning");
+    featureDirectory.push_back(Sky);
 
     //cout << "Feature List Initialized!" << endl;
 

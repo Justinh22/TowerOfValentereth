@@ -203,7 +203,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     {
                         cout << hero.eqpRng.getName() << " activated!" << endl;
                         Sleep(1000);
-                        hero.changeHP(dmg);
+                        hero.changeHP(dmg/2);
                         cout << "Recovered " << dmg << " HP!" << endl;
                         Sleep(1000);
                     }
@@ -303,9 +303,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
             {
                 if(hero.eqpRng.getID()==401||hero.eqpRng.getID()==411||hero.eqpRng.getID()==423) //CONSERVATION
                 {
-                    cout << hero.eqpRng.getName() << " activated!" << endl;
-                    hero.changeMP(manacost);
-                    Sleep(1000);
+                    if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
+                    {
+                        cout << hero.eqpRng.getName() << " activated!" << endl;
+                        hero.changeMP(manacost);
+                        Sleep(1000);
+                    }
                 }
                 if(hero.spellbook[choice-1]<=314)
                 {
@@ -335,7 +338,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         {
                             cout << hero.eqpRng.getName() << " activated!" << endl;
                             Sleep(1000);
-                            hero.changeHP(dmg);
+                            hero.changeHP(dmg/2);
                             cout << "Recovered " << dmg << " HP!" << endl;
                             Sleep(1000);
                         }
@@ -846,14 +849,6 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
             Sleep(1000);
             hero.changeHP(hero.eqpRng.getHPR());
             cout << "Restored " << hero.eqpRng.getHPR() << " HP!" << endl;
-            Sleep(2000);
-        }
-        if(hero.eqpRng.getID()==420||hero.eqpRng.getID()==432) //MANA REGENERATION
-        {
-            cout << hero.eqpRng.getName() << " activated!" << endl;
-            Sleep(1000);
-            hero.changeMP(hero.eqpRng.getMPR());
-            cout << "Restored " << hero.eqpRng.getMPR() << " MP!" << endl;
             Sleep(2000);
         }
     }

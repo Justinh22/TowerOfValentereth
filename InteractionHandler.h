@@ -126,11 +126,14 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 holder += "Accuracy: " + std::to_string(currentRoom.monster.getACC()) + "\n";
                 holder += "Defense: " + std::to_string(currentRoom.monster.getDEF()) + "\n";
                 holder += "Dodge: " + std::to_string(currentRoom.monster.getDDG());
-                if(currentRoom.monster.getID()>=57) //Miniboss
+                if(currentRoom.monster.getID()>=57||currentRoom.monster.getID()==48) //Miniboss
                 {
                     holder += "\nAblity: ";
                     switch(currentRoom.monster.getID())
                     {
+                        case 48:
+                            holder += "Tyrant's Veil - Valentereth takes half damage from all attack spells.";
+                            break;
                         case 57:
                             holder += "Armor-Piercing Fangs - Ozkoroth's attacks cut through 30% of the player's defense.";
                             break;
@@ -233,7 +236,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     valid = 1;
                 else if(target=="armor"&&currentRoom.getIList()[i]>=100&&currentRoom.getIList()[i]<200)
                     valid = 1;
-                else if(target=="robe"&&((currentRoom.getIList()[i]%5==0&&currentRoom.getIList()[i]>111)||currentRoom.getIList()[i]==102||currentRoom.getIList()[i]==105||currentRoom.getIList()[i]==108)&&currentRoom.getIList()[i]<=200)
+                else if(target=="robe"&&((currentRoom.getIList()[i]%5==0&&currentRoom.getIList()[i]>111)||currentRoom.getIList()[i]==102||currentRoom.getIList()[i]==105||currentRoom.getIList()[i]==108||currentRoom.getIList()[i]==111)&&currentRoom.getIList()[i]<200)
                     valid = 1;
                 else if(target=="food"&&currentRoom.getIList()[i]>=200&&currentRoom.getIList()[i]<=203)
                     valid = 1;
@@ -548,18 +551,22 @@ bool nicknameChecker(string name, Creature monster)
         return name=="dragon";
     else if(monster.getID()==49||monster.getID()==53)
         return name=="titan";
+    else if(monster.getID()==56)
+        return name=="man"||name=="boss";
     else if(monster.getID()==57)
         return name=="behemoth"||name=="beast"||name=="ozkoroth";
     else if(monster.getID()==58)
         return name=="figure"||name=="vines"||name=="endrigaia";
     else if(monster.getID()==59)
-        return name=="man"||name=="wizard"||name=="mage"||name=="sorceror"||name=="emeritus";
+        return name=="man"||name=="wizard"||name=="mage"||name=="sorcerer"||name=="emeritus";
     else if(monster.getID()==60)
         return name=="man"||name=="warrior"||name=="bounty hunter"||name=="big boi"||name=="big boy"||name=="stiran";
     else if(monster.getID()==61)
         return name=="figure"||name=="creature"||name=="horror"||name=="humanoid"||name=="?"||name=="???"||name=="?????";
     else if(monster.getID()==62)
         return name=="woman"||name=="short woman"||name=="minion"||name=="scion"||name=="wizard"||name=="mage"||name=="sorcerer"||name=="byralt";
+    else if(monster.getID()==48)
+        return name=="valentereth"||name=="the tyrant"||name=="goddess"||name=="boss";
     else
         return 0;
 }
