@@ -25,11 +25,11 @@ Exploration:
 
 Menu:
     By using the menu command, you can access your inventory. Inside, you will find a variety of options; firstly, is your stats. This screen
-    states your player name, your level, your HP, your MP, and your current strength, defense, accuracy, dodge, and critical hit rate. It also
+    states your player name, your level, your HP, your MP, and your current strength, defense, accuracy, dodge, critical hit rate, and luck. It also
     displays how many experience points you have, as well as any buffs you may have to your magic power. If you are doing a mask run, the mask
     you are wearing will be shown here as well. When on a menu, reference the different options available by their number, if given. Otherwise, just
     by their name.
-    In your equipment menu, you will find a list of all of the armor and weapons your are holding, however you can only hold a maximum of 6 pieces of
+    In your equipment menu, you will find a list of all of the equipment you are holding, however you can only hold a maximum of 6 pieces of
     equipment at a time. You can examine, drop, and equip your equipment in this menu. In your items menu you will find all of the consumable
     items you have, but only 6 can be held, similarly to the equipment menu. These can be examined and used here. In your spellbook, you will
     find a list of all of the spells you have collected, with no maximum capacity. You can check the description of spells here, or if you
@@ -49,10 +49,10 @@ Combat:
     dodge stat will provide a greater chance of escape.
 
 Shops:
-    Throughout the tower, the player can often find locked doors. If unlocked, behind the door will be a shop in which the player can purchase items
-    with gold that they have earned by defeating enemies. In order to unlock the door, the player must use a key, which can be found similarly to any
-    other item. Often times shops will possess items of a higher rarity than those that are normally found around the tower. However, each item only
-    has a stock of one, so they can only be bought once.
+    Throughout the tower, the player can often find locked doors. If unlocked, behind the door will be one of several shop types; a merchant, a divining
+	room, or an altar. At a merchant, the player will be able to spend their gold for items and equipment. In a divining room, they will be able to spend
+	gold to perform one of the given stat transfers at the top of the screen (2 for 1) for an increasing gold cost. At an altar, the player can spend gold
+	to receive a random effect, relating to the given hint. Keys for these rooms can be found throughout the tower.
 
 Masks:
     Masks are a special item that can only be equipped at the start of an ascension of the tower. Each type of mask is an overhaul of one of the game's
@@ -74,8 +74,12 @@ Karma:
     of loot found in each room varies based on previous rooms: if you have bad luck in some rooms, perhaps you will have better luck in future rooms.
 
 Leaderboard:
-    The leaderboard can be accessed from the main menu. The leaderboard displays the top ten scores from previous games, with the name and floor of each
-    entry. Scores with the <+> defeated the tyrant, and scores with <<+>> broke the cycle.
+    The leaderboard can be accessed from the main menu. The leaderboard displays the top ten scores from previous games, with the name, floor, and score
+	of each entry. Scores with the <+> defeated the tyrant, and scores with <<+>> broke the cycle.
+
+Achievements:
+	Achievement progress can be viewed from the main menu. As you play the game, you can unlock achievements from the list, and earn points toward a
+	completion total. Some achievements have their requirements hidden, not revealing how to complete them.
 
 Saving:
     Tower of Valentereth uses autosave to save your level, stats, and items as you ascend the tower. Your save data is kept under your character's name.
@@ -99,6 +103,7 @@ Stats:
         your normal damage.
     ACC: Accuracy. Your chance of hitting an enemy. When striking in combat, this minus the DDG of the enemy will determine your percent chance of hitting.
     DDG: Dodge. Your chance of dodging enemy attacks. When being attacked in combat, the enemy's ACC minus this will determine if you are hit.
+	LCK: Luck. Your chance of activating a ring's effect, in addition to its default activation rate. Each luck is treated as an additional 1% chance.
     AMP: Magical Amplifier. Your percent bonus to magical abilities. Your attack and healing spells will be boosted by this percent of their original amount.
         This stat is increased by wielding magical weapons or staves.
     MPG: Mana Point Gain. The number of MP you regain during each round of combat. This stat is increased by wearing Arcanist Armor or robes.
