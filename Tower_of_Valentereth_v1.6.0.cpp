@@ -273,7 +273,7 @@ int main()
 
     string name;
     string filename;
-    int saveStats[27];
+    int saveStats[28];
     int depth = 1;
     string save;
     string saveName;
@@ -299,17 +299,17 @@ int main()
         saveStats[6] = 20;
         saveStats[7] = 5;
         saveStats[8] = 0;
-        saveStats[9] = 0;
+        saveStats[9] = 70;
         saveStats[10] = 0;
         saveStats[11] = 0;
-        saveStats[12] = 1;
-        saveStats[13] = 0;
+        saveStats[12] = 0;
+        saveStats[13] = 1;
         saveStats[14] = 0;
-        saveStats[15] = -1;
+        saveStats[15] = 0;
         saveStats[16] = -1;
         saveStats[17] = -1;
         saveStats[18] = -1;
-        saveStats[19] = 0;
+        saveStats[19] = -1;
         saveStats[20] = 0;
         saveStats[21] = 0;
         saveStats[22] = 0;
@@ -317,6 +317,7 @@ int main()
         saveStats[24] = 0;
         saveStats[25] = 0;
         saveStats[26] = 0;
+        saveStats[27] = 0;
     }
     else if(intChoice==2)
     {
@@ -336,7 +337,7 @@ int main()
                 {
                     std::stringstream data(save);
                     saveFound = 1;
-                    for(int i=0;i<27;i++)
+                    for(int i=0;i<28;i++)
                         data >> saveStats[i];
                     for(int i=0;i<6;i++)
                     {
@@ -368,16 +369,16 @@ int main()
                 cout << "MP: " << saveStats[5] << "/" << saveStats[6] << endl;
                 cout << "ATK: " << saveStats[7] << endl;
                 cout << "CRT: " << saveStats[8] << endl;
-                cout << "ACC: 70" << endl;
-                cout << "DEF: " << saveStats[9] << endl;
-                cout << "DDG: " << saveStats[10] << endl;
-                cout << "LCK: " << saveStats[11] << endl;
-                cout << "DEPTH: " << saveStats[12] << endl;
-                cout << "KEYS: " << saveStats[13] << endl;
-                cout << "SCORE: " << saveStats[26] << endl;
+                cout << "ACC: " << saveStats[9] << endl;
+                cout << "DEF: " << saveStats[10] << endl;
+                cout << "DDG: " << saveStats[11] << endl;
+                cout << "LCK: " << saveStats[12] << endl;
+                cout << "DEPTH: " << saveStats[13] << endl;
+                cout << "KEYS: " << saveStats[14] << endl;
+                cout << "SCORE: " << saveStats[27] << endl;
                 if(saveStats[15]>=0)
                 {
-                    cout << "MASK: " << dir.maskDirectory[saveStats[15]].getName() << endl << endl;
+                    cout << "MASK: " << dir.maskDirectory[saveStats[16]].getName() << endl << endl;
                 }
                 cout << "Continue with this character? (y/n)" << endl;
                 load = getch();
@@ -405,17 +406,17 @@ int main()
                     saveStats[6] = 20;
                     saveStats[7] = 5;
                     saveStats[8] = 0;
-                    saveStats[9] = 0;
+                    saveStats[9] = 70;
                     saveStats[10] = 0;
                     saveStats[11] = 0;
-                    saveStats[12] = 1;
-                    saveStats[13] = 0;
+                    saveStats[12] = 0;
+                    saveStats[13] = 1;
                     saveStats[14] = 0;
-                    saveStats[15] = -1;
+                    saveStats[15] = 0;
                     saveStats[16] = -1;
                     saveStats[17] = -1;
                     saveStats[18] = -1;
-                    saveStats[19] = 0;
+                    saveStats[19] = -1;
                     saveStats[20] = 0;
                     saveStats[21] = 0;
                     saveStats[22] = 0;
@@ -423,6 +424,7 @@ int main()
                     saveStats[24] = 0;
                     saveStats[25] = 0;
                     saveStats[26] = 0;
+                    saveStats[27] = 0;
                     good = 1;
                 }
                 else
@@ -435,30 +437,30 @@ int main()
     }
     clear();
 
-    Player hero(name,saveStats[0],100,saveStats[4],saveStats[6],saveStats[7],70,saveStats[8],saveStats[9],saveStats[10],saveStats[11],saveStats[2],saveStats[13],saveStats[1]);
+    Player hero(name,saveStats[0],100,saveStats[4],saveStats[6],saveStats[7],saveStats[9],saveStats[8],saveStats[10],saveStats[11],saveStats[12],saveStats[2],saveStats[14],saveStats[1]);
     hero.setEXPGoal(20*hero.level);
     hero.setHP(saveStats[3]);
     hero.setMP(saveStats[5]);
-    if(saveStats[14]==1)
+    if(saveStats[15]==1)
         hero.growth = 1;
-    if(saveStats[15]>=0)
-        mask = saveStats[15];
+    if(saveStats[16]>=0)
+        mask = saveStats[16];
     if(intChoice==2)
     {
         hero.equipment = equipSave;
         hero.inventory = itemSave;
         hero.spellbook = spellSave;
     }
-    depth = saveStats[12];
-    score = saveStats[26];
+    depth = saveStats[13];
+    score = saveStats[27];
     if((depth/5)+2>11)
         hero.empowered = 1;
-    if(saveStats[16]!=-1)
-        hero.equipWpn(dir.weaponDirectory[saveStats[16]]);
     if(saveStats[17]!=-1)
-        hero.equipAmr(dir.armorDirectory[saveStats[17]-100]);
+        hero.equipWpn(dir.weaponDirectory[saveStats[17]]);
     if(saveStats[18]!=-1)
-        hero.equipRng(dir.ringDirectory[saveStats[18]-400]);
+        hero.equipAmr(dir.armorDirectory[saveStats[18]-100]);
+    if(saveStats[19]!=-1)
+        hero.equipRng(dir.ringDirectory[saveStats[19]-400]);
 
     if(mask>=0)
     {
@@ -469,6 +471,8 @@ int main()
         hero.setNDDG(25);
     if(hero.mask.getID()==1) //Wrath
         hero.setACC(hero.getACC()-10);
+    if(hero.mask.getID()==7) //Souls
+        hero.setACC(hero.getNACC());
     srand(time(NULL));
     string action;
     string target;
@@ -491,7 +495,7 @@ int main()
 
     Room currentRoom;
     vector<bool> itemStatus{0,0,0,0,0,0};
-    vector<bool> minibossStatus{saveStats[19]>=1,saveStats[20]>=1,saveStats[21]>=1,saveStats[22]>=1,saveStats[23]>=1,saveStats[24]>=1,saveStats[25]>=1};
+    vector<bool> minibossStatus{saveStats[20]>=1,saveStats[21]>=1,saveStats[22]>=1,saveStats[23]>=1,saveStats[24]>=1,saveStats[25]>=1,saveStats[26]>=1};
     int boss = 0;
     bool win = 0;
     bool lvup = 0;
@@ -1274,7 +1278,7 @@ int menuHandler(Player &hero, Directory dir)
                     {
                         if(hero.equipment[intChoice-1]<=409)
                         {
-                            gCost = 150;
+                            gCost = 100;
                             mCost = 50;
                             cout << endl << dir.getItemName(hero.equipment[intChoice-1]) << " ---> " << dir.getItemName(hero.equipment[intChoice-1]+10) << endl;
                             cout << dir.getItemName(hero.equipment[intChoice-1]+10) << " | " << dir.getItemDesc(hero.equipment[intChoice-1]+10) << endl;
@@ -1288,7 +1292,7 @@ int menuHandler(Player &hero, Directory dir)
                         }
                         else if(hero.equipment[intChoice-1]<=421)
                         {
-                            gCost = 300;
+                            gCost = 250;
                             mCost = 75;
                             cout << endl <<  dir.getItemName(hero.equipment[intChoice-1]) << " ---> " << dir.getItemName(hero.equipment[intChoice-1]+12) << endl;
                             cout << dir.getItemName(hero.equipment[intChoice-1]+12) << " | " << dir.getItemDesc(hero.equipment[intChoice-1]+12) << endl;
@@ -1898,8 +1902,8 @@ void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStat
 {
     std::ofstream saveFile;
     saveFile.open(filename);
-    saveFile << hero.level << " " << hero.exp << " " << hero.gold << " " << hero.getHP() << " " << hero.getMHP() << " " << hero.getMP() << " "
-             << hero.getMMP() << " " << hero.getNSTR() << " " << hero.getNCRT() << " " << hero.getNDEF() << " " << hero.getNDDG() << " " << hero.getLCK() << " " << depth
+    saveFile << hero.level << " " << hero.exp << " " << hero.gold << " " << hero.getHP() << " " << hero.getMHP() << " " << hero.getMP() << " " << hero.getMMP()
+             << " " << hero.getNSTR() << " " << hero.getNCRT() << " " << hero.getNACC() << " " << hero.getNDEF() << " " << hero.getNDDG() << " " << hero.getLCK() << " " << depth
              << " " << hero.keys << " " << hero.growth << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID() << " " << hero.eqpRng.getID()
              << " " << minibossStatus[0] << " " << minibossStatus[1] << " " << minibossStatus[2] << " " << minibossStatus[3] << " " << minibossStatus[4] << " " << minibossStatus[5]
              << " " << minibossStatus[6] << " " << score;

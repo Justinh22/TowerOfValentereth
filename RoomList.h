@@ -130,7 +130,7 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     R29.addFeat(featureDirectory[30]);
     roomDirectory.push_back(R29);
 
-    Room R30(30,"Vines are sprouting from the far end of the room, winding around a statue. It's eyes seem to glow...");
+    Room R30(30,"Vines are sprouting from the far end of the room, winding around a statue. Its eyes seem to glow...");
     R30.addFeat(featureDirectory[30]);
     R30.addFeat(featureDirectory[31]);
     roomDirectory.push_back(R30);

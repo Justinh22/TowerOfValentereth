@@ -518,25 +518,37 @@ public:
     Ring eqpRng;
     void levelUp()
     {
+        level++;
+        int mod;
+        if(mask.getID()==7)
+            mod = level/7;
         int boost;
         score += 100;
         cout << endl << "Level Up!!" << endl;
-        boost = rand() % 5 + 2;
+        boost = rand() % 5 + 2 + mod;
         mhp += boost;
         hp = mhp;
         cout << "HP went up by " << boost << "!" << endl;
-        boost = rand() % 5 + 2;
+        boost = rand() % 5 + 2 + mod;
         mmp += boost;
         cout << "MP went up by " << boost << "!" << endl;
-        boost = rand() % 3;
+        boost = rand() % 3 + mod;
         nstr += boost;
         if(boost!=0)
             cout << "STR went up by " << boost << "!" << endl;
-        boost = rand() % 3;
+        boost = rand() % 3 + mod;
         ncrit += boost;
         if(boost!=0)
             cout << "CRT went up by " << boost << "!" << endl;
-        boost = rand() % 3;
+        if(mask.getID()==7) //SOULS
+        {
+            boost = rand() % 3 + mod;
+            nacc += boost;
+            setACC(nacc);
+            if(boost!=0)
+                cout << "ACC went up by " << boost << "!" << endl;
+        }
+        boost = rand() % 3 + mod;
         ndef += boost;
         if(boost!=0)
             cout << "DEF went up by " << boost << "!" << endl;
@@ -548,12 +560,12 @@ public:
         }
         else
         {
-            boost = rand() % 3;
+            boost = rand() % 3 + mod;
             nddg += boost;
             if(boost!=0)
                 cout << "DDG went up by " << boost << "!" << endl;
         }
-        boost = rand() % 3;
+        boost = rand() % 3 + mod;
         lck += boost;
         if(boost!=0)
             cout << "LCK went up by " << boost << "!" << endl;
@@ -573,7 +585,6 @@ public:
             ddg=eqpAmr.getDdg()+nddg;
         }
 
-        level++;
         exp -= expGoal;
         expGoal += 20;
     }
@@ -581,6 +592,8 @@ public:
     {
         nstr += 5;
         ncrit += 5;
+        if(mask.getID()==7) //SOULS
+            nacc += 5;
         ndef += 5;
         nddg += 5;
 
@@ -608,6 +621,8 @@ public:
         mmp += 2;
         nstr += 2;
         ncrit += 2;
+        if(mask.getID()==7) //SOULS
+            nacc += 2;
         ndef += 2;
         nddg += 2;
         lck += 2;

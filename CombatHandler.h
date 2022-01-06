@@ -341,7 +341,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                             cout << hero.eqpRng.getName() << " activated!" << endl;
                             Sleep(1000);
                             hero.changeHP(dmg/2);
-                            cout << "Recovered " << dmg << " HP!" << endl;
+                            cout << "Recovered " << dmg/2 << " HP!" << endl;
                             Sleep(1000);
                         }
                     }
