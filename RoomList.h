@@ -170,7 +170,7 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     roomDirectory.push_back(R36);
 
     Room R37(37,"A corpse lies in the center of an empty circular room, with its blood soaking into the stone floor.");
-    R37.addFeat(featureDirectory[1]);
+    R37.addFeat(featureDirectory[2]);
     R37.addFeat(featureDirectory[14]);
     R37.addFeat(featureDirectory[rand()%3+42]);
     roomDirectory.push_back(R37);

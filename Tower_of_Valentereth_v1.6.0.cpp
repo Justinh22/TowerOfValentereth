@@ -39,7 +39,7 @@ int actionHandler(string act,bool debug_opt, int gankTracker);  //Done!
 int combatHandler(); //Done!
 int menuHandler(Player &hero,Directory dir); //Done!
 int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom);
-void saveFunc(Player &hero, string filename, int depth);
+void saveFunc(Player &hero, string filename, int depth, vector<bool> minibossStatus);
 bool hiscores(Player &hero, int depth);
 Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &iStatus, bool &dev);
 
@@ -273,7 +273,7 @@ int main()
 
     string name;
     string filename;
-    int saveStats[20];
+    int saveStats[27];
     int depth = 1;
     string save;
     string saveName;
@@ -310,6 +310,13 @@ int main()
         saveStats[17] = -1;
         saveStats[18] = -1;
         saveStats[19] = 0;
+        saveStats[20] = 0;
+        saveStats[21] = 0;
+        saveStats[22] = 0;
+        saveStats[23] = 0;
+        saveStats[24] = 0;
+        saveStats[25] = 0;
+        saveStats[26] = 0;
     }
     else if(intChoice==2)
     {
@@ -329,7 +336,7 @@ int main()
                 {
                     std::stringstream data(save);
                     saveFound = 1;
-                    for(int i=0;i<20;i++)
+                    for(int i=0;i<27;i++)
                         data >> saveStats[i];
                     for(int i=0;i<6;i++)
                     {
@@ -367,7 +374,7 @@ int main()
                 cout << "LCK: " << saveStats[11] << endl;
                 cout << "DEPTH: " << saveStats[12] << endl;
                 cout << "KEYS: " << saveStats[13] << endl;
-                cout << "SCORE: " << saveStats[19] << endl;
+                cout << "SCORE: " << saveStats[26] << endl;
                 if(saveStats[15]>=0)
                 {
                     cout << "MASK: " << dir.maskDirectory[saveStats[15]].getName() << endl << endl;
@@ -409,6 +416,13 @@ int main()
                     saveStats[17] = -1;
                     saveStats[18] = -1;
                     saveStats[19] = 0;
+                    saveStats[20] = 0;
+                    saveStats[21] = 0;
+                    saveStats[22] = 0;
+                    saveStats[23] = 0;
+                    saveStats[24] = 0;
+                    saveStats[25] = 0;
+                    saveStats[26] = 0;
                     good = 1;
                 }
                 else
@@ -436,7 +450,7 @@ int main()
         hero.spellbook = spellSave;
     }
     depth = saveStats[12];
-    score = saveStats[19];
+    score = saveStats[26];
     if((depth/5)+2>11)
         hero.empowered = 1;
     if(saveStats[16]!=-1)
@@ -477,7 +491,7 @@ int main()
 
     Room currentRoom;
     vector<bool> itemStatus{0,0,0,0,0,0};
-    vector<bool> minibossStatus{0,0,0,0,0,0,0};
+    vector<bool> minibossStatus{saveStats[19]>=1,saveStats[20]>=1,saveStats[21]>=1,saveStats[22]>=1,saveStats[23]>=1,saveStats[24]>=1,saveStats[25]>=1};
     int boss = 0;
     bool win = 0;
     bool lvup = 0;
@@ -496,7 +510,35 @@ int main()
         Sleep(1000);
         cout << "Several people from your village have left for the tower, seeking the treasures within, but none have returned." << endl << endl;
         Sleep(1000);
-        cout << "Now, you have gone to the tower, hoping to brave the horrors within to find the treasure and power foretold." << endl << endl;
+        cout << "Now, you have gone to the tower, ";
+        switch(hero.mask.getID())
+        {
+            case 0:
+                cout << "brimming with dangerous power, ";
+                break;
+            case 1:
+                cout << "filled with uncontrollable rage, ";
+                break;
+            case 2:
+                cout << "blind to the trials that await you, ";
+                break;
+            case 3:
+                cout << "magic coursing through your veins, ";
+                break;
+            case 4:
+                cout << "with immovable and unbreakable will, ";
+                break;
+            case 5:
+                cout << "silent like the night, ";
+                break;
+            case 6:
+                cout << "hungry for battle, ";
+                break;
+            case 7:
+                cout << "compelled by the voices within, ";
+                break;
+        }
+        cout << "hoping to brave the horrors within to find the treasure and power foretold." << endl << endl;
         Sleep(1000);
         cout << "Press any key to begin your ascent of the tower." << endl;
         action = getch();
@@ -509,7 +551,7 @@ int main()
     while(end==0)
     {
         if(manSave==0)
-            saveFunc(hero,filename,depth);
+            saveFunc(hero,filename,depth,minibossStatus);
         if(hero.getHP()>hero.getMHP())
             hero.setHP(hero.getMHP());
         if(hero.getMP()>hero.getMMP())
@@ -874,7 +916,7 @@ int main()
                 if(menuval==-1) //Writing Save File
                 {
                     cout << "Quitting..." << endl;
-                    saveFunc(hero,filename,depth);
+                    saveFunc(hero,filename,depth,minibossStatus);
                     end = 1;
                 }
                 else
@@ -898,7 +940,7 @@ int main()
             {
                 if(manSave==0)
                 {
-                    cout << "ToV uses autosave. Would you like to enable manual save? You can re-enable" << endl;
+                    cout << "ToV uses autosave. Would you like to disable autosave? You can re-enable" << endl;
                     cout << "autosave by typing save again or restarting the game. (y/n)" << endl;
                     yn = getch();
                     if(yn=='y')
@@ -1008,7 +1050,7 @@ int main()
         else if(boss==2)
         {
             cout << "CONGRATULATIONS!" << endl;
-            cout << "You have broken the cycle and ascended the Tower of Valentereth!" << endl;
+            cout << "You have broken the cycle and ascended to the top of the Tower of Valentereth!" << endl;
             remove(filename.c_str());
             Sleep(2000);
             if(hiscores(hero,100))
@@ -1188,9 +1230,17 @@ int menuHandler(Player &hero, Directory dir)
                     {
                         if(hero.equipment[intChoice-1]<100)
                         {
-                            hero.equipWpn(dir.weaponDirectory[hero.equipment[intChoice-1]]);
-                            cout << "Equipped " << dir.getItemName(hero.equipment[intChoice-1]);
-                            Sleep(2000);
+                            if(hero.mask.getID()==7) //Souls
+                            {
+                                cout << "The weapon falls through your hand to the ground...";
+                                Sleep(2000);
+                            }
+                            else
+                            {
+                                hero.equipWpn(dir.weaponDirectory[hero.equipment[intChoice-1]]);
+                                cout << "Equipped " << dir.getItemName(hero.equipment[intChoice-1]);
+                                Sleep(2000);
+                            }
                         }
                         else if(hero.equipment[intChoice-1]<200)
                         {
@@ -1844,14 +1894,15 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
     return 0;
 }
 
-void saveFunc(Player &hero,string filename, int depth)
+void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStatus)
 {
     std::ofstream saveFile;
     saveFile.open(filename);
     saveFile << hero.level << " " << hero.exp << " " << hero.gold << " " << hero.getHP() << " " << hero.getMHP() << " " << hero.getMP() << " "
              << hero.getMMP() << " " << hero.getNSTR() << " " << hero.getNCRT() << " " << hero.getNDEF() << " " << hero.getNDDG() << " " << hero.getLCK() << " " << depth
              << " " << hero.keys << " " << hero.growth << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID() << " " << hero.eqpRng.getID()
-             << " " << score;
+             << " " << minibossStatus[0] << " " << minibossStatus[1] << " " << minibossStatus[2] << " " << minibossStatus[3] << " " << minibossStatus[4] << " " << minibossStatus[5]
+             << " " << minibossStatus[6] << " " << score;
     for(int i=0;i<hero.equipment.size();i++)
     {
         saveFile << " " << hero.equipment[i];
