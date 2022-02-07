@@ -603,7 +603,7 @@ int main()
         }
         else //LOAD ROOM
         {
-            cout << "Loading room..." << endl;
+            //cout << "Loading room..." << endl;
             currentRoom.setID(roomData[0]);
             currentRoom.setDesc(dir.roomDirectory[roomData[0]].getDesc());
             for(int i=0;i<saveFList.size();i++)
@@ -702,7 +702,7 @@ int main()
                 currentRoom.store.statDown.push_back(roomData[13]);
                 currentRoom.store.setStatCount(roomData[14]);
             }
-            cout << "Done!" << endl;
+            //cout << "Done!" << endl;
             cout << "Floor " << depth << endl;
             cout << currentRoom.getDesc() << endl;
             for(int i=0;i<currentRoom.getLDescList().size();i++)

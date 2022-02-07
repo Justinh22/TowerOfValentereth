@@ -121,11 +121,17 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     holder = currentRoom.monster.getName() + " | Level " + std::to_string(currentRoom.monster.getLEV()-2) + "\n";
                 else
                     holder = currentRoom.monster.getName() + " | Level " + std::to_string(hero.getLEV()+3) + "\n";
+
+                int monDmg = currentRoom.monster.getSTR() - hero.getDEF();
+                int monHit = currentRoom.monster.getACC() - hero.getDDG();
+                int heroDmg = hero.getSTR() - currentRoom.monster.getDEF();
+                int heroHit = hero.getACC() - currentRoom.monster.getDDG();
+
                 holder += "HP: " + std::to_string(currentRoom.monster.getHP()) + "\n";
-                holder += "Strength: " + std::to_string(currentRoom.monster.getSTR()) + "\n";
-                holder += "Accuracy: " + std::to_string(currentRoom.monster.getACC()) + "\n";
-                holder += "Defense: " + std::to_string(currentRoom.monster.getDEF()) + "\n";
-                holder += "Dodge: " + std::to_string(currentRoom.monster.getDDG());
+                holder += "Strength: " + std::to_string(currentRoom.monster.getSTR()) + " (Enemy DMG: " + std::to_string(monDmg) + ")\n";
+                holder += "Accuracy: " + std::to_string(currentRoom.monster.getACC()) + " (Enemy Hit Rate: " + std::to_string(monHit) + ")\n";
+                holder += "Defense: " + std::to_string(currentRoom.monster.getDEF()) + " (Your DMG: " + std::to_string(heroDmg) + ")\n";
+                holder += "Dodge: " + std::to_string(currentRoom.monster.getDDG()) + " (Your Hit Rate: " + std::to_string(heroHit) + ")\n";
                 if(currentRoom.monster.getID()>=57||currentRoom.monster.getID()==48) //Miniboss
                 {
                     holder += "\nAblity: ";

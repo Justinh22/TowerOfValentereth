@@ -77,6 +77,7 @@ int minibossPicker(vector<bool> &mbStatus)
 void minibossStatGen(int adv, Creature &mon)
 {
     adv--;
+    int mod = (adv-3)/3;
     int hpBuff;
     int strBuff;
     int accBuff;
@@ -85,11 +86,11 @@ void minibossStatGen(int adv, Creature &mon)
 
     if(mon.getID()==57) //Ozkoroth
     {
-        hpBuff = (adv-3)*4;
-        strBuff = (adv-3)*4;
-        accBuff = (adv-3)*3;
-        defBuff = (adv-3)*3;
-        ddgBuff = (adv-3)*2;
+        hpBuff = (adv-3)*(4+mod);
+        strBuff = (adv-3)*(4+mod);
+        accBuff = (adv-3)*(3+mod);
+        defBuff = (adv-3)*(3+mod);
+        ddgBuff = (adv-3)*(2+mod);
 
         mon.setHP(mon.getHP()+hpBuff);
         mon.setSTR(mon.getSTR()+strBuff);
@@ -99,11 +100,11 @@ void minibossStatGen(int adv, Creature &mon)
     }
     else if(mon.getID()==58) // Endrigaia
     {
-        hpBuff = (adv-3)*5;
-        strBuff = (adv-3)*3;
-        accBuff = (adv-3)*4;
-        defBuff = (adv-3)*2;
-        ddgBuff = (adv-3)*2;
+        hpBuff = (adv-3)*(5+mod);
+        strBuff = (adv-3)*(3+mod);
+        accBuff = (adv-3)*(4+mod);
+        defBuff = (adv-3)*(2+mod);
+        ddgBuff = (adv-3)*(2+mod);
 
         mon.setHP(mon.getHP()+hpBuff);
         mon.setSTR(mon.getSTR()+strBuff);
@@ -113,11 +114,11 @@ void minibossStatGen(int adv, Creature &mon)
     }
     else if(mon.getID()==59) //Emeritus
     {
-        hpBuff = (adv-3)*3;
-        strBuff = (adv-3)*5;
-        accBuff = (adv-3)*3;
-        defBuff = (adv-3)*2;
-        ddgBuff = (adv-3)*3;
+        hpBuff = (adv-3)*(3+mod);
+        strBuff = (adv-3)*(5+mod);
+        accBuff = (adv-3)*(3+mod);
+        defBuff = (adv-3)*(2+mod);
+        ddgBuff = (adv-3)*(3+mod);
 
         mon.setHP(mon.getHP()+hpBuff);
         mon.setSTR(mon.getSTR()+strBuff);
@@ -127,11 +128,11 @@ void minibossStatGen(int adv, Creature &mon)
     }
     else if(mon.getID()==60) //Stiran
     {
-        hpBuff = (adv-3)*4;
-        strBuff = (adv-3)*4;
-        accBuff = (adv-3)*2;
-        defBuff = (adv-3)*3;
-        ddgBuff = (adv-3)*3;
+        hpBuff = (adv-3)*(4+mod);
+        strBuff = (adv-3)*(4+mod);
+        accBuff = (adv-3)*(2+mod);
+        defBuff = (adv-3)*(3+mod);
+        ddgBuff = (adv-3)*(3+mod);
 
         mon.setHP(mon.getHP()+hpBuff);
         mon.setSTR(mon.getSTR()+strBuff);
@@ -141,11 +142,11 @@ void minibossStatGen(int adv, Creature &mon)
     }
     else if(mon.getID()==61) //?????
     {
-        hpBuff = (adv-3)*5;
-        strBuff = (adv-3)*3;
-        accBuff = (adv-3)*2;
-        defBuff = (adv-3)*3;
-        ddgBuff = (adv-3)*3;
+        hpBuff = (adv-3)*(5+mod);
+        strBuff = (adv-3)*(3+mod);
+        accBuff = (adv-3)*(2+mod);
+        defBuff = (adv-3)*(3+mod);
+        ddgBuff = (adv-3)*(3+mod);
 
         mon.setHP(mon.getHP()+hpBuff);
         mon.setSTR(mon.getSTR()+strBuff);
@@ -155,11 +156,11 @@ void minibossStatGen(int adv, Creature &mon)
     }
     else if(mon.getID()==62) //Byralt
     {
-        hpBuff = (adv-3)*3;
-        strBuff = (adv-3)*3;
-        accBuff = (adv-3)*4;
-        defBuff = (adv-3)*2;
-        ddgBuff = (adv-3)*4;
+        hpBuff = (adv-3)*(3+mod);
+        strBuff = (adv-3)*(3+mod);
+        accBuff = (adv-3)*(4+mod);
+        defBuff = (adv-3)*(2+mod);
+        ddgBuff = (adv-3)*(4+mod);
 
         mon.setHP(mon.getHP()+hpBuff);
         mon.setSTR(mon.getSTR()+strBuff);
@@ -169,11 +170,11 @@ void minibossStatGen(int adv, Creature &mon)
     }
     else if(mon.getID()==63) //Halliot
     {
-        hpBuff = (adv-3)*4;
-        strBuff = (adv-3)*3;
-        accBuff = (adv-3)*3;
-        defBuff = (adv-3)*4;
-        ddgBuff = (adv-3)*2;
+        hpBuff = (adv-3)*(4+mod);
+        strBuff = (adv-3)*(3+mod);
+        accBuff = (adv-3)*(3+mod);
+        defBuff = (adv-3)*(4+mod);
+        ddgBuff = (adv-3)*(2+mod);
 
         mon.setHP(mon.getHP()+hpBuff);
         mon.setSTR(mon.getSTR()+strBuff);

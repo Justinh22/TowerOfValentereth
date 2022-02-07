@@ -26,7 +26,7 @@ void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStat
 
     //ROOM SAVE
 
-    cout << "Saving room..." << endl;
+    //cout << "Saving room..." << endl;
 
     saveFile << currentRoom.getID() << " ";
 
@@ -137,10 +137,10 @@ void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStat
             int it=0;
             for(it=0;it<currentRoom.store.storeInventory.size();it++)
             {
-                cout << "Saving " << it << ": " << currentRoom.store.storeInventory[it] << endl;
+                //cout << "Saving " << it << ": " << currentRoom.store.storeInventory[it] << endl;
                 saveFile << currentRoom.store.storeInventory[it] << " ";
             }
-            cout << it << endl;
+            //cout << it << endl;
             for(int i=it;i<5;i++)
                 saveFile << -1 << " ";
         }
