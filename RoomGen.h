@@ -438,7 +438,7 @@ Room roomBuilder(int type, vector<int> loot, int cid, Directory dir)
         else if(cid==56)
             id = 90;
         else if(cid<57) //Miniboss
-            id = rand() % (dir.roomDirectory.size()-6);
+            id = rand() % (dir.roomDirectory.size()-9);
         else
             id = cid + 25;
         newRoom = dir.roomDirectory[id];

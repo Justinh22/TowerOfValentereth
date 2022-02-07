@@ -48,13 +48,15 @@ protected:
     string name;
     vector<string> keywords;
     string description;
+    int id;
     int item; //0 = None, 1 = Weapon, 2 = Armor, 3 = Consumable, 4 = Spell
     int luck; //0-3: Probability of items within
 public:
-    Feature(string n,string d,int i,int l)
-    {name=n;description=d;item=i;luck=l;}
+    Feature(string n,string d,int idIn,int i,int l)
+    {name=n;description=d;id=idIn;item=i;luck=l;}
     string getName(){return name;}
     string getDesc(){return description;}
+    int getID(){return id;}
     void addKey(string key){keywords.push_back(key);}
     vector<string> getKeyList(){return keywords;}
     int getItem(){return item;}
@@ -198,18 +200,20 @@ protected:
     bool unlocked;
     int type; //0 = Shop, 1 = Stat Swap
     int statCount;
+public:
     vector<int> statUp;
     vector<int> statDown;
-public:
     Merchant(){level=-1;unlocked=0;type=0;}
     Merchant(int lv,int tp){level = lv;unlocked = 0;type = tp;statCount=0;}
     vector<int> storeInventory;
     vector<int> storeCost;
     int getLevel(){return level;}
+    void setLevel(int l){level=l;}
     bool isUnlocked(){return unlocked;}
     void setUnlocked(bool u){unlocked=u;}
     int getType(){return type;}
     void incStatCount(){statCount++;}
+    void setStatCount(int s){statCount=s;}
     int getStatCount(){return statCount;}
     vector<int> getStatUp(){return statUp;}
     vector<int> getStatDown(){return statDown;}
@@ -286,10 +290,10 @@ class Room
 protected:
     int id;
     string description;
+public:
     vector<Feature> flist;
     vector<int> ilist;
     vector<string> blist;
-public:
     Creature monster;
     string doorDesc;
     vector<string> lootDesc;
@@ -308,6 +312,7 @@ public:
     void setLDescList(vector<string> list){lootDesc=list;}
     void addLDesc(string loot){lootDesc.push_back(loot);}
     string getDesc(){return description;}
+    void setDesc(string d){description=d;}
     vector<Feature> getFList(){return flist;}
     void setFList(vector<Feature> fl){flist=fl;}
     void addFeat(Feature feat){flist.push_back(feat);}
@@ -519,7 +524,7 @@ public:
     void levelUp()
     {
         level++;
-        int mod;
+        int mod=0;
         if(mask.getID()==7)
             mod = level/7;
         int boost;

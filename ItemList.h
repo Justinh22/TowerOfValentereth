@@ -129,7 +129,7 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     //11: Unique
     Weapon Ozkoroths_Fang("Ozkoroth's Fang","Fang of a ravenous beast, this dagger cuts through armor. Deals damage equal to 25% of the target's max HP.",11,57,0,95,20,0);
     weaponDirectory.push_back(Ozkoroths_Fang);
-    Weapon Essence_Siphon("Essence Siphon","Sceptre of an archmage. Its power is equal to your STR. Whenever damage is dealt with this weapon, the wielder gains 5 MP.",11,58,0,80,10,25);
+    Weapon Essence_Siphon("Essence Siphon","Sceptre of an archmage. Whenever damage is dealt with this weapon, the wielder gains 5 MP.",11,58,0,80,10,25);
     weaponDirectory.push_back(Essence_Siphon);
 
     //cout << "Weapon Directory Initialized!" << endl;

@@ -109,7 +109,6 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         dmg = (ceil(static_cast<float>(monster.getHP())*.25))*2;
                     if(hero.eqpWpn.getID()==58) //Energy Siphon
                     {
-                        dmg = ((hero.getSTR()*2)+atkBuff - monster.getDEF())*2;
                         hero.changeMP(5);
                     }
                     if(hero.mask.getID()==0||parry) //Glass
@@ -160,7 +159,6 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         dmg = ceil(static_cast<float>(monster.getHP())*.25);
                     if(hero.eqpWpn.getID()==58) //Energy Siphon
                     {
-                        dmg = (hero.getSTR()*2)+atkBuff - monster.getDEF();
                         hero.changeMP(5);
                     }
                     if(hero.mask.getID()==0||parry) //Glass

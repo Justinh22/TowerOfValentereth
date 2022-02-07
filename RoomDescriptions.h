@@ -1,6 +1,8 @@
-string lootDesc(int type)
+string lootDesc(int type, int ch=-1)
 {
     int choice = rand() % 5;
+    if(ch!=-1)
+        choice = ch;
     if(type==0) //Crates
     {
         switch(choice)
@@ -67,11 +69,13 @@ string lootDesc(int type)
     return "Error!";
 }
 
-string doorDesc(int type)
+string doorDesc(int type, int ch=-1)
 {
     if(type==0)
     {
         int choice = rand() % 10;
+        if(ch!=-1)
+            choice = ch;
         switch(choice)
         {
             case 0:
@@ -109,10 +113,12 @@ string doorDesc(int type)
     return "Error!";
 }
 
-string creatureDesc(int cid, vector<Creature> creatureDirectory, Player &hero)
+string creatureDesc(int cid, vector<Creature> creatureDirectory, Player &hero, int ch=-1)
 {
     string name;
     int choice = rand() % 5;
+    if(ch!=-1)
+        choice = ch;
     if(hero.mask.getID()==2) //Darkness
         name = "Silhouette";
     else
@@ -177,9 +183,11 @@ string creatureDesc(int cid, vector<Creature> creatureDirectory, Player &hero)
     return "Error!";
 }
 
-string ascensionDesc()
+string ascensionDesc(int ch=-1)
 {
     int choice = rand() % 5;
+    if(ch!=-1)
+        choice = ch;
     switch(choice)
     {
         case 0:

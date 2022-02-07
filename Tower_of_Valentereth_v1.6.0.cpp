@@ -34,13 +34,12 @@ int score = 0;
 #include "RoomLogic.h"
 #include "CombatHandler.h"
 #include "GoldPicker.h"
+#include "SaveFunctions.h"
 
 int actionHandler(string act,bool debug_opt, int gankTracker);  //Done!
 int combatHandler(); //Done!
 int menuHandler(Player &hero,Directory dir); //Done!
 int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom);
-void saveFunc(Player &hero, string filename, int depth, vector<bool> minibossStatus);
-bool hiscores(Player &hero, int depth);
 Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &iStatus, bool &dev);
 
 void clear()
@@ -274,6 +273,11 @@ int main()
     string name;
     string filename;
     int saveStats[28];
+    int roomData[15];
+    vector<int> saveFList;
+    vector<int> saveIList;
+    vector<int> saveBList;
+    vector<bool> itemStatus{0,0,0,0,0,0};
     int depth = 1;
     string save;
     string saveName;
@@ -333,33 +337,72 @@ int main()
             if(savedata)
             {
                 cout << "Save data found!" << endl;
+                int line=0;
                 while(std::getline(savedata,save))
                 {
                     std::stringstream data(save);
                     saveFound = 1;
-                    for(int i=0;i<28;i++)
-                        data >> saveStats[i];
-                    for(int i=0;i<6;i++)
+                    if(line==0)
                     {
-                        data >> saveCheck;
-                        if(saveCheck==-1)
-                            break;
-                        equipSave.push_back(saveCheck);
+                        for(int i=0;i<28;i++)
+                            data >> saveStats[i];
+                        for(int i=0;i<6;i++)
+                        {
+                            data >> saveCheck;
+                            if(saveCheck==-1)
+                                break;
+                            equipSave.push_back(saveCheck);
+                        }
+                        for(int i=0;i<6;i++)
+                        {
+                            data >> saveCheck;
+                            if(saveCheck==-1)
+                                break;
+                            itemSave.push_back(saveCheck);
+                        }
+                        while(1==1)
+                        {
+                            data >> saveCheck;
+                            if(saveCheck==-1)
+                                break;
+                            spellSave.push_back(saveCheck);
+                        }
                     }
-                    for(int i=0;i<6;i++)
+                    else if(line==1)
                     {
-                        data >> saveCheck;
-                        if(saveCheck==-1)
+                        data >> roomData[0];
+                        if(roomData[0]==-1)
                             break;
-                        itemSave.push_back(saveCheck);
+                        while(1==1)
+                        {
+                            data >> saveCheck;
+                            if(saveCheck==-1)
+                                break;
+                            saveFList.push_back(saveCheck);
+                        }
+                        while(1==1)
+                        {
+                            data >> saveCheck;
+                            if(saveCheck==-1)
+                                break;
+                            saveIList.push_back(saveCheck);
+                        }
+                        while(1==1)
+                        {
+                            data >> saveCheck;
+                            if(saveCheck==-1)
+                                break;
+                            saveBList.push_back(saveCheck);
+                        }
+                        for(int i=0;i<6;i++)
+                        {
+                            data >> saveCheck;
+                            itemStatus[i] = saveCheck>0;
+                        }
+                        for(int i=1;i<15;i++)
+                            data >> roomData[i];
                     }
-                    while(1==1)
-                    {
-                        data >> saveCheck;
-                        if(saveCheck==-1)
-                            break;
-                        spellSave.push_back(saveCheck);
-                    }
+                    line++;
                 }
                 cout << "Name: " << name << endl;
                 cout << "Level: " << saveStats[0] << endl;
@@ -376,7 +419,7 @@ int main()
                 cout << "DEPTH: " << saveStats[13] << endl;
                 cout << "KEYS: " << saveStats[14] << endl;
                 cout << "SCORE: " << saveStats[27] << endl;
-                if(saveStats[15]>=0)
+                if(saveStats[16]>=0)
                 {
                     cout << "MASK: " << dir.maskDirectory[saveStats[16]].getName() << endl << endl;
                 }
@@ -494,7 +537,6 @@ int main()
     string text;
 
     Room currentRoom;
-    vector<bool> itemStatus{0,0,0,0,0,0};
     vector<bool> minibossStatus{saveStats[20]>=1,saveStats[21]>=1,saveStats[22]>=1,saveStats[23]>=1,saveStats[24]>=1,saveStats[25]>=1,saveStats[26]>=1};
     int boss = 0;
     bool win = 0;
@@ -504,6 +546,7 @@ int main()
     bool dev=0;
     bool itemDrop=0;
     bool gankTracker=1;
+    int boxType=-1;
 
     if(!saveFound)
     {
@@ -547,15 +590,141 @@ int main()
         cout << "Press any key to begin your ascent of the tower." << endl;
         action = getch();
         std::system("cls");
+        cout << "Floor " << depth << endl << endl;
+        currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
     }
-
-    cout << "Floor " << depth << endl << endl;
-    currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
+    else
+    {
+        if(roomData[0]==-1)
+        {
+            std::system("cls");
+            cout << "Floor " << depth << endl << endl;
+            currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
+        }
+        else //LOAD ROOM
+        {
+            cout << "Loading room..." << endl;
+            currentRoom.setID(roomData[0]);
+            currentRoom.setDesc(dir.roomDirectory[roomData[0]].getDesc());
+            for(int i=0;i<saveFList.size();i++)
+                currentRoom.flist.push_back(dir.featureDirectory[saveFList[i]]);
+            for(int i=0;i<saveIList.size();i++)
+                currentRoom.ilist.push_back(saveIList[i]);
+            for(int i=0;i<saveBList.size();i++)
+            {
+                if(saveBList[i]<-1)
+                {
+                    boxType = -(saveBList[i]+2);
+                    switch(boxType)
+                    {
+                        case 0:
+                            currentRoom.blist.push_back("crates");
+                            break;
+                        case 1:
+                            currentRoom.blist.push_back("barrels");
+                            break;
+                        case 2:
+                            currentRoom.blist.push_back("chest");
+                            break;
+                    }
+                }
+                else
+                    currentRoom.blist.push_back(dir.featureDirectory[saveBList[i]].getName());
+            }
+            //itemStatus parsed directly into
+            currentRoom.monster = dir.creatureDirectory[roomData[1]];
+            currentRoom.doorDesc = doorDesc(0,roomData[2]);
+            vector<string> lDescSave = {lootDesc(boxType,roomData[3])};
+            currentRoom.lootDesc = lDescSave;
+            if(roomData[4]==-1)
+                currentRoom.creatDesc = "";
+            else
+                currentRoom.creatDesc = creatureDesc(roomData[1],dir.creatureDirectory,hero,roomData[4]);
+            if(roomData[5]==-1)
+                currentRoom.ascDesc = "";
+            else
+                currentRoom.ascDesc = ascensionDesc(roomData[5]);
+            currentRoom.contents = roomData[6];
+            pass = roomData[7];
+            if(roomData[8]>0) //SHOP
+            {
+                currentRoom.store.setLevel(roomData[8]);
+                currentRoom.store.setUnlocked(roomData[9]);
+                int itemCost;
+                for(int i=10;i<15;i++)
+                {
+                    if(roomData[i]==-1)
+                        break;
+                    currentRoom.store.storeInventory.push_back(roomData[i]);
+                    switch(dir.getItemRarity(roomData[i]))
+                    {
+                        case 1:
+                            itemCost = 8;
+                            break;
+                        case 2:
+                            itemCost = 15;
+                            break;
+                        case 3:
+                            itemCost = 25;
+                            break;
+                        case 4:
+                            itemCost = 40;
+                            break;
+                        case 5:
+                            itemCost = 60;
+                            break;
+                        case 6:
+                            itemCost = 85;
+                            break;
+                        case 7:
+                            itemCost = 115;
+                            break;
+                        case 8:
+                            itemCost = 150;
+                            break;
+                        case 9:
+                            itemCost = 190;
+                            break;
+                        case 10:
+                            itemCost = 250;
+                            break;
+                    }
+                    currentRoom.store.storeCost.push_back(itemCost);
+                }
+            }
+            else if(roomData[8]==0) //DIVINING
+            {
+                currentRoom.store.setLevel(roomData[8]);
+                currentRoom.store.setUnlocked(roomData[9]);
+                currentRoom.store.statUp.push_back(roomData[10]);
+                currentRoom.store.statUp.push_back(roomData[11]);
+                currentRoom.store.statDown.push_back(roomData[12]);
+                currentRoom.store.statDown.push_back(roomData[13]);
+                currentRoom.store.setStatCount(roomData[14]);
+            }
+            cout << "Done!" << endl;
+            cout << "Floor " << depth << endl;
+            cout << currentRoom.getDesc() << endl;
+            for(int i=0;i<currentRoom.getLDescList().size();i++)
+                cout << currentRoom.getLDescList()[i] << endl;
+            if(hero.empowered==1)
+                cout << currentRoom.ascDesc << endl;
+            cout << currentRoom.getDrDesc() << endl;
+            if(currentRoom.store.getLevel()!=-1)
+                if(currentRoom.store.isUnlocked()==0)
+                    cout << "There is a locked door at the side of the room. The sign above it says it is a shop." << endl;
+                else
+                    cout << "There is a shop on the side wall of the room." << endl;
+            cout << currentRoom.creatDesc << endl;
+        }
+    }
 
     while(end==0)
     {
+        //for(int i=0;i<15;i++)
+        //    cout << "ROOMDATA[" << i << "]: " << roomData[i] << endl;
         if(manSave==0)
-            saveFunc(hero,filename,depth,minibossStatus);
+            saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
         if(hero.getHP()>hero.getMHP())
             hero.setHP(hero.getMHP());
         if(hero.getMP()>hero.getMMP())
@@ -920,7 +1089,7 @@ int main()
                 if(menuval==-1) //Writing Save File
                 {
                     cout << "Quitting..." << endl;
-                    saveFunc(hero,filename,depth,minibossStatus);
+                    saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
                     end = 1;
                 }
                 else
@@ -1898,92 +2067,6 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
     return 0;
 }
 
-void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStatus)
-{
-    std::ofstream saveFile;
-    saveFile.open(filename);
-    saveFile << hero.level << " " << hero.exp << " " << hero.gold << " " << hero.getHP() << " " << hero.getMHP() << " " << hero.getMP() << " " << hero.getMMP()
-             << " " << hero.getNSTR() << " " << hero.getNCRT() << " " << hero.getNACC() << " " << hero.getNDEF() << " " << hero.getNDDG() << " " << hero.getLCK() << " " << depth
-             << " " << hero.keys << " " << hero.growth << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID() << " " << hero.eqpRng.getID()
-             << " " << minibossStatus[0] << " " << minibossStatus[1] << " " << minibossStatus[2] << " " << minibossStatus[3] << " " << minibossStatus[4] << " " << minibossStatus[5]
-             << " " << minibossStatus[6] << " " << score;
-    for(int i=0;i<hero.equipment.size();i++)
-    {
-        saveFile << " " << hero.equipment[i];
-    }
-    if(hero.equipment.size()!=6)
-        saveFile << " " << -1;
-    for(int i=0;i<hero.inventory.size();i++)
-    {
-        saveFile << " " << hero.inventory[i];
-    }
-    if(hero.inventory.size()!=6)
-        saveFile << " " << -1;
-    for(int i=0;i<hero.spellbook.size();i++)
-        saveFile << " " << hero.spellbook[i];
-    saveFile << " " << -1;
-    ach.writeAchievements();
-    saveFile.close();
-}
-
-bool hiscores(Player &hero, int depth)
-{
-    std::ifstream readFile("HighScores.txt");
-    string data;
-    string nameArr[10];
-    int scoreArr[10];
-    int depthArr[10];
-    int i = 0;
-    int flag=-1;
-    string nameHold;
-    int scoreHold;
-    int depthHold;
-
-    while(std::getline(readFile,data))
-    {
-        std::stringstream line(data);
-        line >> nameArr[i] >> scoreArr[i] >> depthArr[i];
-        i++;
-        if(i>=10)
-            break;
-    }
-
-    for(i=9;i>=0;i--) //Determining if the score is on the leaderboard, and its position
-        if(score>=scoreArr[i])
-            flag = i;
-    if(flag==-1)
-        return 0;
-
-    for(i=9;i>=0;i--) //Inserting it into the leaderboard
-        if(i>flag)
-            scoreArr[i] = scoreArr[i-1];
-        else if(i==flag)
-            scoreArr[i] = score;
-
-    for(i=9;i>=0;i--) //Inserting name into the leaderboard
-        if(i>flag)
-            nameArr[i] = nameArr[i-1];
-        else if(i==flag)
-            nameArr[i] = hero.getName();
-
-    for(i=9;i>=0;i--) //Inserting name into the leaderboard
-        if(i>flag)
-            depthArr[i] = depthArr[i-1];
-        else if(i==flag)
-            depthArr[i] = depth;
-
-    readFile.close();
-
-    std::ofstream writeFile("HighScores.txt");
-    for(i=0;i<10;i++)
-    {
-        data = nameArr[i] + " " + std::to_string(scoreArr[i]) + " " + std::to_string(depthArr[i]);
-        writeFile << data << endl;
-    }
-    writeFile.close();
-    return 1;
-}
-
 Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &iStatus, bool &dev)
 {
     score += 100;
@@ -1995,10 +2078,6 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
             adv++;
     }
     roomLogic(diff,rew,karma,adv,hero);
-    if(diff==0)
-        pass = 1;
-    else
-        pass = 0;
     std::system("cls");
     cout << "Floor " << depth << endl;
     if(depth==55&&win==0)
@@ -2007,6 +2086,12 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
         diff = 6;
     else if(depth>=80)
         diff = 7;
+
+    if(diff==0)
+        pass = 1;
+    else
+        pass = 0;
+
     if(dev==1)
     {
         dev = 0;
@@ -2029,9 +2114,9 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
         currentRoom.monster.setDEF(currentRoom.monster.getDEF()+egDefBuff);
         currentRoom.monster.setDDG(currentRoom.monster.getDDG()+egDdgBuff);
     }
-    if(diff==5&&adv==10&&win==0)
+    if(currentRoom.monster.getName()=="Valentereth, the Tyrant"&&win==0)
         boss = 1;
-    if(diff==7)
+    if(currentRoom.monster.getName()=="Termineth, the Watcher")
         boss = 2;
     for(int i=0;i<iStatus.size();i++)
         iStatus[i] = 0;

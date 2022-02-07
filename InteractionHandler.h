@@ -102,7 +102,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
         }
         else if(target==lowername||target=="enemy"||target=="monster"||next==1)
         {
-            if(currentRoom.monster.level==-1)
+            if(currentRoom.monster.level==-1||pass==1)
                 return "No enemy present.";
             if(hero.mask.getID()==2) //Darkness
             {
@@ -500,6 +500,8 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
     else if(action==3) //ATTACK
     {
         //cout << "Command was 'ATTACK'" << endl;
+        if(pass>0)
+            return "Enemy has already been defeated.";
         if(hero.mask.getID()==2) //Darkness
             holder = "Silhouette";
         else
