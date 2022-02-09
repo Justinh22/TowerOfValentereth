@@ -109,7 +109,7 @@ void achievementMenu()
     cout << "|-       (";if(ach.complete[0]) cout << "X"; else cout << " "; cout << ") Connoisseur (10pts):                    Eat 20 loaves of bread                                       -|" << endl;
     cout << "|-       (";if(ach.complete[1]) cout << "X"; else cout << " "; cout << ") Alchemist (10pts):                      Drink 50 potions                                             -|" << endl;
     cout << "|-       (";if(ach.complete[2]) cout << "X"; else cout << " "; cout << ") Expert (10pts):                         Defeat 50 enemies                                            -|" << endl;
-    cout << "|-       (";if(ach.complete[3]) cout << "X"; else cout << " "; cout << ") ...and then you wake up (10pts):        Die 10 times                                                 -|" << endl;
+    cout << "|-       (";if(ach.complete[3]) cout << "X"; else cout << " "; cout << ") Deja Vu (10pts):                        Die 10 times                                                 -|" << endl;
     cout << "|-       (";if(ach.complete[4]) cout << "X"; else cout << " "; cout << ") Rise and Shine, Campers! (20pts):       Die 25 times                                                 -|" << endl;
     cout << "|-       (";if(ach.complete[5]) cout << "X"; else cout << " "; cout << ") Powerhouse (20pts):                     Deal 50 damage in one strike                                 -|" << endl;
     cout << "|-       (";if(ach.complete[6]) cout << "X"; else cout << " "; cout << ") The Tyrant (30pts):                     Defeat Valentereth                                           -|" << endl;
@@ -147,11 +147,11 @@ void achievementMenu()
     if(!ach.complete[32])
         cout << "|-       ( ) Spectrum Triumph (75pts)                                                                             -|" << endl;
     else
-        cout << "|-       (X) Spectrum Triumph (75pts): Defeat Valentereth once with each mask                                     -|" << endl;
+        cout << "|-       (X) Spectrum Triumph (75pts): Defeat Valentereth with each mask                                          -|" << endl;
     if(!ach.complete[33])
-        cout << "|-       ( ) True Heir (65pts)                                                                                    -|" << endl;
+        cout << "|-       ( ) Worthy Heir (65pts)                                                                                  -|" << endl;
     else
-        cout << "|-       (X) True Heir (65pts): Defeat Valentereth in one strike                                                  -|" << endl;
+        cout << "|-       (X) Worthy Heir (65pts): Defeat Valentereth in one strike                                                -|" << endl;
     if(!ach.complete[34])
         cout << "|-       ( ) The Watcher (50pts)                                                                                  -|" << endl;
     else

@@ -416,7 +416,7 @@ int main()
                 cout << "DEF: " << saveStats[10] << endl;
                 cout << "DDG: " << saveStats[11] << endl;
                 cout << "LCK: " << saveStats[12] << endl;
-                cout << "DEPTH: " << saveStats[13] << endl;
+                cout << "ROOM: " << saveStats[13] << endl;
                 cout << "KEYS: " << saveStats[14] << endl;
                 cout << "SCORE: " << saveStats[27] << endl;
                 if(saveStats[16]>=0)
@@ -590,7 +590,7 @@ int main()
         cout << "Press any key to begin your ascent of the tower." << endl;
         action = getch();
         std::system("cls");
-        cout << "Floor " << depth << endl << endl;
+        cout << "Room " << depth << endl << endl;
         currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
     }
     else
@@ -598,7 +598,7 @@ int main()
         if(roomData[0]==-1)
         {
             std::system("cls");
-            cout << "Floor " << depth << endl << endl;
+            cout << "Room " << depth << endl << endl;
             currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
         }
         else //LOAD ROOM
@@ -703,7 +703,7 @@ int main()
                 currentRoom.store.setStatCount(roomData[14]);
             }
             //cout << "Done!" << endl;
-            cout << "Floor " << depth << endl;
+            cout << "Room " << depth << endl;
             cout << currentRoom.getDesc() << endl;
             for(int i=0;i<currentRoom.getLDescList().size();i++)
                 cout << currentRoom.getLDescList()[i] << endl;
@@ -1214,9 +1214,9 @@ int main()
         if(pass==2)
         {
             cout << "GAME OVER!" << endl;
-            cout << "You conquered the Tower of Valentereth after " << depth << " floors!" << endl;
+            cout << "You conquered the Tower of Valentereth after " << depth << " rooms!" << endl;
             remove(filename.c_str());
-            ach.WakeUp++;
+            ach.DejaVu++;
             ach.RiseAndShine++;
             Sleep(2000);
             if(hiscores(hero,depth))
@@ -1228,7 +1228,7 @@ int main()
         else if(boss==2)
         {
             cout << "CONGRATULATIONS!" << endl;
-            cout << "You have broken the cycle and ascended to the top of the Tower of Valentereth!" << endl;
+            cout << "You have broken the curse and ascended to the top of the Tower of Valentereth!" << endl;
             remove(filename.c_str());
             Sleep(2000);
             if(hiscores(hero,100))
@@ -1242,10 +1242,10 @@ int main()
     {
         clear();
         remove(filename.c_str());
-        ach.WakeUp++;
+        ach.DejaVu++;
         ach.RiseAndShine++;
         cout << "GAME OVER!" << endl;
-        cout << "You made it to floor " << depth << "!" << endl;
+        cout << "You made it to room " << depth << "!" << endl;
         Sleep(2000);
         if(hiscores(hero,depth))
         {
@@ -2084,7 +2084,7 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
     }
     roomLogic(diff,rew,karma,adv,hero);
     std::system("cls");
-    cout << "Floor " << depth << endl;
+    cout << "Room " << depth << endl;
     if(depth==55&&win==0)
         diff = 5;
     else if(depth>55&&depth<80)

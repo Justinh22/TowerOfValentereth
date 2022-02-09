@@ -22,8 +22,8 @@ public:
         complete.push_back(Alchemist>=50);
         Expert = achVals[2];
         complete.push_back(Expert>=50);
-        WakeUp = achVals[3];
-        complete.push_back(WakeUp>=10);
+        DejaVu = achVals[3];
+        complete.push_back(DejaVu>=10);
         RiseAndShine = achVals[4];
         complete.push_back(RiseAndShine>=25);
         Powerhouse = achVals[5];
@@ -94,7 +94,7 @@ public:
         ach << Connoisseur << " Connoisseur\n";
         ach << Alchemist << " Alchemist\n";
         ach << Expert << " Expert\n";
-        ach << WakeUp << " WakeUp\n";
+        ach << DejaVu << " DejaVu\n";
         ach << RiseAndShine << " RiseAndShine\n";
         ach << Powerhouse << " Powerhouse\n";
         ach << Tyrant << " Tyrant\n";
@@ -208,7 +208,7 @@ public:
     int Connoisseur;
     int Alchemist;
     int Expert;
-    int WakeUp;
+    int DejaVu;
     int RiseAndShine;
     int Powerhouse;
     int Tyrant;
