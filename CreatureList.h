@@ -73,62 +73,62 @@ vector<Creature> initCDir(vector<Creature> creatureDirectory)
     Creature Basilisk("Basilisk",9,31,40,32,75,12,5);
     creatureDirectory.push_back(Basilisk);
     //10
-    Creature Stone_Golem("Stone Golem",10,32,56,28,80,14,0);
+    Creature Stone_Golem("Stone Golem",10,32,56,30,80,16,0);
     creatureDirectory.push_back(Stone_Golem);
-    Creature Demon("Demon",10,33,40,35,90,7,15);
+    Creature Demon("Demon",10,33,40,37,90,9,15);
     creatureDirectory.push_back(Demon);
-    Creature Dark_Mage("Dark Mage",10,34,32,37,85,5,15);
+    Creature Dark_Mage("Dark Mage",10,34,32,40,85,7,15);
     creatureDirectory.push_back(Dark_Mage);
-    Creature Cyclops("Cyclops",10,35,50,34,85,11,0);
+    Creature Cyclops("Cyclops",10,35,50,36,85,14,0);
     creatureDirectory.push_back(Cyclops);
     //11
-    Creature Vampire("Vampire",11,36,44,34,95,9,15);
+    Creature Vampire("Vampire",11,36,44,38,95,11,15);
     creatureDirectory.push_back(Vampire);
-    Creature Phantom_Gladiator("Phantom Gladiator",11,37,60,32,100,10,0);
+    Creature Phantom_Gladiator("Phantom Gladiator",11,37,60,35,100,12,0);
     creatureDirectory.push_back(Phantom_Gladiator);
-    Creature Gorgon("Gorgon",11,38,74,30,85,12,0);
+    Creature Gorgon("Gorgon",11,38,74,33,85,14,0);
     creatureDirectory.push_back(Gorgon);
     //12
-    Creature Iron_Golem("Iron Golem",12,39,80,30,85,24,0);
+    Creature Iron_Golem("Iron Golem",12,39,80,36,90,27,0);
     creatureDirectory.push_back(Iron_Golem);
-    Creature Demon_Lord("Demon Lord",12,40,68,40,105,15,15);
+    Creature Demon_Lord("Demon Lord",12,40,68,43,115,17,15);
     creatureDirectory.push_back(Demon_Lord);
-    Creature Behemoth("Behemoth",12,41,76,36,90,18,10);
+    Creature Behemoth("Behemoth",12,41,76,40,100,20,10);
     creatureDirectory.push_back(Behemoth);
     //13
-    Creature Storm_Giant("Storm Giant",13,42,86,44,90,16,15);
+    Creature Storm_Giant("Storm Giant",13,42,86,48,105,20,15);
     creatureDirectory.push_back(Storm_Giant);
-    Creature Fallen_Angel("Fallen Angel",13,43,68,46,110,12,15);
+    Creature Fallen_Angel("Fallen Angel",13,43,68,50,120,18,15);
     creatureDirectory.push_back(Fallen_Angel);
-    Creature Pheonix("Pheonix",13,44,66,44,100,13,25);
+    Creature Pheonix("Pheonix",13,44,66,47,115,18,25);
     creatureDirectory.push_back(Pheonix);
     //14
-    Creature Valentium_Golem("Valentium Golem",14,45,96,34,90,30,0);
+    Creature Valentium_Golem("Valentium Golem",14,45,96,40,110,34,0);
     creatureDirectory.push_back(Valentium_Golem);
-    Creature Red_Dragon("Red Dragon",14,46,80,50,100,20,15);
+    Creature Red_Dragon("Red Dragon",14,46,80,56,125,26,15);
     creatureDirectory.push_back(Red_Dragon);
-    Creature Duskwalker("Duskwalker",14,47,64,52,100,14,35);
+    Creature Duskwalker("Duskwalker",14,47,64,58,120,22,35);
     creatureDirectory.push_back(Duskwalker);
     //15
-    Creature Valentereth("Valentereth, the Tyrant",15,48,100,60,110,26,15); //48
+    Creature Valentereth("Valentereth, the Tyrant",15,48,100,64,150,32,15); //48
     creatureDirectory.push_back(Valentereth);
     //16
-    Creature Valentium_Titan("Valentium Titan",16,49,104,38,90,32,0);
+    Creature Valentium_Titan("Valentium Titan",16,49,112,44,120,38,0);
     creatureDirectory.push_back(Valentium_Titan);
-    Creature Gold_Dragon("Gold Dragon",16,50,86,56,105,24,15);
+    Creature Gold_Dragon("Gold Dragon",16,50,86,60,135,30,15);
     creatureDirectory.push_back(Gold_Dragon);
-    Creature Silver_Dragon("Silver Dragon",16,51,86,52,120,18,20);
+    Creature Silver_Dragon("Silver Dragon",16,51,86,56,150,26,20);
     creatureDirectory.push_back(Silver_Dragon);
-    Creature Demon_King("Demon King",16,52,86,46,110,19,20);
+    Creature Demon_King("Demon King",16,52,86,58,130,28,25);
     creatureDirectory.push_back(Demon_King);
-    Creature Elemental_Titan("Elemental Titan",16,53,80,50,100,20,15);
+    Creature Elemental_Titan("Elemental Titan",16,53,80,46,120,34,15);
     creatureDirectory.push_back(Elemental_Titan);
-    Creature Hero("Hero",16,54,90,54,100,26,20);
+    Creature Hero("Hero",16,54,90,58,140,30,20);
     creatureDirectory.push_back(Hero);
-    Creature Hydra("Hydra",16,55,90,50,100,30,10);
+    Creature Hydra("Hydra",16,55,96,54,125,32,10);
     creatureDirectory.push_back(Hydra);
     //17
-    Creature Termineth("Termineth, the Watcher",17,56,200,80,145,50,35); //56
+    Creature Termineth("Termineth, the Watcher",17,56,200,80,180,56,35); //56
     creatureDirectory.push_back(Termineth);
 
     //Minibosses

@@ -127,7 +127,7 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     weaponDirectory.push_back(Chaotrix);
 
     //11: Unique
-    Weapon Ozkoroths_Fang("Ozkoroth's Fang","Fang of a ravenous beast, this dagger cuts through armor. Deals damage equal to 25% of the target's max HP.",11,57,0,95,20,0);
+    Weapon Ozkoroths_Fang("Ozkoroth's Fang","Fang of a ravenous beast, this dagger cuts through armor. Deals damage equal to 35% of the target's max HP.",11,57,0,95,20,0);
     weaponDirectory.push_back(Ozkoroths_Fang);
     Weapon Essence_Siphon("Essence Siphon","Sceptre of an archmage. Whenever damage is dealt with this weapon, the wielder gains 5 MP.",11,58,0,80,10,25);
     weaponDirectory.push_back(Essence_Siphon);
@@ -360,7 +360,7 @@ vector<Ring> initRGDir(vector<Ring> ringDirectory)
     ringDirectory.push_back(Fury);
     Ring Mana_Regeneration("Ring of Mana Regeneration","A ring capable of regenerating a small amount of the wearer's magical ability over time.",2,420,0,0,1);
     ringDirectory.push_back(Mana_Regeneration);
-    Ring Blitzing("Ring of Blitzing","A ring that grants the wearer a slight chance of taking a second turn in combat before the enemy can take one.",2,421,10,0,0);
+    Ring Blitzing("Ring of Blitzing","A ring that grants the wearer a slight chance of attacking a second time in combat before the enemy can.",2,421,10,0,0);
     ringDirectory.push_back(Blitzing);
 
     Ring Major_Regeneration("Ring of Major Regeneration","A ring capable of regenerating a large amount of the wearer's vitality over time.",3,422,0,6,0);
@@ -385,7 +385,7 @@ vector<Ring> initRGDir(vector<Ring> ringDirectory)
     ringDirectory.push_back(Major_Fury);
     Ring Major_Mana_Regeneration("Ring of Major Mana Regeneration","A ring capable of regenerating a small amount of the wearer's magical ability over time.",3,432,0,0,2);
     ringDirectory.push_back(Major_Mana_Regeneration);
-    Ring Major_Blitzing("Ring of Major Blitzing","A ring that grants the wearer a chance of taking a second turn in combat before the enemy can take one.",3,433,15,0,0);
+    Ring Major_Blitzing("Ring of Major Blitzing","A ring that grants the wearer a chance of attacking a second time in combat before the enemy can.",3,433,15,0,0);
     ringDirectory.push_back(Major_Blitzing);
     Ring Miracles("Ring of Miracles","A ring that will save the wearer from a killing blow once per combat, leaving them with 1 HP.",3,434,0,0,0);
     ringDirectory.push_back(Miracles);

@@ -28,6 +28,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
     int manacost;
     bool healFlag=0;
     bool halliotHeal=0;
+    bool blitz=0;
     vector<Buff> buffCounter;
 
     if(hero.mask.getID()==2) //Darkness
@@ -53,176 +54,191 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         action = getch();
         if(action=="j"||hero.mask.getID()==6)
         {
-            if(hero.mask.getID()==6)
-                cout << "You lunge at the " << monName << " ferociously!" << endl;
-            else if(parry==0)
-                cout << "You attack the " << monName << "!" << endl;
-            else
-                cout << "You strike at the " << monName << "'s weak point!" << endl;
-            Sleep(1000);
-            hit = ((rand() % 100) + (rand() % 100) + 2) / 2;
-            //cout << hit+monster.getDDG() << ", " << hero.getACC()+accBuff << endl;
-            if(hero.eqpRng.getID()==405||hero.eqpRng.getID()==415||hero.eqpRng.getID()==427) //SIGHT
+            blitz = 0;
+            do
             {
-                if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
-                {
-                    cout << hero.eqpRng.getName() << " activated!" << endl;
-                    hit = -100;
-                    Sleep(1000);
-                }
-            }
-            if(hit+monster.getDDG()<=hero.getACC()+accBuff)
-            {
-                if(hero.eqpRng.getID()==409||hero.eqpRng.getID()==419||hero.eqpRng.getID()==431) //FURY
-                {
-                    cout << hero.eqpRng.getName() << " activated!" << endl;
-                    switch(hero.eqpRng.getID())
-                    {
-                        case 431:
-                            furyDmg += 3;
-                            break;
-                        case 419:
-                            furyDmg += 2;
-                            break;
-                        case 409:
-                            furyDmg += 1;
-                            break;
-                    }
-                    Sleep(1000);
-                }
-                crit = ((rand() % 100) + (rand() % 100) + 2) / 2;
-                if(crit<=hero.getCRT()+crtBuff)
-                {
-                    cout << "Critical Hit!" << endl;
-                    Sleep(1000);
-                    dmg = (hero.getSTR()+atkBuff - monster.getDEF())*2;
-                    if(hero.eqpRng.getID()==406||hero.eqpRng.getID()==416||hero.eqpRng.getID()==428) //PIERCING
-                    {
-                        if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
-                        {
-                            cout << hero.eqpRng.getName() << " activated!" << endl;
-                            dmg = (hero.getSTR()+atkBuff - (static_cast<float>(monster.getDEF())*.5))*2;
-                            Sleep(1000);
-                        }
-                    }
-                    if(hero.eqpWpn.getID()==57) //Ozkoroth's Fang
-                        dmg = (ceil(static_cast<float>(monster.getHP())*.25))*2;
-                    if(hero.eqpWpn.getID()==58) //Energy Siphon
-                    {
-                        hero.changeMP(5);
-                    }
-                    if(hero.mask.getID()==0||parry) //Glass
-                        dmg = dmg*2;
-                    if(hero.mask.getID()==3) //Arcana
-                        dmg = dmg/2;
-                    if(hero.mask.getID()==6) //Beasts
-                        dmg = dmg + (dmg/2);
-                    if(monster.getID()==61) //?????
-                        dmg = static_cast<float>(dmg)*.7;
-                    if(hero.eqpRng.getID()==404||hero.eqpRng.getID()==414||hero.eqpRng.getID()==426) //VENGEANCE
-                    {
-                        switch(hero.eqpRng.getID())
-                        {
-                            case 404:
-                                dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.15;
-                                break;
-                            case 414:
-                                dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.3;
-                                break;
-                            case 426:
-                                dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.5;
-                                break;
-                        }
-                    }
-                    dmg += furyDmg;
-                    if(dmg<0)
-                        dmg = 0;
-                    monHP -= dmg;
-                    cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
-                    Sleep(2000);
-                }
+                if(hero.mask.getID()==6)
+                    cout << "You lunge at the " << monName << " ferociously!" << endl;
+                else if(parry==0)
+                    cout << "You attack the " << monName << "!" << endl;
                 else
-                {
-                    cout << "Hit!" << endl;
-                    Sleep(1000);
-                    dmg = hero.getSTR()+atkBuff - monster.getDEF();
-                    if(hero.eqpRng.getID()==406||hero.eqpRng.getID()==416||hero.eqpRng.getID()==428) //PIERCING
-                    {
-                        if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
-                        {
-                            cout << hero.eqpRng.getName() << " activated!" << endl;
-                            dmg = hero.getSTR()+atkBuff - (static_cast<float>(monster.getDEF())*.5);
-                            Sleep(1000);
-                        }
-                    }
-                    if(hero.eqpWpn.getID()==57) //Ozkoroth's Fang
-                        dmg = ceil(static_cast<float>(monster.getHP())*.25);
-                    if(hero.eqpWpn.getID()==58) //Energy Siphon
-                    {
-                        hero.changeMP(5);
-                    }
-                    if(hero.mask.getID()==0||parry) //Glass
-                        dmg = dmg*2;
-                    if(hero.mask.getID()==3) //Arcana
-                        dmg = dmg/2;
-                    if(hero.mask.getID()==6) //Beasts
-                        dmg = dmg + (dmg/2);
-                    if(monster.getID()==61) //?????
-                        dmg = static_cast<float>(dmg)*.7;
-                    if(hero.eqpRng.getID()==404||hero.eqpRng.getID()==414||hero.eqpRng.getID()==426) //VENGEANCE
-                    {
-                        switch(hero.eqpRng.getID())
-                        {
-                            case 404:
-                                dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.15;
-                                break;
-                            case 414:
-                                dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.3;
-                                break;
-                            case 426:
-                                dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.5;
-                                break;
-                        }
-                    }
-                    dmg += furyDmg;
-                    if(dmg<0)
-                        dmg = 0;
-                    monHP -= dmg;
-                    cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
-                    Sleep(2000);
-                }
-                if(dmg>=50)
-                    ach.Powerhouse = 1;
-                if(dmg>=100)
-                    ach.Overkill = 1;
-                if(dmg>=100&&monster.getName()=="Valentereth, the Tyrant")
-                    ach.TrueHeir = 1;
-                if(hero.eqpRng.getID()==403||hero.eqpRng.getID()==413||hero.eqpRng.getID()==425) //LEECHING
+                    cout << "You strike at the " << monName << "'s weak point!" << endl;
+                Sleep(1000);
+                hit = ((rand() % 100) + (rand() % 100) + 2) / 2;
+                //cout << hit+monster.getDDG() << ", " << hero.getACC()+accBuff << endl;
+                if(hero.eqpRng.getID()==405||hero.eqpRng.getID()==415||hero.eqpRng.getID()==427) //SIGHT
                 {
                     if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
                     {
                         cout << hero.eqpRng.getName() << " activated!" << endl;
-                        Sleep(1000);
-                        hero.changeHP(dmg/2);
-                        cout << "Recovered " << dmg/2 << " HP!" << endl;
+                        hit = -100;
                         Sleep(1000);
                     }
                 }
-            }
-            else
-            {
-                cout << "You missed..." << endl;
-                if(hero.eqpRng.getID()==409||hero.eqpRng.getID()==419||hero.eqpRng.getID()==431) //FURY
+                if(hit+monster.getDDG()<=hero.getACC()+accBuff)
                 {
-                    cout << hero.eqpRng.getName() << " streak broken!" << endl;
-                    furyDmg = 0;
+                    if(hero.eqpRng.getID()==409||hero.eqpRng.getID()==419||hero.eqpRng.getID()==431) //FURY
+                    {
+                        cout << hero.eqpRng.getName() << " activated!" << endl;
+                        switch(hero.eqpRng.getID())
+                        {
+                            case 431:
+                                furyDmg += 3;
+                                break;
+                            case 419:
+                                furyDmg += 2;
+                                break;
+                            case 409:
+                                furyDmg += 1;
+                                break;
+                        }
+                        Sleep(1000);
+                    }
+                    crit = ((rand() % 100) + (rand() % 100) + 2) / 2;
+                    if(crit<=hero.getCRT()+crtBuff)
+                    {
+                        cout << "Critical Hit!" << endl;
+                        Sleep(1000);
+                        dmg = (hero.getSTR()+atkBuff - monster.getDEF())*2;
+                        if(hero.eqpRng.getID()==406||hero.eqpRng.getID()==416||hero.eqpRng.getID()==428) //PIERCING
+                        {
+                            if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
+                            {
+                                cout << hero.eqpRng.getName() << " activated!" << endl;
+                                dmg = (hero.getSTR()+atkBuff - (static_cast<float>(monster.getDEF())*.5))*2;
+                                Sleep(1000);
+                            }
+                        }
+                        if(hero.eqpWpn.getID()==57) //Ozkoroth's Fang
+                            dmg = (ceil(static_cast<float>(monster.getHP())*.35))*2;
+                        if(hero.eqpWpn.getID()==58) //Energy Siphon
+                        {
+                            hero.changeMP(5);
+                        }
+                        if(hero.mask.getID()==0||parry) //Glass
+                            dmg = dmg*2;
+                        if(hero.mask.getID()==3) //Arcana
+                            dmg = dmg/2;
+                        if(hero.mask.getID()==6) //Beasts
+                            dmg = dmg + (dmg/2);
+                        if(monster.getID()==61) //?????
+                            dmg = static_cast<float>(dmg)*.7;
+                        if(hero.eqpRng.getID()==404||hero.eqpRng.getID()==414||hero.eqpRng.getID()==426) //VENGEANCE
+                        {
+                            switch(hero.eqpRng.getID())
+                            {
+                                case 404:
+                                    dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.15;
+                                    break;
+                                case 414:
+                                    dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.3;
+                                    break;
+                                case 426:
+                                    dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.5;
+                                    break;
+                            }
+                        }
+                        dmg += furyDmg;
+                        if(dmg<0)
+                            dmg = 0;
+                        monHP -= dmg;
+                        cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
+                        Sleep(2000);
+                    }
+                    else
+                    {
+                        cout << "Hit!" << endl;
+                        Sleep(1000);
+                        dmg = hero.getSTR()+atkBuff - monster.getDEF();
+                        if(hero.eqpRng.getID()==406||hero.eqpRng.getID()==416||hero.eqpRng.getID()==428) //PIERCING
+                        {
+                            if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
+                            {
+                                cout << hero.eqpRng.getName() << " activated!" << endl;
+                                dmg = hero.getSTR()+atkBuff - (static_cast<float>(monster.getDEF())*.5);
+                                Sleep(1000);
+                            }
+                        }
+                        if(hero.eqpWpn.getID()==57) //Ozkoroth's Fang
+                            dmg = ceil(static_cast<float>(monster.getHP())*.35);
+                        if(hero.eqpWpn.getID()==58) //Energy Siphon
+                        {
+                            hero.changeMP(5);
+                        }
+                        if(hero.mask.getID()==0||parry) //Glass
+                            dmg = dmg*2;
+                        if(hero.mask.getID()==3) //Arcana
+                            dmg = dmg/2;
+                        if(hero.mask.getID()==6) //Beasts
+                            dmg = dmg + (dmg/2);
+                        if(monster.getID()==61) //?????
+                            dmg = static_cast<float>(dmg)*.7;
+                        if(hero.eqpRng.getID()==404||hero.eqpRng.getID()==414||hero.eqpRng.getID()==426) //VENGEANCE
+                        {
+                            switch(hero.eqpRng.getID())
+                            {
+                                case 404:
+                                    dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.15;
+                                    break;
+                                case 414:
+                                    dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.3;
+                                    break;
+                                case 426:
+                                    dmg += static_cast<float>(hero.getMHP()-hero.getHP())*.5;
+                                    break;
+                            }
+                        }
+                        dmg += furyDmg;
+                        if(dmg<0)
+                            dmg = 0;
+                        monHP -= dmg;
+                        cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
+                        Sleep(2000);
+                    }
+                    if(dmg>=50)
+                        ach.Powerhouse = 1;
+                    if(dmg>=100)
+                        ach.Overkill = 1;
+                    if(dmg>=100&&monster.getName()=="Valentereth, the Tyrant")
+                        ach.TrueHeir = 1;
+                    if(hero.eqpRng.getID()==403||hero.eqpRng.getID()==413||hero.eqpRng.getID()==425) //LEECHING
+                    {
+                        if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
+                        {
+                            cout << hero.eqpRng.getName() << " activated!" << endl;
+                            Sleep(1000);
+                            hero.changeHP(dmg/2);
+                            cout << "Recovered " << dmg/2 << " HP!" << endl;
+                            Sleep(1000);
+                        }
+                    }
                 }
-                if(monster.getID()==60)
-                    parry = 1;
-                Sleep(2000);
-            }
-            if(hero.eqpAmr.getID()==142)
-                parry = 0;
+                else
+                {
+                    cout << "You missed..." << endl;
+                    if(hero.eqpRng.getID()==409||hero.eqpRng.getID()==419||hero.eqpRng.getID()==431) //FURY
+                    {
+                        cout << hero.eqpRng.getName() << " streak broken!" << endl;
+                        furyDmg = 0;
+                    }
+                    if(monster.getID()==60)
+                        parry = 1;
+                    Sleep(2000);
+                }
+                if(hero.eqpAmr.getID()==142)
+                    parry = 0;
+                if((hero.eqpRng.getID()==421||hero.eqpRng.getID()==433)&&!blitz) //BLITZING
+                {
+                    if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
+                    {
+                        cout << hero.eqpRng.getName() << " activated!" << endl;
+                        blitz = 1;
+                        Sleep(2000);
+                    }
+                }
+                else
+                    blitz = 0;
+            } while(blitz);
         }
         else if(action=="k")
         {
@@ -732,16 +748,6 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         cout << "HP Buff: " << hpBuff << endl;*/
         hero.changeHP(hpBuff);
         hero.changeMP(hero.getMG());
-
-        if(hero.eqpRng.getID()==421||hero.eqpRng.getID()==433) //BLITZING
-        {
-            if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK()))
-            {
-                cout << hero.eqpRng.getName() << " activated!" << endl;
-                Sleep(2000);
-                continue;
-            }
-        }
 
         //--------------------------ENEMY TURN-------------------------
         //Sleep(1000);

@@ -127,6 +127,16 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 int heroDmg = hero.getSTR() - currentRoom.monster.getDEF();
                 int heroHit = hero.getACC() - currentRoom.monster.getDDG();
 
+                if(hero.eqpWpn.getID()==57)
+                    heroDmg = ceil(static_cast<float>(currentRoom.monster.getHP())*.35);
+                if(hero.eqpAmr.getID()==142)
+                    monDmg -= monDmg/4;
+
+                if(currentRoom.monster.getID()==57)
+                    monDmg = currentRoom.monster.getSTR() - ceil(.7*(static_cast<float>(hero.getDEF())));
+                if(currentRoom.monster.getID()==61)
+                    heroDmg = static_cast<float>(heroDmg)*.7;
+
                 holder += "HP: " + std::to_string(currentRoom.monster.getHP()) + "\n";
                 holder += "Strength: " + std::to_string(currentRoom.monster.getSTR()) + " (Enemy DMG: " + std::to_string(monDmg) + ")\n";
                 holder += "Accuracy: " + std::to_string(currentRoom.monster.getACC()) + " (Enemy Hit Rate: " + std::to_string(monHit) + ")\n";
