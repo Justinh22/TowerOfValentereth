@@ -725,6 +725,11 @@ int main()
         //    cout << "ROOMDATA[" << i << "]: " << roomData[i] << endl;
         if(manSave==0)
             saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
+        if(debug_opt&&depth%5==0&&depth>0)
+        {
+            string debugFile = "Saves/" + hero.getName() + "_Flr" + std::to_string(depth) + ".txt";
+            saveFunc(hero,debugFile,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
+        }
         if(hero.getHP()>hero.getMHP())
             hero.setHP(hero.getMHP());
         if(hero.getMP()>hero.getMMP())

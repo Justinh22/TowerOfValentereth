@@ -269,6 +269,14 @@ public:
                 statDown[i] = rand() % 6;
             } while(statUp[i]==statDown[i]);
         }
+        while(statUp[0]==statUp[1]||statUp[0]==statDown[0]||statUp[1]==statDown[1])
+        {
+            statUp[0] = rand() % 6;
+        }
+        while(statDown[0]==statDown[1]||statUp[0]==statDown[0]||statUp[1]==statDown[1])
+        {
+            statDown[0] = rand() % 6;
+        }
         statCount = 0;
     }
     Merchant operator=(Merchant m)
@@ -537,40 +545,54 @@ public:
         boost = rand() % 5 + 2 + mod;
         mmp += boost;
         cout << "MP went up by " << boost << "!" << endl;
-        boost = rand() % 3 + mod;
+        boost = rand() % 4 + mod;
+        if(boost-mod-1>1)
+            boost--;
         nstr += boost;
         if(boost!=0)
             cout << "STR went up by " << boost << "!" << endl;
-        boost = rand() % 3 + mod;
+        boost = rand() % 4 + mod;
+        if(boost-mod-1>1)
+            boost--;
         ncrit += boost;
         if(boost!=0)
             cout << "CRT went up by " << boost << "!" << endl;
         if(mask.getID()==7) //SOULS
         {
-            boost = rand() % 3 + mod;
+            boost = rand() % 4 + mod;
+            if(boost-mod-1>1)
+                boost--;
             nacc += boost;
             setACC(nacc);
             if(boost!=0)
                 cout << "ACC went up by " << boost << "!" << endl;
         }
-        boost = rand() % 3 + mod;
+        boost = rand() % 4 + mod;
+        if(boost-mod-1>1)
+            boost--;
         ndef += boost;
         if(boost!=0)
             cout << "DEF went up by " << boost << "!" << endl;
         if(mask.getID()==5) //Whispers
         {
-            boost = rand() % 4 + 1;
+            boost = rand() % 5 + mod;
+            if(boost-mod-1>1)
+                boost--;
             nddg += boost;
             cout << "DDG went up by " << boost << "!" << endl;
         }
         else
         {
-            boost = rand() % 3 + mod;
+            boost = rand() % 4 + mod;
+            if(boost-mod-1>1)
+                boost--;
             nddg += boost;
             if(boost!=0)
                 cout << "DDG went up by " << boost << "!" << endl;
         }
-        boost = rand() % 3 + mod;
+        boost = rand() % 4 + mod;
+        if(boost-mod-1>1)
+            boost--;
         lck += boost;
         if(boost!=0)
             cout << "LCK went up by " << boost << "!" << endl;
