@@ -40,6 +40,11 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
 
     while(end==0)
     {
+        if(godMode)
+        {
+            atkBuff = 100;
+            defBuff = 100;
+        }
         if(hero.getHP()>hero.getMHP())
             hero.setHP(hero.getMHP());
         if(hero.getMP()>hero.getMMP())

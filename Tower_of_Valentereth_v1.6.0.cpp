@@ -21,6 +21,7 @@ using std::setw;
 #include "AchievementHandler.h"
 Achievements ach;
 int score = 0;
+bool godMode = 0;
 #include "ItemClasses.h"
 #include "ItemList.h"
 #include "CreatureList.h"
@@ -838,7 +839,7 @@ int main()
                         boss = 0;
                         if(yn=='n')
                         {
-                            end = 1;
+                            end = 2;
                             break;
                         }
                         std::system("cls");
@@ -1124,18 +1125,20 @@ int main()
                     if(yn=='y')
                     {
                         cout << "Autosave disabled. Saving..." << endl;
+                        saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
                         manSave = 1;
                     }
                 }
                 else
                 {
-                    cout << "Autosave is disabled. Re-enable? (y/n)" << endl;
+                    cout << "Autosave is disabled. Re-enable? Your game will be saved either way. (y/n)" << endl;
                     yn = getch();
                     if(yn=='y')
                     {
                         cout << "Autosave re-enabled." << endl;
                         manSave = 0;
                     }
+                    saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
                 }
             }
             else if(err==8)
@@ -1155,7 +1158,7 @@ int main()
                 cout << "        -Meaning: Used to acquire a new item." << endl;
                 cout << "        -EG: get wooden sword" << endl;
                 cout << "    ATTACK: attack <target>" << endl;
-                cout << "        -Synonyms: Fight, Strike, Kill" << endl;
+                cout << "        -Synonyms: Fight, Strike, Kill, Gank" << endl;
                 cout << "        -Meaning: Used to engage in combat with a creature." << endl;
                 cout << "        -EG: attack ogre" << endl;
                 cout << "    MENU: menu" << endl;
@@ -1167,7 +1170,7 @@ int main()
                 cout << "        -Meaning: Enables/Disables manual saving (Autosave enabled by default)." << endl;
                 cout << "        -EG: save" << endl;
                 cout << "    HELP: help" << endl;
-                cout << "        -Synonyms: Manual, H, Guide" << endl;
+                cout << "        -Synonyms: Manual, H, Guide, Instructions" << endl;
                 cout << "        -Meaning: Opens a guide to actions." << endl;
                 cout << "        -EG: help" << endl;
                 cout << endl;
@@ -1204,6 +1207,19 @@ int main()
                 cout << "You hear noises coming from the next room..." << endl;
                 dev = 1;
             }
+            else if(err==12) //GODMODE
+            {
+                if(!godMode)
+                {
+                    cout << "God mode enabled. ATK and DEF have been maxed out in combat for this room." << endl;
+                    godMode = 1;
+                }
+                else
+                {
+                    cout << "God mode disabld." << endl;
+                    godMode = 0;
+                }
+            }
         }
         else
             end = 1;
@@ -1211,13 +1227,30 @@ int main()
     if(win==1)
     {
         clear();
+        if(end==2)
+        {
+            cout << "You sit upon the throne, brimming with ancient power." << endl;
+            Sleep(2000);
+            cout << "At long last, after all the trials you endured, you are the ruler of the tower." << endl << endl;
+            Sleep(3000);
+            cout << "Your head aches and your vision blurs, but the feeling of power within is all that matters now." << endl;
+            Sleep(2000);
+            cout << "Perhaps some fool may ascend the tower someday, trying to take what is rightfully yours. The thought of it makes your blood boil." << endl << endl;
+            Sleep(2000);
+            cout << "But you will never, ever, let that happen." << endl << endl;
+            Sleep(3000);
+            cout << "Numb from the searing pain in your head, you grab your axe, and await your next challenger." << endl << endl << endl;
+        }
         if(pass==2)
         {
             cout << "GAME OVER!" << endl;
-            cout << "You conquered the Tower of Valentereth after " << depth << " rooms!" << endl;
+            cout << "You inherited the throne of the Tower of Valentereth after " << depth << " rooms!" << endl;
             remove(filename.c_str());
-            ach.DejaVu++;
-            ach.RiseAndShine++;
+            if(end!=2)
+            {
+                ach.DejaVu++;
+                ach.RiseAndShine++;
+            }
             Sleep(2000);
             if(hiscores(hero,depth))
             {
@@ -1300,13 +1333,17 @@ int actionHandler(string act, bool debug_opt, int gankTracker)
     {
         return 6;
     }
-    else if((act=="see"||act=="look_all")&&debug_opt)
+    else if((act=="dsee"||act=="look_all")&&debug_opt)
     {
         return 10;
     }
     else if((act=="miniboss"||act=="summon")&&debug_opt)
     {
         return 11;
+    }
+    else if(act=="godmode"&&debug_opt)
+    {
+        return 12;
     }
     else
     {
@@ -2077,6 +2114,7 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
     score += 100;
     depth++;
     itemDrop = 0;
+    godMode = 0;
     if(depth%5==0)
     {
         if(adv<10)
