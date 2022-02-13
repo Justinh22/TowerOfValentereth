@@ -474,8 +474,17 @@ void combatMain(Player hero, Creature monster, int monCHP)
             cout << "  |-       " << setw(103-hero.getMHP()) << std::right << "  {" << setw(100) << std::right << plrHP << "} -|" << endl;
     }
     cout << "  |------------------------------------------------------------------------------------------------------------------|" << endl;
-    cout << "  |-                           |                            |                            |                          -|" << endl;
-    cout << "  |-     <--STRIKE [J]-->      |       <--CAST [K]-->       |        <--USE [L]-->       |       <--RUN [;]-->      -|" << endl;
-    cout << "  |-                           |         " << setw(3) << std::right << hero.getMP() << " // " << setw(3) << std::left << hero.getMMP() << "         |                            |                          -|" << endl;
+    if(hero.mask.getID()!=6)
+    {
+        cout << "  |-                           |                            |                            |                          -|" << endl;
+        cout << "  |-     <--STRIKE [J]-->      |       <--CAST [K]-->       |        <--USE [L]-->       |       <--RUN [;]-->      -|" << endl;
+        cout << "  |-                           |         " << setw(3) << std::right << hero.getMP() << " // " << setw(3) << std::left << hero.getMMP() << "         |                            |                          -|" << endl;
+    }
+    else
+    {
+        cout << "  |-                           |                            |                            |                          -|" << endl;
+        cout << "  |-      <-- STRIKE -->       |       <-- STRIKE -->       |       <-- STRIKE -->       |      <-- STRIKE -->      -|" << endl;
+        cout << "  |-                           |                            |                            |                          -|" << endl;
+    }
     cout << "  \\------------------------------------------------------------------------------------------------------------------/" << endl;
 }//                         27                           28                            28                           28

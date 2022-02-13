@@ -148,6 +148,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                             dmg = 0;
                         monHP -= dmg;
                         cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
+                        if(hero.mask.getID()==6) //Beasts
+                        {
+                            hero.changeHP(dmg/4);
+                            cout << "Restored " << static_cast<int>(dmg/4) << " HP!" << endl;
+                            Sleep(1000);
+                        }
                         Sleep(2000);
                     }
                     else
@@ -198,6 +204,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                             dmg = 0;
                         monHP -= dmg;
                         cout << "Dealt " << dmg << " damage to " << monName << "!" << endl;
+                        if(hero.mask.getID()==6) //Beasts
+                        {
+                            hero.changeHP(dmg/4);
+                            cout << "Restored " << static_cast<int>(dmg/4) << " HP!" << endl;
+                            Sleep(1000);
+                        }
                         Sleep(2000);
                     }
                     if(dmg>=50)
@@ -213,7 +225,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                             cout << hero.eqpRng.getName() << " activated!" << endl;
                             Sleep(1000);
                             hero.changeHP(dmg/2);
-                            cout << "Recovered " << dmg/2 << " HP!" << endl;
+                            cout << "Recovered " << hero.level << " HP!" << endl;
                             Sleep(1000);
                         }
                     }

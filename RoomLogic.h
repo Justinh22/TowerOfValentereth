@@ -469,7 +469,7 @@ void roomLogic(int &diff, int &rew, int &karma, int adv, Player hero)
             }
         }
         chance = rand() % 17 + 1;
-        if(chance==17) //Miniboss Trigger
+        if(chance==17&&adv>4) //Miniboss Trigger
         {
             diff = 8;
         }

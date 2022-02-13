@@ -111,7 +111,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 1;
                         cost = 1;
                     }
-                    else if(foo<8)
+                    else if(foo<=8)
                     {
                         itemRarity = 2;
                         cost = 2;
@@ -128,7 +128,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 2;
                         cost = 1;
                     }
-                    else if(foo<8)
+                    else if(foo<=8)
                     {
                         itemRarity = 3;
                         cost = 2;
@@ -145,7 +145,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 3;
                         cost = 1;
                     }
-                    else if(foo<8)
+                    else if(foo<=8)
                     {
                         itemRarity = 4;
                         cost = 2;
@@ -162,7 +162,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 4;
                         cost = 2;
                     }
-                    else if(foo<8)
+                    else if(foo<=8)
                     {
                         itemRarity = 5;
                         cost = 3;
@@ -179,7 +179,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 5;
                         cost = 2;
                     }
-                    else if(foo<8)
+                    else if(foo<=8)
                     {
                         itemRarity = 6;
                         cost = 3;
@@ -196,7 +196,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 6;
                         cost = 2;
                     }
-                    else if(foo<8)
+                    else if(foo<=8)
                     {
                         itemRarity = 7;
                         cost = 3;
@@ -213,7 +213,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 7;
                         cost = 3;
                     }
-                    else if(foo<8)
+                    else if(foo<=8)
                     {
                         itemRarity = 8;
                         cost = 4;
@@ -230,7 +230,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 8;
                         cost = 3;
                     }
-                    else if(foo<8)
+                    else if(foo<=9)
                     {
                         itemRarity = 9;
                         cost = 4;

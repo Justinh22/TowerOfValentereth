@@ -546,13 +546,13 @@ public:
         mmp += boost;
         cout << "MP went up by " << boost << "!" << endl;
         boost = rand() % 4 + mod;
-        if(boost-mod-1>1)
+        if(boost-mod>1)
             boost--;
         nstr += boost;
         if(boost!=0)
             cout << "STR went up by " << boost << "!" << endl;
         boost = rand() % 4 + mod;
-        if(boost-mod-1>1)
+        if(boost-mod>1)
             boost--;
         ncrit += boost;
         if(boost!=0)
@@ -560,7 +560,7 @@ public:
         if(mask.getID()==7) //SOULS
         {
             boost = rand() % 4 + mod;
-            if(boost-mod-1>1)
+            if(boost-mod>1)
                 boost--;
             nacc += boost;
             setACC(nacc);
@@ -568,30 +568,28 @@ public:
                 cout << "ACC went up by " << boost << "!" << endl;
         }
         boost = rand() % 4 + mod;
-        if(boost-mod-1>1)
+        if(boost-mod>1)
             boost--;
         ndef += boost;
         if(boost!=0)
             cout << "DEF went up by " << boost << "!" << endl;
         if(mask.getID()==5) //Whispers
         {
-            boost = rand() % 5 + mod;
-            if(boost-mod-1>1)
-                boost--;
+            boost = rand() % 5 + 2;
             nddg += boost;
             cout << "DDG went up by " << boost << "!" << endl;
         }
         else
         {
             boost = rand() % 4 + mod;
-            if(boost-mod-1>1)
+            if(boost-mod>1)
                 boost--;
             nddg += boost;
             if(boost!=0)
                 cout << "DDG went up by " << boost << "!" << endl;
         }
         boost = rand() % 4 + mod;
-        if(boost-mod-1>1)
+        if(boost-mod>1)
             boost--;
         lck += boost;
         if(boost!=0)

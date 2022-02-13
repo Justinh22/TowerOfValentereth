@@ -512,7 +512,7 @@ int main()
     }
 
     if(hero.getNDDG()==0&&hero.mask.getID()==5) //Whispers
-        hero.setNDDG(25);
+        hero.setNDDG(10);
     if(hero.mask.getID()==1) //Wrath
         hero.setACC(hero.getACC()-10);
     if(hero.mask.getID()==7) //Souls
