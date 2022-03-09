@@ -260,32 +260,78 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
             {
                 keyFlag = 1;
             }
-            else if(adv < 4)
+            if(rand()%3==0)
             {
-                if(foo<=5)
-                    itemRarity = 1;
-                else if(foo<=8)
-                    itemRarity = 2;
-                else
-                    itemRarity = 3;
+                itemType = 3;
             }
-            else if(adv < 7)
+            if(itemType==2) //Potion/Food
             {
-                if(foo<=5)
-                    itemRarity = 2;
-                else if(foo<=8)
-                    itemRarity = 3;
+                if(adv < 4)
+                {
+                    if(foo<=5)
+                        itemRarity = 1;
+                    else if(foo<=8)
+                        itemRarity = 2;
+                    else
+                        itemRarity = 3;
+                }
+                else if(adv < 7)
+                {
+                    if(foo<=5)
+                        itemRarity = 2;
+                    else if(foo<=8)
+                        itemRarity = 3;
+                    else
+                        itemRarity = 4;
+                }
                 else
-                    itemRarity = 4;
+                {
+                    if(foo<=5)
+                        itemRarity = 3;
+                    else if(foo<=8)
+                        itemRarity = 4;
+                    else
+                        itemRarity = 5;
+                }
             }
-            else
+            else //Special
             {
-                if(foo<=5)
-                    itemRarity = 3;
-                else if(foo<=8)
-                    itemRarity = 4;
+                if(adv < 4)
+                {
+                    if(foo<=6)
+                        itemRarity = 1;
+                    else
+                        itemRarity = 2;
+                }
+                else if(adv < 6)
+                {
+                    if(foo<=3)
+                        itemRarity = 1;
+                    else if(foo<=8)
+                        itemRarity = 2;
+                    else
+                        itemRarity = 3;
+                }
+                else if(adv < 8)
+                {
+                    if(foo<=2)
+                        itemRarity = 1;
+                    else if(foo<=7)
+                        itemRarity = 2;
+                    else
+                        itemRarity = 3;
+                }
                 else
-                    itemRarity = 5;
+                {
+                    if(foo<=2)
+                        itemRarity = 1;
+                    else if(foo<=5)
+                        itemRarity = 2;
+                    else if(foo<=7)
+                        itemRarity = 3;
+                    else
+                        itemRarity = 4;
+                }
             }
             if(keyFlag==0)
             {
@@ -790,7 +836,7 @@ Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vect
                         foo = rand() % 10 + 1;
                         if(adv<10)
                         {
-                            if(foo<7)
+                            if(foo<5)
                                 rty = adv;
                             else
                                 rty = adv - 1;
@@ -813,12 +859,24 @@ Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vect
                 }
                 else if(currentRoom.getFList()[i].getItem()<=3)
                 {
-                    if(adv/2==0)
-                        featid = itemPicker(2,1);
+                    if(foo%2==0)
+                    {
+                        if(adv/2==0)
+                            featid = itemPicker(2,1);
+                        else
+                            featid = itemPicker(2,adv/2);
+                        //cout << "Adding " << featid << "." << endl;
+                        currentRoom.addItem(featid);
+                    }
                     else
-                        featid = itemPicker(2,adv/2);
-                    //cout << "Adding " << featid << "." << endl;
-                    currentRoom.addItem(featid);
+                    {
+                        if(adv/2==0)
+                            featid = itemPicker(3,1);
+                        else
+                            featid = itemPicker(3,adv/2);
+                        //cout << "Adding " << featid << "." << endl;
+                        currentRoom.addItem(featid);
+                    }
                 }
                 else
                 {

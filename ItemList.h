@@ -281,6 +281,38 @@ vector<Consumable> initCDir(vector<Consumable> consumableDirectory)
     Consumable Key("Key","A small, silver key.",0,212,0,0);
     consumableDirectory.push_back(Key);
 
+    //Special Consumables
+
+    //1
+    Consumable Fire_Bomb("Fire Bomb","A small pouch filled with an explosive powder. When thrown, deals 15 damage to the enemy.",1,213,0,0);
+    consumableDirectory.push_back(Fire_Bomb);
+    Consumable Smoke_Capsule("Smoke Capsule","A small, black orb with wisps of smoke billowing within. When used, raises your DDG by 25.",1,214,0,0);
+    consumableDirectory.push_back(Smoke_Capsule);
+    Consumable Gaia_Herbs("Gaia Herbs","A handful of medicinal herbs. When used in battle, regenerates 5 HP for the remainder of combat.",1,215,0,0);
+    consumableDirectory.push_back(Gaia_Herbs);
+    //2
+    Consumable Blast_Bomb("Blast Bomb","A pouch filled to the brim with a volatile explosive substance. When thrown, deals 30 damage to the enemy.",1,216,0,0);
+    consumableDirectory.push_back(Blast_Bomb);
+    Consumable Aether_Vial("Aether Vial","An ornate bottle with golden markings, filled with a shimmering violet liquid. When used, grants +3 MPR for the remainder of combat.",1,217,0,0);
+    consumableDirectory.push_back(Aether_Vial);
+    Consumable Pyllich_Venom("Pyllich Venom","A small vial of venom from the fangs of a pyllich. When used, coats your weapon in the substance to cause the enemy to lose 5 HP every turn for each time they are struck.",1,218,0,0);
+    consumableDirectory.push_back(Pyllich_Venom);
+    //3
+    Consumable Nova_Bomb("Nova Bomb","A glass sphere filled with raging flames. When thrown, deals 50 damage to the enemy.",1,219,0,0);
+    consumableDirectory.push_back(Nova_Bomb);
+    Consumable Gaia_Flower("Gaia Flower","A beautiful silver flower, with incredible healing properties. When used, regenerates 10 HP for the remainder of combat.",1,220,0,0);
+    consumableDirectory.push_back(Gaia_Flower);
+    Consumable Fortune_Tincture("Fortune Tincture","A bottle of liquid obtained from the kismet rose, said to grant fortune to those who drink it. When used, raises LCK by 30 for the remainder of combat.",1,221,0,0);
+    consumableDirectory.push_back(Fortune_Tincture);
+    //4
+    Consumable Rendais_Veil("Rendai's Veil","A small golden statue dedicated to Rendai, the God of Life. When used, protects the user from damage for 3 turns.",1,222,0,0);
+    consumableDirectory.push_back(Rendais_Veil);
+    Consumable Faerie_Dust("Faerie Dust","A satchel of powder obtained from a fae. When used, grants the user CRT, DDG, and ACC +30 for the remainder of combat.",1,223,0,0);
+    consumableDirectory.push_back(Faerie_Dust);
+    Consumable Second_Soul("Second Soul","A small glass sphere, with a faint white orb of light floating around within. Will completely restore your HP and MP once after falling in combat.",1,224,0,0);
+    consumableDirectory.push_back(Second_Soul);
+
+
     //cout << "Consumable List Initialized!" << endl;
 
     return consumableDirectory;

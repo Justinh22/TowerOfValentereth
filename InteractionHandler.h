@@ -264,6 +264,10 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     valid = 1;
                 else if(target=="food"&&currentRoom.getIList()[i]>=200&&currentRoom.getIList()[i]<=203)
                     valid = 1;
+                else if(target=="gem"&&currentRoom.getIList()[i]==203)
+                    valid = 1;
+                else if(target=="berry"&&currentRoom.getIList()[i]==201)
+                    valid = 1;
                 else if(target=="potion"&&currentRoom.getIList()[i]>=204&&currentRoom.getIList()[i]<=211)
                     valid = 1;
                 else if((target=="spell"||target=="scroll")&&currentRoom.getIList()[i]>=300&&currentRoom.getIList()[i]<=342)
@@ -398,6 +402,10 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 valid = 1;
             else if(target=="food"&&currentRoom.getIList()[i]>=200&&currentRoom.getIList()[i]<=203)
                 valid = 1;
+            else if(target=="gem"&&currentRoom.getIList()[i]==203)
+                valid = 1;
+            else if(target=="berry"&&currentRoom.getIList()[i]==201)
+                valid = 1;
             else if(target=="potion"&&currentRoom.getIList()[i]>=204&&currentRoom.getIList()[i]<=211)
                 valid = 1;
             else if((target=="spell"||target=="scroll")&&currentRoom.getIList()[i]>=300&&currentRoom.getIList()[i]<=342)
@@ -433,7 +441,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     }
                     //cout << "Size of equipment inventory: " << hero.equipment.size() << endl;
                 }
-                else if(currentRoom.getIList()[i]<=211)
+                else if(currentRoom.getIList()[i]<=224&&currentRoom.getIList()[i]!=212)
                 {
                     if(hero.inventory.size()>=6)
                     {
@@ -462,7 +470,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                         hero.keys += 1;
                     }
                 }
-                else if(currentRoom.getIList()[i]<=343&&currentRoom.getIList()[i]>212)
+                else if(currentRoom.getIList()[i]<=343&&currentRoom.getIList()[i]>=300)
                 {
                     for(int j=0;j<hero.spellbook.size();j++)
                         if(currentRoom.getIList()[i]==hero.spellbook[j])

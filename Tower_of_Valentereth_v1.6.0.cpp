@@ -1590,47 +1590,68 @@ int menuHandler(Player &hero, Directory dir)
                 {
                     if(intChoice==0)
                         break;
-                    cout << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getName() << " | " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getDesc() << endl;
-                    cout << "RARITY: " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getRarity() << endl;
-                    cout << "HP: " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getHP() << endl;
-                    cout << "MP: " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getMP() << endl << endl;
-                    cout << "What do you want to do to " << dir.getItemName(hero.inventory[intChoice-1]) << "?" << endl;
-                    cout << "1) USE" << endl;
-                    cout << "2) DROP" << endl;
-                    cout << "0) RETURN" << endl;
-                    strChoice = getch();
-                    if(strChoice=="1")
+                    if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getID()<212) //Potion/Food
                     {
-                        if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getHP()>0)
+                        cout << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getName() << " | " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getDesc() << endl;
+                        cout << "RARITY: " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getRarity() << endl;
+                        cout << "HP: " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getHP() << endl;
+                        cout << "MP: " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getMP() << endl << endl;
+                        cout << "What do you want to do to " << dir.getItemName(hero.inventory[intChoice-1]) << "?" << endl;
+                        cout << "1) USE" << endl;
+                        cout << "2) DROP" << endl;
+                        cout << "0) RETURN" << endl;
+                        strChoice = getch();
+                        if(strChoice=="1")
                         {
-                            hero.changeHP(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getHP());
-                            if(hero.getHP()>hero.getMHP())
-                                hero.setHP(hero.getMHP());
-                            cout << "You regained " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getHP() << " HP!" << endl;
+                            if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getHP()>0)
+                            {
+                                hero.changeHP(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getHP());
+                                if(hero.getHP()>hero.getMHP())
+                                    hero.setHP(hero.getMHP());
+                                cout << "You regained " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getHP() << " HP!" << endl;
+                                Sleep(2000);
+                            }
+                            if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getMP()>0)
+                            {
+                                hero.changeMP(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getMP());
+                                if(hero.getMP()>hero.getMMP())
+                                    hero.setMP(hero.getMMP());
+                                cout << "You regained " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getMP() << " MP!" << endl;
+                                Sleep(2000);
+                            }
+                            hero.inventory.erase(hero.inventory.begin()+intChoice-1);
+                            if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getName()=="Bread")
+                                ach.Connoisseur++;
+                            if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getID()>=204&&dir.consumableDirectory[hero.inventory[intChoice-1]-200].getID()<=211)
+                                ach.Alchemist++;
+                        }
+                        else if(strChoice=="2")
+                        {
+                            hero.inventory.erase(hero.inventory.begin()+intChoice-1);
+                        }
+                        else if(strChoice!="0")
+                        {
+                            cout << "Invalid action." << endl;
                             Sleep(2000);
                         }
-                        if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getMP()>0)
+                    }
+                    else
+                    {
+                        cout << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getName() << " | " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getDesc() << endl;
+                        cout << "RARITY: " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getRarity() << endl << endl;
+                        cout << "What do you want to do to " << dir.getItemName(hero.inventory[intChoice-1]) << "?" << endl;
+                        cout << "1) DROP" << endl;
+                        cout << "0) RETURN" << endl;
+                        strChoice = getch();
+                        if(strChoice=="1")
                         {
-                            hero.changeMP(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getMP());
-                            if(hero.getMP()>hero.getMMP())
-                                hero.setMP(hero.getMMP());
-                            cout << "You regained " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getMP() << " MP!" << endl;
+                            hero.inventory.erase(hero.inventory.begin()+intChoice-1);
+                        }
+                        else if(strChoice!="0")
+                        {
+                            cout << "Invalid action." << endl;
                             Sleep(2000);
                         }
-                        hero.inventory.erase(hero.inventory.begin()+intChoice-1);
-                        if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getName()=="Bread")
-                            ach.Connoisseur++;
-                        if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getID()>=204&&dir.consumableDirectory[hero.inventory[intChoice-1]-200].getID()<=211)
-                            ach.Alchemist++;
-                    }
-                    else if(strChoice=="2")
-                    {
-                        hero.inventory.erase(hero.inventory.begin()+intChoice-1);
-                    }
-                    else if(strChoice!="0")
-                    {
-                        cout << "Invalid action." << endl;
-                        Sleep(2000);
                     }
                 }
                 else

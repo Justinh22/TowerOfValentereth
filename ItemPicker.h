@@ -94,7 +94,28 @@ int itemPicker(int type, int rarity)
                 break;
         }
     }
-    else
+    else if(type==3)
+    {
+        switch(rarity)
+        {
+            case 1:
+                id = rand() % 3 + 213;
+                break;
+            case 2:
+                id = rand() % 3 + 216;
+                break;
+            case 3:
+                id = rand() % 6 + 216;
+                break;
+            case 4:
+                id = rand() % 3 + 219;
+                break;
+            case 5:
+                id = rand() % 3 + 222;
+                break;
+        }
+    }
+    else if(type==4)
     {
         switch(rarity)
         {

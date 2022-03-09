@@ -405,6 +405,10 @@ class Buff
 public:
     Buff(string nm, int atu, int dfu, int cu, int acu, int dgu, int hpu)
     {name=nm;atkUp=atu;defUp=dfu;crtUp=cu;accUp=acu;ddgUp=dgu;hpUp=hpu;counter=6;}
+    Buff(string nm, int atu, int dfu, int cu, int acu, int dgu, int hpu, int c)
+    {name=nm;atkUp=atu;defUp=dfu;crtUp=cu;accUp=acu;ddgUp=dgu;hpUp=hpu;counter=c;}
+    Buff()
+    {name="Null";atkUp=0;defUp=0;crtUp=0;accUp=0;ddgUp=0;hpUp=0;counter=200;}
     int getCount(){return counter;}
     void tick(){counter-=1;}
     string getName(){return name;}
@@ -414,6 +418,8 @@ public:
     int getACCU(){return accUp;}
     int getDDGU(){return ddgUp;}
     int getHPU(){return hpUp;}
+    void setName(string n){name=n;}
+    void setCount(int c){counter=c;}
 protected:
     int counter;
     string name;
