@@ -41,7 +41,7 @@ int actionHandler(string act,bool debug_opt, int gankTracker);  //Done!
 int combatHandler(); //Done!
 int menuHandler(Player &hero,Directory dir); //Done!
 int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom);
-Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &iStatus, bool &dev);
+Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &rStatus, vector<bool> &iStatus, bool &dev);
 
 void clear()
 {
@@ -539,6 +539,7 @@ int main()
 
     Room currentRoom;
     vector<bool> minibossStatus{saveStats[20]>=1,saveStats[21]>=1,saveStats[22]>=1,saveStats[23]>=1,saveStats[24]>=1,saveStats[25]>=1,saveStats[26]>=1};
+    vector<bool> roomStatus(100,0);
     int boss = 0;
     bool win = 0;
     bool lvup = 0;
@@ -592,7 +593,7 @@ int main()
         action = getch();
         std::system("cls");
         cout << "Room " << depth << endl << endl;
-        currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
+        currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus,roomStatus);
     }
     else
     {
@@ -600,7 +601,7 @@ int main()
         {
             std::system("cls");
             cout << "Room " << depth << endl << endl;
-            currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus);
+            currentRoom = roomGenerator(diff,rew,adv,dir,hero,minibossStatus,roomStatus);
         }
         else //LOAD ROOM
         {
@@ -765,7 +766,7 @@ int main()
                 text = interactionHandler(err,target,hero,dir,currentRoom,pass,itemStatus,debug_opt);
                 if(text=="next")
                 {
-                    currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,itemStatus,dev);
+                    currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,itemStatus,dev);
                     /*cout << "Reward Stat is " << rew << endl;
                     cout << "Difficulty Stat is " << diff << endl;*/
                     //THIS CODE WORKS FOR IDENTIFYING WHERE ITEMS ARE LOCATED
@@ -797,7 +798,7 @@ int main()
                     if(pass==3)
                     {
                         pass = 1;
-                        currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,itemStatus,dev);
+                        currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,itemStatus,dev);
                         continue;
                     }
                     if(boss==1)
@@ -1079,7 +1080,7 @@ int main()
                         if(good==1)
                         {
                             score += 10;
-                            currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,itemStatus,dev);
+                            currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,itemStatus,dev);
                         }
                     }
                 }
@@ -1184,7 +1185,7 @@ int main()
             }*/
             else if(err==6) //DEBUG_GO
             {
-                currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,itemStatus,dev);
+                currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,itemStatus,dev);
             }
             else if(err==10) //SEE
             {
@@ -2130,7 +2131,7 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
     return 0;
 }
 
-Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &iStatus, bool &dev)
+Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &rStatus, vector<bool> &iStatus, bool &dev)
 {
     score += 100;
     depth++;
@@ -2162,7 +2163,7 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
         diff = 8;
     }
     Room currentRoom;
-    currentRoom = roomGenerator(diff,rew,adv,dir,hero,mStatus);
+    currentRoom = roomGenerator(diff,rew,adv,dir,hero,mStatus,rStatus);
     //cout << "Karma: " << karma << endl;
     if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
     {

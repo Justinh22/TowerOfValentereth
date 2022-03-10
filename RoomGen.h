@@ -472,19 +472,28 @@ int difficultyGen(int &diff, int adv, vector<bool> &mbStatus)
     Sleep(2000);
 }
 
-Room roomBuilder(int type, vector<int> loot, int cid, Directory dir)
+Room roomBuilder(int type, vector<int> loot, int cid, Directory dir, vector<bool> &rmStatus)
 {
     //cout << "In builder." << endl;
     int id;
+    int timeout=0;
     Room newRoom;
     if(type==0)
     {
+
         if(cid==48) //Valentereth
             id = 89;
         else if(cid==56)
             id = 90;
-        else if(cid<57) //Miniboss
-            id = rand() % (dir.roomDirectory.size()-9);
+        else if(cid<57)
+        {
+            do //Room not seen
+            {
+                id = rand() % (dir.roomDirectory.size()-9);
+                timeout++;
+            }while(rmStatus[id]==1||timeout>=30);
+            rmStatus[id] = 1;
+        }
         else
             id = cid + 25;
         newRoom = dir.roomDirectory[id];
@@ -773,7 +782,7 @@ Merchant storeHandler(int level)
     return store;
 }
 
-Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vector<bool> &mbStatus)
+Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vector<bool> &mbStatus, vector<bool> &rmStatus)
 {
     vector<int> loot;
     int foo;
@@ -781,7 +790,7 @@ Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vect
     int creature = difficultyGen(diff,adv,mbStatus);
     Room currentRoom;
     //cout << "Building room..." << endl;
-    currentRoom = roomBuilder(0,loot,creature,dir);
+    currentRoom = roomBuilder(0,loot,creature,dir,rmStatus);
     if(diff==8)
         minibossStatGen(adv,currentRoom.monster);
 
