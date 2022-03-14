@@ -488,8 +488,8 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     switch(hero.inventory[choice-1])
                     {
                         case 213: //Fire Bomb
-                            cout << "Dealt 10 damage to " << monName << "!" << endl;
-                            monHP -= 10;
+                            cout << "Dealt 15 damage to " << monName << "!" << endl;
+                            monHP -= 15;
                             break;
                         case 214: //Smoke Capsule
                             cout << "You escape successfully!" << endl;

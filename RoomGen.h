@@ -601,43 +601,88 @@ Merchant storeHandler(int level)
             }
             else if(itemType==3)
             {
-                if(level<=2)
-                    itemRarity = rand() % 2 + 1;
-                else if(level<=4)
+                if(rand()%3>0)
+                    itemType = 2;
+                if(itemType==2)
                 {
-                    foo = rand() % 10 + 1;
-                    if(foo<3)
-                        itemRarity = 1;
-                    else if(foo<7)
-                        itemRarity = 2;
+                    if(level<=2)
+                        itemRarity = rand() % 2 + 1;
+                    else if(level<=4)
+                    {
+                        foo = rand() % 10 + 1;
+                        if(foo<3)
+                            itemRarity = 1;
+                        else if(foo<7)
+                            itemRarity = 2;
+                        else
+                            itemRarity = 3;
+                    }
+                    else if(level<=7)
+                    {
+                        foo = rand() % 10 + 1;
+                        if(foo<2)
+                            itemRarity = 1;
+                        else if(foo<4)
+                            itemRarity = 2;
+                        else if(foo<7)
+                            itemRarity = 3;
+                        else
+                            itemRarity = 4;
+                    }
                     else
-                        itemRarity = 3;
-                }
-                else if(level<=7)
-                {
-                    foo = rand() % 10 + 1;
-                    if(foo<2)
-                        itemRarity = 1;
-                    else if(foo<4)
-                        itemRarity = 2;
-                    else if(foo<7)
-                        itemRarity = 3;
-                    else
-                        itemRarity = 4;
+                    {
+                        foo = rand() % 10 + 1;
+                        if(foo<2)
+                            itemRarity = 2;
+                        else if(foo<4)
+                            itemRarity = 3;
+                        else if(foo<7)
+                            itemRarity = 4;
+                        else
+                            itemRarity = 5;
+                    }
                 }
                 else
                 {
                     foo = rand() % 10 + 1;
-                    if(foo<2)
-                        itemRarity = 2;
-                    else if(foo<4)
-                        itemRarity = 3;
-                    else if(foo<7)
-                        itemRarity = 4;
+                    if(level < 4)
+                    {
+                        if(foo<=6)
+                            itemRarity = 1;
+                        else
+                            itemRarity = 2;
+                    }
+                    else if(level < 6)
+                    {
+                        if(foo<=3)
+                            itemRarity = 1;
+                        else if(foo<=8)
+                            itemRarity = 2;
+                        else
+                            itemRarity = 3;
+                    }
+                    else if(level < 8)
+                    {
+                        if(foo<=2)
+                            itemRarity = 1;
+                        else if(foo<=7)
+                            itemRarity = 2;
+                        else
+                            itemRarity = 3;
+                    }
                     else
-                        itemRarity = 5;
+                    {
+                        if(foo<=2)
+                            itemRarity = 1;
+                        else if(foo<=5)
+                            itemRarity = 2;
+                        else if(foo<=7)
+                            itemRarity = 3;
+                        else
+                            itemRarity = 4;
+                    }
                 }
-                id = itemPicker(itemType-1,itemRarity);
+                id = itemPicker(itemType,itemRarity);
                 store.storeInventory.push_back(id);
                 switch(itemRarity)
                 {
