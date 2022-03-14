@@ -549,6 +549,7 @@ int main()
     bool itemDrop=0;
     bool gankTracker=1;
     int boxType=-1;
+    bool saveLog=0;
 
     if(!saveFound)
     {
@@ -1221,6 +1222,19 @@ int main()
                     godMode = 0;
                 }
             }
+            else if(err==13) //SAVELOG
+            {
+                if(!saveLog)
+                {
+                    cout << "Save log enabled. Copies of this save file will be made every 5 floors for review purposes." << endl;
+                    saveLog = 1;
+                }
+                else
+                {
+                    cout << "Save log disabld." << endl;
+                    saveLog = 0;
+                }
+            }
         }
         else
             end = 1;
@@ -1345,6 +1359,10 @@ int actionHandler(string act, bool debug_opt, int gankTracker)
     else if(act=="godmode"&&debug_opt)
     {
         return 12;
+    }
+    else if(act=="savelog"&&debug_opt)
+    {
+        return 13;
     }
     else
     {

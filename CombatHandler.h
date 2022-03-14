@@ -492,9 +492,9 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                             monHP -= 10;
                             break;
                         case 214: //Smoke Capsule
-                            cout << "DDG rose by 25!" << endl;
-                            ItemBuff.setName("Smoke Capsule");
-                            buffCounter.push_back(ItemBuff);
+                            cout << "You escape successfully!" << endl;
+                            Sleep(2000);
+                            end = 3;
                             break;
                         case 215: //Gaia Herbs
                             cout << "HP Regeneration rose by 5!" << endl;
@@ -542,6 +542,8 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         case 224: //Second Soul
                             break;
                     }
+                    if(end==3)
+                        break;
                     Sleep(1000);
                 }
 
@@ -875,8 +877,6 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         {
             if(buffCounter[i].getName()=="Enveloping Shadow")
                 dmg += 5;
-            else if(buffCounter[i].getName()=="Smoke Capsule")
-                ddgBuff += 25;
             else if(buffCounter[i].getName()=="Gaia Herbs")
                 hpBuff += 5;
             else if(buffCounter[i].getName()=="Aether Vial")

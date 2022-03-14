@@ -270,6 +270,26 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     valid = 1;
                 else if(target=="potion"&&currentRoom.getIList()[i]>=204&&currentRoom.getIList()[i]<=211)
                     valid = 1;
+                else if(target=="bomb"&&(currentRoom.getIList()[i]==213||currentRoom.getIList()[i]==216||currentRoom.getIList()[i]==219))
+                    valid = 1;
+                else if(target=="capsule"&&currentRoom.getIList()[i]==214)
+                    valid = 1;
+                else if(target=="herbs"&&currentRoom.getIList()[i]==215)
+                    valid = 1;
+                else if(target=="vial"&&(currentRoom.getIList()[i]==217||currentRoom.getIList()[i]==218||currentRoom.getIList()[i]==221))
+                    valid = 1;
+                else if((target=="venom"||target=="poison")&&currentRoom.getIList()[i]==218)
+                    valid = 1;
+                else if(target=="flower"&&currentRoom.getIList()[i]==220)
+                    valid = 1;
+                else if((target=="tincture"||target=="bottle")&&currentRoom.getIList()[i]==221)
+                    valid = 1;
+                else if((target=="veil"||target=="statue")&&currentRoom.getIList()[i]==222)
+                    valid = 1;
+                else if((target=="dust"||target=="powder")&&currentRoom.getIList()[i]==223)
+                    valid = 1;
+                else if((target=="soul"||target=="sphere")&&currentRoom.getIList()[i]==224)
+                    valid = 1;
                 else if((target=="spell"||target=="scroll")&&currentRoom.getIList()[i]>=300&&currentRoom.getIList()[i]<=342)
                     valid = 1;
                 else if((target=="ring")&&currentRoom.getIList()[i]>=400&&currentRoom.getIList()[i]<500)
@@ -407,6 +427,26 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
             else if(target=="berry"&&currentRoom.getIList()[i]==201)
                 valid = 1;
             else if(target=="potion"&&currentRoom.getIList()[i]>=204&&currentRoom.getIList()[i]<=211)
+                valid = 1;
+            else if(target=="bomb"&&(currentRoom.getIList()[i]==213||currentRoom.getIList()[i]==216||currentRoom.getIList()[i]==219))
+                valid = 1;
+            else if(target=="capsule"&&currentRoom.getIList()[i]==214)
+                valid = 1;
+            else if(target=="herbs"&&currentRoom.getIList()[i]==215)
+                valid = 1;
+            else if(target=="vial"&&(currentRoom.getIList()[i]==217||currentRoom.getIList()[i]==218||currentRoom.getIList()[i]==221))
+                valid = 1;
+            else if((target=="venom"||target=="poison")&&currentRoom.getIList()[i]==218)
+                valid = 1;
+            else if(target=="flower"&&currentRoom.getIList()[i]==220)
+                valid = 1;
+            else if((target=="tincture"||target=="bottle")&&currentRoom.getIList()[i]==221)
+                valid = 1;
+            else if((target=="veil"||target=="statue")&&currentRoom.getIList()[i]==222)
+                valid = 1;
+            else if((target=="dust"||target=="powder")&&currentRoom.getIList()[i]==223)
+                valid = 1;
+            else if((target=="soul"||target=="sphere")&&currentRoom.getIList()[i]==224)
                 valid = 1;
             else if((target=="spell"||target=="scroll")&&currentRoom.getIList()[i]>=300&&currentRoom.getIList()[i]<=342)
                 valid = 1;

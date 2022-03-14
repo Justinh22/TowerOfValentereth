@@ -134,7 +134,7 @@ string creatureDesc(int cid, vector<Creature> creatureDirectory, Player &hero, i
     }
     else if(cid==57)
     {
-        return "Prowling around the hall is a massive behemoth, completely entombed in black slime aside from its razor-sharp claws, and piercing yellow eyes. Upon seeing you enter, it lets out a deafening roar.";
+        return "Prowling around the hall is a massive behemoth, completely covered in black slime aside from its razor-sharp claws, and piercing yellow eyes. Upon seeing you enter, it lets out a deafening roar.";
     }
     else if(cid==58)
     {

@@ -286,7 +286,7 @@ vector<Consumable> initCDir(vector<Consumable> consumableDirectory)
     //1
     Consumable Fire_Bomb("Fire Bomb","A small pouch filled with an explosive powder. When thrown, deals 15 damage to the enemy.",1,213,0,0);
     consumableDirectory.push_back(Fire_Bomb);
-    Consumable Smoke_Capsule("Smoke Capsule","A small, black orb with wisps of smoke billowing within. When used, raises your DDG by 25.",1,214,0,0);
+    Consumable Smoke_Capsule("Smoke Capsule","A small, black orb with wisps of smoke billowing within. When used, allows immediate escape from combat.",1,214,0,0);
     consumableDirectory.push_back(Smoke_Capsule);
     Consumable Gaia_Herbs("Gaia Herbs","A handful of medicinal herbs. When used in battle, regenerates 5 HP for the remainder of combat.",1,215,0,0);
     consumableDirectory.push_back(Gaia_Herbs);
