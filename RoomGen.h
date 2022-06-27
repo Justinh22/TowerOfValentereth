@@ -23,6 +23,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
     bool amrFlag = 0;
     bool conFlag = 0;
     bool splFlag = 0;
+    bool rngFlag = 0;
     bool keyFlag = 0;
     cout << endl;
     while(remaining > 0)
@@ -32,7 +33,9 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
         do
         {
             change = 0;
-            itemType = rand() % 4; // 0 = Weapon, 1 = Armor, 2 = Consumable, 3 = Spell
+            itemType = rand() % 5; // 0 = Weapon, 1 = Armor, 2 = Consumable, 3 = Spell, 4 = Ring
+            if((adv<3&&itemType==4)||rand()%2==0)
+                itemType = rand() % 4;
             if(itemType==0)
                 if(wpnFlag==1)
                     change = 1;
@@ -44,6 +47,9 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                     change = 1;
             if(itemType==3)
                 if(splFlag==1)
+                    change = 1;
+            if(itemType==4)
+                if(rngFlag==1)
                     change = 1;
         }while(change==1);
         //cout << "ItemType is " << itemType << endl;
@@ -105,7 +111,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 1;
                         cost = 1;
                     }
-                    else if(foo<8)
+                    else if(foo<=8)
                     {
                         itemRarity = 2;
                         cost = 2;
@@ -122,7 +128,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 2;
                         cost = 1;
                     }
-                    else if(foo<8)
+                    else if(foo<=8)
                     {
                         itemRarity = 3;
                         cost = 2;
@@ -139,7 +145,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 3;
                         cost = 1;
                     }
-                    else if(foo<8)
+                    else if(foo<=8)
                     {
                         itemRarity = 4;
                         cost = 2;
@@ -156,7 +162,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 4;
                         cost = 2;
                     }
-                    else if(foo<8)
+                    else if(foo<=8)
                     {
                         itemRarity = 5;
                         cost = 3;
@@ -173,7 +179,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 5;
                         cost = 2;
                     }
-                    else if(foo<8)
+                    else if(foo<=8)
                     {
                         itemRarity = 6;
                         cost = 3;
@@ -190,7 +196,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 6;
                         cost = 2;
                     }
-                    else if(foo<8)
+                    else if(foo<=8)
                     {
                         itemRarity = 7;
                         cost = 3;
@@ -207,7 +213,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 7;
                         cost = 3;
                     }
-                    else if(foo<8)
+                    else if(foo<=8)
                     {
                         itemRarity = 8;
                         cost = 4;
@@ -224,7 +230,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 8;
                         cost = 3;
                     }
-                    else if(foo<8)
+                    else if(foo<=9)
                     {
                         itemRarity = 9;
                         cost = 4;
@@ -254,32 +260,78 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
             {
                 keyFlag = 1;
             }
-            else if(adv < 4)
+            if(rand()%3==0)
             {
-                if(foo<=5)
-                    itemRarity = 1;
-                else if(foo<=8)
-                    itemRarity = 2;
-                else
-                    itemRarity = 3;
+                itemType = 3;
             }
-            else if(adv < 7)
+            if(itemType==2) //Potion/Food
             {
-                if(foo<=5)
-                    itemRarity = 2;
-                else if(foo<=8)
-                    itemRarity = 3;
+                if(adv < 4)
+                {
+                    if(foo<=5)
+                        itemRarity = 1;
+                    else if(foo<=8)
+                        itemRarity = 2;
+                    else
+                        itemRarity = 3;
+                }
+                else if(adv < 7)
+                {
+                    if(foo<=5)
+                        itemRarity = 2;
+                    else if(foo<=8)
+                        itemRarity = 3;
+                    else
+                        itemRarity = 4;
+                }
                 else
-                    itemRarity = 4;
+                {
+                    if(foo<=5)
+                        itemRarity = 3;
+                    else if(foo<=8)
+                        itemRarity = 4;
+                    else
+                        itemRarity = 5;
+                }
             }
-            else
+            else //Special
             {
-                if(foo<=5)
-                    itemRarity = 3;
-                else if(foo<=8)
-                    itemRarity = 4;
+                if(adv < 4)
+                {
+                    if(foo<=6)
+                        itemRarity = 1;
+                    else
+                        itemRarity = 2;
+                }
+                else if(adv < 6)
+                {
+                    if(foo<=3)
+                        itemRarity = 1;
+                    else if(foo<=8)
+                        itemRarity = 2;
+                    else
+                        itemRarity = 3;
+                }
+                else if(adv < 8)
+                {
+                    if(foo<=2)
+                        itemRarity = 1;
+                    else if(foo<=7)
+                        itemRarity = 2;
+                    else
+                        itemRarity = 3;
+                }
                 else
-                    itemRarity = 5;
+                {
+                    if(foo<=2)
+                        itemRarity = 1;
+                    else if(foo<=5)
+                        itemRarity = 2;
+                    else if(foo<=7)
+                        itemRarity = 3;
+                    else
+                        itemRarity = 4;
+                }
             }
             if(keyFlag==0)
             {
@@ -354,6 +406,30 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
             loot.push_back(iid);
             cost = itemRarity;
         }
+        else //RING
+        {
+            rngFlag = 1;
+            foo = rand() % 10 + 1;
+            if(adv<6)
+                itemRarity = 1;
+            else if(adv<8)
+            {
+                if(foo<=4)
+                    itemRarity = 1;
+                else
+                    itemRarity = 2;
+            }
+            else
+            {
+                if(foo<=7)
+                    itemRarity = 2;
+                else
+                    itemRarity = 3;
+            }
+            iid = itemPicker(itemType,itemRarity);
+            loot.push_back(iid);
+            cost = (itemRarity*2)-1;
+        }
         remaining -= cost;
 
         lootcnt++;
@@ -396,15 +472,28 @@ int difficultyGen(int &diff, int adv, vector<bool> &mbStatus)
     Sleep(2000);
 }
 
-Room roomBuilder(int type, vector<int> loot, int cid, Directory dir)
+Room roomBuilder(int type, vector<int> loot, int cid, Directory dir, vector<bool> &rmStatus)
 {
     //cout << "In builder." << endl;
     int id;
+    int timeout=0;
     Room newRoom;
     if(type==0)
     {
-        if(cid<57) //Miniboss
-            id = rand() % (dir.roomDirectory.size()-6);
+
+        if(cid==48) //Valentereth
+            id = 89;
+        else if(cid==56)
+            id = 90;
+        else if(cid<57)
+        {
+            do //Room not seen
+            {
+                id = rand() % (dir.roomDirectory.size()-9);
+                timeout++;
+            }while(rmStatus[id]==1||timeout>=30);
+            rmStatus[id] = 1;
+        }
         else
             id = cid + 25;
         newRoom = dir.roomDirectory[id];
@@ -456,7 +545,7 @@ Merchant storeHandler(int level)
     {
         for(int i=0;i<5;i++)
         {
-            itemType = rand() % 4 + 1;
+            itemType = rand() % 5 + 1;
             if(itemType<=2)
             {
                 if(level==1)
@@ -512,43 +601,88 @@ Merchant storeHandler(int level)
             }
             else if(itemType==3)
             {
-                if(level<=2)
-                    itemRarity = rand() % 2 + 1;
-                else if(level<=4)
+                if(rand()%3>0)
+                    itemType = 2;
+                if(itemType==2)
                 {
-                    foo = rand() % 10 + 1;
-                    if(foo<3)
-                        itemRarity = 1;
-                    else if(foo<7)
-                        itemRarity = 2;
+                    if(level<=2)
+                        itemRarity = rand() % 2 + 1;
+                    else if(level<=4)
+                    {
+                        foo = rand() % 10 + 1;
+                        if(foo<3)
+                            itemRarity = 1;
+                        else if(foo<7)
+                            itemRarity = 2;
+                        else
+                            itemRarity = 3;
+                    }
+                    else if(level<=7)
+                    {
+                        foo = rand() % 10 + 1;
+                        if(foo<2)
+                            itemRarity = 1;
+                        else if(foo<4)
+                            itemRarity = 2;
+                        else if(foo<7)
+                            itemRarity = 3;
+                        else
+                            itemRarity = 4;
+                    }
                     else
-                        itemRarity = 3;
-                }
-                else if(level<=7)
-                {
-                    foo = rand() % 10 + 1;
-                    if(foo<2)
-                        itemRarity = 1;
-                    else if(foo<4)
-                        itemRarity = 2;
-                    else if(foo<7)
-                        itemRarity = 3;
-                    else
-                        itemRarity = 4;
+                    {
+                        foo = rand() % 10 + 1;
+                        if(foo<2)
+                            itemRarity = 2;
+                        else if(foo<4)
+                            itemRarity = 3;
+                        else if(foo<7)
+                            itemRarity = 4;
+                        else
+                            itemRarity = 5;
+                    }
                 }
                 else
                 {
                     foo = rand() % 10 + 1;
-                    if(foo<2)
-                        itemRarity = 2;
-                    else if(foo<4)
-                        itemRarity = 3;
-                    else if(foo<7)
-                        itemRarity = 4;
+                    if(level < 4)
+                    {
+                        if(foo<=6)
+                            itemRarity = 1;
+                        else
+                            itemRarity = 2;
+                    }
+                    else if(level < 6)
+                    {
+                        if(foo<=3)
+                            itemRarity = 1;
+                        else if(foo<=8)
+                            itemRarity = 2;
+                        else
+                            itemRarity = 3;
+                    }
+                    else if(level < 8)
+                    {
+                        if(foo<=2)
+                            itemRarity = 1;
+                        else if(foo<=7)
+                            itemRarity = 2;
+                        else
+                            itemRarity = 3;
+                    }
                     else
-                        itemRarity = 5;
+                    {
+                        if(foo<=2)
+                            itemRarity = 1;
+                        else if(foo<=5)
+                            itemRarity = 2;
+                        else if(foo<=7)
+                            itemRarity = 3;
+                        else
+                            itemRarity = 4;
+                    }
                 }
-                id = itemPicker(itemType-1,itemRarity);
+                id = itemPicker(itemType,itemRarity);
                 store.storeInventory.push_back(id);
                 switch(itemRarity)
                 {
@@ -648,6 +782,41 @@ Merchant storeHandler(int level)
                 }
                 store.storeCost.push_back(itemCost);
             }
+            else if(itemType==5) //RING
+            {
+                foo = rand() % 10 + 1;
+                if(level<6)
+                    itemRarity = 1;
+                else if(level<8)
+                {
+                    if(foo<=7)
+                        itemRarity = 1;
+                    else
+                        itemRarity = 2;
+                }
+                else
+                {
+                    if(foo<=8)
+                        itemRarity = 2;
+                    else
+                        itemRarity = 3;
+                }
+                id = itemPicker(3,itemRarity);
+                store.storeInventory.push_back(id);
+                switch(itemRarity)
+                {
+                    case 1:
+                        itemCost = 50;
+                        break;
+                    case 2:
+                        itemCost = 125;
+                        break;
+                    case 3:
+                        itemCost = 200;
+                        break;
+                }
+                store.storeCost.push_back(itemCost);
+            }
         }
     }
     else if(store.getType()==1)
@@ -658,7 +827,7 @@ Merchant storeHandler(int level)
     return store;
 }
 
-Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vector<bool> &mbStatus)
+Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vector<bool> &mbStatus, vector<bool> &rmStatus)
 {
     vector<int> loot;
     int foo;
@@ -666,7 +835,7 @@ Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vect
     int creature = difficultyGen(diff,adv,mbStatus);
     Room currentRoom;
     //cout << "Building room..." << endl;
-    currentRoom = roomBuilder(0,loot,creature,dir);
+    currentRoom = roomBuilder(0,loot,creature,dir,rmStatus);
     if(diff==8)
         minibossStatGen(adv,currentRoom.monster);
 
@@ -710,23 +879,58 @@ Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vect
         {
             foo = rand() % 3 + 1;
             int featid;
+            int rty;
             //cout << "Chance is " << foo << ", while luck of finding is " << currentRoom.getFList()[i].getLuck() << "." << endl;
             if(currentRoom.getFList()[i].getLuck()>=foo)
             {
                 if(currentRoom.getFList()[i].getItem()<=2)
                 {
-                    featid = itemPicker(currentRoom.getFList()[i].getItem()-1,adv);
+                    if(adv>3)
+                    {
+                        foo = rand() % 10 + 1;
+                        if(adv<10)
+                        {
+                            if(foo<5)
+                                rty = adv;
+                            else
+                                rty = adv - 1;
+                        }
+                        else
+                        {
+                            if(foo<9)
+                                rty = adv - 1;
+                            else
+                                rty = adv;
+                        }
+                    }
+                    else
+                    {
+                        rty = adv;
+                    }
+                    featid = itemPicker(currentRoom.getFList()[i].getItem()-1,rty);
                     //cout << "Adding " << featid << "." << endl;
                     currentRoom.addItem(featid);
                 }
                 else if(currentRoom.getFList()[i].getItem()<=3)
                 {
-                    if(adv/2==0)
-                        featid = itemPicker(2,1);
+                    if(foo%2==0)
+                    {
+                        if(adv/2==0)
+                            featid = itemPicker(2,1);
+                        else
+                            featid = itemPicker(2,adv/2);
+                        //cout << "Adding " << featid << "." << endl;
+                        currentRoom.addItem(featid);
+                    }
                     else
-                        featid = itemPicker(2,adv/2);
-                    //cout << "Adding " << featid << "." << endl;
-                    currentRoom.addItem(featid);
+                    {
+                        if(adv/2==0)
+                            featid = itemPicker(3,1);
+                        else
+                            featid = itemPicker(3,adv/2);
+                        //cout << "Adding " << featid << "." << endl;
+                        currentRoom.addItem(featid);
+                    }
                 }
                 else
                 {

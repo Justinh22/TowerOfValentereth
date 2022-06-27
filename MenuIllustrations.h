@@ -16,12 +16,12 @@ void titleScreen()
     cout << " |                                                                                                                    | " << endl;
     cout << " |                                                                                                                    | " << endl;
     cout << " |                                                                                                                    | " << endl;
-    cout << " |     1) New Game                                                                                                    | " << endl;
-    cout << " |     2) Load Game                                                                                                   | " << endl;
+    cout << " |     1) Ascend the Tower                                                                                            | " << endl;
+    cout << " |     2) Load Previous Ascent                                                                                        | " << endl;
     cout << " |     3) Leaderboard                                                                                                 | " << endl;
     cout << " |     4) Achievements                                                                                                | " << endl;
     cout << " |     5) Masks                                                                                                       | " << endl;
-    cout << " |                                                                                                             v1.5.4 | " << endl;
+    cout << " |                                                                                                             v1.6.0 | " << endl;
     cout << " |____________________________________________________________________________________________________________________| " << endl;
     cout << "                                                                                                                        " << endl;
 }
@@ -106,10 +106,10 @@ void achievementMenu()
     cout << "|-                                                                                                                -|" << endl;
     cout << "|-       COMPLETION RATE: " << setw(4) << std::right << std::setprecision(3) << float(float(ach.points)/1000)*100 << "%" << " (" << setw(4) << std::right << ach.points << "/1000)                                                                       -|" << endl;
     cout << "|-                                                                                                                -|" << endl;
-    cout << "|-       (";if(ach.complete[0]) cout << "X"; else cout << " "; cout << ") Connoisseur (10pts):                    Eat 50 loaves of bread                                       -|" << endl;
+    cout << "|-       (";if(ach.complete[0]) cout << "X"; else cout << " "; cout << ") Connoisseur (10pts):                    Eat 20 loaves of bread                                       -|" << endl;
     cout << "|-       (";if(ach.complete[1]) cout << "X"; else cout << " "; cout << ") Alchemist (10pts):                      Drink 50 potions                                             -|" << endl;
     cout << "|-       (";if(ach.complete[2]) cout << "X"; else cout << " "; cout << ") Expert (10pts):                         Defeat 50 enemies                                            -|" << endl;
-    cout << "|-       (";if(ach.complete[3]) cout << "X"; else cout << " "; cout << ") ...and then you wake up (10pts):        Die 10 times                                                 -|" << endl;
+    cout << "|-       (";if(ach.complete[3]) cout << "X"; else cout << " "; cout << ") Deja Vu (10pts):                        Die 10 times                                                 -|" << endl;
     cout << "|-       (";if(ach.complete[4]) cout << "X"; else cout << " "; cout << ") Rise and Shine, Campers! (20pts):       Die 25 times                                                 -|" << endl;
     cout << "|-       (";if(ach.complete[5]) cout << "X"; else cout << " "; cout << ") Powerhouse (20pts):                     Deal 50 damage in one strike                                 -|" << endl;
     cout << "|-       (";if(ach.complete[6]) cout << "X"; else cout << " "; cout << ") The Tyrant (30pts):                     Defeat Valentereth                                           -|" << endl;
@@ -119,42 +119,43 @@ void achievementMenu()
     cout << "|-       (";if(ach.complete[10]) cout << "X"; else cout << " "; cout << ") The Scion (15pts):                      Defeat Byralt                                                -|" << endl;
     cout << "|-       (";if(ach.complete[11]) cout << "X"; else cout << " "; cout << ") The Archmage (15pts):                   Defeat Emeritus                                              -|" << endl;
     cout << "|-       (";if(ach.complete[12]) cout << "X"; else cout << " "; cout << ") The Nature's Wrath (15pts):             Defeat Endrigaia                                             -|" << endl;
-    cout << "|-       (";if(ach.complete[13]) cout << "X"; else cout << " "; cout << ") Unstoppable (20pts):                    Defeat 100 enemies                                           -|" << endl;
-    cout << "|-       (";if(ach.complete[14]) cout << "X"; else cout << " "; cout << ") Nuke (30pts):                           Deal 50 damage at once with a spell                          -|" << endl;
-    cout << "|-       (";if(ach.complete[15]) cout << "X"; else cout << " "; cout << ") Overkill (30pts):                       Deal 100 damage in one strike                                -|" << endl;
-    cout << "|-       (";if(ach.complete[16]) cout << "X"; else cout << " "; cout << ") Necromancy (30pts):                     Deal 20 necrotic damage in one turn                          -|" << endl;
-    cout << "|-       (";if(ach.complete[17]) cout << "X"; else cout << " "; cout << ") Sorcerer Supreme (25pts):               Obtain the equipment of the ultimate sorcerer                -|" << endl;
-    cout << "|-       (";if(ach.complete[18]) cout << "X"; else cout << " "; cout << ") Conquerer (25pts):                      Obtain the equipment of the great conquerer                  -|" << endl;
-    cout << "|-       (";if(ach.complete[19]) cout << "X"; else cout << " "; cout << ") Vanguard (25pts):                       Obtain the equipment of the unstoppable vanguard             -|" << endl;
-    cout << "|-       (";if(ach.complete[20]) cout << "X"; else cout << " "; cout << ") Whisper (25pts):                        Obtain the equipment of the silent assassin                  -|" << endl;
-    cout << "|-       (";if(ach.complete[21]) cout << "X"; else cout << " "; cout << ") Ancient Power (25pts):                  Obtain the equipment of the ancient demigod                  -|" << endl;
-    cout << "|-       (";if(ach.complete[22]) cout << "X"; else cout << " "; cout << ") Glass Triumph (40pts):                  Defeat Valentereth with the Mask of Glass                    -|" << endl;
-    cout << "|-       (";if(ach.complete[23]) cout << "X"; else cout << " "; cout << ") Wrath Triumph (40pts):                  Defeat Valentereth with the Mask of Wrath                    -|" << endl;
-    cout << "|-       (";if(ach.complete[24]) cout << "X"; else cout << " "; cout << ") Darkness Triumph (40pts):               Defeat Valentereth with the Mask of Darkness                 -|" << endl;
-    cout << "|-       (";if(ach.complete[25]) cout << "X"; else cout << " "; cout << ") Arcana Triumph (40pts):                 Defeat Valentereth with the Mask of Arcana                   -|" << endl;
-    cout << "|-       (";if(ach.complete[26]) cout << "X"; else cout << " "; cout << ") Steel Triumph (40pts):                  Defeat Valentereth with the Mask of Steel                    -|" << endl;
-    cout << "|-       (";if(ach.complete[27]) cout << "X"; else cout << " "; cout << ") Whispers Triumph (40pts):               Defeat Valentereth with the Mask of Whispers                 -|" << endl;
-    cout << "|-       (";if(ach.complete[28]) cout << "X"; else cout << " "; cout << ") Beasts Triumph (40pts):                 Defeat Valentereth with the Mask of Beasts                   -|" << endl;
-    cout << "|-       (";if(ach.complete[29]) cout << "X"; else cout << " "; cout << ") Souls Triumph (40pts):                  Defeat Valentereth with the Mask of Souls                    -|" << endl;
+    cout << "|-       (";if(ach.complete[13]) cout << "X"; else cout << " "; cout << ") The Ascended (15pts):                   Defeat Halliot                                               -|" << endl;
+    cout << "|-       (";if(ach.complete[14]) cout << "X"; else cout << " "; cout << ") Unstoppable (20pts):                    Defeat 100 enemies                                           -|" << endl;
+    cout << "|-       (";if(ach.complete[15]) cout << "X"; else cout << " "; cout << ") Nuke (30pts):                           Deal 50 damage at once with a spell                          -|" << endl;
+    cout << "|-       (";if(ach.complete[16]) cout << "X"; else cout << " "; cout << ") Overkill (30pts):                       Deal 100 damage in one strike                                -|" << endl;
+    cout << "|-       (";if(ach.complete[17]) cout << "X"; else cout << " "; cout << ") Necromancy (30pts):                     Deal 20 necrotic damage in one turn                          -|" << endl;
+    cout << "|-       (";if(ach.complete[18]) cout << "X"; else cout << " "; cout << ") Sorcerer Supreme (25pts):               Obtain the equipment of the ultimate sorcerer                -|" << endl;
+    cout << "|-       (";if(ach.complete[19]) cout << "X"; else cout << " "; cout << ") Conquerer (25pts):                      Obtain the equipment of the great conquerer                  -|" << endl;
+    cout << "|-       (";if(ach.complete[20]) cout << "X"; else cout << " "; cout << ") Vanguard (25pts):                       Obtain the equipment of the unstoppable vanguard             -|" << endl;
+    cout << "|-       (";if(ach.complete[21]) cout << "X"; else cout << " "; cout << ") Whisper (25pts):                        Obtain the equipment of the silent assassin                  -|" << endl;
+    cout << "|-       (";if(ach.complete[22]) cout << "X"; else cout << " "; cout << ") Ancient Power (25pts):                  Obtain the equipment of the ancient demigod                  -|" << endl;
+    cout << "|-       (";if(ach.complete[23]) cout << "X"; else cout << " "; cout << ") Glass Triumph (40pts):                  Defeat Valentereth with the Mask of Glass                    -|" << endl;
+    cout << "|-       (";if(ach.complete[24]) cout << "X"; else cout << " "; cout << ") Wrath Triumph (40pts):                  Defeat Valentereth with the Mask of Wrath                    -|" << endl;
+    cout << "|-       (";if(ach.complete[25]) cout << "X"; else cout << " "; cout << ") Darkness Triumph (40pts):               Defeat Valentereth with the Mask of Darkness                 -|" << endl;
+    cout << "|-       (";if(ach.complete[26]) cout << "X"; else cout << " "; cout << ") Arcana Triumph (40pts):                 Defeat Valentereth with the Mask of Arcana                   -|" << endl;
+    cout << "|-       (";if(ach.complete[27]) cout << "X"; else cout << " "; cout << ") Steel Triumph (40pts):                  Defeat Valentereth with the Mask of Steel                    -|" << endl;
+    cout << "|-       (";if(ach.complete[28]) cout << "X"; else cout << " "; cout << ") Whispers Triumph (40pts):               Defeat Valentereth with the Mask of Whispers                 -|" << endl;
+    cout << "|-       (";if(ach.complete[29]) cout << "X"; else cout << " "; cout << ") Beasts Triumph (40pts):                 Defeat Valentereth with the Mask of Beasts                   -|" << endl;
+    cout << "|-       (";if(ach.complete[30]) cout << "X"; else cout << " "; cout << ") Souls Triumph (40pts):                  Defeat Valentereth with the Mask of Souls                    -|" << endl;
     cout << "|-                                                                                                                -|" << endl;
     cout << "|-       HIDDEN ACHIEVEMENTS                                                                                      -|" << endl;
     cout << "|-                                                                                                                -|" << endl;
-    if(!ach.complete[30])
+    if(!ach.complete[31])
         cout << "|-       ( ) Gank (40pts)                                                                                         -|" << endl;
     else
         cout << "|-       (X) Gank (40pts): Defeat Valentereth on an ascent where only the word 'gank' is used to attack enemies   -|" << endl;
-    if(!ach.complete[31])
-        cout << "|-       ( ) Spectrum Triumph (80pts)                                                                             -|" << endl;
-    else
-        cout << "|-       (X) Spectrum Triumph (80pts): Defeat Valentereth once with each mask                                     -|" << endl;
     if(!ach.complete[32])
-        cout << "|-       ( ) True Heir (75pts)                                                                                    -|" << endl;
+        cout << "|-       ( ) Spectrum Triumph (75pts)                                                                             -|" << endl;
     else
-        cout << "|-       (X) True Heir (75pts): Defeat Valentereth in one strike                                                  -|" << endl;
+        cout << "|-       (X) Spectrum Triumph (75pts): Defeat Valentereth with each mask                                          -|" << endl;
     if(!ach.complete[33])
-        cout << "|-       ( ) The Truth (50pts)                                                                                    -|" << endl;
+        cout << "|-       ( ) Worthy Heir (65pts)                                                                                  -|" << endl;
     else
-        cout << "|-       (X) The Truth (50pts): Defeat Termineth                                                                  -|" << endl;
+        cout << "|-       (X) Worthy Heir (65pts): Defeat Valentereth in one strike                                                -|" << endl;
+    if(!ach.complete[34])
+        cout << "|-       ( ) The Watcher (50pts)                                                                                  -|" << endl;
+    else
+        cout << "|-       (X) The Watcher (50pts): Defeat Termineth                                                                -|" << endl;
     cout << "|-                                                                                                                -|" << endl;
     cout << "|-       0) RETURN                                                                                                -|" << endl;
     cout << "|-                                                                                                                -|" << endl;
@@ -207,6 +208,7 @@ void statMenu(Player hero, Directory dir)
     cout << "|-                                                  -|" << endl;
     cout << "|-      WPN: " << setw(36) << std::left << hero.eqpWpn.getName() << "   -|" << endl;
     cout << "|-      AMR: " << setw(36) << std::left << hero.eqpAmr.getName() << "   -|" << endl;
+    cout << "|-      RNG: " << setw(36) << std::left << hero.eqpRng.getName() << "   -|" << endl;
     if(hero.mask.getID()>=0)
     {
     cout << "|-                                                  -|" << endl;
@@ -215,7 +217,7 @@ void statMenu(Player hero, Directory dir)
     cout << "|-                                                  -|" << endl;
     cout << "|-      ATK: " << setw(8) << std::left << strString << "             DEF: " << setw(8) << std::left << std::to_string(hero.getNDEF()) + " (+" + std::to_string(hero.eqpAmr.getDef()) + ")" << "     -|" << endl;
     cout << "|-      CRT: " << setw(8) << std::left << crtString << "             DDG: " << setw(8) << std::left << std::to_string(hero.getNDDG()) + " (+" + std::to_string(hero.eqpAmr.getDdg()) + ")" << "     -|" << endl;
-    cout << "|-      ACC: " << setw(8) << std::left << accString << "                               -|" << endl;
+    cout << "|-      ACC: " << setw(8) << std::left << accString << "             LCK: " << setw(8) << std::left << std::to_string(hero.getLCK()) << "     -|" << endl;
     cout << "|-      AMP: " << setw(4) << std::left << std::to_string(hero.getMA()) + "%" << "                 MPG: " << setw(2) << std::left << hero.getMG() << "           -|" << endl;
     cout << "|-                                                  -|" << endl;
     cout << "|-      0) RETURN                                   -|" << endl;
@@ -369,7 +371,7 @@ void diviningMenu(Player hero, Merchant store, Directory dir)
     cout << "|-                          DIVINING                          -|" << endl;
     cout << "|-             --------------------------------               -|" << endl;
     for(int i=0;i<2;i++)
-        cout << "|-         " << i+1 << ")     (2) " << statDown[i] << "  ---------->  (1) " << statUp[i] << "               -|" << endl;
+        cout << "|-               (2) " << statDown[i] << "  ---------->  (1) " << statUp[i] << "                -|" << endl;
     cout << "|-             --------------------------------               -|" << endl;
     cout << "|-                                                            -|" << endl;
     for(int i=0;i<2;i++)
@@ -472,8 +474,17 @@ void combatMain(Player hero, Creature monster, int monCHP)
             cout << "  |-       " << setw(103-hero.getMHP()) << std::right << "  {" << setw(100) << std::right << plrHP << "} -|" << endl;
     }
     cout << "  |------------------------------------------------------------------------------------------------------------------|" << endl;
-    cout << "  |-                           |                            |                            |                          -|" << endl;
-    cout << "  |-     <--STRIKE [J]-->      |       <--CAST [K]-->       |        <--USE [L]-->       |       <--RUN [;]-->      -|" << endl;
-    cout << "  |-                           |         " << setw(3) << std::right << hero.getMP() << " // " << setw(3) << std::left << hero.getMMP() << "         |                            |                          -|" << endl;
+    if(hero.mask.getID()!=6)
+    {
+        cout << "  |-                           |                            |                            |                          -|" << endl;
+        cout << "  |-     <--STRIKE [J]-->      |       <--CAST [K]-->       |        <--USE [L]-->       |       <--RUN [;]-->      -|" << endl;
+        cout << "  |-                           |         " << setw(3) << std::right << hero.getMP() << " // " << setw(3) << std::left << hero.getMMP() << "         |                            |                          -|" << endl;
+    }
+    else
+    {
+        cout << "  |-                           |                            |                            |                          -|" << endl;
+        cout << "  |-      <-- STRIKE -->       |       <-- STRIKE -->       |       <-- STRIKE -->       |      <-- STRIKE -->      -|" << endl;
+        cout << "  |-                           |                            |                            |                          -|" << endl;
+    }
     cout << "  \\------------------------------------------------------------------------------------------------------------------/" << endl;
 }//                         27                           28                            28                           28

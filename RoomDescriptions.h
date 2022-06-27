@@ -1,6 +1,8 @@
-string lootDesc(int type)
+string lootDesc(int type, int ch=-1)
 {
     int choice = rand() % 5;
+    if(ch!=-1)
+        choice = ch;
     if(type==0) //Crates
     {
         switch(choice)
@@ -67,11 +69,13 @@ string lootDesc(int type)
     return "Error!";
 }
 
-string doorDesc(int type)
+string doorDesc(int type, int ch=-1)
 {
     if(type==0)
     {
         int choice = rand() % 10;
+        if(ch!=-1)
+            choice = ch;
         switch(choice)
         {
             case 0:
@@ -109,10 +113,12 @@ string doorDesc(int type)
     return "Error!";
 }
 
-string creatureDesc(int cid, vector<Creature> creatureDirectory, Player &hero)
+string creatureDesc(int cid, vector<Creature> creatureDirectory, Player &hero, int ch=-1)
 {
     string name;
     int choice = rand() % 5;
+    if(ch!=-1)
+        choice = ch;
     if(hero.mask.getID()==2) //Darkness
         name = "Silhouette";
     else
@@ -124,11 +130,11 @@ string creatureDesc(int cid, vector<Creature> creatureDirectory, Player &hero)
     }
     else if(cid==56)
     {
-        return "This is the end. Before you, stands its guardian. Termineth stands at the tower's apex.";
+        return "The man raises his power and approaches you. 'Some curses aren't meant to be broken, fool... Those who hunger for power are all the same. Wretched, evil worms who are doomed to ruin the lives of others. This tower is all that keeps the power-hungry at bay, attracting them like moths to a flame, promising glory, riches, power beyond their wildest fantasy... You are one of them, you should know. Are these truly the ones you hope to save by defeating me? Then so be it. I will not let the world suffer for the sake of your glory.' The man raises his hammer toward the sky at the tower's apex, ready for battle.";
     }
     else if(cid==57)
     {
-        return "Prowling around the hall is a massive behemoth, completely entombed in black slime aside from its razor-sharp claws, and piercing yellow eyes. Upon seeing you enter, it lets out a deafening roar.";
+        return "Prowling around the hall is a massive behemoth, completely covered in black slime aside from its razor-sharp claws, and piercing yellow eyes. Upon seeing you enter, it lets out a deafening roar.";
     }
     else if(cid==58)
     {
@@ -149,6 +155,10 @@ string creatureDesc(int cid, vector<Creature> creatureDirectory, Player &hero)
     else if(cid==62)
     {
         return "A short woman is startled from your entrance, jumping up from her chair at the table. She turns to grab a tome off of the table, and as she does you see Valentereth's sigil on the back of her robes. The woman whirls back around and shouts an incantation, as the room is filled with an inky-black smoke...";
+    }
+    else if(cid==63)
+    {
+        return "A tall woman in shining black armor stands vigilant in the center of the hall, her eyes glowing a with blinding light. 'Your seige of this place comes to an end now. In the name of the Watcher, I sentence you to death!' Pulling a long spear from her back, she charges toward you.";
     }
     switch(choice)
     {
@@ -173,9 +183,11 @@ string creatureDesc(int cid, vector<Creature> creatureDirectory, Player &hero)
     return "Error!";
 }
 
-string ascensionDesc()
+string ascensionDesc(int ch=-1)
 {
     int choice = rand() % 5;
+    if(ch!=-1)
+        choice = ch;
     switch(choice)
     {
         case 0:

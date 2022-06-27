@@ -1,6 +1,6 @@
 bool nicknameChecker(string name, Creature monster);
 
-string interactionHandler(int action, string target, Player &hero, Directory &dir, Room &currentRoom, int &pass, vector<bool> &itemStatus)
+string interactionHandler(int action, string target, Player &hero, Directory &dir, Room &currentRoom, int &pass, vector<bool> &itemStatus,bool debug)
 {
     //cout << endl << "Entered Interaction Handler!!" << endl;
     string holder = "";
@@ -12,14 +12,14 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
     if(action==0) //GO
     {
         //cout << "Command was 'GO'" << endl;
-        if(target=="door"||target=="doors"||target=="tunnel"||target=="doorway"||target=="ladder"||target=="passage"||target=="passageway"||target=="room"||target=="chamber")
+        if(target=="door"||target=="doors"||target=="tunnel"||target=="doorway"||target=="ladder"||target=="passage"||target=="passageway"||target=="chamber")
         {
             if(pass==1)
                 return "next";
             else
                 return "escape";
         }
-        if(target=="store"||target=="locked door"||target=="merchant"||target=="shop")
+        if(target=="store"||target=="locked door"||target=="merchant"||target=="shop"||target=="room")
         {
             return "store";
         }
@@ -48,6 +48,11 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
         }
         if(target=="store"||target=="locked door"||target=="merchant"||target=="shop")
         {
+            return "store";
+        }
+        if(target=="dstore"&&debug)
+        {
+            hero.keys++;
             return "store";
         }
         if(target=="room")
@@ -79,7 +84,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 {
                     if(itemStatus[i]==0)
                     {
-                        if(currentRoom.getIList()[i]<300)
+                        if(currentRoom.getIList()[i]<300||currentRoom.getIList()[i]>=400)
                             holder += "You see a " + dir.getItemName(currentRoom.getIList()[i]) + ".";
                         else
                             holder += "You see a Scroll of " + dir.getItemName(currentRoom.getIList()[i]) + ".";
@@ -97,7 +102,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
         }
         else if(target==lowername||target=="enemy"||target=="monster"||next==1)
         {
-            if(currentRoom.monster.level==-1)
+            if(currentRoom.monster.level==-1||pass==1)
                 return "No enemy present.";
             if(hero.mask.getID()==2) //Darkness
             {
@@ -116,16 +121,40 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     holder = currentRoom.monster.getName() + " | Level " + std::to_string(currentRoom.monster.getLEV()-2) + "\n";
                 else
                     holder = currentRoom.monster.getName() + " | Level " + std::to_string(hero.getLEV()+3) + "\n";
+
+                int monDmg = currentRoom.monster.getSTR() - hero.getDEF();
+                int monHit = currentRoom.monster.getACC() - hero.getDDG();
+                int heroDmg = hero.getSTR() - currentRoom.monster.getDEF();
+                int heroHit = hero.getACC() - currentRoom.monster.getDDG();
+
+                if(hero.eqpWpn.getID()==57)
+                    heroDmg = ceil(static_cast<float>(currentRoom.monster.getHP())*.35);
+                if(hero.eqpAmr.getID()==142)
+                    monDmg -= monDmg/4;
+
+                if(currentRoom.monster.getID()==57)
+                    monDmg = currentRoom.monster.getSTR() - ceil(.7*(static_cast<float>(hero.getDEF())));
+                if(currentRoom.monster.getID()==61)
+                    heroDmg = static_cast<float>(heroDmg)*.7;
+
+                if(hero.mask.getID()==6)
+                    heroDmg = heroDmg + (heroDmg/2);
+                if(hero.mask.getID()==5) //Whispers
+                    monDmg = static_cast<float>(monDmg)*1.5;
+
                 holder += "HP: " + std::to_string(currentRoom.monster.getHP()) + "\n";
-                holder += "Strength: " + std::to_string(currentRoom.monster.getSTR()) + "\n";
-                holder += "Accuracy: " + std::to_string(currentRoom.monster.getACC()) + "\n";
-                holder += "Defense: " + std::to_string(currentRoom.monster.getDEF()) + "\n";
-                holder += "Dodge: " + std::to_string(currentRoom.monster.getDDG());
-                if(currentRoom.monster.getID()>=57) //Miniboss
+                holder += "Strength: " + std::to_string(currentRoom.monster.getSTR()) + " (Enemy DMG: " + std::to_string(monDmg) + ")\n";
+                holder += "Accuracy: " + std::to_string(currentRoom.monster.getACC()) + " (Enemy Hit Rate: " + std::to_string(monHit) + ")\n";
+                holder += "Defense: " + std::to_string(currentRoom.monster.getDEF()) + " (Your DMG: " + std::to_string(heroDmg) + ")\n";
+                holder += "Dodge: " + std::to_string(currentRoom.monster.getDDG()) + " (Your Hit Rate: " + std::to_string(heroHit) + ")\n";
+                if(currentRoom.monster.getID()>=57||currentRoom.monster.getID()==48) //Miniboss
                 {
                     holder += "\nAblity: ";
                     switch(currentRoom.monster.getID())
                     {
+                        case 48:
+                            holder += "Tyrant's Veil - Valentereth takes half damage from all attack spells.";
+                            break;
                         case 57:
                             holder += "Armor-Piercing Fangs - Ozkoroth's attacks cut through 30% of the player's defense.";
                             break;
@@ -143,6 +172,9 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                             break;
                         case 62:
                             holder += "Dark Magic - The player will lose HP equal to their level every turn in combat.";
+                            break;
+                        case 63:
+                            holder += "Undying - Halliot will take a stronger form after her first death.";
                             break;
                     }
                 }
@@ -175,7 +207,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                                 {
                                     if(holder!="")
                                         holder += "\n";
-                                    if(currentRoom.getIList()[j-1+currentRoom.contents]<300)
+                                    if(currentRoom.getIList()[j-1+currentRoom.contents]<300||currentRoom.getIList()[j-1+currentRoom.contents]>=400)
                                         holder += "You find a " + dir.getItemName(currentRoom.getIList()[j-1+currentRoom.contents]) + ".";
                                     else
                                         holder += "You find a Scroll of " + dir.getItemName(currentRoom.getIList()[j-1+currentRoom.contents]) + ".";
@@ -228,13 +260,39 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     valid = 1;
                 else if(target=="armor"&&currentRoom.getIList()[i]>=100&&currentRoom.getIList()[i]<200)
                     valid = 1;
-                else if(target=="robe"&&((currentRoom.getIList()[i]%5==0&&currentRoom.getIList()[i]>111)||currentRoom.getIList()[i]==102||currentRoom.getIList()[i]==105||currentRoom.getIList()[i]==108)&&currentRoom.getIList()[i]<=200)
+                else if(target=="robe"&&((currentRoom.getIList()[i]%5==0&&currentRoom.getIList()[i]>111)||currentRoom.getIList()[i]==102||currentRoom.getIList()[i]==105||currentRoom.getIList()[i]==108||currentRoom.getIList()[i]==111)&&currentRoom.getIList()[i]<200)
                     valid = 1;
                 else if(target=="food"&&currentRoom.getIList()[i]>=200&&currentRoom.getIList()[i]<=203)
                     valid = 1;
+                else if(target=="gem"&&currentRoom.getIList()[i]==203)
+                    valid = 1;
+                else if(target=="berry"&&currentRoom.getIList()[i]==201)
+                    valid = 1;
                 else if(target=="potion"&&currentRoom.getIList()[i]>=204&&currentRoom.getIList()[i]<=211)
                     valid = 1;
+                else if(target=="bomb"&&(currentRoom.getIList()[i]==213||currentRoom.getIList()[i]==216||currentRoom.getIList()[i]==219))
+                    valid = 1;
+                else if(target=="capsule"&&currentRoom.getIList()[i]==214)
+                    valid = 1;
+                else if(target=="herbs"&&currentRoom.getIList()[i]==215)
+                    valid = 1;
+                else if(target=="vial"&&(currentRoom.getIList()[i]==217||currentRoom.getIList()[i]==218||currentRoom.getIList()[i]==221))
+                    valid = 1;
+                else if((target=="venom"||target=="poison")&&currentRoom.getIList()[i]==218)
+                    valid = 1;
+                else if(target=="flower"&&currentRoom.getIList()[i]==220)
+                    valid = 1;
+                else if((target=="tincture"||target=="bottle")&&currentRoom.getIList()[i]==221)
+                    valid = 1;
+                else if((target=="veil"||target=="statue")&&currentRoom.getIList()[i]==222)
+                    valid = 1;
+                else if((target=="dust"||target=="powder")&&currentRoom.getIList()[i]==223)
+                    valid = 1;
+                else if((target=="soul"||target=="sphere")&&currentRoom.getIList()[i]==224)
+                    valid = 1;
                 else if((target=="spell"||target=="scroll")&&currentRoom.getIList()[i]>=300&&currentRoom.getIList()[i]<=342)
+                    valid = 1;
+                else if((target=="ring")&&currentRoom.getIList()[i]>=400&&currentRoom.getIList()[i]<500)
                     valid = 1;
                 if(valid==1)
                 {
@@ -271,7 +329,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                             cout << "MP " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP() << endl;
                         }
                     }
-                    else
+                    else if(currentRoom.getIList()[i]<400)
                     {
                         cout << dir.getItemName(currentRoom.getIList()[i]) << " | " << dir.getItemDesc(currentRoom.getIList()[i]) << endl;
                         cout << "RARITY: " << dir.getItemRarity(currentRoom.getIList()[i]) << endl;
@@ -299,6 +357,17 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                             if(dir.buffSpellDirectory[currentRoom.getIList()[i]-321].getDDGU()>0)
                                 cout << "DDG BUFF: " << dir.buffSpellDirectory[currentRoom.getIList()[i]-321].getDDGU() << endl;
                         }
+                    }
+                    else
+                    {
+                        cout << dir.ringDirectory[currentRoom.getIList()[i]-400].getName() << " | " << dir.ringDirectory[currentRoom.getIList()[i]-400].getDesc() << endl;
+                        cout << "RARITY: " << dir.ringDirectory[currentRoom.getIList()[i]-400].getRarity() << endl;
+                        if(dir.ringDirectory[currentRoom.getIList()[i]-400].getAct()>0)
+                            cout << "ACTIVATION RATE: " << dir.ringDirectory[currentRoom.getIList()[i]-400].getAct() << "%" << endl;
+                        if(dir.ringDirectory[currentRoom.getIList()[i]-400].getHPR()>0)
+                            cout << "HP REGEN: " << dir.ringDirectory[currentRoom.getIList()[i]-400].getHPR() << endl;
+                        if(dir.ringDirectory[currentRoom.getIList()[i]-400].getMPR()>0)
+                            cout << "MP REGEN: " << dir.ringDirectory[currentRoom.getIList()[i]-400].getMPR() << endl;
                     }
                     return "check";
                 }
@@ -353,9 +422,35 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 valid = 1;
             else if(target=="food"&&currentRoom.getIList()[i]>=200&&currentRoom.getIList()[i]<=203)
                 valid = 1;
+            else if(target=="gem"&&currentRoom.getIList()[i]==203)
+                valid = 1;
+            else if(target=="berry"&&currentRoom.getIList()[i]==201)
+                valid = 1;
             else if(target=="potion"&&currentRoom.getIList()[i]>=204&&currentRoom.getIList()[i]<=211)
                 valid = 1;
+            else if(target=="bomb"&&(currentRoom.getIList()[i]==213||currentRoom.getIList()[i]==216||currentRoom.getIList()[i]==219))
+                valid = 1;
+            else if(target=="capsule"&&currentRoom.getIList()[i]==214)
+                valid = 1;
+            else if(target=="herbs"&&currentRoom.getIList()[i]==215)
+                valid = 1;
+            else if(target=="vial"&&(currentRoom.getIList()[i]==217||currentRoom.getIList()[i]==218||currentRoom.getIList()[i]==221))
+                valid = 1;
+            else if((target=="venom"||target=="poison")&&currentRoom.getIList()[i]==218)
+                valid = 1;
+            else if(target=="flower"&&currentRoom.getIList()[i]==220)
+                valid = 1;
+            else if((target=="tincture"||target=="bottle")&&currentRoom.getIList()[i]==221)
+                valid = 1;
+            else if((target=="veil"||target=="statue")&&currentRoom.getIList()[i]==222)
+                valid = 1;
+            else if((target=="dust"||target=="powder")&&currentRoom.getIList()[i]==223)
+                valid = 1;
+            else if((target=="soul"||target=="sphere")&&currentRoom.getIList()[i]==224)
+                valid = 1;
             else if((target=="spell"||target=="scroll")&&currentRoom.getIList()[i]>=300&&currentRoom.getIList()[i]<=342)
+                valid = 1;
+            else if((target=="ring")&&currentRoom.getIList()[i]>=400&&currentRoom.getIList()[i]<500)
                 valid = 1;
             else if(target=="all"||target=="everything")
                 valid = 2;
@@ -365,7 +460,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 //cout << "Match!: " << currentRoom.getIList()[i] << endl;
                 if(itemStatus[i]==1)
                     return "Empty.";
-                if(currentRoom.getIList()[i]<200)
+                if(currentRoom.getIList()[i]<200||currentRoom.getIList()[i]>=400)
                 {
                     if(hero.equipment.size()>=6)
                     {
@@ -386,7 +481,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     }
                     //cout << "Size of equipment inventory: " << hero.equipment.size() << endl;
                 }
-                else if(currentRoom.getIList()[i]<=211)
+                else if(currentRoom.getIList()[i]<=224&&currentRoom.getIList()[i]!=212)
                 {
                     if(hero.inventory.size()>=6)
                     {
@@ -415,7 +510,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                         hero.keys += 1;
                     }
                 }
-                else if(currentRoom.getIList()[i]<=343&&currentRoom.getIList()[i]>212)
+                else if(currentRoom.getIList()[i]<=343&&currentRoom.getIList()[i]>=300)
                 {
                     for(int j=0;j<hero.spellbook.size();j++)
                         if(currentRoom.getIList()[i]==hero.spellbook[j])
@@ -445,7 +540,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 //currentRoom.delItem(i);
                 if(valid==1)
                 {
-                    if(currentRoom.getIList()[i]<300)
+                    if(currentRoom.getIList()[i]<300||currentRoom.getIList()[i]>=400)
                         return "You picked up the " + dir.getItemName((currentRoom.getIList())[i]) + "!";
                     else
                         return "You learned " + dir.getItemName((currentRoom.getIList())[i]) + "!";
@@ -454,7 +549,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 {
                     if(returner!="")
                         returner += "\n";
-                    if(currentRoom.getIList()[i]<300)
+                    if(currentRoom.getIList()[i]<300||currentRoom.getIList()[i]>=400)
                         returner += "You picked up the " + dir.getItemName((currentRoom.getIList())[i]) + "!";
                     else
                         returner += "You learned " + dir.getItemName((currentRoom.getIList())[i]) + "!";
@@ -474,6 +569,8 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
     else if(action==3) //ATTACK
     {
         //cout << "Command was 'ATTACK'" << endl;
+        if(pass>0)
+            return "Enemy has already been defeated.";
         if(hero.mask.getID()==2) //Darkness
             holder = "Silhouette";
         else
@@ -528,18 +625,24 @@ bool nicknameChecker(string name, Creature monster)
         return name=="dragon";
     else if(monster.getID()==49||monster.getID()==53)
         return name=="titan";
+    else if(monster.getID()==56)
+        return name=="man"||name=="boss"||name=="watcher"||name=="termineth"||name=="the watcher";
     else if(monster.getID()==57)
         return name=="behemoth"||name=="beast"||name=="ozkoroth";
     else if(monster.getID()==58)
         return name=="figure"||name=="vines"||name=="endrigaia";
     else if(monster.getID()==59)
-        return name=="man"||name=="wizard"||name=="mage"||name=="sorceror"||name=="emeritus";
+        return name=="man"||name=="wizard"||name=="mage"||name=="sorcerer"||name=="emeritus";
     else if(monster.getID()==60)
         return name=="man"||name=="warrior"||name=="bounty hunter"||name=="big boi"||name=="big boy"||name=="stiran";
     else if(monster.getID()==61)
         return name=="figure"||name=="creature"||name=="horror"||name=="humanoid"||name=="?"||name=="???"||name=="?????";
     else if(monster.getID()==62)
         return name=="woman"||name=="short woman"||name=="minion"||name=="scion"||name=="wizard"||name=="mage"||name=="sorcerer"||name=="byralt";
+    else if(monster.getID()==48)
+        return name=="valentereth"||name=="the tyrant"||name=="goddess"||name=="boss";
+    else if(monster.getID()==63)
+        return name=="halliot"||name=="woman"||name=="awakened";
     else
         return 0;
 }

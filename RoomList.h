@@ -130,7 +130,7 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     R29.addFeat(featureDirectory[30]);
     roomDirectory.push_back(R29);
 
-    Room R30(30,"Vines are sprouting from the far end of the room, winding around a statue. It's eyes seem to glow...");
+    Room R30(30,"Vines are sprouting from the far end of the room, winding around a statue. Its eyes seem to glow...");
     R30.addFeat(featureDirectory[30]);
     R30.addFeat(featureDirectory[31]);
     roomDirectory.push_back(R30);
@@ -170,7 +170,7 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     roomDirectory.push_back(R36);
 
     Room R37(37,"A corpse lies in the center of an empty circular room, with its blood soaking into the stone floor.");
-    R37.addFeat(featureDirectory[1]);
+    R37.addFeat(featureDirectory[2]);
     R37.addFeat(featureDirectory[14]);
     R37.addFeat(featureDirectory[rand()%3+42]);
     roomDirectory.push_back(R37);
@@ -477,6 +477,27 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     R87.addFeat(featureDirectory[57]);
     R87.addFeat(featureDirectory[58]);
     roomDirectory.push_back(R87);
+
+    Room R88(88,"A long hall is decorated with stained glass windows on the marble walls which stretch down the length of the room. Natural light bathes the room in a menagerie of color, with a red carpet leading down the center of the room.");
+    R88.addFeat(featureDirectory[26]); //Halliot
+    R88.addFeat(featureDirectory[78]);
+    R88.addFeat(featureDirectory[81]);
+    R88.addFeat(featureDirectory[82]);
+    roomDirectory.push_back(R88);
+
+    Room R89(89,"A long, regal throne room extends before you. A marble pathway is lit by candelabras positioned on the pillars on either side of you, stretching up into the inky darkness above you. The marble floor leads you to a blood-red throne, cloaked in shadow.");
+    R89.addFeat(featureDirectory[1]); //VALENTERETH
+    R89.addFeat(featureDirectory[26]);
+    R89.addFeat(featureDirectory[78]);
+    R89.addFeat(featureDirectory[79]);
+    roomDirectory.push_back(R89);
+
+    Room R90(90,"You finally reach the top of the tower, only to be met with a deafening crash of thunder as a storm rages from the dark sky above. Lightning flashes before you, silhouetting a massive man standing at the tower's edge. He raises a warhammer in one hand, and brings it down on the stone in front of you, causing another deafening crash of thunder to send a tremor to your very core.");
+    R90.addFeat(featureDirectory[2]); //TERMINETH
+    R90.addFeat(featureDirectory[79]);
+    R90.addFeat(featureDirectory[80]);
+    roomDirectory.push_back(R90);
+
 
     return roomDirectory;
 }

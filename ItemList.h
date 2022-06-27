@@ -127,9 +127,9 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     weaponDirectory.push_back(Chaotrix);
 
     //11: Unique
-    Weapon Ozkoroths_Fang("Ozkoroth's Fang","Fang of a ravenous beast, this dagger cuts through armor. Deals damage equal to 25% of the target's max HP.",11,57,0,95,20,0);
+    Weapon Ozkoroths_Fang("Ozkoroth's Fang","Fang of a ravenous beast, this dagger cuts through armor. Deals damage equal to 35% of the target's max HP.",11,57,0,95,20,0);
     weaponDirectory.push_back(Ozkoroths_Fang);
-    Weapon Essence_Siphon("Essence Siphon","Sceptre of an archmage. Its power is equal to your STR. Whenever damage is dealt with this weapon, the wielder gains 5 MP.",11,58,0,80,10,25);
+    Weapon Essence_Siphon("Essence Siphon","Sceptre of an archmage. Whenever damage is dealt with this weapon, the wielder gains 5 MP.",11,58,0,80,10,25);
     weaponDirectory.push_back(Essence_Siphon);
 
     //cout << "Weapon Directory Initialized!" << endl;
@@ -236,7 +236,7 @@ vector<Armor> initADir(vector<Armor> armorDirectory)
     armorDirectory.push_back(Helm_of_the_Ancients);
 
     //11
-    Armor Mercenarys_Shield("Mercenary's Shield","Stiran's shield. Reduces incoming damage by 25%. If an enemy misses their attack against you, your next attack has the potential to deal double damage.",11,142,3,30,0);
+    Armor Mercenarys_Shield("Mercenary's Shield","Stiran's shield. Reduces incoming damage by 25%. If an enemy misses their attack against you, your next attack has the potential to deal double damage.",11,142,3,20,0);
     armorDirectory.push_back(Mercenarys_Shield);
 
     //cout << "Armor Directory Initialized!" << endl;
@@ -281,6 +281,38 @@ vector<Consumable> initCDir(vector<Consumable> consumableDirectory)
     Consumable Key("Key","A small, silver key.",0,212,0,0);
     consumableDirectory.push_back(Key);
 
+    //Special Consumables
+
+    //1
+    Consumable Fire_Bomb("Fire Bomb","A small pouch filled with an explosive powder. When thrown, deals 15 damage to the enemy.",1,213,0,0);
+    consumableDirectory.push_back(Fire_Bomb);
+    Consumable Smoke_Capsule("Smoke Capsule","A small, black orb with wisps of smoke billowing within. When used, allows immediate escape from combat.",1,214,0,0);
+    consumableDirectory.push_back(Smoke_Capsule);
+    Consumable Gaia_Herbs("Gaia Herbs","A handful of medicinal herbs. When used in battle, regenerates 5 HP for the remainder of combat.",1,215,0,0);
+    consumableDirectory.push_back(Gaia_Herbs);
+    //2
+    Consumable Blast_Bomb("Blast Bomb","A pouch filled to the brim with a volatile explosive substance. When thrown, deals 30 damage to the enemy.",1,216,0,0);
+    consumableDirectory.push_back(Blast_Bomb);
+    Consumable Aether_Vial("Aether Vial","An ornate bottle with golden markings, filled with a shimmering violet liquid. When used, grants +3 MPR for the remainder of combat.",1,217,0,0);
+    consumableDirectory.push_back(Aether_Vial);
+    Consumable Pyllich_Venom("Pyllich Venom","A small vial of venom from the fangs of a pyllich. When used, coats your weapon in the substance to cause the enemy to lose 5 HP every turn for each time they are struck.",1,218,0,0);
+    consumableDirectory.push_back(Pyllich_Venom);
+    //3
+    Consumable Nova_Bomb("Nova Bomb","A glass sphere filled with raging flames. When thrown, deals 50 damage to the enemy.",1,219,0,0);
+    consumableDirectory.push_back(Nova_Bomb);
+    Consumable Gaia_Flower("Gaia Flower","A beautiful silver flower, with incredible healing properties. When used, regenerates 10 HP for the remainder of combat.",1,220,0,0);
+    consumableDirectory.push_back(Gaia_Flower);
+    Consumable Fortune_Tincture("Fortune Tincture","A bottle of liquid obtained from the kismet rose, said to grant fortune to those who drink it. When used, raises LCK by 30 for the remainder of combat.",1,221,0,0);
+    consumableDirectory.push_back(Fortune_Tincture);
+    //4
+    Consumable Rendais_Veil("Rendai's Veil","A small golden statue dedicated to Rendai, the God of Life. When used, protects the user from damage for 3 turns.",1,222,0,0);
+    consumableDirectory.push_back(Rendais_Veil);
+    Consumable Faerie_Dust("Faerie Dust","A satchel of powder obtained from a fae. When used, grants the user CRT, DDG, and ACC +30 for the remainder of combat.",1,223,0,0);
+    consumableDirectory.push_back(Faerie_Dust);
+    Consumable Second_Soul("Second Soul","A small glass sphere, with a faint white orb of light floating around within. Will completely restore your HP and MP once after falling in combat.",1,224,0,0);
+    consumableDirectory.push_back(Second_Soul);
+
+
     //cout << "Consumable List Initialized!" << endl;
 
     return consumableDirectory;
@@ -306,11 +338,89 @@ vector<Item> initMDir(vector<Item> maskDirectory)
     Item Mask_of_Whispers("Mask of Whispers","A transparent mask made of invisible threads. When worn, increases chance to dodge by 25% and increases dodge gained on level up, but enemies deal 150% damage to the wearer.",10,5);
     maskDirectory.push_back(Mask_of_Whispers);
 
-    Item Mask_of_Beasts("Mask of Beasts","A ravenous mask made of bloodied pelts. When worn, increases strength by 50%, but the wearer must strike each round of combat.",10,6);
+    Item Mask_of_Beasts("Mask of Beasts","A ravenous mask made of bloodied pelts. When worn, increases strength by 50% and restores HP equal to the wearer's level upon attacking, but the wearer must strike each round of combat.",10,6);
     maskDirectory.push_back(Mask_of_Beasts);
 
-    Item Mask_of_Souls("Mask of Souls","An expressionless mask made of light itself. When worn, triples the amount of EXP earned by the wearer, but restricts the wearer from equipping any armor.",10,7);
+    Item Mask_of_Souls("Mask of Souls","An expressionless mask made of light itself. When worn, triples the amount of EXP earned by the wearer, but restricts the wearer from equipping any weapons or armor.",10,7);
     maskDirectory.push_back(Mask_of_Souls);
 
     return maskDirectory;
+}
+
+vector<Ring> initRGDir(vector<Ring> ringDirectory)
+{
+    Ring Minor_Regeneration("Ring of Minor Regeneration","A ring capable of regenerating a small amount of the wearer's vitality over time.",1,400,0,2,0);
+    ringDirectory.push_back(Minor_Regeneration);
+    Ring Minor_Conservation("Ring of Minor Conservation","A ring that grants the wearer a slight chance of conserving the mana used after casting a spell.",1,401,10,0,0);
+    ringDirectory.push_back(Minor_Conservation);
+    Ring Minor_Bravery("Ring of Minor Bravery","A ring that grants the wearer a slight chance of negating incoming damage.",1,402,10,0,0);
+    ringDirectory.push_back(Minor_Bravery);
+    Ring Minor_Leeching("Ring of Minor Leeching","A ring that grants the wearer a slight chance of recovering health equal to half the amount of damage dealt.",1,403,10,0,0);
+    ringDirectory.push_back(Minor_Leeching);
+    Ring Minor_Vengeance("Ring of Minor Vengeance","A ring that deals additional damage equal to 15% of the wearer's damage taken when attacking an enemy.",1,404,0,0,0);
+    ringDirectory.push_back(Minor_Vengeance);
+    Ring Minor_Sight("Ring of Minor Sight","A ring that grants the wearer a slight chance of ensuring a successful hit when attacking.",1,405,10,0,0);
+    ringDirectory.push_back(Minor_Sight);
+    Ring Minor_Piercing("Ring of Minor Piercing","A ring that grants the wearer a slight chance of cutting a foe's defense in half.",1,406,10,0,0);
+    ringDirectory.push_back(Minor_Piercing);
+    Ring Minor_Overcharging("Ring of Minor Overcharging","A ring that grants the wearer a slight chance of increasing attack spell potency by 50%.",1,407,10,0,0);
+    ringDirectory.push_back(Minor_Overcharging);
+    Ring Minor_Reflection("Ring of Minor Reflection","A ring that grants the wearer a slight chance of dealing damage dealt to the wearer back to the enemy.",1,408,10,0,0);
+    ringDirectory.push_back(Minor_Reflection);
+    Ring Minor_Fury("Ring of Minor Fury","A ring that deals an additional 1 damage to the enemy with each consecutive hit.",1,409,0,0,0);
+    ringDirectory.push_back(Minor_Fury);
+
+    Ring Regeneration("Ring of Regeneration","A ring capable of regenerating a moderate amount of the wearer's vitality over time.",2,410,0,4,0);
+    ringDirectory.push_back(Regeneration);
+    Ring Conservation("Ring of Conservation","A ring that grants the wearer a chance of conserving the mana used after casting a spell.",2,411,20,0,0);
+    ringDirectory.push_back(Conservation);
+    Ring Bravery("Ring of Bravery","A ring that grants the wearer a chance of negating incoming damage.",2,412,20,0,0);
+    ringDirectory.push_back(Bravery);
+    Ring Leeching("Ring of Leeching","A ring that grants the wearer a chance of recovering health equal to half the amount of damage dealt.",2,413,20,0,0);
+    ringDirectory.push_back(Leeching);
+    Ring Vengeance("Ring of Vengeance","A ring that deals additional damage equal to 30% of the wearer's damage taken when attacking an enemy.",2,414,0,0,0);
+    ringDirectory.push_back(Vengeance);
+    Ring Sight("Ring of Sight","A ring that grants the wearer a chance of ensuring a successful hit when attacking.",2,415,20,0,0);
+    ringDirectory.push_back(Sight);
+    Ring Piercing("Ring of Piercing","A ring that grants the wearer a chance of cutting a foe's defense in half.",2,416,20,0,0);
+    ringDirectory.push_back(Piercing);
+    Ring Overcharging("Ring of Overcharging","A ring that grants the wearer a chance of increasing attack spell potency by 50%.",2,417,20,0,0);
+    ringDirectory.push_back(Overcharging);
+    Ring Reflection("Ring of Reflection","A ring that grants the wearer a chance of dealing damage dealt to the wearer back to the enemy.",2,418,20,0,0);
+    ringDirectory.push_back(Reflection);
+    Ring Fury("Ring of Fury","A ring that deals an additional 2 damage to the enemy with each consecutive hit.",2,419,0,0,0);
+    ringDirectory.push_back(Fury);
+    Ring Mana_Regeneration("Ring of Mana Regeneration","A ring capable of regenerating a small amount of the wearer's magical ability over time.",2,420,0,0,1);
+    ringDirectory.push_back(Mana_Regeneration);
+    Ring Blitzing("Ring of Blitzing","A ring that grants the wearer a slight chance of attacking a second time in combat before the enemy can.",2,421,10,0,0);
+    ringDirectory.push_back(Blitzing);
+
+    Ring Major_Regeneration("Ring of Major Regeneration","A ring capable of regenerating a large amount of the wearer's vitality over time.",3,422,0,6,0);
+    ringDirectory.push_back(Major_Regeneration);
+    Ring Major_Conservation("Ring of Major Conservation","A ring that grants the wearer a significant chance of conserving the mana used after casting a spell.",3,423,30,0,0);
+    ringDirectory.push_back(Major_Conservation);
+    Ring Major_Bravery("Ring of Major Bravery","A ring that grants the wearer a significant chance of negating incoming damage.",3,424,30,0,0);
+    ringDirectory.push_back(Major_Bravery);
+    Ring Major_Leeching("Ring of Major Leeching","A ring that grants the wearer a significant chance of recovering health equal to half the amount of damage dealt.",3,425,30,0,0);
+    ringDirectory.push_back(Major_Leeching);
+    Ring Major_Vengeance("Ring of Major Vengeance","A ring that deals additional damage equal to 50% of the wearer's damage taken when attacking an enemy.",3,426,0,0,0);
+    ringDirectory.push_back(Major_Vengeance);
+    Ring Major_Sight("Ring of Major Sight","A ring that grants the wearer a significant chance of ensuring a successful hit when attacking.",3,427,30,0,0);
+    ringDirectory.push_back(Major_Sight);
+    Ring Major_Piercing("Ring of Major Piercing","A ring that grants the wearer a significant chance of cutting a foe's defense in half.",3,428,30,0,0);
+    ringDirectory.push_back(Major_Piercing);
+    Ring Major_Overcharging("Ring of Major Overcharging","A ring that grants the wearer a significant chance of increasing attack spell potency by 50%.",3,429,30,0,0);
+    ringDirectory.push_back(Major_Overcharging);
+    Ring Major_Reflection("Ring of Major Reflection","A ring that grants the wearer a significant chance of dealing damage dealt to the wearer back to the enemy.",3,430,30,0,0);
+    ringDirectory.push_back(Major_Reflection);
+    Ring Major_Fury("Ring of Major Fury","A ring that deals an additional 3 damage to the enemy with each consecutive hit.",3,431,0,0,0);
+    ringDirectory.push_back(Major_Fury);
+    Ring Major_Mana_Regeneration("Ring of Major Mana Regeneration","A ring capable of regenerating a small amount of the wearer's magical ability over time.",3,432,0,0,2);
+    ringDirectory.push_back(Major_Mana_Regeneration);
+    Ring Major_Blitzing("Ring of Major Blitzing","A ring that grants the wearer a chance of attacking a second time in combat before the enemy can.",3,433,15,0,0);
+    ringDirectory.push_back(Major_Blitzing);
+    Ring Miracles("Ring of Miracles","A ring that will save the wearer from a killing blow once per combat, leaving them with 1 HP.",3,434,0,0,0);
+    ringDirectory.push_back(Miracles);
+
+    return ringDirectory;
 }

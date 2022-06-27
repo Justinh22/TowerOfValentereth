@@ -48,13 +48,15 @@ protected:
     string name;
     vector<string> keywords;
     string description;
+    int id;
     int item; //0 = None, 1 = Weapon, 2 = Armor, 3 = Consumable, 4 = Spell
     int luck; //0-3: Probability of items within
 public:
-    Feature(string n,string d,int i,int l)
-    {name=n;description=d;item=i;luck=l;}
+    Feature(string n,string d,int idIn,int i,int l)
+    {name=n;description=d;id=idIn;item=i;luck=l;}
     string getName(){return name;}
     string getDesc(){return description;}
+    int getID(){return id;}
     void addKey(string key){keywords.push_back(key);}
     vector<string> getKeyList(){return keywords;}
     int getItem(){return item;}
@@ -156,6 +158,41 @@ protected:
     int mprestored;
 };
 
+class Ring: public Item
+{
+public:
+    Ring(string n,string d,int r,int i,int a,int h,int m):Item(n,d,r,i)
+    {
+        activation = a;
+        hpr = h;
+        mpr = m;
+    }
+    Ring():Item()
+    {hpr=0;mpr=0;activation=0;}
+    int getAct(){return activation;}
+    int getHPR(){return hpr;}
+    int getMPR(){return mpr;}
+    int activate(int luck)
+    {
+        return activation+luck;
+    }
+    Ring operator=(Ring r)
+    {
+        this->name = r.getName();
+        this->description = r.getDesc();
+        this->rarity = r.getRarity();
+        this->id = r.getID();
+        this->hpr = r.getHPR();
+        this->mpr = r.getMPR();
+        this->activation = r.getAct();
+        return *this;
+    }
+private:
+    int activation;
+    int hpr;
+    int mpr;
+};
+
 class Merchant
 {
 protected:
@@ -163,18 +200,20 @@ protected:
     bool unlocked;
     int type; //0 = Shop, 1 = Stat Swap
     int statCount;
+public:
     vector<int> statUp;
     vector<int> statDown;
-public:
     Merchant(){level=-1;unlocked=0;type=0;}
     Merchant(int lv,int tp){level = lv;unlocked = 0;type = tp;statCount=0;}
     vector<int> storeInventory;
     vector<int> storeCost;
     int getLevel(){return level;}
+    void setLevel(int l){level=l;}
     bool isUnlocked(){return unlocked;}
     void setUnlocked(bool u){unlocked=u;}
     int getType(){return type;}
     void incStatCount(){statCount++;}
+    void setStatCount(int s){statCount=s;}
     int getStatCount(){return statCount;}
     vector<int> getStatUp(){return statUp;}
     vector<int> getStatDown(){return statDown;}
@@ -230,6 +269,14 @@ public:
                 statDown[i] = rand() % 6;
             } while(statUp[i]==statDown[i]);
         }
+        while(statUp[0]==statUp[1]||statUp[0]==statDown[0]||statUp[1]==statDown[1])
+        {
+            statUp[0] = rand() % 6;
+        }
+        while(statDown[0]==statDown[1]||statUp[0]==statDown[0]||statUp[1]==statDown[1])
+        {
+            statDown[0] = rand() % 6;
+        }
         statCount = 0;
     }
     Merchant operator=(Merchant m)
@@ -251,10 +298,10 @@ class Room
 protected:
     int id;
     string description;
+public:
     vector<Feature> flist;
     vector<int> ilist;
     vector<string> blist;
-public:
     Creature monster;
     string doorDesc;
     vector<string> lootDesc;
@@ -273,6 +320,7 @@ public:
     void setLDescList(vector<string> list){lootDesc=list;}
     void addLDesc(string loot){lootDesc.push_back(loot);}
     string getDesc(){return description;}
+    void setDesc(string d){description=d;}
     vector<Feature> getFList(){return flist;}
     void setFList(vector<Feature> fl){flist=fl;}
     void addFeat(Feature feat){flist.push_back(feat);}
@@ -357,6 +405,10 @@ class Buff
 public:
     Buff(string nm, int atu, int dfu, int cu, int acu, int dgu, int hpu)
     {name=nm;atkUp=atu;defUp=dfu;crtUp=cu;accUp=acu;ddgUp=dgu;hpUp=hpu;counter=6;}
+    Buff(string nm, int atu, int dfu, int cu, int acu, int dgu, int hpu, int c)
+    {name=nm;atkUp=atu;defUp=dfu;crtUp=cu;accUp=acu;ddgUp=dgu;hpUp=hpu;counter=c;}
+    Buff()
+    {name="Null";atkUp=0;defUp=0;crtUp=0;accUp=0;ddgUp=0;hpUp=0;counter=200;}
     int getCount(){return counter;}
     void tick(){counter-=1;}
     string getName(){return name;}
@@ -366,6 +418,8 @@ public:
     int getACCU(){return accUp;}
     int getDDGU(){return ddgUp;}
     int getHPU(){return hpUp;}
+    void setName(string n){name=n;}
+    void setCount(int c){counter=c;}
 protected:
     int counter;
     string name;
@@ -380,9 +434,9 @@ protected:
 class Player: public Creature
 {
 public:
-    Player(string n, int l, int i, int h, int m, int s, int a, int c, int df, int dg, int g, int k, int e): Creature(n,l,i,h,s,a,df,dg)
+    Player(string n, int l, int i, int h, int m, int s, int a, int c, int df, int dg, int lk, int g, int k, int e): Creature(n,l,i,h,s,a,df,dg)
     {
-        hp = h;mhp=hp;mp = m;mmp = mp;nstr = s;nacc = a;crit = c;ncrit = c;ndef = df;nddg = dg;level = l;gold = g;keys = k;exp=e;expGoal=20;empowered=0;growth=0;
+        hp = h;mhp=hp;mp = m;mmp = mp;nstr = s;nacc = a;crit = c;ncrit = c;ndef = df;nddg = dg;level = l;gold = g;keys = k;exp=e;expGoal=20;empowered=0;growth=0;lck=lk;
     }
     void changeMP(int delta){mp+=delta;}
     void setMP(int m){mp=m;}
@@ -395,12 +449,14 @@ public:
     int getNCRT(){return ncrit;}
     int getNDEF(){return ndef;}
     int getNDDG(){return nddg;}
+    int getLCK(){return lck;}
     void setMMP(int m){mmp=m;}
     void setMHP(int m){mhp=m;}
     void setNSTR(int s){nstr=s;}
     void setNCRT(int c){ncrit=c;}
     void setNDEF(int d){ndef=d;}
     void setNDDG(int d){nddg=d;}
+    void setLCK(int l){lck=l;}
     int getMG()
     {
         int gain=0;
@@ -408,7 +464,7 @@ public:
             gain+=5;
         if(growth)
             gain+=2;
-        return eqpAmr.getMG()+gain;
+        return eqpAmr.getMG()+gain+eqpRng.getMPR();
     }
     int getMA()
     {
@@ -463,6 +519,10 @@ public:
         if(eqpWpn.getName()=="Chaotrix"&&eqpAmr.getName()=="Helm of the Ancients")
             ach.AncientPower = 1;
     }
+    void equipRng(Ring rng)
+    {
+        eqpRng = rng;
+    }
     vector<int> equipment;
     vector<int> inventory;
     vector<int> spellbook;
@@ -474,43 +534,72 @@ public:
     Item mask;
     Weapon eqpWpn;
     Armor eqpAmr;
+    Ring eqpRng;
     void levelUp()
     {
+        level++;
+        int mod=0;
+        if(mask.getID()==7)
+            mod = level/7;
         int boost;
         score += 100;
         cout << endl << "Level Up!!" << endl;
-        boost = rand() % 5 + 2;
+        boost = rand() % 5 + 2 + mod;
         mhp += boost;
         hp = mhp;
         cout << "HP went up by " << boost << "!" << endl;
-        boost = rand() % 5 + 2;
+        boost = rand() % 5 + 2 + mod;
         mmp += boost;
         cout << "MP went up by " << boost << "!" << endl;
-        boost = rand() % 3;
+        boost = rand() % 4 + mod;
+        if(boost-mod>1)
+            boost--;
         nstr += boost;
         if(boost!=0)
             cout << "STR went up by " << boost << "!" << endl;
-        boost = rand() % 3;
+        boost = rand() % 4 + mod;
+        if(boost-mod>1)
+            boost--;
         ncrit += boost;
         if(boost!=0)
             cout << "CRT went up by " << boost << "!" << endl;
-        boost = rand() % 3;
+        if(mask.getID()==7) //SOULS
+        {
+            boost = rand() % 4 + mod;
+            if(boost-mod>1)
+                boost--;
+            nacc += boost;
+            setACC(nacc);
+            if(boost!=0)
+                cout << "ACC went up by " << boost << "!" << endl;
+        }
+        boost = rand() % 4 + mod;
+        if(boost-mod>1)
+            boost--;
         ndef += boost;
         if(boost!=0)
             cout << "DEF went up by " << boost << "!" << endl;
         if(mask.getID()==5) //Whispers
         {
-            boost = rand() % 4 + 1;
+            boost = rand() % 5 + 2;
             nddg += boost;
             cout << "DDG went up by " << boost << "!" << endl;
         }
         else
         {
-            boost = rand() % 3;
+            boost = rand() % 4 + mod;
+            if(boost-mod>1)
+                boost--;
             nddg += boost;
             if(boost!=0)
                 cout << "DDG went up by " << boost << "!" << endl;
         }
+        boost = rand() % 4 + mod;
+        if(boost-mod>1)
+            boost--;
+        lck += boost;
+        if(boost!=0)
+            cout << "LCK went up by " << boost << "!" << endl;
 
         if(mask.getID()==1) //Wrath
         {
@@ -527,7 +616,6 @@ public:
             ddg=eqpAmr.getDdg()+nddg;
         }
 
-        level++;
         exp -= expGoal;
         expGoal += 20;
     }
@@ -535,6 +623,8 @@ public:
     {
         nstr += 5;
         ncrit += 5;
+        if(mask.getID()==7) //SOULS
+            nacc += 5;
         ndef += 5;
         nddg += 5;
 
@@ -552,6 +642,8 @@ public:
             def=eqpAmr.getDef()+ndef;
             ddg=eqpAmr.getDdg()+nddg;
         }
+
+        lck += 2;
         empowered = 1;
     }
     void Boost()
@@ -560,8 +652,11 @@ public:
         mmp += 2;
         nstr += 2;
         ncrit += 2;
+        if(mask.getID()==7) //SOULS
+            nacc += 2;
         ndef += 2;
         nddg += 2;
+        lck += 2;
     }
 protected:
     int mhp;
@@ -573,6 +668,7 @@ protected:
     int ncrit;
     int ndef;
     int nddg;
+    int lck;
     int expGoal;
 };
 
@@ -589,8 +685,9 @@ public:
     vector<Creature> creatureDirectory;
     vector<Feature> featureDirectory;
     vector<Room> roomDirectory;
-    Directory(vector<Weapon> w, vector<Armor> a, vector<Consumable> c, vector<Item> m, vector<AttackSpell> as, vector<HealingSpell> hs, vector<BuffSpell> bs, vector<Creature> cr, vector<Feature> f, vector<Room> r)
-    {weaponDirectory=w;armorDirectory=a;consumableDirectory=c;maskDirectory=m;attackSpellDirectory=as;healingSpellDirectory=hs;buffSpellDirectory=bs;creatureDirectory=cr;featureDirectory=f;roomDirectory=r;}
+    vector<Ring> ringDirectory;
+    Directory(vector<Weapon> w, vector<Armor> a, vector<Consumable> c, vector<Item> m, vector<AttackSpell> as, vector<HealingSpell> hs, vector<BuffSpell> bs, vector<Creature> cr, vector<Feature> f, vector<Room> r, vector<Ring> rn)
+    {weaponDirectory=w;armorDirectory=a;consumableDirectory=c;maskDirectory=m;attackSpellDirectory=as;healingSpellDirectory=hs;buffSpellDirectory=bs;creatureDirectory=cr;featureDirectory=f;roomDirectory=r;ringDirectory=rn;}
     string getItemName(int i)
     {
         if(i<100)
@@ -605,6 +702,8 @@ public:
             return healingSpellDirectory[i-315].getName();
         else if(i<=343)
             return buffSpellDirectory[i-321].getName();
+        else if(i<=435)
+            return ringDirectory[i-400].getName();
         else
             return "Error";
     }
@@ -622,6 +721,8 @@ public:
             return healingSpellDirectory[i-315].getDesc();
         else if(i<=343)
             return buffSpellDirectory[i-321].getDesc();
+        else if(i<=435)
+            return ringDirectory[i-400].getDesc();
         else
             return "Error";
     }
@@ -639,6 +740,8 @@ public:
             return healingSpellDirectory[i-315].getRarity();
         else if(i<=343)
             return buffSpellDirectory[i-321].getRarity();
+        else if(i<=435)
+            return ringDirectory[i-400].getRarity();
         else
             return 0;
     }

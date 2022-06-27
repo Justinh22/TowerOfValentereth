@@ -17,13 +17,13 @@ public:
             i++;
         }
         Connoisseur = achVals[0];
-        complete.push_back(Connoisseur>=50);
+        complete.push_back(Connoisseur>=20);
         Alchemist = achVals[1];
         complete.push_back(Alchemist>=50);
         Expert = achVals[2];
         complete.push_back(Expert>=50);
-        WakeUp = achVals[3];
-        complete.push_back(WakeUp>=10);
+        DejaVu = achVals[3];
+        complete.push_back(DejaVu>=10);
         RiseAndShine = achVals[4];
         complete.push_back(RiseAndShine>=25);
         Powerhouse = achVals[5];
@@ -42,48 +42,50 @@ public:
         complete.push_back(Archmage==1);
         NaturesWrath = achVals[12];
         complete.push_back(NaturesWrath==1);
-        Unstoppable = achVals[13];
+        Ascended = achVals[13];
+        complete.push_back(Ascended==1);
+        Unstoppable = achVals[14];
         complete.push_back(Unstoppable>=100);
-        Nuke = achVals[14];
+        Nuke = achVals[15];
         complete.push_back(Nuke==1);
-        Overkill = achVals[15];
+        Overkill = achVals[16];
         complete.push_back(Overkill==1);
-        Necromancy = achVals[16];
+        Necromancy = achVals[17];
         complete.push_back(Necromancy==1);
-        SorcererSupreme = achVals[17];
+        SorcererSupreme = achVals[18];
         complete.push_back(SorcererSupreme==1);
-        Conquerer = achVals[18];
+        Conquerer = achVals[19];
         complete.push_back(Conquerer==1);
-        Vanguard = achVals[19];
+        Vanguard = achVals[20];
         complete.push_back(Vanguard==1);
-        Whisper = achVals[20];
+        Whisper = achVals[21];
         complete.push_back(Whisper==1);
-        AncientPower = achVals[21];
+        AncientPower = achVals[22];
         complete.push_back(AncientPower==1);
-        GlassTriumph = achVals[22];
+        GlassTriumph = achVals[23];
         complete.push_back(GlassTriumph==1);
-        WrathTriumph = achVals[23];
+        WrathTriumph = achVals[24];
         complete.push_back(WrathTriumph==1);
-        DarknessTriumph = achVals[24];
+        DarknessTriumph = achVals[25];
         complete.push_back(DarknessTriumph==1);
-        ArcanaTriumph = achVals[25];
+        ArcanaTriumph = achVals[26];
         complete.push_back(ArcanaTriumph==1);
-        SteelTriumph = achVals[26];
+        SteelTriumph = achVals[27];
         complete.push_back(SteelTriumph==1);
-        WhispersTriumph = achVals[27];
+        WhispersTriumph = achVals[28];
         complete.push_back(WhispersTriumph==1);
-        BeastsTriumph = achVals[28];
+        BeastsTriumph = achVals[29];
         complete.push_back(BeastsTriumph==1);
-        SoulsTriumph = achVals[29];
+        SoulsTriumph = achVals[30];
         complete.push_back(SoulsTriumph==1);
-        Gank = achVals[30];
+        Gank = achVals[31];
         complete.push_back(Gank==1);
-        SpectrumTriumph = achVals[31];
+        SpectrumTriumph = achVals[32];
         complete.push_back(SpectrumTriumph==8);
-        TrueHeir = achVals[32];
+        TrueHeir = achVals[33];
         complete.push_back(TrueHeir==1);
-        Truth = achVals[33];
-        complete.push_back(Truth==1);
+        Watcher = achVals[34];
+        complete.push_back(Watcher==1);
         ach.close();
     }
     writeAchievements()
@@ -92,7 +94,7 @@ public:
         ach << Connoisseur << " Connoisseur\n";
         ach << Alchemist << " Alchemist\n";
         ach << Expert << " Expert\n";
-        ach << WakeUp << " WakeUp\n";
+        ach << DejaVu << " DejaVu\n";
         ach << RiseAndShine << " RiseAndShine\n";
         ach << Powerhouse << " Powerhouse\n";
         ach << Tyrant << " Tyrant\n";
@@ -102,6 +104,7 @@ public:
         ach << Scion << " Scion\n";
         ach << Archmage << " Archmage\n";
         ach << NaturesWrath << " NaturesWrath\n";
+        ach << Ascended << " Ascended\n";
         ach << Unstoppable << " Unstoppable\n";
         ach << Nuke << " Nuke\n";
         ach << Overkill << " Overkill\n";
@@ -122,7 +125,7 @@ public:
         ach << Gank << " Gank\n";
         ach << SpectrumTriumph << " SpectrumTriumph\n";
         ach << TrueHeir << " TrueHeir\n";
-        ach << Truth << " Truth\n";
+        ach << Watcher << " Watcher\n";
         ach.close();
     }
     calculatePoints()
@@ -155,15 +158,15 @@ public:
         if(complete[12])
             points += 15;
         if(complete[13])
-            points += 20;
+            points += 15;
         if(complete[14])
-            points += 30;
+            points += 20;
         if(complete[15])
             points += 30;
         if(complete[16])
             points += 30;
         if(complete[17])
-            points += 25;
+            points += 30;
         if(complete[18])
             points += 25;
         if(complete[19])
@@ -173,7 +176,7 @@ public:
         if(complete[21])
             points += 25;
         if(complete[22])
-            points += 40;
+            points += 25;
         if(complete[23])
             points += 40;
         if(complete[24])
@@ -191,10 +194,12 @@ public:
         if(complete[30])
             points += 40;
         if(complete[31])
-            points += 80;
+            points += 40;
         if(complete[32])
-            points += 75;
+            points += 70;
         if(complete[33])
+            points += 65;
+        if(complete[34])
             points += 50;
     }
     vector<int> achVals;
@@ -203,7 +208,7 @@ public:
     int Connoisseur;
     int Alchemist;
     int Expert;
-    int WakeUp;
+    int DejaVu;
     int RiseAndShine;
     int Powerhouse;
     int Tyrant;
@@ -213,6 +218,7 @@ public:
     int Scion;
     int Archmage;
     int NaturesWrath;
+    int Ascended;
     int Unstoppable;
     int Nuke;
     int Overkill;
@@ -233,5 +239,5 @@ public:
     int Gank;
     int SpectrumTriumph;
     int TrueHeir;
-    int Truth;
+    int Watcher;
 };
