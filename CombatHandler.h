@@ -89,28 +89,28 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 }
                 if(hit+monster.getDDG()<=hero.getACC()+accBuff)
                 {
-                    if(hero.eqpRng.getID()==409||hero.eqpRng.getID()==419||hero.eqpRng.getID()==431) //FURY
-                    {
-                        cout << hero.eqpRng.getName() << " activated!" << endl;
-                        switch(hero.eqpRng.getID())
-                        {
-                            case 431:
-                                furyDmg += 3;
-                                break;
-                            case 419:
-                                furyDmg += 2;
-                                break;
-                            case 409:
-                                furyDmg += 1;
-                                break;
-                        }
-                        Sleep(1000);
-                    }
                     crit = ((rand() % 100) + (rand() % 100) + 2) / 2;
                     if(crit<=hero.getCRT()+crtBuff)
                     {
                         cout << "Critical Hit!" << endl;
                         Sleep(1000);
+                        if(hero.eqpRng.getID()==409||hero.eqpRng.getID()==419||hero.eqpRng.getID()==431) //FURY
+                        {
+                            cout << hero.eqpRng.getName() << " activated!" << endl;
+                            switch(hero.eqpRng.getID())
+                            {
+                                case 431:
+                                    furyDmg += 3;
+                                    break;
+                                case 419:
+                                    furyDmg += 2;
+                                    break;
+                                case 409:
+                                    furyDmg += 1;
+                                    break;
+                            }
+                            Sleep(1000);
+                        }
                         dmg = (hero.getSTR()+atkBuff - monster.getDEF())*2;
                         if(hero.eqpRng.getID()==406||hero.eqpRng.getID()==416||hero.eqpRng.getID()==428) //PIERCING
                         {
@@ -172,6 +172,23 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     {
                         cout << "Hit!" << endl;
                         Sleep(1000);
+                        if(hero.eqpRng.getID()==409||hero.eqpRng.getID()==419||hero.eqpRng.getID()==431) //FURY
+                        {
+                            cout << hero.eqpRng.getName() << " activated!" << endl;
+                            switch(hero.eqpRng.getID())
+                            {
+                                case 431:
+                                    furyDmg += 3;
+                                    break;
+                                case 419:
+                                    furyDmg += 2;
+                                    break;
+                                case 409:
+                                    furyDmg += 1;
+                                    break;
+                            }
+                            Sleep(1000);
+                        }
                         dmg = hero.getSTR()+atkBuff - monster.getDEF();
                         if(hero.eqpRng.getID()==406||hero.eqpRng.getID()==416||hero.eqpRng.getID()==428) //PIERCING
                         {
@@ -512,6 +529,8 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                             break;
                         case 218: //Pyllich Venom
                             cout << "Your weapon was coated in poison!" << endl;
+                            ItemBuff.setName("Pyllich Venom");
+                            buffCounter.push_back(ItemBuff);
                             poisonDmg += 5;
                             break;
                         case 219: //Nova Bomb
@@ -1075,6 +1094,10 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
             cout << monName << "'s magic deals " << hero.getLEV() << " necrotic damage to you!" << endl;
             Sleep(2000);
         }
+        if(hero.eqpRng.getID()==400||hero.eqpRng.getID()==410||hero.eqpRng.getID()==422) //REGENERATION
+        {
+            hero.changeHP(hero.eqpRng.getHPR());
+        }
         if(hero.getHP()<=0)
         {
             if(hero.eqpRng.getID()==434&&!miracleFlag) //MIRACLE
@@ -1114,14 +1137,6 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 monHP = monster.getHP();
             dmg = static_cast<float>(monster.getHP())*.15;
             cout << monName << " recovers " << dmg << " HP!" << endl;
-            Sleep(2000);
-        }
-        if(hero.eqpRng.getID()==400||hero.eqpRng.getID()==410||hero.eqpRng.getID()==422) //REGENERATION
-        {
-            cout << hero.eqpRng.getName() << " activated!" << endl;
-            Sleep(1000);
-            hero.changeHP(hero.eqpRng.getHPR());
-            cout << "Restored " << hero.eqpRng.getHPR() << " HP!" << endl;
             Sleep(2000);
         }
     }

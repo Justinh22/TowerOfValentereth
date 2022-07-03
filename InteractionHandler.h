@@ -325,8 +325,10 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                         {
                             cout << dir.consumableDirectory[currentRoom.getIList()[i]-200].getName() << " | " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getDesc() << endl;
                             cout << "RARITY: " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getRarity() << endl;
-                            cout << "HP " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP() << endl;
-                            cout << "MP " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP() << endl;
+                            if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP()>0)
+                                cout << "HP " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP() << endl;
+                            if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP()>0)
+                                cout << "MP " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP() << endl;
                         }
                     }
                     else if(currentRoom.getIList()[i]<400)
@@ -432,7 +434,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 valid = 1;
             else if(target=="capsule"&&currentRoom.getIList()[i]==214)
                 valid = 1;
-            else if(target=="herbs"&&currentRoom.getIList()[i]==215)
+            else if((target=="herbs"||target=="herb")&&currentRoom.getIList()[i]==215)
                 valid = 1;
             else if(target=="vial"&&(currentRoom.getIList()[i]==217||currentRoom.getIList()[i]==218||currentRoom.getIList()[i]==221))
                 valid = 1;
@@ -478,6 +480,8 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     {
                         itemStatus[i] = 1;
                         hero.equipment.push_back(currentRoom.getIList()[i]);
+                        if(currentRoom.getIList()[i]==57||currentRoom.getIList()[i]==58||currentRoom.getIList()[i]==142||currentRoom.getIList()[i]==434)
+                            currentRoom.creatDesc = "";
                     }
                     //cout << "Size of equipment inventory: " << hero.equipment.size() << endl;
                 }

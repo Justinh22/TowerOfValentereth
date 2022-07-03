@@ -230,7 +230,7 @@ void roomLogic(int &diff, int &rew, int &karma, int adv, Player hero)
             }
         }
     }
-    else if(adv<6)
+    else if(adv<12)
     {
         chance = rand() % 10 + 1;
         if(karma<-15)

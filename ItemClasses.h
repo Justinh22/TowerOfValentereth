@@ -544,62 +544,146 @@ public:
         int boost;
         score += 100;
         cout << endl << "Level Up!!" << endl;
-        boost = rand() % 5 + 2 + mod;
+
+        boost = rand() % 3 + 4 + mod;
         mhp += boost;
         hp = mhp;
         cout << "HP went up by " << boost << "!" << endl;
-        boost = rand() % 5 + 2 + mod;
+
+        boost = rand() % 3 + 4 + mod;
         mmp += boost;
         cout << "MP went up by " << boost << "!" << endl;
-        boost = rand() % 4 + mod;
-        if(boost-mod>1)
-            boost--;
-        nstr += boost;
-        if(boost!=0)
-            cout << "STR went up by " << boost << "!" << endl;
-        boost = rand() % 4 + mod;
-        if(boost-mod>1)
-            boost--;
-        ncrit += boost;
-        if(boost!=0)
-            cout << "CRT went up by " << boost << "!" << endl;
+
+        switch(rand()%6)
+        {
+            case 0:
+                nstr += mod;
+                if(mod>0)
+                    cout << "STR went up by " << mod << "!" << endl;
+                break;
+            case 1:case 2:case 3:
+                nstr += mod + 1;
+                cout << "STR went up by " << mod+1 << "!" << endl;
+                break;
+            case 4:case 5:
+                nstr += mod + 2;
+                cout << "STR went up by " << mod+2 << "!" << endl;
+                break;
+        }
+
+        switch(rand()%6)
+        {
+            case 0:
+                ncrit += mod;
+                if(mod>0)
+                    cout << "CRT went up by " << mod << "!" << endl;
+                break;
+            case 1:case 2:case 3:
+                ncrit += mod + 1;
+                cout << "CRT went up by " << mod+1 << "!" << endl;
+                break;
+            case 4:case 5:
+                ncrit += mod + 2;
+                cout << "CRT went up by " << mod+2 << "!" << endl;
+                break;
+        }
+
         if(mask.getID()==7) //SOULS
         {
-            boost = rand() % 4 + mod;
-            if(boost-mod>1)
-                boost--;
-            nacc += boost;
+            switch(rand()%6)
+            {
+                case 0:
+                    nacc += mod;
+                    if(mod>0)
+                        cout << "ACC went up by " << mod << "!" << endl;
+                    break;
+                case 1:case 2:case 3:
+                    nacc += mod + 1;
+                    cout << "ACC went up by " << mod+1 << "!" << endl;
+                    break;
+                case 4:case 5:
+                    nacc += mod + 2;
+                    cout << "ACC went up by " << mod+2 << "!" << endl;
+                    break;
+            }
             setACC(nacc);
-            if(boost!=0)
-                cout << "ACC went up by " << boost << "!" << endl;
         }
-        boost = rand() % 4 + mod;
-        if(boost-mod>1)
-            boost--;
-        ndef += boost;
-        if(boost!=0)
-            cout << "DEF went up by " << boost << "!" << endl;
+
+        switch(rand()%6)
+        {
+            case 0:
+                ndef += mod;
+                if(mod>0)
+                    cout << "DEF went up by " << mod << "!" << endl;
+                break;
+            case 1:case 2:case 3:
+                ndef += mod + 1;
+                cout << "DEF went up by " << mod+1 << "!" << endl;
+                break;
+            case 4:case 5:
+                ndef += mod + 2;
+                cout << "DEF went up by " << mod+2 << "!" << endl;
+                break;
+        }
+
         if(mask.getID()==5) //Whispers
         {
-            boost = rand() % 5 + 2;
-            nddg += boost;
-            cout << "DDG went up by " << boost << "!" << endl;
+            switch(rand()%8)
+            {
+                case 0:
+                    nddg += mod + 2;
+                    cout << "DDG went up by " << mod+2 << "!" << endl;
+                    break;
+                case 1:case 2:
+                    nddg += mod + 3;
+                    cout << "DDG went up by " << mod+3 << "!" << endl;
+                    break;
+                case 3:case 4:case 5:
+                    nddg += mod + 4;
+                    cout << "DDG went up by " << mod+4 << "!" << endl;
+                    break;
+                case 6:case 7:
+                    nddg += mod + 5;
+                    cout << "DDG went up by " << mod+5 << "!" << endl;
+                    break;
+            }
         }
         else
         {
-            boost = rand() % 4 + mod;
-            if(boost-mod>1)
-                boost--;
-            nddg += boost;
-            if(boost!=0)
-                cout << "DDG went up by " << boost << "!" << endl;
+            switch(rand()%6)
+            {
+                case 0:
+                    nddg += mod;
+                    if(mod>0)
+                        cout << "DDG went up by " << mod << "!" << endl;
+                    break;
+                case 1:case 2:case 3:
+                    nddg += mod + 1;
+                    cout << "DDG went up by " << mod+1 << "!" << endl;
+                    break;
+                case 4:case 5:
+                    nddg += mod + 2;
+                    cout << "DDG went up by " << mod+2 << "!" << endl;
+                    break;
+            }
         }
-        boost = rand() % 4 + mod;
-        if(boost-mod>1)
-            boost--;
-        lck += boost;
-        if(boost!=0)
-            cout << "LCK went up by " << boost << "!" << endl;
+
+        switch(rand()%6)
+        {
+            case 0:
+                lck += mod;
+                if(mod>0)
+                    cout << "LCK went up by " << mod << "!" << endl;
+                break;
+            case 1:case 2:case 3:
+                lck += mod + 1;
+                cout << "LCK went up by " << mod+1 << "!" << endl;
+                break;
+            case 4:case 5:
+                lck += mod + 2;
+                cout << "LCK went up by " << mod+2 << "!" << endl;
+                break;
+        }
 
         if(mask.getID()==1) //Wrath
         {

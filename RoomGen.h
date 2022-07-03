@@ -260,7 +260,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
             {
                 keyFlag = 1;
             }
-            if(rand()%3==0)
+            if(rand()%4==0)
             {
                 itemType = 3;
             }
@@ -913,7 +913,7 @@ Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vect
                 }
                 else if(currentRoom.getFList()[i].getItem()<=3)
                 {
-                    if(foo%2==0)
+                    if(foo%3==0)
                     {
                         if(adv/2==0)
                             featid = itemPicker(2,1);

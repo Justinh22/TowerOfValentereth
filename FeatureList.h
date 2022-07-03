@@ -101,7 +101,7 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
     Coffins.addKey("niches");
     featureDirectory.push_back(Coffins);
 
-    Feature Suit_of_Armor("armor","The suits of dark, rusted armor stand vigilant on either side of the chamber.",12,2,2); //12
+    Feature Suit_of_Armor("armor","A suit of dark, rusted armor standing vigilant.",12,2,2); //12
     Suit_of_Armor.addKey("armor");
     Suit_of_Armor.addKey("suit of armor");
     Suit_of_Armor.addKey("suits of armor");

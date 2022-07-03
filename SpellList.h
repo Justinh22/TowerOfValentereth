@@ -4,8 +4,8 @@ vector<AttackSpell> initASDir(vector<AttackSpell> attackSpellDirectory)
     attackSpellDirectory.push_back(Jolt);
     AttackSpell Ember("Ember","Fires a small burst of flame at a target.",1,301,3,8);
     attackSpellDirectory.push_back(Ember);
-    AttackSpell Chill("Chill","Fires a small burst of cold at a target.",1,302,2,6);
-    attackSpellDirectory.push_back(Chill);
+    AttackSpell Frostbite("Frostbite","Fires a small burst of cold at a target.",1,302,2,6);
+    attackSpellDirectory.push_back(Frostbite);
     AttackSpell Thunderbolt("Thunderbolt","Fires a bolt of lightning at a target.",2,303,8,16);
     attackSpellDirectory.push_back(Thunderbolt);
     AttackSpell Firebolt("Firebolt","Fires a bolt of fire at a target.",2,304,7,14);
