@@ -263,6 +263,29 @@ void itemMenu(Player &hero, vector<int> &items, Directory dir)
     cout << "\\----------------------------------------------------/" << endl;
 }
 
+void replaceMenu(Player &hero, Directory dir, bool type, int newItem)
+{//50 long
+    vector<int> inventory;
+    if(!type)
+        inventory = hero.equipment;
+    else
+        inventory = hero.inventory;
+    std::system("cls");
+    int i;
+    cout << "/----------------------------------------------------\\" << endl;
+    cout << "|-                                                  -|" << endl;
+    cout << "|-      WHICH ITEM WOULD YOU LIKE TO REPLACE?       -|" << endl;
+    cout << "|-                                                  -|" << endl;
+    for(i=0;i<inventory.size();i++)
+        cout << "|-   " << i+1 << ") " << setw(40) << std::left << dir.getItemName(inventory[i]) << "    -|" << endl;
+    for(int j=i;j<6;j++)
+    cout << "|-   " << j+1 << ")                                             -|" << endl;
+    cout << "|-                                                  -|" << endl;
+    cout << "|-   0) " << setw(40) << std::left << dir.getItemName(newItem) + " - Cancel" << "    -|" << endl;
+    cout << "|-                                                  -|" << endl;
+    cout << "\\----------------------------------------------------/" << endl;
+}
+
 void spellbookMenu(vector<int> &spellbook, Directory dir)
 {//50 long
     std::system("cls");

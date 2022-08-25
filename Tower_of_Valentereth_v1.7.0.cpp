@@ -22,6 +22,7 @@ using std::setw;
 Achievements ach;
 int score = 0;
 bool godMode = 0;
+int karma = 5;
 #include "ItemClasses.h"
 #include "ItemList.h"
 #include "CreatureList.h"
@@ -526,7 +527,6 @@ int main()
 
     int diff = 0;
     int rew = 5;
-    int karma = 5;
     int adv = (depth / 5) + 1;
     if(adv>10)
         adv = 10;
@@ -550,6 +550,7 @@ int main()
     bool gankTracker=1;
     int boxType=-1;
     bool saveLog=0;
+    int itemIndex = 0;
 
     if(!saveFound)
     {
@@ -764,7 +765,7 @@ int main()
                 if(target.front()==' ')
                     target.erase(target.begin());
                 //cout << target << "." << endl;
-                text = interactionHandler(err,target,hero,dir,currentRoom,pass,itemStatus,debug_opt);
+                text = interactionHandler(err,target,hero,dir,currentRoom,pass,itemStatus,debug_opt,itemIndex);
                 if(text=="next")
                 {
                     currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,itemStatus,dev);
@@ -1083,6 +1084,64 @@ int main()
                             score += 10;
                             currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,itemStatus,dev);
                         }
+                    }
+                }
+                else if(text=="replace")
+                {
+                    bool inventoryType = 0;
+                    if(currentRoom.getIList()[itemIndex]<200||currentRoom.getIList()[itemIndex]>=400)
+                        inventoryType = 0;
+                    else
+                        inventoryType = 1;
+                    bool stop = 0;
+                    clear();
+                    while(!stop)
+                    {
+                        replaceMenu(hero,dir,inventoryType,currentRoom.getIList()[itemIndex]);
+                        strChoice = getch();
+                        std::stringstream stoi(strChoice);
+                        stoi >> intChoice;
+                        if(!inventoryType)
+                        {
+                            if(intChoice>=1&&intChoice<=hero.equipment.size())
+                            {
+                                cout << "Replaced " << dir.getItemName(hero.equipment[intChoice-1]) << " with " << dir.getItemName(currentRoom.getIList()[itemIndex]) << "." << endl;
+                                Sleep(2000);
+                                hero.equipment[intChoice-1] = currentRoom.getIList()[itemIndex];
+                                itemStatus[itemIndex] = 1;
+                                stop = 1;
+                            }
+                            else if(intChoice==0)
+                            {
+                                stop = 1;
+                            }
+                            else
+                            {
+                                cout << "Invalid input." << endl;
+                                Sleep(1000);
+                            }
+                        }
+                        else
+                        {
+                            if(intChoice>=1&&intChoice<=hero.inventory.size())
+                            {
+                                cout << "Replaced " << dir.getItemName(hero.inventory[intChoice-1]) << " with " << dir.getItemName(currentRoom.getIList()[itemIndex]) << "." << endl;
+                                Sleep(2000);
+                                hero.inventory[intChoice-1] = currentRoom.getIList()[itemIndex];
+                                itemStatus[itemIndex] = 1;
+                                stop = 1;
+                            }
+                            else if(intChoice==0)
+                            {
+                                stop = 1;
+                            }
+                            else
+                            {
+                                cout << "Invalid input." << endl;
+                                Sleep(1000);
+                            }
+                        }
+                        clear();
                     }
                 }
                 else
@@ -2160,6 +2219,7 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
         if(adv<10)
             adv++;
     }
+    //Roll for random encounter
     roomLogic(diff,rew,karma,adv,hero);
     std::system("cls");
     cout << "Room " << depth << endl;
@@ -2183,7 +2243,7 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
     Room currentRoom;
     currentRoom = roomGenerator(diff,rew,adv,dir,hero,mStatus,rStatus);
     //cout << "Karma: " << karma << endl;
-    if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
+    if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth, the Watcher")
     {
         int egHPBuff = ((depth/5)-11)*6;
         int egStrBuff = ((depth/5)-11)*4;

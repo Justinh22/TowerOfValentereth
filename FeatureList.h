@@ -548,6 +548,7 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
 
     Feature Tombstone("tombstone","An old tombstone, with illegible writing on it...",72,0,0); //72
     Tombstone.addKey("tombstone");
+    Tombstone.addKey("tombstones");
     Tombstone.addKey("gravestone");
     Tombstone.addKey("headstone");
     Tombstone.addKey("epitaph");

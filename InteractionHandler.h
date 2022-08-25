@@ -1,6 +1,6 @@
 bool nicknameChecker(string name, Creature monster);
 
-string interactionHandler(int action, string target, Player &hero, Directory &dir, Room &currentRoom, int &pass, vector<bool> &itemStatus,bool debug)
+string interactionHandler(int action, string target, Player &hero, Directory &dir, Room &currentRoom, int &pass, vector<bool> &itemStatus, bool debug, int &itemIndex)
 {
     //cout << endl << "Entered Interaction Handler!!" << endl;
     string holder = "";
@@ -467,7 +467,10 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     if(hero.equipment.size()>=6)
                     {
                         if(valid==1)
-                            return "Your inventory is full.";
+                        {
+                            itemIndex = i;
+                            return "replace";
+                        }
                         else if(valid!=2||i<currentRoom.contents)
                         {
                             if(returner!="")
@@ -490,7 +493,10 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     if(hero.inventory.size()>=6)
                     {
                         if(valid==1)
-                            return "Your inventory is full.";
+                        {
+                            itemIndex = i;
+                            return "replace";
+                        }
                         else if(valid!=2||i<currentRoom.contents)
                         {
                             if(returner!="")
