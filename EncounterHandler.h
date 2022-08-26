@@ -589,10 +589,10 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
             break;
         case 7:
             cout << "A large, burly-looking man stands in the corridor, training against a dummy. After looking you over, he says 'Heh, looks like you need all the help you can get. I s'pose I could give you some training... I trained under Stiran after all.'" << endl << endl;
-            cout << "1) 75g - Train with daggers." << endl;
-            cout << "2) 75g - Train with spears." << endl;
-            cout << "3) 75g - Train with swords." << endl;
-            cout << "4) 75g - Train with axes." << endl;
+            cout << "1) " << 10*adv << "g - Train with daggers." << endl;
+            cout << "2) " << 10*adv << "g - Train with spears." << endl;
+            cout << "3) " << 10*adv << "g - Train with swords." << endl;
+            cout << "4) " << 10*adv << "g - Train with axes." << endl;
             cout << "5) Pass on training." << endl;
             while(!good)
             {
@@ -602,7 +602,7 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                 stoi >> intChoice;
                 if(intChoice>=1&&intChoice<=4)
                 {
-                    if(hero.gold<75)
+                    if(hero.gold>=10*adv)
                     {
                         cout << "You trained to become better with ";
                         switch(intChoice)
@@ -623,7 +623,7 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                         Sleep(1000);
                         cout << "You will deal +2 damage and have +5% ACC when wielding them." << endl;
                         hero.meleeTraining = intChoice-1;
-                        hero.gold -= 75;
+                        hero.gold -= 10*adv;
                         Sleep(2500);
                         good = 1;
                     }
@@ -647,9 +647,9 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
             break;
         case 8:
             cout << "A small girl sits on the floor, wearing a robe far too large for her. She looks up at you and smiles. 'Oh, hi! You certainly shouldn't have come here. But if you wanna stay, let me help!'" << endl << endl;
-            cout << "1) 75g - Train with frost magic." << endl;
-            cout << "2) 75g - Train with fire magic." << endl;
-            cout << "3) 75g - Train with lightning magic." << endl;
+            cout << "1) " << 10*adv << "g - Train with frost magic." << endl;
+            cout << "2) " << 10*adv << "g - Train with fire magic." << endl;
+            cout << "3) " << 10*adv << "g - Train with lightning magic." << endl;
             cout << "4) Pass on training." << endl;
             while(!good)
             {
@@ -659,7 +659,7 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                 stoi >> intChoice;
                 if(intChoice>=1&&intChoice<=3)
                 {
-                    if(hero.gold<75)
+                    if(hero.gold>=10*adv)
                     {
                         cout << "You trained to become better with ";
                         switch(intChoice)
@@ -675,9 +675,9 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                                 break;
                         }
                         Sleep(1000);
-                        cout << "You will deal +2 damage when using spells of that element." << endl;
+                        cout << "You will deal +2 damage when using spells of that element, and they will cost 1 less MP." << endl;
                         hero.magicTraining = intChoice-1;
-                        hero.gold -= 75;
+                        hero.gold -= 10*adv;
                         Sleep(2500);
                         good = 1;
                     }

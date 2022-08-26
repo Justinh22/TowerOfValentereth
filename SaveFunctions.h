@@ -196,7 +196,7 @@ bool hiscores(Player &hero, int depth)
     if(flag==-1)
         return 0;
 
-    for(i=9;i>=0;i--) //Inserting it into the leaderboard
+    for(i=9;i>=0;i--) //Inserting score into the leaderboard
         if(i>flag)
             scoreArr[i] = scoreArr[i-1];
         else if(i==flag)
@@ -208,7 +208,7 @@ bool hiscores(Player &hero, int depth)
         else if(i==flag)
             nameArr[i] = hero.getName();
 
-    for(i=9;i>=0;i--) //Inserting name into the leaderboard
+    for(i=9;i>=0;i--) //Inserting depth into the leaderboard
         if(i>flag)
             depthArr[i] = depthArr[i-1];
         else if(i==flag)

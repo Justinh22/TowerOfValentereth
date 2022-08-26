@@ -65,7 +65,7 @@ void scores()
         }
         else
             clear = "     ";
-        data = std::to_string(i+1) + ") " + nameArr[i] + " | " + std::to_string(scoreArr[i]) + " points, " + std::to_string(depthArr[i]) + " floors    " + clear;
+        data = std::to_string(i+1) + ") " + nameArr[i] + " | " + std::to_string(scoreArr[i]) + " points, " + std::to_string(depthArr[i]) + " chambers    " + clear;
         cout << "|-      " << setw(58) << std::left << data << "    -|" << endl;
     }
     cout << "|-                                                                    -|" << endl;

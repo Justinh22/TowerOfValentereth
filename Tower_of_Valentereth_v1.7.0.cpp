@@ -514,6 +514,8 @@ int main()
         hero.spellbook = spellSave;
     }
     depth = saveStats[13];
+    hero.meleeTraining = saveStats[16];
+    hero.magicTraining = saveStats[17];
     score = saveStats[29];
     if((depth/5)+2>11)
         hero.empowered = 1;
@@ -1163,6 +1165,19 @@ int main()
                         }
                         clear();
                     }
+                    cout << "Floor " << depth << endl << endl;
+                    cout << currentRoom.getDesc() << endl;
+                    for(int i=0;i<currentRoom.getLDescList().size();i++)
+                        cout << currentRoom.getLDescList()[i] << endl;
+                    if(hero.empowered==1)
+                        cout << currentRoom.ascDesc << endl;
+                    cout << currentRoom.getDrDesc() << endl;
+                    if(currentRoom.store.getLevel()!=-1)
+                        if(currentRoom.store.isUnlocked()==0)
+                            cout << "There is a locked door at the side of the room. The sign above it says it is a shop." << endl;
+                        else
+                            cout << "There is a shop on the side wall of the room." << endl;
+                    cout << currentRoom.creatDesc << endl;
                 }
                 else
                 {
@@ -1506,8 +1521,19 @@ int menuHandler(Player &hero, Directory dir)
                     {
                         cout << dir.getItemName(hero.equipment[intChoice-1]) << " | " << dir.getItemDesc(hero.equipment[intChoice-1]) << endl;
                         cout << "RARITY: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getRarity() << endl;
-                        cout << "STR: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getStr() << endl;
-                        cout << "ACC: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getAcc() << endl;
+                        if((hero.meleeTraining==0&&(hero.eqpWpn.getName().find("Dagger")!=string::npos||hero.eqpWpn.getName().find("Knife")!=string::npos||hero.eqpWpn.getName().find("Aerolinde")!=string::npos))||
+                           (hero.meleeTraining==1&&(hero.eqpWpn.getName().find("Spear")!=string::npos||hero.eqpWpn.getName().find("Pike")!=string::npos||hero.eqpWpn.getName().find("Hyliat")!=string::npos))||
+                           (hero.meleeTraining==2&&(hero.eqpWpn.getName().find("Sword")!=string::npos||hero.eqpWpn.getName().find("Saber")!=string::npos||hero.eqpWpn.getName().find("Pyrithia")!=string::npos))||
+                           (hero.meleeTraining==3&&(hero.eqpWpn.getName().find("Axe")!=string::npos||hero.eqpWpn.getName().find("Club")!=string::npos||hero.eqpWpn.getName().find("Teratra")!=string::npos)))
+                        {
+                            cout << "STR: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getStr()+2 << endl;
+                            cout << "ACC: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getAcc()+5 << endl;
+                        }
+                        else
+                        {
+                            cout << "STR: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getStr() << endl;
+                            cout << "ACC: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getAcc() << endl;
+                        }
                         cout << "CRIT: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getCrt() << endl;
                         if(dir.weaponDirectory[hero.equipment[intChoice-1]].getMA()!=0)
                             cout << "MAGIC AMP: +" << dir.weaponDirectory[hero.equipment[intChoice-1]].getMA() << "%" << endl;
@@ -1786,8 +1812,18 @@ int menuHandler(Player &hero, Directory dir)
                     cout << "RARITY: " << dir.getItemRarity(hero.spellbook[intChoice-1]) << endl;
                     if(hero.spellbook[intChoice-1]<=314)
                     {
-                        cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-300].getManaCost() << endl;
-                        cout << "DAMAGE: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-300].getDMG() << endl;
+                        if((hero.magicTraining==0&&(hero.spellbook[intChoice-1]%3==2))||
+                           (hero.magicTraining==1&&(hero.spellbook[intChoice-1]%3==1))||
+                           (hero.magicTraining==2&&(hero.spellbook[intChoice-1]%3==0)))
+                        {
+                            cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-300].getManaCost()-1 << endl;
+                            cout << "DAMAGE: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-300].getDMG()+2 << endl;
+                        }
+                        else
+                        {
+                            cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-300].getManaCost() << endl;
+                            cout << "DAMAGE: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-300].getDMG() << endl;
+                        }
                     }
                     else if(hero.spellbook[intChoice-1]<=320)
                     {
@@ -1892,8 +1928,19 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                 {
                     cout << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << " | " << dir.getItemDesc(currentRoom.store.storeInventory[intChoice-1]) << endl;
                     cout << "RARITY: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getRarity() << endl;
-                    cout << "STR: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getStr() << endl;
-                    cout << "ACC: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getAcc() << endl;
+                    if((hero.meleeTraining==0&&(hero.eqpWpn.getName().find("Dagger")!=string::npos||hero.eqpWpn.getName().find("Knife")!=string::npos||hero.eqpWpn.getName().find("Aerolinde")!=string::npos))||
+                       (hero.meleeTraining==1&&(hero.eqpWpn.getName().find("Spear")!=string::npos||hero.eqpWpn.getName().find("Pike")!=string::npos||hero.eqpWpn.getName().find("Hyliat")!=string::npos))||
+                       (hero.meleeTraining==2&&(hero.eqpWpn.getName().find("Sword")!=string::npos||hero.eqpWpn.getName().find("Saber")!=string::npos||hero.eqpWpn.getName().find("Pyrithia")!=string::npos))||
+                       (hero.meleeTraining==3&&(hero.eqpWpn.getName().find("Axe")!=string::npos||hero.eqpWpn.getName().find("Club")!=string::npos||hero.eqpWpn.getName().find("Teratra")!=string::npos)))
+                    {
+                        cout << "STR: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getStr()+2 << endl;
+                        cout << "ACC: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getAcc()+5 << endl;
+                    }
+                    else
+                    {
+                        cout << "STR: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getStr() << endl;
+                        cout << "ACC: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getAcc() << endl;
+                    }
                     cout << "CRIT: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getCrt() << endl;
                     if(dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getMA()!=0)
                         cout << "MAGIC AMP: +" << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getMA() << "%" << endl;
@@ -1921,8 +1968,18 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                     cout << "RARITY: " << dir.getItemRarity(currentRoom.store.storeInventory[intChoice-1]) << endl;
                     if(currentRoom.store.storeInventory[intChoice-1]<315)
                     {
-                        cout << "MANA COST: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getManaCost() << endl;
-                        cout << "DAMAGE: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getDMG() << endl;
+                        if((hero.magicTraining==0&&(hero.spellbook[intChoice-1]%3==2))||
+                           (hero.magicTraining==1&&(hero.spellbook[intChoice-1]%3==1))||
+                           (hero.magicTraining==2&&(hero.spellbook[intChoice-1]%3==0)))
+                        {
+                            cout << "MANA COST: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getManaCost()-1 << endl;
+                            cout << "DAMAGE: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getDMG()+2 << endl;
+                        }
+                        else
+                        {
+                            cout << "MANA COST: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getManaCost() << endl;
+                            cout << "DAMAGE: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getDMG() << endl;
+                        }
                     }
                     else if(currentRoom.store.storeInventory[intChoice-1]<321)
                     {

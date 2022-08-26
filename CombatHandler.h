@@ -280,7 +280,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                             cout << hero.eqpRng.getName() << " activated!" << endl;
                             Sleep(1000);
                             hero.changeHP(dmg/2);
-                            cout << "Recovered " << hero.level << " HP!" << endl;
+                            cout << "Recovered " << dmg/2 << " HP!" << endl;
                             Sleep(1000);
                         }
                     }
@@ -330,7 +330,18 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 if(choice<=hero.spellbook.size()&&choice>0)
                 {
                     if(hero.spellbook[choice-1]<=314)
-                        manacost = dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getManaCost();
+                    {
+                        if((hero.magicTraining==0&&(hero.spellbook[choice-1]%3==2))||
+                           (hero.magicTraining==1&&(hero.spellbook[choice-1]%3==1))||
+                           (hero.magicTraining==2&&(hero.spellbook[choice-1]%3==0)))
+                        {
+                            manacost = dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getManaCost()-1;
+                        }
+                        else
+                        {
+                            manacost = dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getManaCost();
+                        }
+                    }
                     else if(hero.spellbook[choice-1]<=320)
                         manacost = dir.healingSpellDirectory[hero.spellbook[choice-1]-315].getManaCost();
                     else
@@ -341,15 +352,18 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         cout << dir.getItemName(hero.spellbook[choice-1]) << ": " << dir.getItemDesc(hero.spellbook[choice-1]) << endl;
                         if(hero.spellbook[choice-1]<=314)
                         {
-                            cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getManaCost() << endl;
                             if((hero.magicTraining==0&&(hero.spellbook[choice-1]%3==2))||
                                (hero.magicTraining==1&&(hero.spellbook[choice-1]%3==1))||
                                (hero.magicTraining==2&&(hero.spellbook[choice-1]%3==0)))
                             {
+                                cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getManaCost()-1 << endl;
                                 cout << "DAMAGE: " << ceil(static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getDMG()+2)+(amp*static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getDMG()+2))) << endl;
                             }
                             else
+                            {
+                                cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getManaCost() << endl;
                                 cout << "DAMAGE: " << ceil(static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getDMG())+(amp*static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getDMG()))) << endl;
+                            }
                         }
                         else if(hero.spellbook[choice-1]<=320)
                         {
