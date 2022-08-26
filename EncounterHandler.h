@@ -1113,6 +1113,6 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
 
             break;
     }
-    cout << "Press any button to continue to the next chamber." << endl;
+    cout << endl << endl << "Press any button to continue to the next chamber." << endl;
     strChoice = getch();
 }

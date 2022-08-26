@@ -1,4 +1,4 @@
-void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStatus, vector<bool> itemStatus, Room currentRoom, int pass, Directory dir)
+void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStatus, vector<bool> itemStatus, Room currentRoom, int pass, Directory dir, vector<bool> randEncStatus)
 {
     std::ofstream saveFile;
     int boxNum;
@@ -24,9 +24,9 @@ void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStat
         saveFile << " " << hero.spellbook[i];
     saveFile << " " << -1 << "\n";
 
+
     //ROOM SAVE
 
-    //cout << "Saving room..." << endl;
 
     saveFile << currentRoom.getID() << " ";
 
@@ -119,9 +119,6 @@ void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStat
         }
     else
         saveFile << -1 << " ";
-    //cout << "AscDesc Done..." << endl;
-
-    //cout << "Descriptions Saved..." << endl;
 
     saveFile << currentRoom.contents << " ";
     saveFile << pass << " ";
@@ -154,6 +151,15 @@ void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStat
             saveFile << currentRoom.store.getStatDown()[1] << " ";
             saveFile << currentRoom.store.getStatCount() << " ";
         }
+    }
+
+    saveFile << "\n";
+
+    //RANDOM ENCOUNTER STATUS SAVE
+
+    for(int i=0;i<randEncStatus.size();i++)
+    {
+        saveFile << randEncStatus[i] << " ";
     }
 
     //cout << "Done!" << endl;

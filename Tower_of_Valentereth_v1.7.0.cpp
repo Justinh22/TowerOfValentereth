@@ -279,6 +279,8 @@ int main()
     string filename;
     int saveStats[30];
     int roomData[15];
+    int randEncCount = 15;
+    vector<bool> randEncStatus(randEncCount,0);
     vector<int> saveFList;
     vector<int> saveIList;
     vector<int> saveBList;
@@ -408,6 +410,14 @@ int main()
                         }
                         for(int i=1;i<15;i++)
                             data >> roomData[i];
+                    }
+                    else if(line==2)
+                    {
+                        for(int i=0;i<randEncCount;i++)
+                        {
+                            data >> saveCheck;
+                            randEncStatus[i] = saveCheck;
+                        }
                     }
                     line++;
                 }
@@ -544,7 +554,6 @@ int main()
     Room currentRoom;
     vector<bool> minibossStatus{saveStats[22]>=1,saveStats[23]>=1,saveStats[24]>=1,saveStats[25]>=1,saveStats[26]>=1,saveStats[27]>=1,saveStats[28]>=1};
     vector<bool> roomStatus(100,0);
-    vector<bool> randEncStatus(20,0);
     int boss = 0;
     bool win = 0;
     bool lvup = 0;
@@ -739,11 +748,11 @@ int main()
             break;
         }
         if(manSave==0)
-            saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
+            saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir,randEncStatus);
         if(debug_opt&&depth%5==0&&depth>0)
         {
             string debugFile = "Saves/" + hero.getName() + "_Flr" + std::to_string(depth) + ".txt";
-            saveFunc(hero,debugFile,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
+            saveFunc(hero,debugFile,depth,minibossStatus,itemStatus,currentRoom,pass,dir,randEncStatus);
         }
         if(hero.getHP()>hero.getMHP())
             hero.setHP(hero.getMHP());
@@ -1167,7 +1176,7 @@ int main()
                 if(menuval==-1) //Writing Save File
                 {
                     cout << "Quitting..." << endl;
-                    saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
+                    saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir,randEncStatus);
                     end = 1;
                 }
                 else
@@ -1197,7 +1206,7 @@ int main()
                     if(yn=='y')
                     {
                         cout << "Autosave disabled. Saving..." << endl;
-                        saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
+                        saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir,randEncStatus);
                         manSave = 1;
                     }
                 }
@@ -1210,7 +1219,7 @@ int main()
                         cout << "Autosave re-enabled." << endl;
                         manSave = 0;
                     }
-                    saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
+                    saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir,randEncStatus);
                 }
             }
             else if(err==8)
