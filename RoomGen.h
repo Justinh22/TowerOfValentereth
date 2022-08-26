@@ -441,7 +441,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
     return loot;
 }
 
-int difficultyGen(int &diff, int adv, vector<bool> &mbStatus)
+int difficultyGen(int &diff, int adv, vector<bool> &mbStatus, Player hero)
 {
 //Diff: The difficulty level of the chamber. From 1-5
 //Adv: The current level of advancement the player is at within the dungeon. From 1-10
@@ -455,6 +455,8 @@ int difficultyGen(int &diff, int adv, vector<bool> &mbStatus)
         {
             //cout << "Creature Level: " << creatureLevel << endl;
             cid = creaturePicker(creatureLevel);
+            if(creatureLevel==15&&hero.empowered==1)
+                cid = creaturePicker(14);
             return cid;
         }
         else
@@ -832,7 +834,7 @@ Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vect
     vector<int> loot;
     int foo;
     loot = rewardGen(rew,adv,dir);
-    int creature = difficultyGen(diff,adv,mbStatus);
+    int creature = difficultyGen(diff,adv,mbStatus,hero);
     Room currentRoom;
     //cout << "Building room..." << endl;
     currentRoom = roomBuilder(0,loot,creature,dir,rmStatus);

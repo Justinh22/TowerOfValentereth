@@ -87,6 +87,13 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         Sleep(1000);
                     }
                 }
+                if((hero.meleeTraining==0&&(hero.eqpWpn.getName().find("Dagger")!=string::npos||hero.eqpWpn.getName().find("Knife")!=string::npos||hero.eqpWpn.getName().find("Aerolinde")!=string::npos))||
+                   (hero.meleeTraining==1&&(hero.eqpWpn.getName().find("Spear")!=string::npos||hero.eqpWpn.getName().find("Pike")!=string::npos||hero.eqpWpn.getName().find("Hyliat")!=string::npos))||
+                   (hero.meleeTraining==2&&(hero.eqpWpn.getName().find("Sword")!=string::npos||hero.eqpWpn.getName().find("Saber")!=string::npos||hero.eqpWpn.getName().find("Pyrithia")!=string::npos))||
+                   (hero.meleeTraining==3&&(hero.eqpWpn.getName().find("Axe")!=string::npos||hero.eqpWpn.getName().find("Club")!=string::npos||hero.eqpWpn.getName().find("Teratra")!=string::npos)))
+                {
+                    accBuff += 5;
+                }
                 if(hit+monster.getDDG()<=hero.getACC()+accBuff)
                 {
                     crit = ((rand() % 100) + (rand() % 100) + 2) / 2;
@@ -112,6 +119,13 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                             Sleep(1000);
                         }
                         dmg = (hero.getSTR()+atkBuff - monster.getDEF())*2;
+                        if((hero.meleeTraining==0&&(hero.eqpWpn.getName().find("Dagger")!=string::npos||hero.eqpWpn.getName().find("Knife")!=string::npos||hero.eqpWpn.getName().find("Aerolinde")!=string::npos))||
+                           (hero.meleeTraining==1&&(hero.eqpWpn.getName().find("Spear")!=string::npos||hero.eqpWpn.getName().find("Pike")!=string::npos||hero.eqpWpn.getName().find("Hyliat")!=string::npos))||
+                           (hero.meleeTraining==2&&(hero.eqpWpn.getName().find("Sword")!=string::npos||hero.eqpWpn.getName().find("Saber")!=string::npos||hero.eqpWpn.getName().find("Pyrithia")!=string::npos))||
+                           (hero.meleeTraining==3&&(hero.eqpWpn.getName().find("Axe")!=string::npos||hero.eqpWpn.getName().find("Club")!=string::npos||hero.eqpWpn.getName().find("Teratra")!=string::npos)))
+                        {
+                            dmg += 2;
+                        }
                         if(hero.eqpRng.getID()==406||hero.eqpRng.getID()==416||hero.eqpRng.getID()==428) //PIERCING
                         {
                             if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK())+lckBuff)
@@ -190,6 +204,13 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                             Sleep(1000);
                         }
                         dmg = hero.getSTR()+atkBuff - monster.getDEF();
+                        if((hero.meleeTraining==0&&(hero.eqpWpn.getName().find("Dagger")!=string::npos||hero.eqpWpn.getName().find("Knife")!=string::npos||hero.eqpWpn.getName().find("Aerolinde")!=string::npos))||
+                           (hero.meleeTraining==1&&(hero.eqpWpn.getName().find("Spear")!=string::npos||hero.eqpWpn.getName().find("Pike")!=string::npos||hero.eqpWpn.getName().find("Hyliat")!=string::npos))||
+                           (hero.meleeTraining==2&&(hero.eqpWpn.getName().find("Sword")!=string::npos||hero.eqpWpn.getName().find("Saber")!=string::npos||hero.eqpWpn.getName().find("Pyrithia")!=string::npos))||
+                           (hero.meleeTraining==3&&(hero.eqpWpn.getName().find("Axe")!=string::npos||hero.eqpWpn.getName().find("Club")!=string::npos||hero.eqpWpn.getName().find("Teratra")!=string::npos)))
+                        {
+                            dmg += 2;
+                        }
                         if(hero.eqpRng.getID()==406||hero.eqpRng.getID()==416||hero.eqpRng.getID()==428) //PIERCING
                         {
                             if((rand()%100+1)<=hero.eqpRng.activate(hero.getLCK())+lckBuff)
@@ -321,7 +342,14 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         if(hero.spellbook[choice-1]<=314)
                         {
                             cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getManaCost() << endl;
-                            cout << "DAMAGE: " << ceil(static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getDMG())+(amp*static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getDMG()))) << endl;
+                            if((hero.magicTraining==0&&(hero.spellbook[choice-1]%3==2))||
+                               (hero.magicTraining==1&&(hero.spellbook[choice-1]%3==1))||
+                               (hero.magicTraining==2&&(hero.spellbook[choice-1]%3==0)))
+                            {
+                                cout << "DAMAGE: " << ceil(static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getDMG()+2)+(amp*static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getDMG()+2))) << endl;
+                            }
+                            else
+                                cout << "DAMAGE: " << ceil(static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getDMG())+(amp*static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getDMG()))) << endl;
                         }
                         else if(hero.spellbook[choice-1]<=320)
                         {
@@ -382,7 +410,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     //cout << "Attack Spell!" << endl;
                     fdmg = static_cast<float>(dir.attackSpellDirectory[hero.spellbook[choice-1]-300].getDMG());
                     dmg = ceil(fdmg+(amp*fdmg));
-                    //cout << dmg << " = " << fdmg << " + (" << amp << " * " << fdmg << ")" << endl;
+                    if((hero.magicTraining==0&&(hero.spellbook[choice-1]%3==2))||
+                       (hero.magicTraining==1&&(hero.spellbook[choice-1]%3==1))||
+                       (hero.magicTraining==2&&(hero.spellbook[choice-1]%3==0)))
+                    {
+                        dmg += 2;
+                    }
                     if(monster.getID()==48) //Valentereth
                         dmg = dmg/2;
                     if(monster.getID()==61) //?????

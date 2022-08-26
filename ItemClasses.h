@@ -436,7 +436,7 @@ class Player: public Creature
 public:
     Player(string n, int l, int i, int h, int m, int s, int a, int c, int df, int dg, int lk, int g, int k, int e): Creature(n,l,i,h,s,a,df,dg)
     {
-        hp = h;mhp=hp;mp = m;mmp = mp;nstr = s;nacc = a;crit = c;ncrit = c;ndef = df;nddg = dg;level = l;gold = g;keys = k;exp=e;expGoal=20;empowered=0;growth=0;lck=lk;
+        hp = h;mhp=hp;mp = m;mmp = mp;nstr = s;nacc = a;crit = c;ncrit = c;ndef = df;nddg = dg;level = l;gold = g;keys = k;exp=e;expGoal=20;empowered=0;growth=0;lck=lk;meleeTraining=-1;magicTraining=-1;
     }
     void changeMP(int delta){mp+=delta;}
     void setMP(int m){mp=m;}
@@ -532,6 +532,8 @@ public:
     bool growth;
     bool empowered;
     Item mask;
+    int meleeTraining; // -1 = None, 0 = Dagger, 1 = Spear, 2 = Sword, 3 = Axe
+    int magicTraining; // -1 = None, 0 = Frost, 1 = Fire, 2 = Lightning
     Weapon eqpWpn;
     Armor eqpAmr;
     Ring eqpRng;

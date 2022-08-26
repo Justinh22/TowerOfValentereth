@@ -23,6 +23,8 @@ Achievements ach;
 int score = 0;
 bool godMode = 0;
 int karma = 5;
+int end = 0;
+int pass = 1;
 #include "ItemClasses.h"
 #include "ItemList.h"
 #include "CreatureList.h"
@@ -275,7 +277,7 @@ int main()
 
     string name;
     string filename;
-    int saveStats[28];
+    int saveStats[30];
     int roomData[15];
     vector<int> saveFList;
     vector<int> saveIList;
@@ -317,14 +319,16 @@ int main()
         saveStats[17] = -1;
         saveStats[18] = -1;
         saveStats[19] = -1;
-        saveStats[20] = 0;
-        saveStats[21] = 0;
+        saveStats[20] = -1;
+        saveStats[21] = -1;
         saveStats[22] = 0;
         saveStats[23] = 0;
         saveStats[24] = 0;
         saveStats[25] = 0;
         saveStats[26] = 0;
         saveStats[27] = 0;
+        saveStats[28] = 0;
+        saveStats[29] = 0;
     }
     else if(intChoice==2)
     {
@@ -347,7 +351,7 @@ int main()
                     saveFound = 1;
                     if(line==0)
                     {
-                        for(int i=0;i<28;i++)
+                        for(int i=0;i<30;i++)
                             data >> saveStats[i];
                         for(int i=0;i<6;i++)
                         {
@@ -421,10 +425,10 @@ int main()
                 cout << "LCK: " << saveStats[12] << endl;
                 cout << "ROOM: " << saveStats[13] << endl;
                 cout << "KEYS: " << saveStats[14] << endl;
-                cout << "SCORE: " << saveStats[27] << endl;
-                if(saveStats[16]>=0)
+                cout << "SCORE: " << saveStats[29] << endl;
+                if(saveStats[18]>=0)
                 {
-                    cout << "MASK: " << dir.maskDirectory[saveStats[16]].getName() << endl << endl;
+                    cout << "MASK: " << dir.maskDirectory[saveStats[18]].getName() << endl << endl;
                 }
                 cout << "Continue with this character? (y/n)" << endl;
                 load = getch();
@@ -463,14 +467,16 @@ int main()
                     saveStats[17] = -1;
                     saveStats[18] = -1;
                     saveStats[19] = -1;
-                    saveStats[20] = 0;
-                    saveStats[21] = 0;
+                    saveStats[20] = -1;
+                    saveStats[21] = -1;
                     saveStats[22] = 0;
                     saveStats[23] = 0;
                     saveStats[24] = 0;
                     saveStats[25] = 0;
                     saveStats[26] = 0;
                     saveStats[27] = 0;
+                    saveStats[28] = 0;
+                    saveStats[29] = 0;
                     good = 1;
                 }
                 else
@@ -489,8 +495,8 @@ int main()
     hero.setMP(saveStats[5]);
     if(saveStats[15]==1)
         hero.growth = 1;
-    if(saveStats[16]>=0)
-        mask = saveStats[16];
+    if(saveStats[18]>=0)
+        mask = saveStats[18];
     if(intChoice==2)
     {
         hero.equipment = equipSave;
@@ -498,15 +504,15 @@ int main()
         hero.spellbook = spellSave;
     }
     depth = saveStats[13];
-    score = saveStats[27];
+    score = saveStats[29];
     if((depth/5)+2>11)
         hero.empowered = 1;
-    if(saveStats[17]!=-1)
-        hero.equipWpn(dir.weaponDirectory[saveStats[17]]);
-    if(saveStats[18]!=-1)
-        hero.equipAmr(dir.armorDirectory[saveStats[18]-100]);
     if(saveStats[19]!=-1)
-        hero.equipRng(dir.ringDirectory[saveStats[19]-400]);
+        hero.equipWpn(dir.weaponDirectory[saveStats[19]]);
+    if(saveStats[20]!=-1)
+        hero.equipAmr(dir.armorDirectory[saveStats[20]-100]);
+    if(saveStats[21]!=-1)
+        hero.equipRng(dir.ringDirectory[saveStats[21]-400]);
 
     if(mask>=0)
     {
@@ -524,14 +530,11 @@ int main()
     string target;
 
     int err = 0;
-    int end = 0;
-
     int diff = 0;
     int rew = 5;
     int adv = (depth / 5) + 1;
     if(adv>10)
         adv = 10;
-    int pass = 1;
     int menuval;
     int gd;
     int ex;
@@ -539,7 +542,7 @@ int main()
     string text;
 
     Room currentRoom;
-    vector<bool> minibossStatus{saveStats[20]>=1,saveStats[21]>=1,saveStats[22]>=1,saveStats[23]>=1,saveStats[24]>=1,saveStats[25]>=1,saveStats[26]>=1};
+    vector<bool> minibossStatus{saveStats[22]>=1,saveStats[23]>=1,saveStats[24]>=1,saveStats[25]>=1,saveStats[26]>=1,saveStats[27]>=1,saveStats[28]>=1};
     vector<bool> roomStatus(100,0);
     vector<bool> randEncStatus(20,0);
     int boss = 0;
@@ -729,6 +732,12 @@ int main()
     {
         //for(int i=0;i<15;i++)
         //    cout << "ROOMDATA[" << i << "]: " << roomData[i] << endl;
+        if(hero.getHP()<=0)
+        {
+            end = 1;
+            pass = 2;
+            break;
+        }
         if(manSave==0)
             saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
         if(debug_opt&&depth%5==0&&depth>0)
@@ -2222,7 +2231,7 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
             adv++;
     }
     if(rand()%5==0)
-        encounterHandler(hero,dir,adv,reStatus);
+        encounterHandler(hero,dir,adv,depth,reStatus);
     roomLogic(diff,rew,karma,adv,hero);
     std::system("cls");
     cout << "Room " << depth << endl;

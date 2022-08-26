@@ -5,9 +5,9 @@ void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStat
     saveFile.open(filename);
     saveFile << hero.level << " " << hero.exp << " " << hero.gold << " " << hero.getHP() << " " << hero.getMHP() << " " << hero.getMP() << " " << hero.getMMP()
              << " " << hero.getNSTR() << " " << hero.getNCRT() << " " << hero.getNACC() << " " << hero.getNDEF() << " " << hero.getNDDG() << " " << hero.getLCK() << " " << depth
-             << " " << hero.keys << " " << hero.growth << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID() << " " << hero.eqpRng.getID()
-             << " " << minibossStatus[0] << " " << minibossStatus[1] << " " << minibossStatus[2] << " " << minibossStatus[3] << " " << minibossStatus[4] << " " << minibossStatus[5]
-             << " " << minibossStatus[6] << " " << score;
+             << " " << hero.keys << " " << hero.growth << " " << hero.meleeTraining << " " << hero.magicTraining << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID()
+             << " " << hero.eqpRng.getID() << " " << minibossStatus[0] << " " << minibossStatus[1] << " " << minibossStatus[2] << " " << minibossStatus[3] << " " << minibossStatus[4]
+             << " " << minibossStatus[5] << " " << minibossStatus[6] << " " << score;
     for(int i=0;i<hero.equipment.size();i++)
     {
         saveFile << " " << hero.equipment[i];
