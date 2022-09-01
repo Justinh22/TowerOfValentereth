@@ -111,7 +111,7 @@ vector<BuffSpell> initBSDir(vector<BuffSpell> buffSpellDirectory)
     BuffSpell Spectrum_II("Spectrum II","Increases all your stats by a great amount.",5,342,50,10,10,30,30,30);
     buffSpellDirectory.push_back(Spectrum_II);
 
-    BuffSpell Enveloping_Shadow("Enveloping Shadow","Increases your Ddg. Deals 5 damage to the enemy each turn.",6,343,16,0,0,0,0,15);
+    BuffSpell Enveloping_Shadow("Enveloping Shadow","Increases your Ddg. Deals 5 necrotic damage to the enemy each turn.",6,343,16,0,0,0,0,15);
     buffSpellDirectory.push_back(Enveloping_Shadow);
     //cout << "Spell List Initialized! (3/3)" << endl;
 

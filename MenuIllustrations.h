@@ -182,19 +182,66 @@ void mainMenu()
 void statMenu(Player hero, Directory dir)
 {//50 long
     string strString;
+    int strBonus = 0;
     string crtString;
+    int crtBonus = 0;
     string accString;
+    int accBonus = 0;
+    string meleeTrainingStr = "";
+    string magicTrainingStr = "";
+    if(hero.meleeTraining>=0)
+    {
+        switch(hero.meleeTraining)
+        {
+            case 0:
+                meleeTrainingStr = "Dagger";
+                break;
+            case 1:
+                meleeTrainingStr = "Spear";
+                break;
+            case 2:
+                meleeTrainingStr = "Sword";
+                break;
+            case 3:
+                meleeTrainingStr = "Axe";
+                break;
+        }
+    }
+    if(hero.magicTraining>=0)
+    {
+        switch(hero.magicTraining)
+        {
+            case 0:
+                magicTrainingStr = "Frost";
+                break;
+            case 1:
+                magicTrainingStr = "Fire";
+                break;
+            case 2:
+                magicTrainingStr = "Lightning";
+                break;
+        }
+    }
+    if((hero.meleeTraining==0&&(hero.eqpWpn.getName().find("Dagger")!=string::npos||hero.eqpWpn.getName().find("Knife")!=string::npos||hero.eqpWpn.getName().find("Aerolinde")!=string::npos))||
+       (hero.meleeTraining==1&&(hero.eqpWpn.getName().find("Spear")!=string::npos||hero.eqpWpn.getName().find("Pike")!=string::npos||hero.eqpWpn.getName().find("Hyliat")!=string::npos))||
+       (hero.meleeTraining==2&&(hero.eqpWpn.getName().find("Sword")!=string::npos||hero.eqpWpn.getName().find("Saber")!=string::npos||hero.eqpWpn.getName().find("Pyrithia")!=string::npos))||
+       (hero.meleeTraining==3&&(hero.eqpWpn.getName().find("Axe")!=string::npos||hero.eqpWpn.getName().find("Club")!=string::npos||hero.eqpWpn.getName().find("Teratra")!=string::npos)))
+    {
+        strBonus = 2;
+        accBonus = 5;
+        crtBonus = 5;
+    }
     if(hero.mask.getID()==1) //Wrath
     {
-        strString = std::to_string(hero.getNSTR()+(hero.getNSTR()/2)) + " (+" + std::to_string(hero.eqpWpn.getStr()) + ")";
-        accString = std::to_string(hero.getACC());
-        crtString = std::to_string(hero.getNCRT()+(hero.getNCRT()/2)) + " (+" + std::to_string(hero.eqpWpn.getCrt()) + ")";
+        strString = std::to_string(hero.getNSTR()+(hero.getNSTR()/2)) + " (+" + std::to_string(hero.eqpWpn.getStr()+strBonus) + ")";
+        accString = std::to_string(hero.getACC()+accBonus);
+        crtString = std::to_string(hero.getNCRT()+(hero.getNCRT()/2)) + " (+" + std::to_string(hero.eqpWpn.getCrt()+crtBonus) + ")";
     }
     else
     {
-        strString = std::to_string(hero.getNSTR()) + " (+" + std::to_string(hero.eqpWpn.getStr()) + ")";
-        accString = std::to_string(hero.getACC());
-        crtString = std::to_string(hero.getNCRT()) + " (+" + std::to_string(hero.eqpWpn.getCrt()) + ")";
+        strString = std::to_string(hero.getNSTR()) + " (+" + std::to_string(hero.eqpWpn.getStr()+strBonus) + ")";
+        accString = std::to_string(hero.getACC()+accBonus);
+        crtString = std::to_string(hero.getNCRT()) + " (+" + std::to_string(hero.eqpWpn.getCrt()+crtBonus) + ")";
     }
     std::system("cls");
     cout << "/----------------------------------------------------\\" << endl;
@@ -220,6 +267,18 @@ void statMenu(Player hero, Directory dir)
     cout << "|-      ACC: " << setw(8) << std::left << accString << "             LCK: " << setw(8) << std::left << std::to_string(hero.getLCK()) << "     -|" << endl;
     cout << "|-      AMP: " << setw(4) << std::left << std::to_string(hero.getMA()) + "%" << "                 MPG: " << setw(2) << std::left << hero.getMG() << "           -|" << endl;
     cout << "|-                                                  -|" << endl;
+    if(meleeTrainingStr!="")
+    {
+        cout << "|-      " << setw(26) << std::left << meleeTrainingStr + " Training" << "                  -|" << endl;
+    }
+    if(magicTrainingStr!="")
+    {
+        cout << "|-      " << setw(26) << std::left << magicTrainingStr + " Magic Training" << "                  -|" << endl;
+    }
+    if(meleeTrainingStr!=""||magicTrainingStr!="")
+    {
+        cout << "|-                                                  -|" << endl;
+    }
     cout << "|-      0) RETURN                                   -|" << endl;
     cout << "|-                                                  -|" << endl;
     cout << "\\----------------------------------------------------/" << endl;

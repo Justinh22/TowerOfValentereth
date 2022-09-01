@@ -471,7 +471,7 @@ int difficultyGen(int &diff, int adv, vector<bool> &mbStatus, Player hero)
         }
     }
     //cout << "Creature: " << cid << endl;
-    Sleep(2000);
+    //Sleep(midWait);
 }
 
 Room roomBuilder(int type, vector<int> loot, int cid, Directory dir, vector<bool> &rmStatus)
