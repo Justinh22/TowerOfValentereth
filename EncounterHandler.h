@@ -22,6 +22,7 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
     } while(!good);
     randEncStatus[encounter] = 1;
     good = 0;
+    cout << "---------------------------------------------------------ENCOUNTER-----------------------------------------------------" << endl << endl;
 
     switch(encounter)
     {
@@ -473,7 +474,6 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                                 if(intChoice>=1&&intChoice<=hero.equipment.size())
                                 {
                                     cout << "Replaced " << dir.getItemName(hero.equipment[intChoice-1]) << " with " << dir.getItemName(amount) << "." << endl;
-                                    Sleep(midWait);
                                     hero.equipment[intChoice-1] = amount;
                                     good = 1;
                                 }
@@ -741,6 +741,7 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                     Sleep(shortWait);
                     cout << "'May you have better luck than I.' The soul fades away into the darkness." << endl;
                     Sleep(longWait);
+                    good = 1;
                 }
                 else if(intChoice==2)
                 {

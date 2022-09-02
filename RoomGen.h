@@ -3,7 +3,7 @@
 #include "SpellPicker.h"
 #include "RoomDescriptions.h"
 
-vector<int> rewardGen(int rew, int adv, Directory dir)
+vector<int> rewardGen(int rew, int adv, Player hero, Directory dir)
 {
 //Rew: The chosen value of the rewards contained within the generated room. From 1-20
 //Adv: The current level of advancement the player is at within the dungeon. From 1-10
@@ -327,7 +327,7 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                         itemRarity = 1;
                     else if(foo<=5)
                         itemRarity = 2;
-                    else if(foo<=7)
+                    else if(foo<=8)
                         itemRarity = 3;
                     else
                         itemRarity = 4;
@@ -336,6 +336,10 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
             if(keyFlag==0)
             {
                 iid = itemPicker(itemType,itemRarity);
+                if(iid==224)
+                    for(int i=0;i<hero.inventory.size();i++)
+                        while(hero.inventory[i]==224&&iid==224)
+                            iid = itemPicker(itemType,itemRarity);
                 loot.push_back(iid);
                 cost = itemRarity;
             }
@@ -414,17 +418,17 @@ vector<int> rewardGen(int rew, int adv, Directory dir)
                 itemRarity = 1;
             else if(adv<8)
             {
-                if(foo<=4)
+                if(foo<=7)
                     itemRarity = 1;
                 else
                     itemRarity = 2;
             }
             else
             {
-                if(foo<=7)
-                    itemRarity = 2;
+                if(foo<=3)
+                    itemRarity = 1;
                 else
-                    itemRarity = 3;
+                    itemRarity = 2;
             }
             iid = itemPicker(itemType,itemRarity);
             loot.push_back(iid);
@@ -533,7 +537,7 @@ Room roomBuilder(int type, vector<int> loot, int cid, Directory dir, vector<bool
     return newRoom;
 }
 
-Merchant storeHandler(int level)
+Merchant storeHandler(int level, Player hero)
 {
     int foo;
     int id;
@@ -685,6 +689,10 @@ Merchant storeHandler(int level)
                     }
                 }
                 id = itemPicker(itemType,itemRarity);
+                if(id==224)
+                    for(int i=0;i<hero.inventory.size();i++)
+                        while(hero.inventory[i]==224&&id==224)
+                            id = itemPicker(itemType,itemRarity);
                 store.storeInventory.push_back(id);
                 switch(itemRarity)
                 {
@@ -833,7 +841,7 @@ Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vect
 {
     vector<int> loot;
     int foo;
-    loot = rewardGen(rew,adv,dir);
+    loot = rewardGen(rew,adv,hero,dir);
     int creature = difficultyGen(diff,adv,mbStatus,hero);
     Room currentRoom;
     //cout << "Building room..." << endl;
@@ -843,7 +851,7 @@ Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vect
 
     foo = rand() % 4 + 1;
     if(foo==4)
-        currentRoom.setMerchant(storeHandler(adv));
+        currentRoom.setMerchant(storeHandler(adv,hero));
     //cout << "Room built!" << endl;
     cout << endl << currentRoom.getDesc() << endl;
 

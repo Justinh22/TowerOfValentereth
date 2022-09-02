@@ -91,6 +91,11 @@ int main()
     bool debug_opt=0;
     bool good=0;
     bool men;
+    vector<int> startingItems;
+    int startingItem = -1;
+    int meleeProficiency = -1;
+    int magicProficiency = -1;
+    bool alreadyLearned = 0;
     //int mapx=171;
     //int mapy=39;
     bool floorFlag=0;
@@ -110,6 +115,673 @@ int main()
             men = 0;
             while(men==0)
             {
+                valeTrade(ach);
+                strChoice = getch();
+                std::stringstream stoi(strChoice);
+                stoi >> intChoice;
+                if(intChoice==1)
+                {
+                    while(men==0)
+                    {
+                        ach.writeAchievements();
+                        valeUnlockables(ach);
+                        strChoice = getch();
+                        std::stringstream stoi(strChoice);
+                        stoi >> intChoice;
+                        if(intChoice==1)
+                        {
+                            if(ach.UnlockSword==0)
+                            {
+                                cout << "Would you like to spend 50 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<50)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 50;
+                                        cout << "You can now choose to start an ascent with a Crooked Saber!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockSword = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockSword==1)
+                            {
+                                cout << "Start this ascent with a Crooked Saber? You can only start an ascent with one of these items at a time. (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    cout << "You will start your next ascent with a Crooked Saber!" << endl;
+                                    startingItem = 5;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==2)
+                        {
+                            if(ach.UnlockArmor==0)
+                            {
+                                cout << "Would you like to spend 50 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<50)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 50;
+                                        cout << "You can now choose to start an ascent with Leather Armor!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockArmor = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockArmor==1)
+                            {
+                                cout << "Start this ascent with Leather Armor? You can only start an ascent with one of these items at a time. (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    cout << "You will start your next ascent with Leather Armor!" << endl;
+                                    startingItem = 103;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==3)
+                        {
+                            if(ach.UnlockJolt==0)
+                            {
+                                cout << "Would you like to spend 80 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<80)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 80;
+                                        cout << "You can now choose to start an ascent with Jolt!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockJolt = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockJolt==1)
+                            {
+                                cout << "Start this ascent with Jolt? You can only start an ascent with one of these items at a time. (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    cout << "You will start your next ascent with Jolt!" << endl;
+                                    startingItem = 300;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==4)
+                        {
+                            if(ach.UnlockHeal==0)
+                            {
+                                cout << "Would you like to spend 80 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<80)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 80;
+                                        cout << "You can now choose to start an ascent with Minor Heal!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockHeal = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockHeal==1)
+                            {
+                                cout << "Start this ascent with Minor Heal? You can only start an ascent with one of these items at a time. (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    cout << "You will start your next ascent with Minor Heal!" << endl;
+                                    startingItem = 315;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==5)
+                        {
+                            if(ach.UnlockHealingPot==0)
+                            {
+                                cout << "Would you like to spend 80 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<80)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 80;
+                                        cout << "You can now choose to start an ascent with a Potion of Healing!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockHealingPot = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockHealingPot==1)
+                            {
+                                cout << "Start this ascent with a Potion of Healing? You can only start an ascent with one of these items at a time. (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    cout << "You will start your next ascent with a Potion of Healing!" << endl;
+                                    startingItem = 204;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==6)
+                        {
+                            if(ach.UnlockCalmingPot==0)
+                            {
+                                cout << "Would you like to spend 80 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<80)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 80;
+                                        cout << "You can now choose to start an ascent with a Potion of Calming!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockCalmingPot = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockCalmingPot==1)
+                            {
+                                cout << "Start this ascent with a Potion of Calming? You can only start an ascent with one of these items at a time. (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    cout << "You will start your next ascent with a Potion of Calming!" << endl;
+                                    startingItem = 205;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==7)
+                        {
+                            if(ach.UnlockMelee==0)
+                            {
+                                cout << "Would you like to spend 150 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<150)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 150;
+                                        cout << "You can now choose to start an ascent with a Weapon Proficiency!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockMelee = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockMelee==1)
+                            {
+                                cout << "Which weapon would you like to be proficient in?" << endl;
+                                cout << "1) Daggers" << endl;
+                                cout << "2) Spears" << endl;
+                                cout << "3) Swords" << endl;
+                                cout << "4) Axes" << endl << endl;
+                                strChoice = getch();
+                                if(strChoice=="1")
+                                {
+                                    cout << "You will start your next ascent with dagger proficiency!" << endl;
+                                    meleeProficiency = 0;
+                                    Sleep(midWait);
+                                }
+                                if(strChoice=="2")
+                                {
+                                    cout << "You will start your next ascent with spear proficiency!" << endl;
+                                    meleeProficiency = 1;
+                                    Sleep(midWait);
+                                }
+                                if(strChoice=="3")
+                                {
+                                    cout << "You will start your next ascent with sword proficiency!" << endl;
+                                    meleeProficiency = 2;
+                                    Sleep(midWait);
+                                }
+                                if(strChoice=="4")
+                                {
+                                    cout << "You will start your next ascent with axe proficiency!" << endl;
+                                    meleeProficiency = 3;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==8)
+                        {
+                            if(ach.UnlockMagic==0)
+                            {
+                                cout << "Would you like to spend 150 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<150)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 150;
+                                        cout << "You can now choose to start an ascent with an Elemental Proficiency!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockMagic = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockMagic==1)
+                            {
+                                cout << "Which element would you like to be proficient in?" << endl;
+                                cout << "1) Frost" << endl;
+                                cout << "2) Fire" << endl;
+                                cout << "3) Lightning" << endl << endl;
+                                strChoice = getch();
+                                if(strChoice=="1")
+                                {
+                                    cout << "You will start your next ascent with frost proficiency!" << endl;
+                                    magicProficiency = 0;
+                                    Sleep(midWait);
+                                }
+                                if(strChoice=="2")
+                                {
+                                    cout << "You will start your next ascent with fire proficiency!" << endl;
+                                    magicProficiency = 1;
+                                    Sleep(midWait);
+                                }
+                                if(strChoice=="3")
+                                {
+                                    cout << "You will start your next ascent with lightning proficiency!" << endl;
+                                    magicProficiency = 2;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==9)
+                        {
+                            if(ach.UnlockRing==0)
+                            {
+                                cout << "Would you like to spend 150 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<150)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 150;
+                                        cout << "You can now choose to start an ascent with a Minor-Level Ring!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockRing = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockRing==1)
+                            {
+                                cout << "Which ring would you like to start with?" << endl;
+                                cout << "1) Minor Regeneration" << endl;
+                                cout << "2) Minor Conservation" << endl;
+                                cout << "3) Minor Bravery" << endl;
+                                cout << "4) Minor Leeching" << endl;
+                                cout << "5) Minor Vengeance" << endl;
+                                cout << "6) Minor Sight" << endl;
+                                cout << "7) Minor Piercing" << endl;
+                                cout << "8) Minor Overcharging" << endl;
+                                cout << "9) Minor Reflection" << endl;
+                                cout << "0) Minor Fury" << endl;
+                                strChoice = getch();
+                                if(strChoice=="1")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Regeneration!" << endl;
+                                    startingItem = 400;
+                                }
+                                if(strChoice=="2")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Conservation!" << endl;
+                                    startingItem = 401;
+                                }
+                                if(strChoice=="3")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Bravery!" << endl;
+                                    startingItem = 402;
+                                }
+                                if(strChoice=="4")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Leeching!" << endl;
+                                    startingItem = 403;
+                                }
+                                if(strChoice=="5")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Vengeance!" << endl;
+                                    startingItem = 404;
+                                }
+                                if(strChoice=="6")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Sight!" << endl;
+                                    startingItem = 405;
+                                }
+                                if(strChoice=="7")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Piercing!" << endl;
+                                    startingItem = 406;
+                                }
+                                if(strChoice=="8")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Overcharging!" << endl;
+                                    startingItem = 407;
+                                }
+                                if(strChoice=="9")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Reflection!" << endl;
+                                    startingItem = 408;
+                                }
+                                if(strChoice=="0")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Fury!" << endl;
+                                    startingItem = 409;
+                                }
+                                Sleep(midWait);
+                            }
+                        }
+                        else if(intChoice==0)
+                        {
+                            men = 1;
+                        }
+                        else
+                        {
+                            cout << "Invalid command." << endl;
+                            Sleep(midWait);
+                        }
+                    }
+                    men = 0;
+                }
+                else if(intChoice==2)
+                {
+                    while(men==0)
+                    {
+                        ach.writeAchievements();
+                        valeOneTime(ach);
+                        strChoice = getch();
+                        std::stringstream stoi(strChoice);
+                        stoi >> intChoice;
+                        if(intChoice==1)
+                        {
+                            cout << "Would you like to spend 30 Vale to start this run with an Iron Sword? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                if(ach.Vale<30)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else
+                                {
+                                    ach.Vale -= 30;
+                                    cout << "You will start the next ascent with an Iron Sword!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(10);
+                                }
+                            }
+                        }
+                        else if(intChoice==2)
+                        {
+                            cout << "Would you like to spend 30 Vale to start this run with Hide Armor? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                if(ach.Vale<30)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else
+                                {
+                                    ach.Vale -= 30;
+                                    cout << "You will start the next ascent with Hide Armor!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(106);
+                                }
+                            }
+                        }
+                        else if(intChoice==3)
+                        {
+                            cout << "Would you like to spend 20 Vale to start this run with Thunderbolt? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                alreadyLearned = 0;
+                                for(int i=0;i<startingItems.size();i++)
+                                    if(startingItems[i]==303)
+                                        alreadyLearned = 1;
+                                if(ach.Vale<20)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else if(!alreadyLearned)
+                                {
+                                    ach.Vale -= 20;
+                                    cout << "You will start the next ascent with Thunderbolt!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(303);
+                                }
+                                else
+                                {
+                                    cout << "You can't bring duplicates of the same spell." << endl;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==4)
+                        {
+                            cout << "Would you like to spend 40 Vale to start this run with Lightning Strike? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                alreadyLearned = 0;
+                                for(int i=0;i<startingItems.size();i++)
+                                    if(startingItems[i]==306)
+                                        alreadyLearned = 1;
+                                if(ach.Vale<40)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else if(!alreadyLearned)
+                                {
+                                    ach.Vale -= 40;
+                                    cout << "You will start the next ascent with Lightning Strike!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(306);
+                                }
+                                else
+                                {
+                                    cout << "You can't bring duplicates of the same spell." << endl;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==5)
+                        {
+                            cout << "Would you like to spend 40 Vale to start this run with Minor Regenerate? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                alreadyLearned = 0;
+                                for(int i=0;i<startingItems.size();i++)
+                                    if(startingItems[i]==317)
+                                        alreadyLearned = 1;
+                                if(ach.Vale<40)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else if(!alreadyLearned)
+                                {
+                                    ach.Vale -= 40;
+                                    cout << "You will start the next ascent with Minor Regenerate!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(317);
+                                }
+                                else
+                                {
+                                    cout << "You can't bring duplicates of the same spell." << endl;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==6)
+                        {
+                            cout << "Would you like to spend 30 Vale to start this run with a Potion of Healing? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                if(ach.Vale<30)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else
+                                {
+                                    ach.Vale -= 30;
+                                    cout << "You will start the next ascent with a Potion of Healing!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(204);
+                                }
+                            }
+                        }
+                        else if(intChoice==7)
+                        {
+                            cout << "Would you like to spend 30 Vale to start this run with a Potion of Calming? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                if(ach.Vale<30)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else
+                                {
+                                    ach.Vale -= 30;
+                                    cout << "You will start the next ascent with a Potion of Calming!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(205);
+                                }
+                            }
+                        }
+                        else if(intChoice==8)
+                        {
+                            cout << "Would you like to spend 30 Vale to start this run with a Blast Bomb? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                if(ach.Vale<30)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else
+                                {
+                                    ach.Vale -= 30;
+                                    cout << "You will start the next ascent with a Blast Bomb!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(216);
+                                }
+                            }
+                        }
+                        else if(intChoice==9)
+                        {
+                            cout << "Would you like to spend 80 Vale to start this run with a Second Soul? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                if(ach.Vale<80)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else
+                                {
+                                    ach.Vale -= 80;
+                                    cout << "You will start the next ascent with a Second Soul!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(216);
+                                }
+                            }
+                        }
+                        else if(intChoice==0)
+                        {
+                            men = 1;
+                        }
+                        else
+                        {
+                            cout << "Invalid command." << endl;
+                            Sleep(midWait);
+                        }
+                    }
+                    men = 0;
+                }
+                else if(intChoice==0)
+                {
+                    men = 1;
+                }
+                else
+                {
+                    cout << "Invalid command." << endl;
+                    Sleep(midWait);
+                }
+            }
+        }
+        if(intChoice==4)
+        {
+            men = 0;
+            while(men==0)
+            {
                 scores();
                 strChoice = getch();
                 std::stringstream stoi(strChoice);
@@ -118,7 +790,7 @@ int main()
                     men = 1;
             }
         }
-        if(intChoice==4)
+        if(intChoice==5)
         {
             men = 0;
             while(men==0)
@@ -131,7 +803,7 @@ int main()
                     men = 1;
             }
         }
-        if(intChoice==5)
+        if(intChoice==6)
         {
             men = 0;
             while(men==0)
@@ -320,8 +992,8 @@ int main()
         saveStats[13] = 1;
         saveStats[14] = 0;
         saveStats[15] = 0;
-        saveStats[16] = -1;
-        saveStats[17] = -1;
+        saveStats[16] = meleeProficiency;
+        saveStats[17] = magicProficiency;
         saveStats[18] = -1;
         saveStats[19] = -1;
         saveStats[20] = -1;
@@ -476,8 +1148,8 @@ int main()
                     saveStats[13] = 1;
                     saveStats[14] = 0;
                     saveStats[15] = 0;
-                    saveStats[16] = -1;
-                    saveStats[17] = -1;
+                    saveStats[16] = meleeProficiency;
+                    saveStats[17] = magicProficiency;
                     saveStats[18] = -1;
                     saveStats[19] = -1;
                     saveStats[20] = -1;
@@ -570,6 +1242,20 @@ int main()
     int boxType=-1;
     bool saveLog=0;
     int itemIndex = 0;
+
+    if(!saveFound)
+    {
+        startingItems.push_back(startingItem);
+        for(int i=0;i<startingItems.size();i++)
+        {
+            if((startingItems[i]<200||(startingItems[i]<500&&startingItems[i]>=400))&&hero.equipment.size()<=6)
+                hero.equipment.push_back(startingItems[i]);
+            else if((startingItems[i]>=200&&startingItems[i]<300)&&hero.inventory.size()<=6)
+                hero.inventory.push_back(startingItems[i]);
+            else if(startingItems[i]>=300&&startingItems[i]<400)
+                hero.spellbook.push_back(startingItems[i]);
+        }
+    }
 
     if(!saveFound)
     {
@@ -2425,6 +3111,7 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
     double percDmgTook;
     score += 100;
     depth++;
+    ach.Vale++;
     itemDrop = 0;
     godMode = 0;
     if(depth%5==0)

@@ -8,6 +8,7 @@ public:
         int i=0;
         achVals.clear();
         complete.clear();
+        unlocked.clear();
         std::ifstream ach(".achievements.txt");
         while(std::getline(ach,line))
         {
@@ -86,6 +87,17 @@ public:
         complete.push_back(TrueHeir==1);
         Watcher = achVals[34];
         complete.push_back(Watcher==1);
+        Vale = achVals[35];
+        complete.push_back(1);
+        UnlockHeal = achVals[36];
+        UnlockJolt = achVals[37];
+        UnlockHealingPot = achVals[38];
+        UnlockCalmingPot = achVals[39];
+        UnlockSword = achVals[40];
+        UnlockArmor = achVals[41];
+        UnlockMelee = achVals[42];
+        UnlockMagic = achVals[43];
+        UnlockRing = achVals[44];
         ach.close();
     }
     writeAchievements()
@@ -126,6 +138,16 @@ public:
         ach << SpectrumTriumph << " SpectrumTriumph\n";
         ach << TrueHeir << " TrueHeir\n";
         ach << Watcher << " Watcher\n";
+        ach << Vale << " Vale\n";
+        ach << UnlockHeal << " UnlockHeal\n";
+        ach << UnlockJolt << " UnlockJolt\n";
+        ach << UnlockHealingPot << " UnlockHealingPot\n";
+        ach << UnlockCalmingPot << " UnlockCalmingPot\n";
+        ach << UnlockSword << " UnlockSword\n";
+        ach << UnlockArmor << " UnlockArmor\n";
+        ach << UnlockMelee << " UnlockMelee\n";
+        ach << UnlockMagic << " UnlockMagic\n";
+        ach << UnlockRing << " UnlockRing\n";
         ach.close();
     }
     calculatePoints()
@@ -204,6 +226,7 @@ public:
     }
     vector<int> achVals;
     vector<bool> complete;
+    vector<bool> unlocked;
     int points;
     int Connoisseur;
     int Alchemist;
@@ -240,4 +263,14 @@ public:
     int SpectrumTriumph;
     int TrueHeir;
     int Watcher;
+    int Vale;
+    int UnlockHeal;
+    int UnlockJolt;
+    int UnlockHealingPot;
+    int UnlockCalmingPot;
+    int UnlockSword;
+    int UnlockArmor;
+    int UnlockMelee;
+    int UnlockMagic;
+    int UnlockRing;
 };

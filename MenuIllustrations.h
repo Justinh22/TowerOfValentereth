@@ -18,9 +18,10 @@ void titleScreen()
     cout << " |                                                                                                                    | " << endl;
     cout << " |     1) Ascend the Tower                                                                                            | " << endl;
     cout << " |     2) Load Previous Ascent                                                                                        | " << endl;
-    cout << " |     3) Leaderboard                                                                                                 | " << endl;
-    cout << " |     4) Achievements                                                                                                | " << endl;
-    cout << " |     5) Masks                                                                                                       | " << endl;
+    cout << " |     3) Vale Trade                                                                                                  | " << endl;
+    cout << " |     4) Leaderboard                                                                                                 | " << endl;
+    cout << " |     5) Achievements                                                                                                | " << endl;
+    cout << " |     6) Masks                                                                                                       | " << endl;
     cout << " |                                                                                                             v1.7.0 | " << endl;
     cout << " |____________________________________________________________________________________________________________________| " << endl;
     cout << "                                                                                                                        " << endl;
@@ -94,6 +95,90 @@ void maskSelect()
     cout << "|-       0) RETURN                                  -|" << endl;
     cout << "|-                                                  -|" << endl;
     cout << "\\----------------------------------------------------/" << endl;
+}
+
+void valeTrade(Achievements &ach)
+{
+    std::system("cls");
+    cout << "/--------------------------------------------------------------\\" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       VALE TRADE                         VALE: " << std::left << std::setw(5) << ach.Vale << "       -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       1) Unlockables                                       -|" << endl;
+    cout << "|-       2) One-Time Use                                      -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       0) RETURN                                            -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "\\--------------------------------------------------------------/" << endl;
+}
+
+void valeUnlockables(Achievements &ach)
+{
+    std::system("cls");
+    vector<string> unlockableStr;
+    unlockableStr.push_back("50 Vale");
+    if(ach.UnlockSword==1) unlockableStr[0] = "Unlocked";
+    unlockableStr.push_back("50 Vale");
+    if(ach.UnlockArmor==1) unlockableStr[1] = "Unlocked";
+    unlockableStr.push_back("80 Vale");
+    if(ach.UnlockJolt==1) unlockableStr[2] = "Unlocked";
+    unlockableStr.push_back("80 Vale");
+    if(ach.UnlockHeal==1) unlockableStr[3] = "Unlocked";
+    unlockableStr.push_back("80 Vale");
+    if(ach.UnlockHealingPot==1) unlockableStr[4] = "Unlocked";
+    unlockableStr.push_back("80 Vale");
+    if(ach.UnlockCalmingPot==1) unlockableStr[5] = "Unlocked";
+    unlockableStr.push_back("150 Vale");
+    if(ach.UnlockMelee==1) unlockableStr[6] = "Unlocked";
+    unlockableStr.push_back("150 Vale");
+    if(ach.UnlockMagic==1) unlockableStr[7] = "Unlocked";
+    unlockableStr.push_back("150 Vale");
+    if(ach.UnlockRing==1) unlockableStr[8] = "Unlocked";
+
+    cout << "/--------------------------------------------------------------\\" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       VALE TRADE                         VALE: " << std::left << std::setw(5) << ach.Vale << "       -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       Start With:                                          -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       1) Crooked Saber                   " << std::left << std::setw(10) << unlockableStr[0] << "        -|" << endl;
+    cout << "|-       2) Leather Armor                   " << std::left << std::setw(10) << unlockableStr[1] << "        -|" << endl;
+    cout << "|-       3) Jolt                            " << std::left << std::setw(10) << unlockableStr[2] << "        -|" << endl;
+    cout << "|-       4) Minor Heal                      " << std::left << std::setw(10) << unlockableStr[3] << "        -|" << endl;
+    cout << "|-       5) Potion of Healing               " << std::left << std::setw(10) << unlockableStr[4] << "        -|" << endl;
+    cout << "|-       6) Potion of Calming               " << std::left << std::setw(10) << unlockableStr[5] << "        -|" << endl;
+    cout << "|-       7) Weapon Proficiency              " << std::left << std::setw(10) << unlockableStr[6] << "        -|" << endl;
+    cout << "|-       8) Magic Proficiency               " << std::left << std::setw(10) << unlockableStr[7] << "        -|" << endl;
+    cout << "|-       9) Minor-Level Ring                " << std::left << std::setw(10) << unlockableStr[8] << "        -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       0) RETURN                                            -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "\\--------------------------------------------------------------/" << endl;
+}
+
+void valeOneTime(Achievements &ach)
+{
+
+    std::system("cls");
+    cout << "/--------------------------------------------------------------\\" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       VALE TRADE                         VALE: " << std::left << std::setw(5) << ach.Vale << "       -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       Start With:                                          -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       1) Iron Sword                      30 Vale           -|" << endl;
+    cout << "|-       2) Hide Armor                      30 Vale           -|" << endl;
+    cout << "|-       3) Thunderbolt                     20 Vale           -|" << endl;
+    cout << "|-       4) Lightning Strike                40 Vale           -|" << endl;
+    cout << "|-       5) Minor Regenerate                40 Vale           -|" << endl;
+    cout << "|-       6) Potion of Healing               30 Vale           -|" << endl;
+    cout << "|-       7) Potion of Calming               30 Vale           -|" << endl;
+    cout << "|-       8) Blast Bomb                      30 Vale           -|" << endl;
+    cout << "|-       9) Second Soul                     80 Vale           -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       0) RETURN                                            -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "\\--------------------------------------------------------------/" << endl;
 }
 
 void achievementMenu()
