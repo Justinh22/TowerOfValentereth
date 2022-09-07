@@ -495,18 +495,10 @@ public:
     void equipWpn(Weapon wpn)
     {
         eqpWpn=wpn;
-        if(mask.getID()==1) //Wrath
-        {
-            str=wpn.getStr()+(nstr+(nstr/2));
-            acc=wpn.getAcc()-10;
-            crit=wpn.getCrt()+(ncrit+(ncrit/2));
-        }
-        else
-        {
-            str=wpn.getStr()+nstr;
-            acc=wpn.getAcc();
-            crit=wpn.getCrt()+ncrit;
-        }
+
+        str=wpn.getStr()+nstr;
+        acc=wpn.getAcc();
+        crit=wpn.getCrt()+ncrit;
 
         if(eqpWpn.getName()=="Ordointh"&&eqpAmr.getName()=="Robe of the Archmage")
             ach.SorcererSupreme = 1;
@@ -670,37 +662,52 @@ public:
             }
         }
 
-        switch(rand()%6)
+        if(mask.getID()==1)
         {
-            case 0:
-                lck += mod;
-                if(mod>0)
-                    cout << "LCK went up by " << mod << "!" << endl;
-                break;
-            case 1:case 2:case 3:
-                lck += mod + 1;
-                cout << "LCK went up by " << mod+1 << "!" << endl;
-                break;
-            case 4:case 5:
-                lck += mod + 2;
-                cout << "LCK went up by " << mod+2 << "!" << endl;
-                break;
-        }
-
-        if(mask.getID()==1) //Wrath
-        {
-            str=eqpWpn.getStr()+(nstr+(nstr/2));
-            crit=eqpWpn.getCrt()+(ncrit+(ncrit/2));
-            def=eqpAmr.getDef()+ndef;
-            ddg=eqpAmr.getDdg()+nddg;
+            switch(rand()%8)
+            {
+                case 0:
+                    lck += mod + 2;
+                    cout << "LCK went up by " << mod+2 << "!" << endl;
+                    break;
+                case 1:case 2:
+                    lck += mod + 3;
+                    cout << "LCK went up by " << mod+3 << "!" << endl;
+                    break;
+                case 3:case 4:case 5:
+                    lck += mod + 4;
+                    cout << "LCK went up by " << mod+4 << "!" << endl;
+                    break;
+                case 6:case 7:
+                    lck += mod + 5;
+                    cout << "LCK went up by " << mod+5 << "!" << endl;
+                    break;
+            }
         }
         else
         {
-            str=eqpWpn.getStr()+nstr;
-            crit=eqpWpn.getCrt()+ncrit;
-            def=eqpAmr.getDef()+ndef;
-            ddg=eqpAmr.getDdg()+nddg;
+            switch(rand()%6)
+            {
+                case 0:
+                    lck += mod;
+                    if(mod>0)
+                        cout << "LCK went up by " << mod << "!" << endl;
+                    break;
+                case 1:case 2:case 3:
+                    lck += mod + 1;
+                    cout << "LCK went up by " << mod+1 << "!" << endl;
+                    break;
+                case 4:case 5:
+                    lck += mod + 2;
+                    cout << "LCK went up by " << mod+2 << "!" << endl;
+                    break;
+            }
         }
+
+        str=eqpWpn.getStr()+nstr;
+        crit=eqpWpn.getCrt()+ncrit;
+        def=eqpAmr.getDef()+ndef;
+        ddg=eqpAmr.getDdg()+nddg;
 
         exp -= expGoal;
         expGoal += 20;
@@ -714,20 +721,10 @@ public:
         ndef += 5;
         nddg += 5;
 
-        if(mask.getID()==1) //Wrath
-        {
-            str=eqpWpn.getStr()+(nstr+(nstr/2));
-            crit=eqpWpn.getCrt()+(ncrit+(ncrit/2));
-            def=eqpAmr.getDef()+ndef;
-            ddg=eqpAmr.getDdg()+nddg;
-        }
-        else
-        {
-            str=eqpWpn.getStr()+nstr;
-            crit=eqpWpn.getCrt()+ncrit;
-            def=eqpAmr.getDef()+ndef;
-            ddg=eqpAmr.getDdg()+nddg;
-        }
+        str=eqpWpn.getStr()+nstr;
+        crit=eqpWpn.getCrt()+ncrit;
+        def=eqpAmr.getDef()+ndef;
+        ddg=eqpAmr.getDdg()+nddg;
 
         lck += 2;
         empowered = 1;

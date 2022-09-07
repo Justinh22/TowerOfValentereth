@@ -131,6 +131,8 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     weaponDirectory.push_back(Ozkoroths_Fang);
     Weapon Essence_Siphon("Essence Siphon","Sceptre of an archmage. Whenever damage is dealt with this weapon, the wielder gains 5 MP.",11,58,0,80,10,25);
     weaponDirectory.push_back(Essence_Siphon);
+    Weapon Axe_of_Valentereth("Axe of Valentereth","The fabled axe belonging to the Tyrant of the Tower. Now yours to command.",11,59,45,90,20,20);
+    weaponDirectory.push_back(Axe_of_Valentereth);
 
     //cout << "Weapon Directory Initialized!" << endl;
 
@@ -323,8 +325,8 @@ vector<Item> initMDir(vector<Item> maskDirectory)
     Item Mask_of_Glass("Mask of Glass","A smiling mask made of shimmering glass. When worn, doubles the damage dealt with strikes, but doubles the damage dealt to the wearer.",10,0);
     maskDirectory.push_back(Mask_of_Glass);
 
-    Item Mask_of_Wrath("Mask of Wrath","An enraged mask made of searing hot stone. When worn, raises strength and crit chance by 50%, but lowers accuracy by 10.",10,1);
-    maskDirectory.push_back(Mask_of_Wrath);
+    Item Mask_of_Fate("Mask of Fate","A black and white mask, resembling a yin-yang. When worn, gain increased luck on level up, but become less lucky.",10,1);
+    maskDirectory.push_back(Mask_of_Fate);
 
     Item Mask_of_Darkness("Mask of Darkness","A screaming mask made of dark obsidian. When worn, spells are amplified by 50%, but enemies cannot be identified.",10,2);
     maskDirectory.push_back(Mask_of_Darkness);

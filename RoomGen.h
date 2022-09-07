@@ -457,10 +457,10 @@ int difficultyGen(int &diff, int adv, vector<bool> &mbStatus, Player hero)
     {
         if(diff!=8)
         {
-            //cout << "Creature Level: " << creatureLevel << endl;
-            cid = creaturePicker(creatureLevel);
             if(creatureLevel==15&&hero.empowered==1)
-                cid = creaturePicker(14);
+                creatureLevel = 14;
+            cid = creaturePicker(creatureLevel);
+            //cout << "Creature Level: " << creatureLevel << endl;
             return cid;
         }
         else

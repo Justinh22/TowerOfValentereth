@@ -65,8 +65,8 @@ public:
         complete.push_back(AncientPower==1);
         GlassTriumph = achVals[23];
         complete.push_back(GlassTriumph==1);
-        WrathTriumph = achVals[24];
-        complete.push_back(WrathTriumph==1);
+        FateTriumph = achVals[24];
+        complete.push_back(FateTriumph==1);
         DarknessTriumph = achVals[25];
         complete.push_back(DarknessTriumph==1);
         ArcanaTriumph = achVals[26];
@@ -83,21 +83,14 @@ public:
         complete.push_back(Gank==1);
         SpectrumTriumph = achVals[32];
         complete.push_back(SpectrumTriumph==8);
-        TrueHeir = achVals[33];
+        CurseBearer = achVals[33];
+        complete.push_back(CurseBearer==1);
+        TrueHeir = achVals[34];
         complete.push_back(TrueHeir==1);
-        Watcher = achVals[34];
+        Watcher = achVals[35];
         complete.push_back(Watcher==1);
-        Vale = achVals[35];
+        Vale = achVals[36];
         complete.push_back(1);
-        UnlockHeal = achVals[36];
-        UnlockJolt = achVals[37];
-        UnlockHealingPot = achVals[38];
-        UnlockCalmingPot = achVals[39];
-        UnlockSword = achVals[40];
-        UnlockArmor = achVals[41];
-        UnlockMelee = achVals[42];
-        UnlockMagic = achVals[43];
-        UnlockRing = achVals[44];
         ach.close();
     }
     writeAchievements()
@@ -127,7 +120,7 @@ public:
         ach << Whisper << " Whisper\n";
         ach << AncientPower << " AncientPower\n";
         ach << GlassTriumph << " GlassTriumph\n";
-        ach << WrathTriumph << " WrathTriumph\n";
+        ach << FateTriumph << " FateTriumph\n";
         ach << DarknessTriumph << " DarknessTriumph\n";
         ach << ArcanaTriumph << " ArcanaTriumph\n";
         ach << SteelTriumph << " SteelTriumph\n";
@@ -137,6 +130,7 @@ public:
         ach << Gank << " Gank\n";
         ach << SpectrumTriumph << " SpectrumTriumph\n";
         ach << TrueHeir << " TrueHeir\n";
+        ach << CurseBearer << " CurseBearer\n";
         ach << Watcher << " Watcher\n";
         ach << Vale << " Vale\n";
         ach << UnlockHeal << " UnlockHeal\n";
@@ -184,11 +178,11 @@ public:
         if(complete[14])
             points += 20;
         if(complete[15])
-            points += 30;
+            points += 25;
         if(complete[16])
-            points += 30;
+            points += 25;
         if(complete[17])
-            points += 30;
+            points += 25;
         if(complete[18])
             points += 25;
         if(complete[19])
@@ -216,12 +210,14 @@ public:
         if(complete[30])
             points += 40;
         if(complete[31])
-            points += 40;
+            points += 30;
         if(complete[32])
-            points += 70;
+            points += 60;
         if(complete[33])
-            points += 65;
+            points += 50;
         if(complete[34])
+            points += 50;
+        if(complete[35])
             points += 50;
     }
     vector<int> achVals;
@@ -252,7 +248,7 @@ public:
     int Whisper;
     int AncientPower;
     int GlassTriumph;
-    int WrathTriumph;
+    int FateTriumph;
     int DarknessTriumph;
     int ArcanaTriumph;
     int SteelTriumph;
@@ -261,6 +257,7 @@ public:
     int SoulsTriumph;
     int Gank;
     int SpectrumTriumph;
+    int CurseBearer
     int TrueHeir;
     int Watcher;
     int Vale;

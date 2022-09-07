@@ -31,6 +31,7 @@
 0 SoulsTriumph
 0 Gank
 0 SpectrumTriumph
+0 CurseBearer
 0 TrueHeir
 0 Watcher
 0 Vale

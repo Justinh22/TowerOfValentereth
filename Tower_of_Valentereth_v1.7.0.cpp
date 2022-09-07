@@ -45,10 +45,10 @@ int longWait = 3000;
 #include "SaveFunctions.h"
 
 int actionHandler(string act,bool debug_opt, int gankTracker);  //Done!
-int combatHandler(); //Done!
 int menuHandler(Player &hero,Directory dir); //Done!
 int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom);
 Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &rStatus, vector<bool> &reStatus, vector<bool> &iStatus, bool &dev);
+int throneDefense(Player &hero, Directory dir, bool debug_opt, bool &gankTracker);
 
 void clear()
 {
@@ -1192,7 +1192,7 @@ int main()
     hero.meleeTraining = saveStats[16];
     hero.magicTraining = saveStats[17];
     score = saveStats[29];
-    if((depth/5)+2>11)
+    if(depth>55)
         hero.empowered = 1;
     if(saveStats[19]!=-1)
         hero.equipWpn(dir.weaponDirectory[saveStats[19]]);
@@ -1208,8 +1208,6 @@ int main()
 
     if(hero.getNDDG()==0&&hero.mask.getID()==5) //Whispers
         hero.setNDDG(10);
-    if(hero.mask.getID()==1) //Wrath
-        hero.setACC(hero.getACC()-10);
     if(hero.mask.getID()==7) //Souls
         hero.setACC(hero.getNACC());
     srand(time(NULL));
@@ -1242,10 +1240,12 @@ int main()
     int boxType=-1;
     bool saveLog=0;
     int itemIndex = 0;
+    int throneDefensePoints = 0;
 
     if(!saveFound)
     {
-        startingItems.push_back(startingItem);
+        if(startingItem!=-1)
+            startingItems.push_back(startingItem);
         for(int i=0;i<startingItems.size();i++)
         {
             if((startingItems[i]<200||(startingItems[i]<500&&startingItems[i]>=400))&&hero.equipment.size()<=6)
@@ -1523,7 +1523,7 @@ int main()
                         if(hero.mask.getID()==0)
                             ach.GlassTriumph = 1;
                         if(hero.mask.getID()==1)
-                            ach.WrathTriumph = 1;
+                            ach.FateTriumph = 1;
                         if(hero.mask.getID()==2)
                             ach.DarknessTriumph = 1;
                         if(hero.mask.getID()==3)
@@ -1536,7 +1536,7 @@ int main()
                             ach.BeastsTriumph = 1;
                         if(hero.mask.getID()==7)
                             ach.SoulsTriumph = 1;
-                        if(ach.GlassTriumph==1&&ach.WrathTriumph==1&&ach.DarknessTriumph==1&&ach.ArcanaTriumph==1&&ach.SteelTriumph==1&&ach.WhispersTriumph==1&&ach.BeastsTriumph==1&&ach.SoulsTriumph==1)
+                        if(ach.GlassTriumph==1&&ach.FateTriumph==1&&ach.DarknessTriumph==1&&ach.ArcanaTriumph==1&&ach.SteelTriumph==1&&ach.WhispersTriumph==1&&ach.BeastsTriumph==1&&ach.SoulsTriumph==1)
                             ach.SpectrumTriumph = 1;
                         if(gankTracker==1)
                             ach.Gank = 1;
@@ -1544,28 +1544,86 @@ int main()
                         Sleep(midWait);
                         cout << "As she lay there, the same energy that had hold of her rushes from her body, and into yours." << endl;
                         Sleep(midWait);
-                        cout << "You are flooded with incredible power. The power of a God." << endl;
+                        cout << "You are flooded with incredible power." << endl;
                         Sleep(midWait);
-                        cout << "A voice calls to you from above... 'NOW YOU HAVE INHERITED THE MANTLE. YOU SHALL REMAIN HERE, AND DEFEND THE THRONE...'" << endl << endl;
+                        cout << "A voice from above calls down to you... 'POWER HUNGRY ONE... YOU HAVE FOUND WHAT YOU DESIRED. NOW YOU MUST DEFEND YOUR TITLE AS TYRANT OF THE TOWER...'" << endl << endl;
                         Sleep(longWait);
-                        cout << "You have defeated Valentereth, and inherited the throne! Would you like to continue upward? (y/n): " << endl;
-                        yn = getch();
+                        cout << "You have defeated Valentereth, and inherited the throne! What do you do now?" << endl;
+                        cout << "1) Defend the throne." << endl;
+                        cout << "2) Venture to the top of the tower." << endl;
+                        strChoice = getch();
+                        std::stringstream stoi(strChoice);
+                        stoi >> intChoice;
                         boss = 0;
-                        if(yn=='n')
+                        if(intChoice==1)
                         {
                             end = 2;
+                            clear();
+                            cout << "You sit upon the throne, Valentereth's axe in hand, brimming with ancient power." << endl;
+                            Sleep(shortWait);
+                            cout << "At long last, after all the trials you endured, you are the ruler of the tower." << endl;
+                            Sleep(shortWait);
+                            cout << "Your head aches and your vision blurs, but the feeling of power within is all that matters now." << endl;
+                            Sleep(shortWait);
+                            cout << "You know there will be many who come forth and challenge your throne. The idea of it fills you with rage..." << endl << endl;
+                            Sleep(shortWait);
+                            cout << "But you will never, ever, let that happen." << endl << endl;
+                            Sleep(midWait);
+                            cout << "Numb from the searing pain in your head, you grab your axe, and await your next challenger." << endl << endl;
+                            Sleep(midWait);
+                            cout << "Press any key to defend your throne.";
+                            yn = getch();
+                            if(hero.equipment.size()<6)
+                            {
+                                cout << "You now wield " << dir.getItemName(59) << "!" << endl;
+                                hero.equipment.push_back(59);
+                                hero.equipWpn(dir.weaponDirectory[59]);
+                            }
+                            else
+                            {
+                                good = 0;
+                                while(!good)
+                                {
+                                    std::system("cls");
+                                    replaceMenu(hero,dir,0,59);
+                                    strChoice = getch();
+                                    std::stringstream stoi(strChoice);
+                                    stoi >> intChoice;
+                                    if(intChoice>=1&&intChoice<=hero.equipment.size())
+                                    {
+                                        cout << "Replaced " << dir.getItemName(hero.equipment[intChoice-1]) << " with " << dir.getItemName(59) << "." << endl;
+                                        hero.equipment[intChoice-1] = 59;
+                                        hero.equipWpn(dir.weaponDirectory[59]);
+                                        good = 1;
+                                    }
+                                    else if(intChoice==0)
+                                    {
+                                        good = 1;
+                                    }
+                                    else
+                                    {
+                                        cout << "Invalid input." << endl;
+                                        Sleep(shortWait);
+                                    }
+                                }
+                            }
+                            Sleep(longWait);
+                            throneDefensePoints = throneDefense(hero,dir,debug_opt,gankTracker);
                             break;
                         }
-                        std::system("cls");
-                        cout << "This cycle... of those who defeat the conquerer becoming one themselves... It cannot go on." << endl;
-                        Sleep(shortWait);
-                        cout << "The voices from above command you to defend the title of the Tyrant of the Tower." << endl;
-                        Sleep(shortWait);
-                        cout << "So you must ascend even further to truly break this cycle..." << endl;
-                        Sleep(midWait);
-                        cout << "Press any key to continue ascending the tower.";
-                        yn = getch();
-                        hero.Empower();
+                        else
+                        {
+                            std::system("cls");
+                            cout << "You stare at Valentereth's axe in your hand, its power desperately calling you to wield it..." << endl;
+                            Sleep(shortWait);
+                            cout << "But is this truly the power you sought? To stay in this tower upon your throne, a prison of your own making?" << endl;
+                            Sleep(shortWait);
+                            cout << "You cast the axe aside. True power must lie further beyond..." << endl << endl;
+                            Sleep(midWait);
+                            cout << "Press any key to continue ascending the tower.";
+                            yn = getch();
+                            hero.Empower();
+                        }
                         std::system("cls");
                     }
                     if(boss==2)
@@ -2108,7 +2166,7 @@ int main()
                 std::getline(cin,target);
                 while(target=="")
                 {
-                    cout << endl << "Select a target: ";
+                    cout << endl << "Select a speed: ";
                     std::getline(cin,target);
                 }
                 if(target.front()==' ')
@@ -2146,24 +2204,10 @@ int main()
     if(win==1)
     {
         clear();
-        if(end==2)
-        {
-            cout << "You sit upon the throne, brimming with ancient power." << endl;
-            Sleep(midWait);
-            cout << "At long last, after all the trials you endured, you are the ruler of the tower." << endl << endl;
-            Sleep(longWait);
-            cout << "Your head aches and your vision blurs, but the feeling of power within is all that matters now." << endl;
-            Sleep(midWait);
-            cout << "Perhaps some fool may ascend the tower someday, trying to take what is rightfully yours. The thought of it makes your blood boil." << endl << endl;
-            Sleep(midWait);
-            cout << "But you will never, ever, let that happen." << endl << endl;
-            Sleep(longWait);
-            cout << "Numb from the searing pain in your head, you grab your axe, and await your next challenger." << endl << endl << endl;
-        }
         if(pass==2)
         {
             cout << "GAME OVER!" << endl;
-            cout << "You inherited the throne of the Tower of Valentereth after " << depth << " rooms!" << endl;
+            cout << "You inherited the throne of the Tower of Valentereth, and defended it for " << throneDefensePoints << " rounds!" << endl;
             remove(filename.c_str());
             if(end!=2)
             {
@@ -2171,7 +2215,7 @@ int main()
                 ach.RiseAndShine++;
             }
             Sleep(midWait);
-            if(hiscores(hero,depth))
+            if(hiscores(hero,depth+throneDefensePoints))
             {
                 cout << "On the leaderboard!" << endl;
                 Sleep(midWait);
@@ -2699,7 +2743,10 @@ int menuHandler(Player &hero, Directory dir)
         }
         else if(intChoice==6)
         {
-            cout << "Are you sure you want to quit? Your progress will be saved under your name. (y/n): ";
+            if(end!=2)
+                cout << "Are you sure you want to quit? Your progress will be saved under your name. (y/n)";
+            else
+                cout << "Give up? (y/n)";
             strChoice = getch();
             if(strChoice=="y")
                 nav = -1;
@@ -3105,6 +3152,257 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
     return 0;
 }
 
+int throneDefense(Player &hero, Directory dir, bool debug_opt, bool &gankTracker)
+{
+    int kills = 0;
+    string action;
+    string target;
+    string holder;
+    int gd;
+    int ex;
+    int err;
+    Creature enemy = dir.creatureDirectory[54];
+    std::system("cls");
+    cout << "After some time waiting, your first challenger approaches. A hero stands before you." << endl << endl;
+    godMode = 0;
+    while(1==1)
+    {
+        if(hero.getHP()>hero.getMHP())
+            hero.setHP(hero.getMHP());
+        if(hero.getMP()>hero.getMMP())
+            hero.setMP(hero.getMMP());
+        if(hero.exp>=hero.getEXPGoal())
+            hero.levelUp();
+        cout << endl << "What do you do?" << endl;
+        cin >> action;
+        err = actionHandler(action,debug_opt,gankTracker);
+        if(err==1) //Look
+        {
+            std::getline(cin,target);
+            while(target=="")
+            {
+                cout << endl << "Select a target: ";
+                std::getline(cin,target);
+            }
+            if(target.front()==' ')
+                target.erase(target.begin());
+            if(target!="hero"&&target!="challenger"&&target!="traveler"&&target!="enemy"&&target!="monster")
+                continue;
+
+            if(hero.mask.getID()==2) //Darkness
+            {
+                holder = "Silhouette | Level ??\n";
+                holder += "HP: ??\n";
+                holder += "Strength: ??\n";
+                holder += "Accuracy: ??\n";
+                holder += "Defense: ??\n";
+                holder += "Dodge: ??";
+            }
+            else
+            {
+                holder = "Hero | Level ";
+
+                int monDmg = enemy.getSTR() - hero.getDEF();
+                int monHit = enemy.getACC() - hero.getDDG();
+                int heroDmg = hero.getSTR() - enemy.getDEF();
+                int heroHit = hero.getACC() -enemy.getDDG();
+
+                if(hero.eqpWpn.getID()==57)
+                    heroDmg = ceil(static_cast<float>(enemy.getHP())*.35);
+                if(hero.eqpAmr.getID()==142)
+                    monDmg -= monDmg/4;
+
+                if(hero.mask.getID()==6)
+                    heroDmg = heroDmg + (heroDmg/2);
+                if(hero.mask.getID()==5) //Whispers
+                    monDmg = static_cast<float>(monDmg)*1.5;
+                if((hero.meleeTraining==0&&(hero.eqpWpn.getName().find("Dagger")!=string::npos||hero.eqpWpn.getName().find("Knife")!=string::npos||hero.eqpWpn.getName().find("Aerolinde")!=string::npos))||
+                   (hero.meleeTraining==1&&(hero.eqpWpn.getName().find("Spear")!=string::npos||hero.eqpWpn.getName().find("Pike")!=string::npos||hero.eqpWpn.getName().find("Hyliat")!=string::npos))||
+                   (hero.meleeTraining==2&&(hero.eqpWpn.getName().find("Sword")!=string::npos||hero.eqpWpn.getName().find("Saber")!=string::npos||hero.eqpWpn.getName().find("Pyrithia")!=string::npos))||
+                   (hero.meleeTraining==3&&(hero.eqpWpn.getName().find("Axe")!=string::npos||hero.eqpWpn.getName().find("Club")!=string::npos||hero.eqpWpn.getName().find("Teratra")!=string::npos)))
+                {
+                    heroDmg += 2;
+                    heroHit += 5;
+                }
+
+                holder += "HP: " + std::to_string(enemy.getHP()) + "\n";
+                holder += "Strength: " + std::to_string(enemy.getSTR()) + " (Enemy DMG: " + std::to_string(monDmg) + ")\n";
+                holder += "Accuracy: " + std::to_string(enemy.getACC()) + " (Enemy Hit Rate: " + std::to_string(monHit) + ")\n";
+                holder += "Defense: " + std::to_string(enemy.getDEF()) + " (Your DMG: " + std::to_string(heroDmg) + ")\n";
+                holder += "Dodge: " + std::to_string(enemy.getDDG()) + " (Your Hit Rate: " + std::to_string(heroHit) + ")\n";
+
+                cout << holder << endl;
+            }
+        }
+        else if(err==3) //Fight
+        {
+            std::getline(cin,target);
+            while(target=="")
+            {
+                cout << endl << "Select a target: ";
+                std::getline(cin,target);
+            }
+            if(target.front()==' ')
+                target.erase(target.begin());
+            if(target!="hero"&&target!="challenger"&&target!="traveler"&&target!="enemy"&&target!="monster")
+                continue;
+            gd = goldPicker(enemy.getLEV());
+            ex = expPicker(enemy.getLEV());
+            if(hero.mask.getID()==7) //Souls
+                ex = ex*3;
+            pass = combatHandler(hero,enemy,dir,gd,ex,debug_opt);
+            switch(pass)
+            {
+                case 1:
+                    kills++;
+                    if(kills>=10)
+                    {
+                        cout << "Next." << endl;
+                        Sleep(longWait);
+                    }
+                    else
+                    {
+                        cout << "Another defeated." << endl;
+                        Sleep(shortWait);
+                        cout << "You wait for the next challenger... time passes." << endl;
+                        Sleep(shortWait);
+                        cout << "You are not sure how many days, months, or years have passed, but you finally see another challenger enter the room." << endl;
+                        Sleep(shortWait);
+                        switch(kills)
+                        {
+                            case 0:case 1:case 2:
+                                cout << "You stand up from your throne, axe in hand, eager to show the foolish one what true power really is." << endl;
+                                break;
+                            case 3:case 4:
+                                cout << "You stand up slowly, axe in hand. You let out a sigh, and ready for battle." << endl;
+                                break;
+                            case 5:case 6:
+                                cout << "You arise slowly from the throne. Hoping this one will finally be strong enough to end you, you raise your axe and ready for combat." << endl;
+                                break;
+                            default:
+                                cout << "You stand up from the throne, feeling numb. You pray that this will be the one to end your suffering." << endl;
+                                break;
+                        }
+                        enemy = dir.creatureDirectory[54];
+
+                        enemy.setHP(enemy.getHP()+(kills*3));
+                        enemy.setSTR(enemy.getSTR()+(kills*2));
+                        enemy.setACC(enemy.getACC()+(kills*2));
+                        enemy.setDEF(enemy.getDEF()+(kills*2));
+                        enemy.setDDG(enemy.getDDG()+(kills*2));
+                        Sleep(longWait);
+                    }
+                    break;
+                case 2:
+                    return kills;
+            }
+            godMode = 0;
+        }
+        else if(err==12) //GODMODE
+        {
+            if(!godMode)
+            {
+                cout << "God mode enabled. ATK and DEF have been maxed out in combat for this room." << endl;
+                godMode = 1;
+            }
+            else
+            {
+                cout << "God mode disabled." << endl;
+                godMode = 0;
+            }
+        }
+        else if(err==15)
+        {
+            std::getline(cin,target);
+            while(target=="")
+            {
+                cout << endl << "Select a speed: ";
+                std::getline(cin,target);
+            }
+            if(target.front()==' ')
+                target.erase(target.begin());
+            if(target=="slow"||target=="long")
+            {
+                shortWait = 1500;
+                midWait = 3000;
+                longWait = 4500;
+                cout << "Game speed set to slow." << endl;
+            }
+            else if(target=="normal"||target=="regular"||target=="medium")
+            {
+                shortWait = 1000;
+                midWait = 2000;
+                longWait = 3000;
+                cout << "Game speed set to normal." << endl;
+            }
+            else if(target=="fast"||target=="short")
+            {
+                shortWait = 500;
+                midWait = 1000;
+                longWait = 1500;
+                cout << "Game speed set to fast." << endl;
+            }
+            else
+            {
+                cout << "Invalid speed. Try: slow, normal, fast" << endl;
+            }
+        }
+        else if(err==4)
+        {
+            err = menuHandler(hero,dir);
+            clear();
+            if(err==-1) //Writing Save File
+            {
+                return kills;
+            }
+            else
+            {
+                cout << "The hero stands ready for battle." << endl;
+            }
+        }
+        else if(err==8)
+        {
+            cout << endl;
+            cout << "Actions:" << endl;
+            cout << "    MOVE: move <target>" << endl;
+            cout << "        -Synonyms: Go, Enter, Leave, Walk, Next" << endl;
+            cout << "        -Meaning: Used to enter a new area." << endl;
+            cout << "        -EG: enter door" << endl;
+            cout << "    LOOK: look <target>" << endl;
+            cout << "        -Synonyms: Check, Examine, See" << endl;
+            cout << "        -Meaning: Used to examine a feature in the room." << endl;
+            cout << "        -EG: check crates" << endl;
+            cout << "    GET: get <target>" << endl;
+            cout << "        -Synonyms: Take, Grab, Add" << endl;
+            cout << "        -Meaning: Used to acquire a new item." << endl;
+            cout << "        -EG: get wooden sword" << endl;
+            cout << "    ATTACK: attack <target>" << endl;
+            cout << "        -Synonyms: Fight, Strike, Kill, Gank" << endl;
+            cout << "        -Meaning: Used to engage in combat with a creature." << endl;
+            cout << "        -EG: attack ogre" << endl;
+            cout << "    MENU: menu" << endl;
+            cout << "        -Synonyms: Inventory, Pause, M, Items" << endl;
+            cout << "        -Meaning: Opens up your menu." << endl;
+            cout << "        -EG: menu" << endl;
+            cout << "    SAVE: save" << endl;
+            cout << "        -Synonyms: (None)" << endl;
+            cout << "        -Meaning: Enables/Disables manual saving (Autosave enabled by default)." << endl;
+            cout << "        -EG: save" << endl;
+            cout << "    SPEED: speed <speed>" << endl;
+            cout << "        -Synonyms: Delay, Textspeed, Gamespeed" << endl;
+            cout << "        -Meaning: Sets the speed of the gameplay to either slow, normal, or fast." << endl;
+            cout << "        -EG: speed fast" << endl;
+            cout << "    HELP: help" << endl;
+            cout << "        -Synonyms: Manual, H, Guide, Instructions" << endl;
+            cout << "        -Meaning: Opens a guide to actions." << endl;
+            cout << "        -EG: help" << endl;
+            cout << endl;
+            cout << "For further help, consult the REAMDE file in the game files." << endl << endl;
+        }
+    }
+
+}
+
 Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &rStatus, vector<bool> &reStatus, vector<bool> &iStatus, bool &dev)
 {
     double percDmgDone;
@@ -3119,6 +3417,8 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
         if(adv<10)
             adv++;
     }
+    if(hero.mask.getID()==1)
+        karma -= 2;
     if(rand()%5==0)
         encounterHandler(hero,dir,adv,depth,reStatus);
     roomLogic(diff,rew,karma,adv,hero);
@@ -3167,7 +3467,7 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
 
     percDmgDone = (hero.getSTR()-currentRoom.monster.getDEF())/currentRoom.monster.getHP();
     percDmgTook = (currentRoom.monster.getSTR()-hero.getDEF())/hero.getMHP();
-    if(adv>=10)
+    if(adv>=5)
     {
         if(percDmgTook>percDmgDone*3)
             karma += 2;
@@ -3179,6 +3479,8 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
             karma -= 2;
     }
 
+    //cout << "Diff: " << diff << endl;
+    //cout << "Adv: " << adv << endl;
     //cout << "Karma: " << karma << endl;
     return currentRoom;
 }

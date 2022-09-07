@@ -625,6 +625,11 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         }
         else if(action==";")
         {
+           if(end==2)
+           {
+               cout << "They're the one who should be running from you." << endl;
+               Sleep(longWait);
+           }
            hit = ((rand() % 100) + (rand() % 100) + 2) / 2;
            if(hero.getDDG()>=monster.getLEV()*3)
            {
@@ -1188,6 +1193,159 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                 monHP = monster.getHP();
             dmg = static_cast<float>(monster.getHP())*.15;
             cout << monName << " recovers " << dmg << " HP!" << endl;
+            Sleep(midWait);
+        }
+
+        if(monster.getName()=="Ozkoroth, the Slime-Soaked Behemoth")
+        {
+            switch(rand()%3)
+            {
+                case 0:
+                    cout << "'GRAAAAGGGGHHH!!'" << endl;
+                    break;
+                case 1:
+                    cout << "The beast leaps across the hall, smashing a pillar to pieces." << endl;
+                    break;
+                case 2:
+                    cout << "The beast roars, spattering black flecks of ooze onto you." << endl;
+                    break;
+            }
+            Sleep(midWait);
+        }
+
+        if(monster.getName()=="Endrigaia, the Ever-Growing")
+        {
+            switch(rand()%3)
+            {
+                case 0:
+                    cout << "'We are life. We are growth. Join us, and set aside your thirst for power.'" << endl;
+                    break;
+                case 1:
+                    cout << "'You cannot evade us... We are everywhere.'" << endl;
+                    break;
+                case 2:
+                    cout << "The creature's eyes and antlers glow a bright golden color, and vines rush out from its arms." << endl;
+                    break;
+            }
+            Sleep(midWait);
+        }
+
+        if(monster.getName()=="Emeritus, the Enlightened Sorcerer")
+        {
+            switch(rand()%3)
+            {
+                case 0:
+                    cout << "'You think you know this world? This tower?? You know NOTHING!'" << endl;
+                    break;
+                case 1:
+                    cout << "'You are just a moth, who fluttered too close to the lamp... this tower will be your rightful end.'" << endl;
+                    break;
+                case 2:
+                    cout << "'This place is MINE! Only I can decipher the secrets of this library, of this tower!'" << endl;
+                    break;
+            }
+            Sleep(midWait);
+        }
+
+        if(monster.getName()=="Stiran, the Famed Bounty-Hunter")
+        {
+            switch(rand()%3)
+            {
+                case 0:
+                    cout << "'No hard feelings, kid. But I was here first.'" << endl;
+                    break;
+                case 1:
+                    cout << "'The tower is mine to plunder. Can't risk having you skulking 'round here.'" << endl;
+                    break;
+                case 2:
+                    cout << "'You gotta kill to survive. Nothin' personal. But you're in my way, and I intend to survive.'" << endl;
+                    break;
+            }
+            Sleep(midWait);
+        }
+
+        if(monster.getName()=="?????, the Cursed Amalgamation")
+        {
+            switch(rand()%3)
+            {
+                case 0:
+                    cout << "'%&#*!%&~ !@&#*%*$'" << endl;
+                    break;
+                case 1:
+                    cout << "'&@^#%! *$& ^~%!~'" << endl;
+                    break;
+                case 2:
+                    cout << "'!*&@&$%#^@&!&@* &@%%'" << endl;
+                    break;
+            }
+            Sleep(midWait);
+        }
+
+        if(monster.getName()=="Byralt, Valentereth's Scion")
+        {
+            switch(rand()%3)
+            {
+                case 0:
+                    cout << "'Have you come to end her suffering...?'" << endl;
+                    break;
+                case 1:
+                    cout << "'You don't stand a chance against her... you are weak.'" << endl;
+                    break;
+                case 2:
+                    cout << "'Watcher... grant me your power.'" << endl;
+                    break;
+            }
+            Sleep(midWait);
+        }
+
+        if(monster.getName()=="Halliot, the Ascended")
+        {
+            switch(rand()%3)
+            {
+                case 0:
+                    cout << "'With this spear, I will strike thee down!'" << endl;
+                    break;
+                case 1:
+                    cout << "'By the Watcher, I will never fall to one as wicked as you! Have at thee!'" << endl;
+                    break;
+                case 2:
+                    cout << "'Halliot leaps into the air, her eyes glowing with holy light, and twirls her spear around her.'" << endl;
+                    break;
+            }
+            Sleep(midWait);
+        }
+
+        if(monster.getName()=="Valentereth, the Tyrant")
+        {
+            switch(rand()%3)
+            {
+                case 0:
+                    cout << "'End... It...'" << endl;
+                    break;
+                case 1:
+                    cout << "'Run...'" << endl;
+                    break;
+                case 2:
+                    cout << "'Kill... Me...'" << endl;
+                    break;
+            }
+            Sleep(midWait);
+        }
+
+        if(monster.getName()=="Termineth, the Watcher")
+        {
+            switch(rand()%3)
+            {
+                case 0:
+                    cout << "'The power is what you sought... why did you leave the throne?!'" << endl;
+                    break;
+                case 1:
+                    cout << "'I will not let greed prevail... do your worst, mortal!'" << endl;
+                    break;
+                case 2:
+                    cout << "'I shall not fall to the likes of you. This tower is all that keeps the world safe.'" << endl;
+                    break;
+            }
             Sleep(midWait);
         }
     }

@@ -313,6 +313,12 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                     Sleep(longWait);
                     good = 1;
                 }
+                else if(intChoice==4)
+                {
+                    cout << "You decide to leave them be." << endl;
+                    Sleep(longWait);
+                    good = 1;
+                }
                 else
                 {
                     cout << "Invalid input." << endl << endl;
@@ -750,28 +756,35 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                         karma -= 3;
                         cout << "You catch the soul in a glass bottle!" << endl;
                         Sleep(longWait);
-                        while(!good)
+                        if(hero.inventory.size()<6)
                         {
-                            std::system("cls");
-                            replaceMenu(hero,dir,1,224);
-                            strChoice = getch();
-                            std::stringstream stoi(strChoice);
-                            stoi >> intChoice;
-                            if(intChoice>=1&&intChoice<=hero.inventory.size())
+                            hero.inventory.push_back(224);
+                        }
+                        else
+                        {
+                            while(!good)
                             {
-                                cout << "Replaced " << dir.getItemName(hero.inventory[intChoice-1]) << " with " << dir.getItemName(224) << "." << endl;
-                                Sleep(midWait);
-                                hero.inventory[intChoice-1] = 224;
-                                good = 1;
-                            }
-                            else if(intChoice==0)
-                            {
-                                good = 1;
-                            }
-                            else
-                            {
-                                cout << "Invalid input." << endl;
-                                Sleep(shortWait);
+                                std::system("cls");
+                                replaceMenu(hero,dir,1,224);
+                                strChoice = getch();
+                                std::stringstream stoi(strChoice);
+                                stoi >> intChoice;
+                                if(intChoice>=1&&intChoice<=hero.inventory.size())
+                                {
+                                    cout << "Replaced " << dir.getItemName(hero.inventory[intChoice-1]) << " with " << dir.getItemName(224) << "." << endl;
+                                    Sleep(midWait);
+                                    hero.inventory[intChoice-1] = 224;
+                                    good = 1;
+                                }
+                                else if(intChoice==0)
+                                {
+                                    good = 1;
+                                }
+                                else
+                                {
+                                    cout << "Invalid input." << endl;
+                                    Sleep(shortWait);
+                                }
                             }
                         }
                     }

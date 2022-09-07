@@ -59,7 +59,7 @@ Masks:
     mechanics, and wearing one throughout the game will drastically alter the playstyle. Try them out and see how far you can make it!
 	-MASK OF GLASS: A smiling mask made of shimmering glass. When worn, doubles the damage dealt with strikes, but doubles the damage dealt to the
 		wearer.
-	-MASK OF WRATH: An enraged mask made of searing hot stone. When worn, raises strength and crit chance by 50%, but lowers accuracy by 33%.
+	-MASK OF FATE: A black and white mask, resembling a yin-yang. When worn, gain increased luck on level up, but become less lucky.
 	-MASK OF DARKNESS: A screaming mask made of dark obsidian. When worn, spells are amplified by 50%, but enemies cannot be identified.
 	-MASK OF ARCANA: A peaceful mask made of smooth marble. When worn, increases mana regeneration by 5, but all strikes deal half damage.
 	-MASK OF STEEL: A stoic mask made of hardened metal. When worn, halves damage taken from attacks, but enemies never miss.
