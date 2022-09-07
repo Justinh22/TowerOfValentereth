@@ -257,7 +257,7 @@ public:
     int SoulsTriumph;
     int Gank;
     int SpectrumTriumph;
-    int CurseBearer
+    int CurseBearer;
     int TrueHeir;
     int Watcher;
     int Vale;
