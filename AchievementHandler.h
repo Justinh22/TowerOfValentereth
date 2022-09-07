@@ -91,6 +91,15 @@ public:
         complete.push_back(Watcher==1);
         Vale = achVals[36];
         complete.push_back(1);
+        UnlockHeal = achVals[37];
+        UnlockJolt = achVals[38];
+        UnlockHealingPot = achVals[39];
+        UnlockCalmingPot = achVals[40];
+        UnlockSword = achVals[41];
+        UnlockArmor = achVals[42];
+        UnlockMelee = achVals[43];
+        UnlockMagic = achVals[44];
+        UnlockRing = achVals[45];
         ach.close();
     }
     writeAchievements()
@@ -129,8 +138,8 @@ public:
         ach << SoulsTriumph << " SoulsTriumph\n";
         ach << Gank << " Gank\n";
         ach << SpectrumTriumph << " SpectrumTriumph\n";
-        ach << TrueHeir << " TrueHeir\n";
         ach << CurseBearer << " CurseBearer\n";
+        ach << TrueHeir << " TrueHeir\n";
         ach << Watcher << " Watcher\n";
         ach << Vale << " Vale\n";
         ach << UnlockHeal << " UnlockHeal\n";

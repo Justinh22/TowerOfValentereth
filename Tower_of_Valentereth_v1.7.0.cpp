@@ -3258,6 +3258,7 @@ int throneDefense(Player &hero, Directory dir, bool debug_opt, bool &gankTracker
                     if(kills>=10)
                     {
                         cout << "Next." << endl;
+                        ach.CurseBearer = 1;
                         Sleep(longWait);
                     }
                     else
