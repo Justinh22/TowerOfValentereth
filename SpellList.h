@@ -4,8 +4,8 @@ vector<AttackSpell> initASDir(vector<AttackSpell> attackSpellDirectory)
     attackSpellDirectory.push_back(Jolt);
     AttackSpell Ember("Ember","Fires a small burst of flame at a target.",1,301,3,8);
     attackSpellDirectory.push_back(Ember);
-    AttackSpell Chill("Chill","Fires a small burst of cold at a target.",1,302,2,6);
-    attackSpellDirectory.push_back(Chill);
+    AttackSpell Frostbite("Frostbite","Fires a small burst of cold at a target.",1,302,2,6);
+    attackSpellDirectory.push_back(Frostbite);
     AttackSpell Thunderbolt("Thunderbolt","Fires a bolt of lightning at a target.",2,303,8,16);
     attackSpellDirectory.push_back(Thunderbolt);
     AttackSpell Firebolt("Firebolt","Fires a bolt of fire at a target.",2,304,7,14);
@@ -111,7 +111,7 @@ vector<BuffSpell> initBSDir(vector<BuffSpell> buffSpellDirectory)
     BuffSpell Spectrum_II("Spectrum II","Increases all your stats by a great amount.",5,342,50,10,10,30,30,30);
     buffSpellDirectory.push_back(Spectrum_II);
 
-    BuffSpell Enveloping_Shadow("Enveloping Shadow","Increases your Ddg. Deals 5 damage to the enemy each turn.",6,343,16,0,0,0,0,15);
+    BuffSpell Enveloping_Shadow("Enveloping Shadow","Increases your Ddg. Deals 5 necrotic damage to the enemy each turn.",6,343,16,0,0,0,0,15);
     buffSpellDirectory.push_back(Enveloping_Shadow);
     //cout << "Spell List Initialized! (3/3)" << endl;
 

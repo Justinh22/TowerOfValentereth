@@ -18,10 +18,11 @@ void titleScreen()
     cout << " |                                                                                                                    | " << endl;
     cout << " |     1) Ascend the Tower                                                                                            | " << endl;
     cout << " |     2) Load Previous Ascent                                                                                        | " << endl;
-    cout << " |     3) Leaderboard                                                                                                 | " << endl;
-    cout << " |     4) Achievements                                                                                                | " << endl;
-    cout << " |     5) Masks                                                                                                       | " << endl;
-    cout << " |                                                                                                             v1.6.0 | " << endl;
+    cout << " |     3) Vale Exchange                                                                                               | " << endl;
+    cout << " |     4) Leaderboard                                                                                                 | " << endl;
+    cout << " |     5) Achievements                                                                                                | " << endl;
+    cout << " |     6) Masks                                                                                                       | " << endl;
+    cout << " |                                                                                                             v1.7.0 | " << endl;
     cout << " |____________________________________________________________________________________________________________________| " << endl;
     cout << "                                                                                                                        " << endl;
 }
@@ -58,14 +59,14 @@ void scores()
             depthArr[i] = 0;
         if(depthArr[i]>55&&depthArr[i]<=80)
             clear = "<+>";
-        else if(depthArr[i]==100)
+        else if(depthArr[i]>80)
         {
             clear = "<<+>>";
             depthArr[i] = 80;
         }
         else
             clear = "     ";
-        data = std::to_string(i+1) + ") " + nameArr[i] + " | " + std::to_string(scoreArr[i]) + " points, " + std::to_string(depthArr[i]) + " floors    " + clear;
+        data = std::to_string(i+1) + ") " + nameArr[i] + " | " + std::to_string(scoreArr[i]) + " points, " + std::to_string(depthArr[i]) + " chambers    " + clear;
         cout << "|-      " << setw(58) << std::left << data << "    -|" << endl;
     }
     cout << "|-                                                                    -|" << endl;
@@ -82,7 +83,7 @@ void maskSelect()
     cout << "|-                   MASK  SELECT                   -|" << endl;
     cout << "|-                                                  -|" << endl;
     cout << "|-       1) Mask of Glass                           -|" << endl;
-    cout << "|-       2) Mask of Wrath                           -|" << endl;
+    cout << "|-       2) Mask of Fate                            -|" << endl;
     cout << "|-       3) Mask of Darkness                        -|" << endl;
     cout << "|-       4) Mask of Arcana                          -|" << endl;
     cout << "|-       5) Mask of Steel                           -|" << endl;
@@ -94,6 +95,90 @@ void maskSelect()
     cout << "|-       0) RETURN                                  -|" << endl;
     cout << "|-                                                  -|" << endl;
     cout << "\\----------------------------------------------------/" << endl;
+}
+
+void valeTrade(Achievements &ach)
+{
+    std::system("cls");
+    cout << "/--------------------------------------------------------------\\" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       VALE EXCHANGE                      VALE: " << std::left << std::setw(5) << ach.Vale << "       -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       1) Unlockables                                       -|" << endl;
+    cout << "|-       2) One-Time Use                                      -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       0) RETURN                                            -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "\\--------------------------------------------------------------/" << endl;
+}
+
+void valeUnlockables(Achievements &ach)
+{
+    std::system("cls");
+    vector<string> unlockableStr;
+    unlockableStr.push_back("50 Vale");
+    if(ach.UnlockSword==1) unlockableStr[0] = "Unlocked";
+    unlockableStr.push_back("50 Vale");
+    if(ach.UnlockArmor==1) unlockableStr[1] = "Unlocked";
+    unlockableStr.push_back("80 Vale");
+    if(ach.UnlockJolt==1) unlockableStr[2] = "Unlocked";
+    unlockableStr.push_back("80 Vale");
+    if(ach.UnlockHeal==1) unlockableStr[3] = "Unlocked";
+    unlockableStr.push_back("80 Vale");
+    if(ach.UnlockHealingPot==1) unlockableStr[4] = "Unlocked";
+    unlockableStr.push_back("80 Vale");
+    if(ach.UnlockCalmingPot==1) unlockableStr[5] = "Unlocked";
+    unlockableStr.push_back("150 Vale");
+    if(ach.UnlockMelee==1) unlockableStr[6] = "Unlocked";
+    unlockableStr.push_back("150 Vale");
+    if(ach.UnlockMagic==1) unlockableStr[7] = "Unlocked";
+    unlockableStr.push_back("150 Vale");
+    if(ach.UnlockRing==1) unlockableStr[8] = "Unlocked";
+
+    cout << "/--------------------------------------------------------------\\" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       VALE EXCHANGE                      VALE: " << std::left << std::setw(5) << ach.Vale << "       -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       Start With:                                          -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       1) Crooked Saber                   " << std::left << std::setw(10) << unlockableStr[0] << "        -|" << endl;
+    cout << "|-       2) Leather Armor                   " << std::left << std::setw(10) << unlockableStr[1] << "        -|" << endl;
+    cout << "|-       3) Jolt                            " << std::left << std::setw(10) << unlockableStr[2] << "        -|" << endl;
+    cout << "|-       4) Minor Heal                      " << std::left << std::setw(10) << unlockableStr[3] << "        -|" << endl;
+    cout << "|-       5) Potion of Healing               " << std::left << std::setw(10) << unlockableStr[4] << "        -|" << endl;
+    cout << "|-       6) Potion of Calming               " << std::left << std::setw(10) << unlockableStr[5] << "        -|" << endl;
+    cout << "|-       7) Weapon Proficiency              " << std::left << std::setw(10) << unlockableStr[6] << "        -|" << endl;
+    cout << "|-       8) Magic Proficiency               " << std::left << std::setw(10) << unlockableStr[7] << "        -|" << endl;
+    cout << "|-       9) Minor-Level Ring                " << std::left << std::setw(10) << unlockableStr[8] << "        -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       0) RETURN                                            -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "\\--------------------------------------------------------------/" << endl;
+}
+
+void valeOneTime(Achievements &ach)
+{
+
+    std::system("cls");
+    cout << "/--------------------------------------------------------------\\" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       VALE EXCHANGE                      VALE: " << std::left << std::setw(5) << ach.Vale << "       -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       Start With:                                          -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       1) Iron Sword                      30 Vale           -|" << endl;
+    cout << "|-       2) Hide Armor                      30 Vale           -|" << endl;
+    cout << "|-       3) Thunderbolt                     20 Vale           -|" << endl;
+    cout << "|-       4) Lightning Strike                40 Vale           -|" << endl;
+    cout << "|-       5) Minor Regenerate                40 Vale           -|" << endl;
+    cout << "|-       6) Potion of Healing               30 Vale           -|" << endl;
+    cout << "|-       7) Potion of Calming               30 Vale           -|" << endl;
+    cout << "|-       8) Blast Bomb                      30 Vale           -|" << endl;
+    cout << "|-       9) Second Soul                     80 Vale           -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "|-       0) RETURN                                            -|" << endl;
+    cout << "|-                                                            -|" << endl;
+    cout << "\\--------------------------------------------------------------/" << endl;
 }
 
 void achievementMenu()
@@ -121,16 +206,16 @@ void achievementMenu()
     cout << "|-       (";if(ach.complete[12]) cout << "X"; else cout << " "; cout << ") The Nature's Wrath (15pts):             Defeat Endrigaia                                             -|" << endl;
     cout << "|-       (";if(ach.complete[13]) cout << "X"; else cout << " "; cout << ") The Ascended (15pts):                   Defeat Halliot                                               -|" << endl;
     cout << "|-       (";if(ach.complete[14]) cout << "X"; else cout << " "; cout << ") Unstoppable (20pts):                    Defeat 100 enemies                                           -|" << endl;
-    cout << "|-       (";if(ach.complete[15]) cout << "X"; else cout << " "; cout << ") Nuke (30pts):                           Deal 50 damage at once with a spell                          -|" << endl;
-    cout << "|-       (";if(ach.complete[16]) cout << "X"; else cout << " "; cout << ") Overkill (30pts):                       Deal 100 damage in one strike                                -|" << endl;
-    cout << "|-       (";if(ach.complete[17]) cout << "X"; else cout << " "; cout << ") Necromancy (30pts):                     Deal 20 necrotic damage in one turn                          -|" << endl;
+    cout << "|-       (";if(ach.complete[15]) cout << "X"; else cout << " "; cout << ") Nuke (25pts):                           Deal 50 damage at once with a spell                          -|" << endl;
+    cout << "|-       (";if(ach.complete[16]) cout << "X"; else cout << " "; cout << ") Overkill (25pts):                       Deal 100 damage in one strike                                -|" << endl;
+    cout << "|-       (";if(ach.complete[17]) cout << "X"; else cout << " "; cout << ") Necromancy (25pts):                     Deal 20 necrotic damage in one turn                          -|" << endl;
     cout << "|-       (";if(ach.complete[18]) cout << "X"; else cout << " "; cout << ") Sorcerer Supreme (25pts):               Obtain the equipment of the ultimate sorcerer                -|" << endl;
     cout << "|-       (";if(ach.complete[19]) cout << "X"; else cout << " "; cout << ") Conquerer (25pts):                      Obtain the equipment of the great conquerer                  -|" << endl;
     cout << "|-       (";if(ach.complete[20]) cout << "X"; else cout << " "; cout << ") Vanguard (25pts):                       Obtain the equipment of the unstoppable vanguard             -|" << endl;
     cout << "|-       (";if(ach.complete[21]) cout << "X"; else cout << " "; cout << ") Whisper (25pts):                        Obtain the equipment of the silent assassin                  -|" << endl;
     cout << "|-       (";if(ach.complete[22]) cout << "X"; else cout << " "; cout << ") Ancient Power (25pts):                  Obtain the equipment of the ancient demigod                  -|" << endl;
     cout << "|-       (";if(ach.complete[23]) cout << "X"; else cout << " "; cout << ") Glass Triumph (40pts):                  Defeat Valentereth with the Mask of Glass                    -|" << endl;
-    cout << "|-       (";if(ach.complete[24]) cout << "X"; else cout << " "; cout << ") Wrath Triumph (40pts):                  Defeat Valentereth with the Mask of Wrath                    -|" << endl;
+    cout << "|-       (";if(ach.complete[24]) cout << "X"; else cout << " "; cout << ") Fate Triumph (40pts):                   Defeat Valentereth with the Mask of Fate                     -|" << endl;
     cout << "|-       (";if(ach.complete[25]) cout << "X"; else cout << " "; cout << ") Darkness Triumph (40pts):               Defeat Valentereth with the Mask of Darkness                 -|" << endl;
     cout << "|-       (";if(ach.complete[26]) cout << "X"; else cout << " "; cout << ") Arcana Triumph (40pts):                 Defeat Valentereth with the Mask of Arcana                   -|" << endl;
     cout << "|-       (";if(ach.complete[27]) cout << "X"; else cout << " "; cout << ") Steel Triumph (40pts):                  Defeat Valentereth with the Mask of Steel                    -|" << endl;
@@ -141,18 +226,22 @@ void achievementMenu()
     cout << "|-       HIDDEN ACHIEVEMENTS                                                                                      -|" << endl;
     cout << "|-                                                                                                                -|" << endl;
     if(!ach.complete[31])
-        cout << "|-       ( ) Gank (40pts)                                                                                         -|" << endl;
+        cout << "|-       ( ) Gank (30pts)                                                                                         -|" << endl;
     else
-        cout << "|-       (X) Gank (40pts): Defeat Valentereth on an ascent where only the word 'gank' is used to attack enemies   -|" << endl;
+        cout << "|-       (X) Gank (30pts): Defeat Valentereth on an ascent where only the word 'gank' is used to attack enemies   -|" << endl;
     if(!ach.complete[32])
-        cout << "|-       ( ) Spectrum Triumph (75pts)                                                                             -|" << endl;
+        cout << "|-       ( ) Spectrum Triumph (60pts)                                                                             -|" << endl;
     else
-        cout << "|-       (X) Spectrum Triumph (75pts): Defeat Valentereth with each mask                                          -|" << endl;
-    if(!ach.complete[33])
-        cout << "|-       ( ) Worthy Heir (65pts)                                                                                  -|" << endl;
+        cout << "|-       (X) Spectrum Triumph (60pts): Defeat Valentereth with each mask                                          -|" << endl;
+    if(!ach.complete[32])
+        cout << "|-       ( ) Curse Bearer (50pts)                                                                                 -|" << endl;
     else
-        cout << "|-       (X) Worthy Heir (65pts): Defeat Valentereth in one strike                                                -|" << endl;
+        cout << "|-       (X) Curse Bearer (50pts): Defend the Tyrant's Throne for 10 rounds                                       -|" << endl;
     if(!ach.complete[34])
+        cout << "|-       ( ) Worthy Heir (50pts)                                                                                  -|" << endl;
+    else
+        cout << "|-       (X) Worthy Heir (50pts): Defeat Valentereth in one strike                                                -|" << endl;
+    if(!ach.complete[35])
         cout << "|-       ( ) The Watcher (50pts)                                                                                  -|" << endl;
     else
         cout << "|-       (X) The Watcher (50pts): Defeat Termineth                                                                -|" << endl;
@@ -182,20 +271,60 @@ void mainMenu()
 void statMenu(Player hero, Directory dir)
 {//50 long
     string strString;
+    int strBonus = 0;
     string crtString;
+    int crtBonus = 0;
     string accString;
-    if(hero.mask.getID()==1) //Wrath
+    int accBonus = 0;
+    string meleeTrainingStr = "";
+    string magicTrainingStr = "";
+    if(hero.meleeTraining>=0)
     {
-        strString = std::to_string(hero.getNSTR()+(hero.getNSTR()/2)) + " (+" + std::to_string(hero.eqpWpn.getStr()) + ")";
-        accString = std::to_string(hero.getACC());
-        crtString = std::to_string(hero.getNCRT()+(hero.getNCRT()/2)) + " (+" + std::to_string(hero.eqpWpn.getCrt()) + ")";
+        switch(hero.meleeTraining)
+        {
+            case 0:
+                meleeTrainingStr = "Dagger";
+                break;
+            case 1:
+                meleeTrainingStr = "Spear";
+                break;
+            case 2:
+                meleeTrainingStr = "Sword";
+                break;
+            case 3:
+                meleeTrainingStr = "Axe";
+                break;
+        }
     }
-    else
+    if(hero.magicTraining>=0)
     {
-        strString = std::to_string(hero.getNSTR()) + " (+" + std::to_string(hero.eqpWpn.getStr()) + ")";
-        accString = std::to_string(hero.getACC());
-        crtString = std::to_string(hero.getNCRT()) + " (+" + std::to_string(hero.eqpWpn.getCrt()) + ")";
+        switch(hero.magicTraining)
+        {
+            case 0:
+                magicTrainingStr = "Frost";
+                break;
+            case 1:
+                magicTrainingStr = "Fire";
+                break;
+            case 2:
+                magicTrainingStr = "Lightning";
+                break;
+        }
     }
+    if((hero.meleeTraining==0&&(hero.eqpWpn.getName().find("Dagger")!=string::npos||hero.eqpWpn.getName().find("Knife")!=string::npos||hero.eqpWpn.getName().find("Aerolinde")!=string::npos))||
+       (hero.meleeTraining==1&&(hero.eqpWpn.getName().find("Spear")!=string::npos||hero.eqpWpn.getName().find("Pike")!=string::npos||hero.eqpWpn.getName().find("Hyliat")!=string::npos))||
+       (hero.meleeTraining==2&&(hero.eqpWpn.getName().find("Sword")!=string::npos||hero.eqpWpn.getName().find("Saber")!=string::npos||hero.eqpWpn.getName().find("Pyrithia")!=string::npos))||
+       (hero.meleeTraining==3&&(hero.eqpWpn.getName().find("Axe")!=string::npos||hero.eqpWpn.getName().find("Club")!=string::npos||hero.eqpWpn.getName().find("Teratra")!=string::npos)))
+    {
+        strBonus = 2;
+        accBonus = 5;
+        crtBonus = 5;
+    }
+
+    strString = std::to_string(hero.getNSTR()) + " (+" + std::to_string(hero.eqpWpn.getStr()+strBonus) + ")";
+    accString = std::to_string(hero.getACC()+accBonus);
+    crtString = std::to_string(hero.getNCRT()) + " (+" + std::to_string(hero.eqpWpn.getCrt()+crtBonus) + ")";
+
     std::system("cls");
     cout << "/----------------------------------------------------\\" << endl;
     cout << "|-                                                  -|" << endl;
@@ -220,6 +349,18 @@ void statMenu(Player hero, Directory dir)
     cout << "|-      ACC: " << setw(8) << std::left << accString << "             LCK: " << setw(8) << std::left << std::to_string(hero.getLCK()) << "     -|" << endl;
     cout << "|-      AMP: " << setw(4) << std::left << std::to_string(hero.getMA()) + "%" << "                 MPG: " << setw(2) << std::left << hero.getMG() << "           -|" << endl;
     cout << "|-                                                  -|" << endl;
+    if(meleeTrainingStr!="")
+    {
+        cout << "|-      " << setw(26) << std::left << meleeTrainingStr + " Proficiency" << "                  -|" << endl;
+    }
+    if(magicTrainingStr!="")
+    {
+        cout << "|-      " << setw(30) << std::left << magicTrainingStr + " Magic Proficiency" << "              -|" << endl;
+    }
+    if(meleeTrainingStr!=""||magicTrainingStr!="")
+    {
+        cout << "|-                                                  -|" << endl;
+    }
     cout << "|-      0) RETURN                                   -|" << endl;
     cout << "|-                                                  -|" << endl;
     cout << "\\----------------------------------------------------/" << endl;
@@ -259,6 +400,29 @@ void itemMenu(Player &hero, vector<int> &items, Directory dir)
     cout << "|-   KEYS: " << setw(2) << std::left << hero.keys << "                                       -|" << endl;
     cout << "|-                                                  -|" << endl;
     cout << "|-         0) RETURN                                -|" << endl;
+    cout << "|-                                                  -|" << endl;
+    cout << "\\----------------------------------------------------/" << endl;
+}
+
+void replaceMenu(Player &hero, Directory dir, bool type, int newItem)
+{//50 long
+    vector<int> inventory;
+    if(!type)
+        inventory = hero.equipment;
+    else
+        inventory = hero.inventory;
+    std::system("cls");
+    int i;
+    cout << "/----------------------------------------------------\\" << endl;
+    cout << "|-                                                  -|" << endl;
+    cout << "|-      WHICH ITEM WOULD YOU LIKE TO REPLACE?       -|" << endl;
+    cout << "|-                                                  -|" << endl;
+    for(i=0;i<inventory.size();i++)
+        cout << "|-   " << i+1 << ") " << setw(40) << std::left << dir.getItemName(inventory[i]) << "    -|" << endl;
+    for(int j=i;j<6;j++)
+    cout << "|-   " << j+1 << ")                                             -|" << endl;
+    cout << "|-                                                  -|" << endl;
+    cout << "|-   0) " << setw(40) << std::left << dir.getItemName(newItem) + " - Cancel" << "    -|" << endl;
     cout << "|-                                                  -|" << endl;
     cout << "\\----------------------------------------------------/" << endl;
 }

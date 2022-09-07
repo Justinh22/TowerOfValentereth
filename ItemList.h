@@ -11,7 +11,7 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     Weapon Wooden_Staff("Wooden Staff","A bent wooden staff, resembling a branch.",1,3,2,70,0,5);
     weaponDirectory.push_back(Wooden_Staff);
     //2
-    Weapon Jagged_Axe("Jagged Axe","A hastily-crafted iron axe, with a sharp and jagged edge.",2,4,7,65,5,0);
+    Weapon Jagged_Axe("Jagged Axe","A hastily-crafted iron axe, with a sharp and jagged edge.",2,4,7,70,5,0);
     weaponDirectory.push_back(Jagged_Axe);
     Weapon Crooked_Saber("Crooked Saber","A jagged iron blade, resembling a long piece of schrapnel.",2,5,6,75,0,0);
     weaponDirectory.push_back(Crooked_Saber);
@@ -22,7 +22,7 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     Weapon Gnarled_Rod("Gnarled Rod","A tangled wooden rod, containing a green gem at its top.",2,8,4,75,0,10);
     weaponDirectory.push_back(Gnarled_Rod);
     //3
-    Weapon Iron_Axe("Iron Axe","A sturdy iron axe.",3,9,10,65,5,0);
+    Weapon Iron_Axe("Iron Axe","A sturdy iron axe.",3,9,10,70,5,0);
     weaponDirectory.push_back(Iron_Axe);
     Weapon Iron_Sword("Iron Sword","A sturdy iron sword.",3,10,8,80,0,0);
     weaponDirectory.push_back(Iron_Sword);
@@ -35,7 +35,7 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     Weapon Mana_Club("Mana Club","An iron club, with a sapphire embedded in its handle.",3,14,8,70,0,5);
     weaponDirectory.push_back(Mana_Club);
     //4
-    Weapon Steel_Axe("Steel Axe","A sharp, shining steel axe.",4,15,13,70,5,0);
+    Weapon Steel_Axe("Steel Axe","A sharp, shining steel axe.",4,15,13,75,5,0);
     weaponDirectory.push_back(Steel_Axe);
     Weapon Steel_Sword("Steel Sword","A sharp, shining steel sword.",4,16,12,80,0,0);
     weaponDirectory.push_back(Steel_Sword);
@@ -48,20 +48,20 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     Weapon Casters_Sword("Caster's Sword","A long, shining steel blade with an amethyst embedded in the hilt.",4,20,10,75,0,10);
     weaponDirectory.push_back(Casters_Sword);
     //5
-    Weapon Dark_Steel_Axe("Dark Steel Axe","An axe made of a dark, menacing steel, emanating an evil aura.",5,21,16,60,15,0);
+    Weapon Dark_Steel_Axe("Dark Steel Axe","An axe made of a dark, menacing steel, emanating an evil aura.",5,21,16,70,15,0);
     weaponDirectory.push_back(Dark_Steel_Axe);
-    Weapon Dark_Steel_Sword("Dark Steel Sword","A sword made of a dark, menacing steel, emanating an evil aura.",5,22,14,70,10,0);
+    Weapon Dark_Steel_Sword("Dark Steel Sword","A sword made of a dark, menacing steel, emanating an evil aura.",5,22,14,75,10,0);
     weaponDirectory.push_back(Dark_Steel_Sword);
-    Weapon Dark_Steel_Spear("Dark Steel Spear","A spear made of a dark, menacing steel, emanating an evil aura.",5,23,12,75,15,0);
+    Weapon Dark_Steel_Spear("Dark Steel Spear","A spear made of a dark, menacing steel, emanating an evil aura.",5,23,12,80,15,0);
     weaponDirectory.push_back(Dark_Steel_Spear);
-    Weapon Dark_Steel_Dagger("Dark Steel Dagger","A dagger made of a dark, menacing steel, emanating an evil aura.",5,24,10,80,25,0);
+    Weapon Dark_Steel_Dagger("Dark Steel Dagger","A dagger made of a dark, menacing steel, emanating an evil aura.",5,24,10,85,25,0);
     weaponDirectory.push_back(Dark_Steel_Dagger);
-    Weapon Dark_Sceptre("Dark Sceptre","A long, menacing sceptre made of a dark black metal.",5,25,7,75,10,25);
+    Weapon Dark_Sceptre("Dark Sceptre","A long, menacing sceptre made of a dark black metal.",5,25,7,80,10,25);
     weaponDirectory.push_back(Dark_Sceptre);
-    Weapon Mana_Cleaver("Mana Cleaver","A massive dark blade with a ruby core, emanating an evil aura.",5,26,14,60,10,15);
+    Weapon Mana_Cleaver("Mana Cleaver","A massive dark blade with a ruby core, emanating an evil aura.",5,26,14,65,10,15);
     weaponDirectory.push_back(Mana_Cleaver);
     //6
-    Weapon Golden_Axe("Golden Axe","An axe made of shimmering gold.",6,27,20,75,10,0);
+    Weapon Golden_Axe("Golden Axe","An axe made of shimmering gold.",6,27,20,80,10,0);
     weaponDirectory.push_back(Golden_Axe);
     Weapon Golden_Sword("Golden Sword","A sword made of shimmering gold.",6,28,17,85,5,0);
     weaponDirectory.push_back(Golden_Sword);
@@ -74,46 +74,46 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     Weapon Enchanted_Knife("Enchanted Knife","A shimmering, enchanted knife, radiating magical energy.",6,32,12,90,20,15);
     weaponDirectory.push_back(Enchanted_Knife);
     //7
-    Weapon Jeweled_Axe("Jeweled Axe","An axe made of shining gold, with bright gemstones embedded into it.",7,33,32,55,10,0);
+    Weapon Jeweled_Axe("Jeweled Axe","An axe made of shining gold, with bright gemstones embedded into it.",7,33,30,65,10,0);
     weaponDirectory.push_back(Jeweled_Axe);
-    Weapon Jeweled_Sword("Jeweled Sword","A sword made of shining gold, with bright gemstones embedded into it.",7,34,28,65,5,0);
+    Weapon Jeweled_Sword("Jeweled Sword","A sword made of shining gold, with bright gemstones embedded into it.",7,34,26,70,5,0);
     weaponDirectory.push_back(Jeweled_Sword);
-    Weapon Jeweled_Spear("Jeweled Spear","A spear made of shining gold, with bright gemstones embedded into it.",7,35,25,70,10,0);
+    Weapon Jeweled_Spear("Jeweled Spear","A spear made of shining gold, with bright gemstones embedded into it.",7,35,23,75,10,0);
     weaponDirectory.push_back(Jeweled_Spear);
-    Weapon Jeweled_Dagger("Jeweled Dagger","A dagger made of shining gold, with bright gemstones embedded into it.",7,36,22,75,20,0);
+    Weapon Jeweled_Dagger("Jeweled Dagger","A dagger made of shining gold, with bright gemstones embedded into it.",7,36,20,80,20,0);
     weaponDirectory.push_back(Jeweled_Dagger);
     Weapon Jeweled_Wand("Jeweled Wand","A golden wand, encrusted with bright gemstones.",7,37,14,75,5,35);
     weaponDirectory.push_back(Jeweled_Wand);
-    Weapon Magic_Gauntlet("Magic Gauntlet","A shining metal gauntlet, with a bright diamond on the back of the palm.",7,38,30,60,10,20);
+    Weapon Magic_Gauntlet("Magic Gauntlet","A shining metal gauntlet, with a bright diamond on the back of the palm.",7,38,28,65,10,20);
     weaponDirectory.push_back(Magic_Gauntlet);
     //8
-    Weapon Valentium_Axe("Valentium Axe","An axe made of a magical, indestructable metal.",8,39,30,80,15,5);
+    Weapon Valentium_Axe("Valentium Axe","An axe made of a magical, indestructable metal.",8,39,28,85,15,5);
     weaponDirectory.push_back(Valentium_Axe);
-    Weapon Valentium_Sword("Valentium Sword","A sword made of a magical, indestructable metal.",8,40,26,90,10,5);
+    Weapon Valentium_Sword("Valentium Sword","A sword made of a magical, indestructable metal.",8,40,24,90,10,5);
     weaponDirectory.push_back(Valentium_Sword);
-    Weapon Valentium_Spear("Valentium Spear","A spear made of a magical, indestructable metal.",8,41,23,95,15,5);
+    Weapon Valentium_Spear("Valentium Spear","A spear made of a magical, indestructable metal.",8,41,21,95,15,5);
     weaponDirectory.push_back(Valentium_Spear);
-    Weapon Valentium_Dagger("Valentium Dagger","An dagger made of a magical, indestructable metal.",8,42,20,100,25,5);
+    Weapon Valentium_Dagger("Valentium Dagger","An dagger made of a magical, indestructable metal.",8,42,18,100,25,5);
     weaponDirectory.push_back(Valentium_Dagger);
-    Weapon Valentium_Sceptre("Valentium Sceptre","A sceptre made of a magical, indestructable metal.",8,43,16,90,10,40);
+    Weapon Valentium_Sceptre("Valentium Sceptre","A sceptre made of a magical, indestructable metal.",8,43,14,90,10,40);
     weaponDirectory.push_back(Valentium_Sceptre);
-    Weapon Arcane_Axe("Arcane Axe","A massive axe made of a magical, indestructable metal, emanating a powerful aura.",8,44,26,70,15,25);
+    Weapon Arcane_Axe("Arcane Axe","A massive axe made of a magical, indestructable metal, emanating a powerful aura.",8,44,24,70,15,25);
     weaponDirectory.push_back(Arcane_Axe);
     //9
-    Weapon Mechanical_Axe("Mechanical Axe","An axe covered in whirring gears, arcing with electricity.",9,45,28,80,35,0);
+    Weapon Mechanical_Axe("Mechanical Axe","An axe covered in whirring gears, arcing with electricity.",9,45,30,85,35,0);
     weaponDirectory.push_back(Mechanical_Axe);
-    Weapon Mechanical_Sword("Mechanical Sword","A sword covered in whirring gears, arcing with electricity.",9,46,24,90,30,0);
+    Weapon Mechanical_Sword("Mechanical Sword","A sword covered in whirring gears, arcing with electricity.",9,46,26,90,30,0);
     weaponDirectory.push_back(Mechanical_Sword);
-    Weapon Mechanical_Spear("Mechanical Spear","A spear covered in whirring gears, arcing with electricity.",9,47,21,95,35,0);
+    Weapon Mechanical_Spear("Mechanical Spear","A spear covered in whirring gears, arcing with electricity.",9,47,23,95,35,0);
     weaponDirectory.push_back(Mechanical_Spear);
-    Weapon Mechanical_Dagger("Mechanical Dagger","A dagger covered in whirring gears, arcing with electricity.",9,48,18,100,45,0);
+    Weapon Mechanical_Dagger("Mechanical Dagger","A dagger covered in whirring gears, arcing with electricity.",9,48,20,100,45,0);
     weaponDirectory.push_back(Mechanical_Dagger);
     Weapon Rod_of_Order("Rod of Order","A magic staff, covered in spinning gears.",9,49,18,90,20,45);
     weaponDirectory.push_back(Rod_of_Order);
     Weapon Spear_of_Storms("Spear of Storms","A spear covered in whirring gears, with an electrical core brimming with power.",9,50,23,90,30,30);
     weaponDirectory.push_back(Spear_of_Storms);
     //10
-    Weapon Teratra("Teratra","A mythical axe of legend, raised from the earth.",10,51,42,75,20,5);
+    Weapon Teratra("Teratra","A mythical axe of legend, raised from the earth.",10,51,42,80,20,5);
     weaponDirectory.push_back(Teratra);
     Weapon Pyrithia("Pyrithia","A mythical sword of legend, born from flame.",10,52,36,90,10,10);
     weaponDirectory.push_back(Pyrithia);
@@ -131,6 +131,8 @@ vector<Weapon> initWDir(vector<Weapon> weaponDirectory)
     weaponDirectory.push_back(Ozkoroths_Fang);
     Weapon Essence_Siphon("Essence Siphon","Sceptre of an archmage. Whenever damage is dealt with this weapon, the wielder gains 5 MP.",11,58,0,80,10,25);
     weaponDirectory.push_back(Essence_Siphon);
+    Weapon Axe_of_Valentereth("Axe of Valentereth","The fabled axe belonging to the Tyrant of the Tower. Now yours to command.",11,59,45,90,20,20);
+    weaponDirectory.push_back(Axe_of_Valentereth);
 
     //cout << "Weapon Directory Initialized!" << endl;
 
@@ -291,25 +293,25 @@ vector<Consumable> initCDir(vector<Consumable> consumableDirectory)
     Consumable Gaia_Herbs("Gaia Herbs","A handful of medicinal herbs. When used in battle, regenerates 5 HP for the remainder of combat.",1,215,0,0);
     consumableDirectory.push_back(Gaia_Herbs);
     //2
-    Consumable Blast_Bomb("Blast Bomb","A pouch filled to the brim with a volatile explosive substance. When thrown, deals 30 damage to the enemy.",1,216,0,0);
+    Consumable Blast_Bomb("Blast Bomb","A pouch filled to the brim with a volatile explosive substance. When thrown, deals 30 damage to the enemy.",2,216,0,0);
     consumableDirectory.push_back(Blast_Bomb);
-    Consumable Aether_Vial("Aether Vial","An ornate bottle with golden markings, filled with a shimmering violet liquid. When used, grants +3 MPR for the remainder of combat.",1,217,0,0);
+    Consumable Aether_Vial("Aether Vial","An ornate bottle with golden markings, filled with a shimmering violet liquid. When used, grants +3 MPR for the remainder of combat.",2,217,0,0);
     consumableDirectory.push_back(Aether_Vial);
-    Consumable Pyllich_Venom("Pyllich Venom","A small vial of venom from the fangs of a pyllich. When used, coats your weapon in the substance to cause the enemy to lose 5 HP every turn for each time they are struck.",1,218,0,0);
+    Consumable Pyllich_Venom("Pyllich Venom","A small vial of venom from the fangs of a pyllich. When used, coats your weapon in the substance to cause the enemy to lose 5 HP every turn for each time they are struck.",2,218,0,0);
     consumableDirectory.push_back(Pyllich_Venom);
     //3
-    Consumable Nova_Bomb("Nova Bomb","A glass sphere filled with raging flames. When thrown, deals 50 damage to the enemy.",1,219,0,0);
+    Consumable Nova_Bomb("Nova Bomb","A glass sphere filled with raging flames. When thrown, deals 50 damage to the enemy.",3,219,0,0);
     consumableDirectory.push_back(Nova_Bomb);
-    Consumable Gaia_Flower("Gaia Flower","A beautiful silver flower, with incredible healing properties. When used, regenerates 10 HP for the remainder of combat.",1,220,0,0);
+    Consumable Gaia_Flower("Gaia Flower","A beautiful silver flower, with incredible healing properties. When used, regenerates 10 HP for the remainder of combat.",3,220,0,0);
     consumableDirectory.push_back(Gaia_Flower);
-    Consumable Fortune_Tincture("Fortune Tincture","A bottle of liquid obtained from the kismet rose, said to grant fortune to those who drink it. When used, raises LCK by 30 for the remainder of combat.",1,221,0,0);
+    Consumable Fortune_Tincture("Fortune Tincture","A bottle of liquid obtained from the kismet rose, said to grant fortune to those who drink it. When used, raises LCK by 30 for the remainder of combat.",3,221,0,0);
     consumableDirectory.push_back(Fortune_Tincture);
     //4
-    Consumable Rendais_Veil("Rendai's Veil","A small golden statue dedicated to Rendai, the God of Life. When used, protects the user from damage for 3 turns.",1,222,0,0);
+    Consumable Rendais_Veil("Rendai's Veil","A small golden statue dedicated to Rendai, the God of Life. When used, protects the user from damage for 3 turns.",4,222,0,0);
     consumableDirectory.push_back(Rendais_Veil);
-    Consumable Faerie_Dust("Faerie Dust","A satchel of powder obtained from a fae. When used, grants the user CRT, DDG, and ACC +30 for the remainder of combat.",1,223,0,0);
+    Consumable Faerie_Dust("Faerie Dust","A satchel of powder obtained from a fae. When used, grants the user CRT, DDG, and ACC +30 for the remainder of combat.",4,223,0,0);
     consumableDirectory.push_back(Faerie_Dust);
-    Consumable Second_Soul("Second Soul","A small glass sphere, with a faint white orb of light floating around within. Will completely restore your HP and MP once after falling in combat.",1,224,0,0);
+    Consumable Second_Soul("Second Soul","A small glass sphere, with a faint white orb of light floating around within. Will completely restore your HP and MP once after falling in combat.",4,224,0,0);
     consumableDirectory.push_back(Second_Soul);
 
 
@@ -323,8 +325,8 @@ vector<Item> initMDir(vector<Item> maskDirectory)
     Item Mask_of_Glass("Mask of Glass","A smiling mask made of shimmering glass. When worn, doubles the damage dealt with strikes, but doubles the damage dealt to the wearer.",10,0);
     maskDirectory.push_back(Mask_of_Glass);
 
-    Item Mask_of_Wrath("Mask of Wrath","An enraged mask made of searing hot stone. When worn, raises strength and crit chance by 50%, but lowers accuracy by 10.",10,1);
-    maskDirectory.push_back(Mask_of_Wrath);
+    Item Mask_of_Fate("Mask of Fate","A black and white mask, resembling a yin-yang. When worn, gain increased luck on level up, but become less lucky.",10,1);
+    maskDirectory.push_back(Mask_of_Fate);
 
     Item Mask_of_Darkness("Mask of Darkness","A screaming mask made of dark obsidian. When worn, spells are amplified by 50%, but enemies cannot be identified.",10,2);
     maskDirectory.push_back(Mask_of_Darkness);
@@ -363,7 +365,7 @@ vector<Ring> initRGDir(vector<Ring> ringDirectory)
     ringDirectory.push_back(Minor_Sight);
     Ring Minor_Piercing("Ring of Minor Piercing","A ring that grants the wearer a slight chance of cutting a foe's defense in half.",1,406,10,0,0);
     ringDirectory.push_back(Minor_Piercing);
-    Ring Minor_Overcharging("Ring of Minor Overcharging","A ring that grants the wearer a slight chance of increasing attack spell potency by 50%.",1,407,10,0,0);
+    Ring Minor_Overcharging("Ring of Minor Overcharging","A ring that grants the wearer a slight chance of increasing attack spell potency by 100%.",1,407,10,0,0);
     ringDirectory.push_back(Minor_Overcharging);
     Ring Minor_Reflection("Ring of Minor Reflection","A ring that grants the wearer a slight chance of dealing damage dealt to the wearer back to the enemy.",1,408,10,0,0);
     ringDirectory.push_back(Minor_Reflection);
@@ -384,7 +386,7 @@ vector<Ring> initRGDir(vector<Ring> ringDirectory)
     ringDirectory.push_back(Sight);
     Ring Piercing("Ring of Piercing","A ring that grants the wearer a chance of cutting a foe's defense in half.",2,416,20,0,0);
     ringDirectory.push_back(Piercing);
-    Ring Overcharging("Ring of Overcharging","A ring that grants the wearer a chance of increasing attack spell potency by 50%.",2,417,20,0,0);
+    Ring Overcharging("Ring of Overcharging","A ring that grants the wearer a chance of increasing attack spell potency by 100%.",2,417,20,0,0);
     ringDirectory.push_back(Overcharging);
     Ring Reflection("Ring of Reflection","A ring that grants the wearer a chance of dealing damage dealt to the wearer back to the enemy.",2,418,20,0,0);
     ringDirectory.push_back(Reflection);
@@ -409,7 +411,7 @@ vector<Ring> initRGDir(vector<Ring> ringDirectory)
     ringDirectory.push_back(Major_Sight);
     Ring Major_Piercing("Ring of Major Piercing","A ring that grants the wearer a significant chance of cutting a foe's defense in half.",3,428,30,0,0);
     ringDirectory.push_back(Major_Piercing);
-    Ring Major_Overcharging("Ring of Major Overcharging","A ring that grants the wearer a significant chance of increasing attack spell potency by 50%.",3,429,30,0,0);
+    Ring Major_Overcharging("Ring of Major Overcharging","A ring that grants the wearer a significant chance of increasing attack spell potency by 100%.",3,429,30,0,0);
     ringDirectory.push_back(Major_Overcharging);
     Ring Major_Reflection("Ring of Major Reflection","A ring that grants the wearer a significant chance of dealing damage dealt to the wearer back to the enemy.",3,430,30,0,0);
     ringDirectory.push_back(Major_Reflection);

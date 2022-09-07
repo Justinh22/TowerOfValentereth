@@ -8,6 +8,7 @@ public:
         int i=0;
         achVals.clear();
         complete.clear();
+        unlocked.clear();
         std::ifstream ach(".achievements.txt");
         while(std::getline(ach,line))
         {
@@ -64,8 +65,8 @@ public:
         complete.push_back(AncientPower==1);
         GlassTriumph = achVals[23];
         complete.push_back(GlassTriumph==1);
-        WrathTriumph = achVals[24];
-        complete.push_back(WrathTriumph==1);
+        FateTriumph = achVals[24];
+        complete.push_back(FateTriumph==1);
         DarknessTriumph = achVals[25];
         complete.push_back(DarknessTriumph==1);
         ArcanaTriumph = achVals[26];
@@ -82,10 +83,23 @@ public:
         complete.push_back(Gank==1);
         SpectrumTriumph = achVals[32];
         complete.push_back(SpectrumTriumph==8);
-        TrueHeir = achVals[33];
+        CurseBearer = achVals[33];
+        complete.push_back(CurseBearer==1);
+        TrueHeir = achVals[34];
         complete.push_back(TrueHeir==1);
-        Watcher = achVals[34];
+        Watcher = achVals[35];
         complete.push_back(Watcher==1);
+        Vale = achVals[36];
+        complete.push_back(1);
+        UnlockHeal = achVals[37];
+        UnlockJolt = achVals[38];
+        UnlockHealingPot = achVals[39];
+        UnlockCalmingPot = achVals[40];
+        UnlockSword = achVals[41];
+        UnlockArmor = achVals[42];
+        UnlockMelee = achVals[43];
+        UnlockMagic = achVals[44];
+        UnlockRing = achVals[45];
         ach.close();
     }
     writeAchievements()
@@ -115,7 +129,7 @@ public:
         ach << Whisper << " Whisper\n";
         ach << AncientPower << " AncientPower\n";
         ach << GlassTriumph << " GlassTriumph\n";
-        ach << WrathTriumph << " WrathTriumph\n";
+        ach << FateTriumph << " FateTriumph\n";
         ach << DarknessTriumph << " DarknessTriumph\n";
         ach << ArcanaTriumph << " ArcanaTriumph\n";
         ach << SteelTriumph << " SteelTriumph\n";
@@ -124,8 +138,19 @@ public:
         ach << SoulsTriumph << " SoulsTriumph\n";
         ach << Gank << " Gank\n";
         ach << SpectrumTriumph << " SpectrumTriumph\n";
+        ach << CurseBearer << " CurseBearer\n";
         ach << TrueHeir << " TrueHeir\n";
         ach << Watcher << " Watcher\n";
+        ach << Vale << " Vale\n";
+        ach << UnlockHeal << " UnlockHeal\n";
+        ach << UnlockJolt << " UnlockJolt\n";
+        ach << UnlockHealingPot << " UnlockHealingPot\n";
+        ach << UnlockCalmingPot << " UnlockCalmingPot\n";
+        ach << UnlockSword << " UnlockSword\n";
+        ach << UnlockArmor << " UnlockArmor\n";
+        ach << UnlockMelee << " UnlockMelee\n";
+        ach << UnlockMagic << " UnlockMagic\n";
+        ach << UnlockRing << " UnlockRing\n";
         ach.close();
     }
     calculatePoints()
@@ -162,11 +187,11 @@ public:
         if(complete[14])
             points += 20;
         if(complete[15])
-            points += 30;
+            points += 25;
         if(complete[16])
-            points += 30;
+            points += 25;
         if(complete[17])
-            points += 30;
+            points += 25;
         if(complete[18])
             points += 25;
         if(complete[19])
@@ -194,16 +219,19 @@ public:
         if(complete[30])
             points += 40;
         if(complete[31])
-            points += 40;
+            points += 30;
         if(complete[32])
-            points += 70;
+            points += 60;
         if(complete[33])
-            points += 65;
+            points += 50;
         if(complete[34])
+            points += 50;
+        if(complete[35])
             points += 50;
     }
     vector<int> achVals;
     vector<bool> complete;
+    vector<bool> unlocked;
     int points;
     int Connoisseur;
     int Alchemist;
@@ -229,7 +257,7 @@ public:
     int Whisper;
     int AncientPower;
     int GlassTriumph;
-    int WrathTriumph;
+    int FateTriumph;
     int DarknessTriumph;
     int ArcanaTriumph;
     int SteelTriumph;
@@ -238,6 +266,17 @@ public:
     int SoulsTriumph;
     int Gank;
     int SpectrumTriumph;
+    int CurseBearer;
     int TrueHeir;
     int Watcher;
+    int Vale;
+    int UnlockHeal;
+    int UnlockJolt;
+    int UnlockHealingPot;
+    int UnlockCalmingPot;
+    int UnlockSword;
+    int UnlockArmor;
+    int UnlockMelee;
+    int UnlockMagic;
+    int UnlockRing;
 };

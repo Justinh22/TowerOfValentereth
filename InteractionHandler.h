@@ -1,6 +1,6 @@
 bool nicknameChecker(string name, Creature monster);
 
-string interactionHandler(int action, string target, Player &hero, Directory &dir, Room &currentRoom, int &pass, vector<bool> &itemStatus,bool debug)
+string interactionHandler(int action, string target, Player &hero, Directory &dir, Room &currentRoom, int &pass, vector<bool> &itemStatus, bool debug, int &itemIndex)
 {
     //cout << endl << "Entered Interaction Handler!!" << endl;
     string holder = "";
@@ -141,6 +141,14 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     heroDmg = heroDmg + (heroDmg/2);
                 if(hero.mask.getID()==5) //Whispers
                     monDmg = static_cast<float>(monDmg)*1.5;
+                if((hero.meleeTraining==0&&(hero.eqpWpn.getName().find("Dagger")!=string::npos||hero.eqpWpn.getName().find("Knife")!=string::npos||hero.eqpWpn.getName().find("Aerolinde")!=string::npos))||
+                   (hero.meleeTraining==1&&(hero.eqpWpn.getName().find("Spear")!=string::npos||hero.eqpWpn.getName().find("Pike")!=string::npos||hero.eqpWpn.getName().find("Hyliat")!=string::npos))||
+                   (hero.meleeTraining==2&&(hero.eqpWpn.getName().find("Sword")!=string::npos||hero.eqpWpn.getName().find("Saber")!=string::npos||hero.eqpWpn.getName().find("Pyrithia")!=string::npos))||
+                   (hero.meleeTraining==3&&(hero.eqpWpn.getName().find("Axe")!=string::npos||hero.eqpWpn.getName().find("Club")!=string::npos||hero.eqpWpn.getName().find("Teratra")!=string::npos)))
+                {
+                    heroDmg += 2;
+                    heroHit += 5;
+                }
 
                 holder += "HP: " + std::to_string(currentRoom.monster.getHP()) + "\n";
                 holder += "Strength: " + std::to_string(currentRoom.monster.getSTR()) + " (Enemy DMG: " + std::to_string(monDmg) + ")\n";
@@ -248,7 +256,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     valid = 1;
                 else if((target=="sword"||target=="saber"||target=="cleaver")&&((currentRoom.getIList()[i]%6==4&&currentRoom.getIList()[i]!=4)||currentRoom.getIList()[i]==0||currentRoom.getIList()[i]==1||currentRoom.getIList()[i]==5||currentRoom.getIList()[i]==20||currentRoom.getIList()[i]==26)&&currentRoom.getIList()[i]<=56)
                     valid = 1;
-                else if((target=="spear"||target=="pike")&&((currentRoom.getIList()[i]%6==5&&currentRoom.getIList()[i]>5)||currentRoom.getIList()[i]==6)&&currentRoom.getIList()[i]<=56)
+                else if((target=="spear"||target=="pike")&&((currentRoom.getIList()[i]%6==5&&currentRoom.getIList()[i]>5)||currentRoom.getIList()[i]==6||currentRoom.getIList()[i]==50)&&currentRoom.getIList()[i]<=56)
                     valid = 1;
                 else if((target=="dagger"||target=="knife")&&((currentRoom.getIList()[i]%6==0&&currentRoom.getIList()[i]>6)||currentRoom.getIList()[i]==2||currentRoom.getIList()[i]==7||currentRoom.getIList()[i]==32)&&currentRoom.getIList()[i]<=56)
                     valid = 1;
@@ -300,9 +308,21 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     {
                         cout << dir.getItemName(currentRoom.getIList()[i]) << " | " << dir.getItemDesc(currentRoom.getIList()[i]) << endl;
                         cout << "RARITY: " << dir.weaponDirectory[currentRoom.getIList()[i]].getRarity() << endl;
-                        cout << "STR " << dir.weaponDirectory[currentRoom.getIList()[i]].getStr() << endl;
-                        cout << "ACC " << dir.weaponDirectory[currentRoom.getIList()[i]].getAcc() << endl;
-                        cout << "CRIT " << dir.weaponDirectory[currentRoom.getIList()[i]].getCrt() << endl;
+                        if((hero.meleeTraining==0&&(dir.getItemName(currentRoom.getIList()[i]).find("Dagger")!=string::npos||dir.getItemName(currentRoom.getIList()[i]).find("Knife")!=string::npos||dir.getItemName(currentRoom.getIList()[i]).find("Aerolinde")!=string::npos))||
+                           (hero.meleeTraining==1&&(dir.getItemName(currentRoom.getIList()[i]).find("Spear")!=string::npos||dir.getItemName(currentRoom.getIList()[i]).find("Pike")!=string::npos||dir.getItemName(currentRoom.getIList()[i]).find("Hyliat")!=string::npos))||
+                           (hero.meleeTraining==2&&(dir.getItemName(currentRoom.getIList()[i]).find("Sword")!=string::npos||dir.getItemName(currentRoom.getIList()[i]).find("Saber")!=string::npos||dir.getItemName(currentRoom.getIList()[i]).find("Pyrithia")!=string::npos))||
+                           (hero.meleeTraining==3&&(dir.getItemName(currentRoom.getIList()[i]).find("Axe")!=string::npos||dir.getItemName(currentRoom.getIList()[i]).find("Club")!=string::npos||dir.getItemName(currentRoom.getIList()[i]).find("Teratra")!=string::npos)))
+                        {
+                            cout << "STR " << dir.weaponDirectory[currentRoom.getIList()[i]].getStr()+2 << endl;
+                            cout << "ACC " << dir.weaponDirectory[currentRoom.getIList()[i]].getAcc()+5 << endl;
+                            cout << "CRIT " << dir.weaponDirectory[currentRoom.getIList()[i]].getCrt()+5 << endl;
+                        }
+                        else
+                        {
+                            cout << "STR " << dir.weaponDirectory[currentRoom.getIList()[i]].getStr() << endl;
+                            cout << "ACC " << dir.weaponDirectory[currentRoom.getIList()[i]].getAcc() << endl;
+                            cout << "CRIT " << dir.weaponDirectory[currentRoom.getIList()[i]].getCrt() << endl;
+                        }
                         if(dir.weaponDirectory[currentRoom.getIList()[i]].getMA()!=0)
                             cout << "MAGIC AMP: +" << dir.weaponDirectory[currentRoom.getIList()[i]].getMA() << "%" << endl;
                     }
@@ -325,8 +345,10 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                         {
                             cout << dir.consumableDirectory[currentRoom.getIList()[i]-200].getName() << " | " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getDesc() << endl;
                             cout << "RARITY: " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getRarity() << endl;
-                            cout << "HP " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP() << endl;
-                            cout << "MP " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP() << endl;
+                            if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP()>0)
+                                cout << "HP " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP() << endl;
+                            if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP()>0)
+                                cout << "MP " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP() << endl;
                         }
                     }
                     else if(currentRoom.getIList()[i]<400)
@@ -335,8 +357,18 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                         cout << "RARITY: " << dir.getItemRarity(currentRoom.getIList()[i]) << endl;
                         if(currentRoom.getIList()[i]<=314)
                         {
-                            cout << "MANA COST: " << dir.attackSpellDirectory[currentRoom.getIList()[i]-300].getManaCost() << endl;
-                            cout << "DAMAGE: " << dir.attackSpellDirectory[currentRoom.getIList()[i]-300].getDMG() << endl;
+                            if((hero.magicTraining==0&&(currentRoom.getIList()[i]%3==2))||
+                               (hero.magicTraining==1&&(currentRoom.getIList()[i]%3==1))||
+                               (hero.magicTraining==2&&(currentRoom.getIList()[i]%3==0)))
+                            {
+                                cout << "MANA COST: " << dir.attackSpellDirectory[currentRoom.getIList()[i]-300].getManaCost()-1 << endl;
+                                cout << "DAMAGE: " << dir.attackSpellDirectory[currentRoom.getIList()[i]-300].getDMG()+2 << endl;
+                            }
+                            else
+                            {
+                                cout << "MANA COST: " << dir.attackSpellDirectory[currentRoom.getIList()[i]-300].getManaCost() << endl;
+                                cout << "DAMAGE: " << dir.attackSpellDirectory[currentRoom.getIList()[i]-300].getDMG() << endl;
+                            }
                         }
                         else if(currentRoom.getIList()[i]<=320)
                         {
@@ -400,7 +432,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 valid = 1;
             else if((target=="sword"||target=="saber"||target=="cleaver")&&((currentRoom.getIList()[i]%6==4&&currentRoom.getIList()[i]!=4)||currentRoom.getIList()[i]==0||currentRoom.getIList()[i]==1||currentRoom.getIList()[i]==5||currentRoom.getIList()[i]==20||currentRoom.getIList()[i]==26)&&currentRoom.getIList()[i]<=56)
                 valid = 1;
-            else if((target=="spear"||target=="pike")&&((currentRoom.getIList()[i]%6==5&&currentRoom.getIList()[i]>5)||currentRoom.getIList()[i]==6)&&currentRoom.getIList()[i]<=56)
+            else if((target=="spear"||target=="pike")&&((currentRoom.getIList()[i]%6==5&&currentRoom.getIList()[i]>5)||currentRoom.getIList()[i]==6||currentRoom.getIList()[i]==50)&&currentRoom.getIList()[i]<=56)
                 valid = 1;
             else if((target=="dagger"||target=="knife")&&((currentRoom.getIList()[i]%6==0&&currentRoom.getIList()[i]>6)||currentRoom.getIList()[i]==2||currentRoom.getIList()[i]==7||currentRoom.getIList()[i]==32)&&currentRoom.getIList()[i]<=56)
                 valid = 1;
@@ -414,7 +446,13 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 valid = 1;
             else if((target=="sceptre"||target=="siphon")&&currentRoom.getIList()[i]==58)
                 valid = 1;
-            else if(target=="shield"&&currentRoom.getIList()[i]==142)
+            else if(target=="shield"&&(currentRoom.getIList()[i]==139||currentRoom.getIList()[i]==142))
+                valid = 1;
+            else if(target=="cloak"&&currentRoom.getIList()[i]==137)
+                valid = 1;
+            else if(target=="plate"&&currentRoom.getIList()[i]==138)
+                valid = 1;
+            else if(target=="helm"&&currentRoom.getIList()[i]==141)
                 valid = 1;
             else if(target=="armor"&&currentRoom.getIList()[i]>=100&&currentRoom.getIList()[i]<200)
                 valid = 1;
@@ -432,7 +470,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 valid = 1;
             else if(target=="capsule"&&currentRoom.getIList()[i]==214)
                 valid = 1;
-            else if(target=="herbs"&&currentRoom.getIList()[i]==215)
+            else if((target=="herbs"||target=="herb")&&currentRoom.getIList()[i]==215)
                 valid = 1;
             else if(target=="vial"&&(currentRoom.getIList()[i]==217||currentRoom.getIList()[i]==218||currentRoom.getIList()[i]==221))
                 valid = 1;
@@ -465,7 +503,10 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     if(hero.equipment.size()>=6)
                     {
                         if(valid==1)
-                            return "Your inventory is full.";
+                        {
+                            itemIndex = i;
+                            return "replace";
+                        }
                         else if(valid!=2||i<currentRoom.contents)
                         {
                             if(returner!="")
@@ -478,6 +519,8 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     {
                         itemStatus[i] = 1;
                         hero.equipment.push_back(currentRoom.getIList()[i]);
+                        if(currentRoom.getIList()[i]==57||currentRoom.getIList()[i]==58||currentRoom.getIList()[i]==142||currentRoom.getIList()[i]==434)
+                            currentRoom.creatDesc = "";
                     }
                     //cout << "Size of equipment inventory: " << hero.equipment.size() << endl;
                 }
@@ -486,7 +529,10 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     if(hero.inventory.size()>=6)
                     {
                         if(valid==1)
-                            return "Your inventory is full.";
+                        {
+                            itemIndex = i;
+                            return "replace";
+                        }
                         else if(valid!=2||i<currentRoom.contents)
                         {
                             if(returner!="")

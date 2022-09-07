@@ -144,49 +144,7 @@ void roomLogic(int &diff, int &rew, int &karma, int adv, Player hero)
                     karma -= 1;
                 }
             }
-            else if(karma>5)
-            {
-                if(chance<=2)
-                {
-                    diff = 0;
-                    karma -= 2;
-                }
-                else if(chance<=6)
-                {
-                    diff = 1;
-                }
-                else if(chance<=10)
-                {
-                    diff = 2;
-                    karma += 2;
-                }
-                chance = rand() % 10 + 1;
-                if(chance<=2)
-                {
-                    rew = 1;
-                    karma += 1;
-                }
-                else if(chance<=4)
-                {
-                    rew = 2;
-                }
-                else if(chance<=6)
-                {
-                    rew = 3;
-                    karma -= 1;
-                }
-                else if(chance<=8)
-                {
-                    rew = 4;
-                    karma -= 1;
-                }
-                else if(chance<=10)
-                {
-                    rew = 4;
-                    karma -= 2;
-                }
-            }
-            else if(karma>15)
+            else if(karma>=15)
             {
                 if(chance<=2)
                 {
@@ -230,7 +188,7 @@ void roomLogic(int &diff, int &rew, int &karma, int adv, Player hero)
             }
         }
     }
-    else if(adv<6)
+    else if(adv<12)
     {
         chance = rand() % 10 + 1;
         if(karma<-15)
@@ -440,7 +398,7 @@ void roomLogic(int &diff, int &rew, int &karma, int adv, Player hero)
             }
             else if(chance<=10)
             {
-                diff = 2;
+                diff = 3;
             }
             chance = rand() % 10 + 1;
             if(chance<=3)
@@ -479,11 +437,7 @@ void roomLogic(int &diff, int &rew, int &karma, int adv, Player hero)
         chance = rand() % 10 + 1;
         if(karma<-15)
         {
-            if(chance<=4)
-            {
-                diff = 2;
-            }
-            else if(chance<=6)
+            if(chance<=5)
             {
                 diff = 3;
                 karma += 2;

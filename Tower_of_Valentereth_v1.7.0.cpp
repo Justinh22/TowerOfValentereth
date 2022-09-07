@@ -22,6 +22,12 @@ using std::setw;
 Achievements ach;
 int score = 0;
 bool godMode = 0;
+int karma = 5;
+int end = 0;
+int pass = 1;
+int shortWait = 1000;
+int midWait = 2000;
+int longWait = 3000;
 #include "ItemClasses.h"
 #include "ItemList.h"
 #include "CreatureList.h"
@@ -32,16 +38,17 @@ bool godMode = 0;
 #include "RoomGen.h"
 #include "MenuIllustrations.h"
 #include "InteractionHandler.h"
+#include "EncounterHandler.h"
 #include "RoomLogic.h"
 #include "CombatHandler.h"
 #include "GoldPicker.h"
 #include "SaveFunctions.h"
 
 int actionHandler(string act,bool debug_opt, int gankTracker);  //Done!
-int combatHandler(); //Done!
 int menuHandler(Player &hero,Directory dir); //Done!
 int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom);
-Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &rStatus, vector<bool> &iStatus, bool &dev);
+Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &rStatus, vector<bool> &reStatus, vector<bool> &iStatus, bool &dev);
+int throneDefense(Player &hero, Directory dir, bool debug_opt, bool &gankTracker);
 
 void clear()
 {
@@ -84,6 +91,11 @@ int main()
     bool debug_opt=0;
     bool good=0;
     bool men;
+    vector<int> startingItems;
+    int startingItem = -1;
+    int meleeProficiency = -1;
+    int magicProficiency = -1;
+    bool alreadyLearned = 0;
     //int mapx=171;
     //int mapy=39;
     bool floorFlag=0;
@@ -103,6 +115,673 @@ int main()
             men = 0;
             while(men==0)
             {
+                valeTrade(ach);
+                strChoice = getch();
+                std::stringstream stoi(strChoice);
+                stoi >> intChoice;
+                if(intChoice==1)
+                {
+                    while(men==0)
+                    {
+                        ach.writeAchievements();
+                        valeUnlockables(ach);
+                        strChoice = getch();
+                        std::stringstream stoi(strChoice);
+                        stoi >> intChoice;
+                        if(intChoice==1)
+                        {
+                            if(ach.UnlockSword==0)
+                            {
+                                cout << "Would you like to spend 50 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<50)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 50;
+                                        cout << "You can now choose to start an ascent with a Crooked Saber!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockSword = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockSword==1)
+                            {
+                                cout << "Start this ascent with a Crooked Saber? You can only start an ascent with one of these items at a time. (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    cout << "You will start your next ascent with a Crooked Saber!" << endl;
+                                    startingItem = 5;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==2)
+                        {
+                            if(ach.UnlockArmor==0)
+                            {
+                                cout << "Would you like to spend 50 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<50)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 50;
+                                        cout << "You can now choose to start an ascent with Leather Armor!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockArmor = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockArmor==1)
+                            {
+                                cout << "Start this ascent with Leather Armor? You can only start an ascent with one of these items at a time. (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    cout << "You will start your next ascent with Leather Armor!" << endl;
+                                    startingItem = 103;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==3)
+                        {
+                            if(ach.UnlockJolt==0)
+                            {
+                                cout << "Would you like to spend 80 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<80)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 80;
+                                        cout << "You can now choose to start an ascent with Jolt!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockJolt = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockJolt==1)
+                            {
+                                cout << "Start this ascent with Jolt? You can only start an ascent with one of these items at a time. (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    cout << "You will start your next ascent with Jolt!" << endl;
+                                    startingItem = 300;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==4)
+                        {
+                            if(ach.UnlockHeal==0)
+                            {
+                                cout << "Would you like to spend 80 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<80)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 80;
+                                        cout << "You can now choose to start an ascent with Minor Heal!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockHeal = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockHeal==1)
+                            {
+                                cout << "Start this ascent with Minor Heal? You can only start an ascent with one of these items at a time. (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    cout << "You will start your next ascent with Minor Heal!" << endl;
+                                    startingItem = 315;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==5)
+                        {
+                            if(ach.UnlockHealingPot==0)
+                            {
+                                cout << "Would you like to spend 80 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<80)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 80;
+                                        cout << "You can now choose to start an ascent with a Potion of Healing!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockHealingPot = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockHealingPot==1)
+                            {
+                                cout << "Start this ascent with a Potion of Healing? You can only start an ascent with one of these items at a time. (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    cout << "You will start your next ascent with a Potion of Healing!" << endl;
+                                    startingItem = 204;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==6)
+                        {
+                            if(ach.UnlockCalmingPot==0)
+                            {
+                                cout << "Would you like to spend 80 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<80)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 80;
+                                        cout << "You can now choose to start an ascent with a Potion of Calming!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockCalmingPot = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockCalmingPot==1)
+                            {
+                                cout << "Start this ascent with a Potion of Calming? You can only start an ascent with one of these items at a time. (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    cout << "You will start your next ascent with a Potion of Calming!" << endl;
+                                    startingItem = 205;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==7)
+                        {
+                            if(ach.UnlockMelee==0)
+                            {
+                                cout << "Would you like to spend 150 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<150)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 150;
+                                        cout << "You can now choose to start an ascent with a Weapon Proficiency!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockMelee = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockMelee==1)
+                            {
+                                cout << "Which weapon would you like to be proficient in?" << endl;
+                                cout << "1) Daggers" << endl;
+                                cout << "2) Spears" << endl;
+                                cout << "3) Swords" << endl;
+                                cout << "4) Axes" << endl << endl;
+                                strChoice = getch();
+                                if(strChoice=="1")
+                                {
+                                    cout << "You will start your next ascent with dagger proficiency!" << endl;
+                                    meleeProficiency = 0;
+                                    Sleep(midWait);
+                                }
+                                if(strChoice=="2")
+                                {
+                                    cout << "You will start your next ascent with spear proficiency!" << endl;
+                                    meleeProficiency = 1;
+                                    Sleep(midWait);
+                                }
+                                if(strChoice=="3")
+                                {
+                                    cout << "You will start your next ascent with sword proficiency!" << endl;
+                                    meleeProficiency = 2;
+                                    Sleep(midWait);
+                                }
+                                if(strChoice=="4")
+                                {
+                                    cout << "You will start your next ascent with axe proficiency!" << endl;
+                                    meleeProficiency = 3;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==8)
+                        {
+                            if(ach.UnlockMagic==0)
+                            {
+                                cout << "Would you like to spend 150 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<150)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 150;
+                                        cout << "You can now choose to start an ascent with an Elemental Proficiency!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockMagic = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockMagic==1)
+                            {
+                                cout << "Which element would you like to be proficient in?" << endl;
+                                cout << "1) Frost" << endl;
+                                cout << "2) Fire" << endl;
+                                cout << "3) Lightning" << endl << endl;
+                                strChoice = getch();
+                                if(strChoice=="1")
+                                {
+                                    cout << "You will start your next ascent with frost proficiency!" << endl;
+                                    magicProficiency = 0;
+                                    Sleep(midWait);
+                                }
+                                if(strChoice=="2")
+                                {
+                                    cout << "You will start your next ascent with fire proficiency!" << endl;
+                                    magicProficiency = 1;
+                                    Sleep(midWait);
+                                }
+                                if(strChoice=="3")
+                                {
+                                    cout << "You will start your next ascent with lightning proficiency!" << endl;
+                                    magicProficiency = 2;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==9)
+                        {
+                            if(ach.UnlockRing==0)
+                            {
+                                cout << "Would you like to spend 150 Vale to unlock this? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    if(ach.Vale<150)
+                                    {
+                                        cout << "You cannot afford this." << endl;
+                                        Sleep(midWait);
+                                    }
+                                    else
+                                    {
+                                        ach.Vale -= 150;
+                                        cout << "You can now choose to start an ascent with a Minor-Level Ring!" << endl;
+                                        Sleep(midWait);
+                                        ach.UnlockRing = 1;
+                                    }
+                                }
+                            }
+                            if(ach.UnlockRing==1)
+                            {
+                                cout << "Which ring would you like to start with?" << endl;
+                                cout << "1) Minor Regeneration" << endl;
+                                cout << "2) Minor Conservation" << endl;
+                                cout << "3) Minor Bravery" << endl;
+                                cout << "4) Minor Leeching" << endl;
+                                cout << "5) Minor Vengeance" << endl;
+                                cout << "6) Minor Sight" << endl;
+                                cout << "7) Minor Piercing" << endl;
+                                cout << "8) Minor Overcharging" << endl;
+                                cout << "9) Minor Reflection" << endl;
+                                cout << "0) Minor Fury" << endl;
+                                strChoice = getch();
+                                if(strChoice=="1")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Regeneration!" << endl;
+                                    startingItem = 400;
+                                }
+                                if(strChoice=="2")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Conservation!" << endl;
+                                    startingItem = 401;
+                                }
+                                if(strChoice=="3")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Bravery!" << endl;
+                                    startingItem = 402;
+                                }
+                                if(strChoice=="4")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Leeching!" << endl;
+                                    startingItem = 403;
+                                }
+                                if(strChoice=="5")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Vengeance!" << endl;
+                                    startingItem = 404;
+                                }
+                                if(strChoice=="6")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Sight!" << endl;
+                                    startingItem = 405;
+                                }
+                                if(strChoice=="7")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Piercing!" << endl;
+                                    startingItem = 406;
+                                }
+                                if(strChoice=="8")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Overcharging!" << endl;
+                                    startingItem = 407;
+                                }
+                                if(strChoice=="9")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Reflection!" << endl;
+                                    startingItem = 408;
+                                }
+                                if(strChoice=="0")
+                                {
+                                    cout << "You will start your next ascent with a Ring of Minor Fury!" << endl;
+                                    startingItem = 409;
+                                }
+                                Sleep(midWait);
+                            }
+                        }
+                        else if(intChoice==0)
+                        {
+                            men = 1;
+                        }
+                        else
+                        {
+                            cout << "Invalid command." << endl;
+                            Sleep(midWait);
+                        }
+                    }
+                    men = 0;
+                }
+                else if(intChoice==2)
+                {
+                    while(men==0)
+                    {
+                        ach.writeAchievements();
+                        valeOneTime(ach);
+                        strChoice = getch();
+                        std::stringstream stoi(strChoice);
+                        stoi >> intChoice;
+                        if(intChoice==1)
+                        {
+                            cout << "Would you like to spend 30 Vale to start this run with an Iron Sword? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                if(ach.Vale<30)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else
+                                {
+                                    ach.Vale -= 30;
+                                    cout << "You will start the next ascent with an Iron Sword!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(10);
+                                }
+                            }
+                        }
+                        else if(intChoice==2)
+                        {
+                            cout << "Would you like to spend 30 Vale to start this run with Hide Armor? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                if(ach.Vale<30)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else
+                                {
+                                    ach.Vale -= 30;
+                                    cout << "You will start the next ascent with Hide Armor!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(106);
+                                }
+                            }
+                        }
+                        else if(intChoice==3)
+                        {
+                            cout << "Would you like to spend 20 Vale to start this run with Thunderbolt? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                alreadyLearned = 0;
+                                for(int i=0;i<startingItems.size();i++)
+                                    if(startingItems[i]==303)
+                                        alreadyLearned = 1;
+                                if(ach.Vale<20)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else if(!alreadyLearned)
+                                {
+                                    ach.Vale -= 20;
+                                    cout << "You will start the next ascent with Thunderbolt!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(303);
+                                }
+                                else
+                                {
+                                    cout << "You can't bring duplicates of the same spell." << endl;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==4)
+                        {
+                            cout << "Would you like to spend 40 Vale to start this run with Lightning Strike? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                alreadyLearned = 0;
+                                for(int i=0;i<startingItems.size();i++)
+                                    if(startingItems[i]==306)
+                                        alreadyLearned = 1;
+                                if(ach.Vale<40)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else if(!alreadyLearned)
+                                {
+                                    ach.Vale -= 40;
+                                    cout << "You will start the next ascent with Lightning Strike!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(306);
+                                }
+                                else
+                                {
+                                    cout << "You can't bring duplicates of the same spell." << endl;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==5)
+                        {
+                            cout << "Would you like to spend 40 Vale to start this run with Minor Regenerate? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                alreadyLearned = 0;
+                                for(int i=0;i<startingItems.size();i++)
+                                    if(startingItems[i]==317)
+                                        alreadyLearned = 1;
+                                if(ach.Vale<40)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else if(!alreadyLearned)
+                                {
+                                    ach.Vale -= 40;
+                                    cout << "You will start the next ascent with Minor Regenerate!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(317);
+                                }
+                                else
+                                {
+                                    cout << "You can't bring duplicates of the same spell." << endl;
+                                    Sleep(midWait);
+                                }
+                            }
+                        }
+                        else if(intChoice==6)
+                        {
+                            cout << "Would you like to spend 30 Vale to start this run with a Potion of Healing? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                if(ach.Vale<30)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else
+                                {
+                                    ach.Vale -= 30;
+                                    cout << "You will start the next ascent with a Potion of Healing!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(204);
+                                }
+                            }
+                        }
+                        else if(intChoice==7)
+                        {
+                            cout << "Would you like to spend 30 Vale to start this run with a Potion of Calming? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                if(ach.Vale<30)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else
+                                {
+                                    ach.Vale -= 30;
+                                    cout << "You will start the next ascent with a Potion of Calming!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(205);
+                                }
+                            }
+                        }
+                        else if(intChoice==8)
+                        {
+                            cout << "Would you like to spend 30 Vale to start this run with a Blast Bomb? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                if(ach.Vale<30)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else
+                                {
+                                    ach.Vale -= 30;
+                                    cout << "You will start the next ascent with a Blast Bomb!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(216);
+                                }
+                            }
+                        }
+                        else if(intChoice==9)
+                        {
+                            cout << "Would you like to spend 80 Vale to start this run with a Second Soul? (y/n)" << endl;
+                            strChoice = getch();
+                            if(strChoice=="y")
+                            {
+                                if(ach.Vale<80)
+                                {
+                                    cout << "You cannot afford this." << endl;
+                                    Sleep(midWait);
+                                }
+                                else
+                                {
+                                    ach.Vale -= 80;
+                                    cout << "You will start the next ascent with a Second Soul!" << endl;
+                                    Sleep(midWait);
+                                    startingItems.push_back(216);
+                                }
+                            }
+                        }
+                        else if(intChoice==0)
+                        {
+                            men = 1;
+                        }
+                        else
+                        {
+                            cout << "Invalid command." << endl;
+                            Sleep(midWait);
+                        }
+                    }
+                    men = 0;
+                }
+                else if(intChoice==0)
+                {
+                    men = 1;
+                }
+                else
+                {
+                    cout << "Invalid command." << endl;
+                    Sleep(midWait);
+                }
+            }
+        }
+        if(intChoice==4)
+        {
+            men = 0;
+            while(men==0)
+            {
                 scores();
                 strChoice = getch();
                 std::stringstream stoi(strChoice);
@@ -111,7 +790,7 @@ int main()
                     men = 1;
             }
         }
-        if(intChoice==4)
+        if(intChoice==5)
         {
             men = 0;
             while(men==0)
@@ -124,7 +803,7 @@ int main()
                     men = 1;
             }
         }
-        if(intChoice==5)
+        if(intChoice==6)
         {
             men = 0;
             while(men==0)
@@ -142,7 +821,7 @@ int main()
                     {
                         mask = dir.maskDirectory[intChoice-1].getID();
                         cout << "You put on the " << dir.maskDirectory[intChoice-1].getName() << "." << endl;
-                        Sleep(2000);
+                        Sleep(midWait);
                     }
                 }
                 else if(intChoice==9)
@@ -151,12 +830,12 @@ int main()
                     {
                         mask = -1;
                         cout << "You removed your mask." << endl;
-                        Sleep(2000);
+                        Sleep(midWait);
                     }
                     else
                     {
                         cout << "You aren't wearing a mask." << endl;
-                        Sleep(2000);
+                        Sleep(midWait);
                     }
                 }
                 else if(intChoice==0)
@@ -166,14 +845,14 @@ int main()
                 else
                 {
                     cout << "Invalid command." << endl;
-                    Sleep(2000);
+                    Sleep(midWait);
                 }
             }
         }
         if(intChoice==8)
         {
             cout << "Debug mode activated.";
-            Sleep(2000);
+            Sleep(midWait);
             debug_opt = 1;
         }
         /*if(intChoice==9)
@@ -273,8 +952,10 @@ int main()
 
     string name;
     string filename;
-    int saveStats[28];
+    int saveStats[30];
     int roomData[15];
+    int randEncCount = 15;
+    vector<bool> randEncStatus(randEncCount,0);
     vector<int> saveFList;
     vector<int> saveIList;
     vector<int> saveBList;
@@ -311,18 +992,20 @@ int main()
         saveStats[13] = 1;
         saveStats[14] = 0;
         saveStats[15] = 0;
-        saveStats[16] = -1;
-        saveStats[17] = -1;
+        saveStats[16] = meleeProficiency;
+        saveStats[17] = magicProficiency;
         saveStats[18] = -1;
         saveStats[19] = -1;
-        saveStats[20] = 0;
-        saveStats[21] = 0;
+        saveStats[20] = -1;
+        saveStats[21] = -1;
         saveStats[22] = 0;
         saveStats[23] = 0;
         saveStats[24] = 0;
         saveStats[25] = 0;
         saveStats[26] = 0;
         saveStats[27] = 0;
+        saveStats[28] = 0;
+        saveStats[29] = 0;
     }
     else if(intChoice==2)
     {
@@ -345,7 +1028,7 @@ int main()
                     saveFound = 1;
                     if(line==0)
                     {
-                        for(int i=0;i<28;i++)
+                        for(int i=0;i<30;i++)
                             data >> saveStats[i];
                         for(int i=0;i<6;i++)
                         {
@@ -403,6 +1086,14 @@ int main()
                         for(int i=1;i<15;i++)
                             data >> roomData[i];
                     }
+                    else if(line==2)
+                    {
+                        for(int i=0;i<randEncCount;i++)
+                        {
+                            data >> saveCheck;
+                            randEncStatus[i] = saveCheck;
+                        }
+                    }
                     line++;
                 }
                 cout << "Name: " << name << endl;
@@ -419,10 +1110,10 @@ int main()
                 cout << "LCK: " << saveStats[12] << endl;
                 cout << "ROOM: " << saveStats[13] << endl;
                 cout << "KEYS: " << saveStats[14] << endl;
-                cout << "SCORE: " << saveStats[27] << endl;
-                if(saveStats[16]>=0)
+                cout << "SCORE: " << saveStats[29] << endl;
+                if(saveStats[18]>=0)
                 {
-                    cout << "MASK: " << dir.maskDirectory[saveStats[16]].getName() << endl << endl;
+                    cout << "MASK: " << dir.maskDirectory[saveStats[18]].getName() << endl << endl;
                 }
                 cout << "Continue with this character? (y/n)" << endl;
                 load = getch();
@@ -457,18 +1148,20 @@ int main()
                     saveStats[13] = 1;
                     saveStats[14] = 0;
                     saveStats[15] = 0;
-                    saveStats[16] = -1;
-                    saveStats[17] = -1;
+                    saveStats[16] = meleeProficiency;
+                    saveStats[17] = magicProficiency;
                     saveStats[18] = -1;
                     saveStats[19] = -1;
-                    saveStats[20] = 0;
-                    saveStats[21] = 0;
+                    saveStats[20] = -1;
+                    saveStats[21] = -1;
                     saveStats[22] = 0;
                     saveStats[23] = 0;
                     saveStats[24] = 0;
                     saveStats[25] = 0;
                     saveStats[26] = 0;
                     saveStats[27] = 0;
+                    saveStats[28] = 0;
+                    saveStats[29] = 0;
                     good = 1;
                 }
                 else
@@ -487,8 +1180,8 @@ int main()
     hero.setMP(saveStats[5]);
     if(saveStats[15]==1)
         hero.growth = 1;
-    if(saveStats[16]>=0)
-        mask = saveStats[16];
+    if(saveStats[18]>=0)
+        mask = saveStats[18];
     if(intChoice==2)
     {
         hero.equipment = equipSave;
@@ -496,15 +1189,17 @@ int main()
         hero.spellbook = spellSave;
     }
     depth = saveStats[13];
-    score = saveStats[27];
-    if((depth/5)+2>11)
+    hero.meleeTraining = saveStats[16];
+    hero.magicTraining = saveStats[17];
+    score = saveStats[29];
+    if(depth>55)
         hero.empowered = 1;
-    if(saveStats[17]!=-1)
-        hero.equipWpn(dir.weaponDirectory[saveStats[17]]);
-    if(saveStats[18]!=-1)
-        hero.equipAmr(dir.armorDirectory[saveStats[18]-100]);
     if(saveStats[19]!=-1)
-        hero.equipRng(dir.ringDirectory[saveStats[19]-400]);
+        hero.equipWpn(dir.weaponDirectory[saveStats[19]]);
+    if(saveStats[20]!=-1)
+        hero.equipAmr(dir.armorDirectory[saveStats[20]-100]);
+    if(saveStats[21]!=-1)
+        hero.equipRng(dir.ringDirectory[saveStats[21]-400]);
 
     if(mask>=0)
     {
@@ -513,8 +1208,6 @@ int main()
 
     if(hero.getNDDG()==0&&hero.mask.getID()==5) //Whispers
         hero.setNDDG(10);
-    if(hero.mask.getID()==1) //Wrath
-        hero.setACC(hero.getACC()-10);
     if(hero.mask.getID()==7) //Souls
         hero.setACC(hero.getNACC());
     srand(time(NULL));
@@ -522,15 +1215,11 @@ int main()
     string target;
 
     int err = 0;
-    int end = 0;
-
     int diff = 0;
     int rew = 5;
-    int karma = 5;
     int adv = (depth / 5) + 1;
     if(adv>10)
         adv = 10;
-    int pass = 1;
     int menuval;
     int gd;
     int ex;
@@ -538,7 +1227,7 @@ int main()
     string text;
 
     Room currentRoom;
-    vector<bool> minibossStatus{saveStats[20]>=1,saveStats[21]>=1,saveStats[22]>=1,saveStats[23]>=1,saveStats[24]>=1,saveStats[25]>=1,saveStats[26]>=1};
+    vector<bool> minibossStatus{saveStats[22]>=1,saveStats[23]>=1,saveStats[24]>=1,saveStats[25]>=1,saveStats[26]>=1,saveStats[27]>=1,saveStats[28]>=1};
     vector<bool> roomStatus(100,0);
     int boss = 0;
     bool win = 0;
@@ -550,16 +1239,33 @@ int main()
     bool gankTracker=1;
     int boxType=-1;
     bool saveLog=0;
+    int itemIndex = 0;
+    int throneDefensePoints = 0;
+
+    if(!saveFound)
+    {
+        if(startingItem!=-1)
+            startingItems.push_back(startingItem);
+        for(int i=0;i<startingItems.size();i++)
+        {
+            if((startingItems[i]<200||(startingItems[i]<500&&startingItems[i]>=400))&&hero.equipment.size()<=6)
+                hero.equipment.push_back(startingItems[i]);
+            else if((startingItems[i]>=200&&startingItems[i]<300)&&hero.inventory.size()<=6)
+                hero.inventory.push_back(startingItems[i]);
+            else if(startingItems[i]>=300&&startingItems[i]<400)
+                hero.spellbook.push_back(startingItems[i]);
+        }
+    }
 
     if(!saveFound)
     {
         std::system("cls");
         cout << "Word has been passed for centuries of a tower at the far edge of the land, filled with monsters, riches, and power unimaginable." << endl;
-        Sleep(1000);
+        Sleep(shortWait);
         cout << "At the heart of the tower waits a tyrant with god-like power, who calls themself Valentereth." << endl;
-        Sleep(1000);
+        Sleep(shortWait);
         cout << "Several people from your village have left for the tower, seeking the treasures within, but none have returned." << endl << endl;
-        Sleep(1000);
+        Sleep(shortWait);
         cout << "Now, you have gone to the tower, ";
         switch(hero.mask.getID())
         {
@@ -589,7 +1295,7 @@ int main()
                 break;
         }
         cout << "hoping to brave the horrors within to find the treasure and power foretold." << endl << endl;
-        Sleep(1000);
+        Sleep(shortWait);
         cout << "Press any key to begin your ascent of the tower." << endl;
         action = getch();
         std::system("cls");
@@ -726,12 +1432,18 @@ int main()
     {
         //for(int i=0;i<15;i++)
         //    cout << "ROOMDATA[" << i << "]: " << roomData[i] << endl;
+        if(hero.getHP()<=0)
+        {
+            end = 1;
+            pass = 2;
+            break;
+        }
         if(manSave==0)
-            saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
+            saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir,randEncStatus);
         if(debug_opt&&depth%5==0&&depth>0)
         {
             string debugFile = "Saves/" + hero.getName() + "_Flr" + std::to_string(depth) + ".txt";
-            saveFunc(hero,debugFile,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
+            saveFunc(hero,debugFile,depth,minibossStatus,itemStatus,currentRoom,pass,dir,randEncStatus);
         }
         if(hero.getHP()>hero.getMHP())
             hero.setHP(hero.getMHP());
@@ -764,10 +1476,10 @@ int main()
                 if(target.front()==' ')
                     target.erase(target.begin());
                 //cout << target << "." << endl;
-                text = interactionHandler(err,target,hero,dir,currentRoom,pass,itemStatus,debug_opt);
+                text = interactionHandler(err,target,hero,dir,currentRoom,pass,itemStatus,debug_opt,itemIndex);
                 if(text=="next")
                 {
-                    currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,itemStatus,dev);
+                    currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,randEncStatus,itemStatus,dev);
                     /*cout << "Reward Stat is " << rew << endl;
                     cout << "Difficulty Stat is " << diff << endl;*/
                     //THIS CODE WORKS FOR IDENTIFYING WHERE ITEMS ARE LOCATED
@@ -799,7 +1511,7 @@ int main()
                     if(pass==3)
                     {
                         pass = 1;
-                        currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,itemStatus,dev);
+                        currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,randEncStatus,itemStatus,dev);
                         continue;
                     }
                     if(boss==1)
@@ -811,7 +1523,7 @@ int main()
                         if(hero.mask.getID()==0)
                             ach.GlassTriumph = 1;
                         if(hero.mask.getID()==1)
-                            ach.WrathTriumph = 1;
+                            ach.FateTriumph = 1;
                         if(hero.mask.getID()==2)
                             ach.DarknessTriumph = 1;
                         if(hero.mask.getID()==3)
@@ -824,36 +1536,94 @@ int main()
                             ach.BeastsTriumph = 1;
                         if(hero.mask.getID()==7)
                             ach.SoulsTriumph = 1;
-                        if(ach.GlassTriumph==1&&ach.WrathTriumph==1&&ach.DarknessTriumph==1&&ach.ArcanaTriumph==1&&ach.SteelTriumph==1&&ach.WhispersTriumph==1&&ach.BeastsTriumph==1&&ach.SoulsTriumph==1)
+                        if(ach.GlassTriumph==1&&ach.FateTriumph==1&&ach.DarknessTriumph==1&&ach.ArcanaTriumph==1&&ach.SteelTriumph==1&&ach.WhispersTriumph==1&&ach.BeastsTriumph==1&&ach.SoulsTriumph==1)
                             ach.SpectrumTriumph = 1;
                         if(gankTracker==1)
                             ach.Gank = 1;
                         cout << "Valentereth falls to the ground, motionless. She is defeated." << endl;
-                        Sleep(2000);
+                        Sleep(midWait);
                         cout << "As she lay there, the same energy that had hold of her rushes from her body, and into yours." << endl;
-                        Sleep(2000);
-                        cout << "You are flooded with incredible power. The power of a God." << endl;
-                        Sleep(2000);
-                        cout << "A voice calls to you from above... 'NOW YOU HAVE INHERITED THE MANTLE. YOU SHALL REMAIN HERE, AND DEFEND THE THRONE...'" << endl << endl;
-                        Sleep(3000);
-                        cout << "You have defeated Valentereth, and inherited the throne! Would you like to continue upward? (y/n): " << endl;
-                        yn = getch();
+                        Sleep(midWait);
+                        cout << "You are flooded with incredible power." << endl;
+                        Sleep(midWait);
+                        cout << "A voice from above calls down to you... 'POWER HUNGRY ONE... YOU HAVE FOUND WHAT YOU DESIRED. NOW YOU MUST DEFEND YOUR TITLE AS TYRANT OF THE TOWER...'" << endl << endl;
+                        Sleep(longWait);
+                        cout << "You have defeated Valentereth, and inherited the throne! What do you do now?" << endl;
+                        cout << "1) Defend the throne." << endl;
+                        cout << "2) Venture to the top of the tower." << endl;
+                        strChoice = getch();
+                        std::stringstream stoi(strChoice);
+                        stoi >> intChoice;
                         boss = 0;
-                        if(yn=='n')
+                        if(intChoice==1)
                         {
                             end = 2;
+                            clear();
+                            cout << "You sit upon the throne, Valentereth's axe in hand, brimming with ancient power." << endl;
+                            Sleep(shortWait);
+                            cout << "At long last, after all the trials you endured, you are the ruler of the tower." << endl;
+                            Sleep(shortWait);
+                            cout << "Your head aches and your vision blurs, but the feeling of power within is all that matters now." << endl;
+                            Sleep(shortWait);
+                            cout << "You know there will be many who come forth and challenge your throne. The idea of it fills you with rage..." << endl << endl;
+                            Sleep(shortWait);
+                            cout << "But you will never, ever, let that happen." << endl << endl;
+                            Sleep(midWait);
+                            cout << "Numb from the searing pain in your head, you grab your axe, and await your next challenger." << endl << endl;
+                            Sleep(midWait);
+                            cout << "Press any key to defend your throne.";
+                            yn = getch();
+                            if(hero.equipment.size()<6)
+                            {
+                                cout << "You now wield " << dir.getItemName(59) << "!" << endl;
+                                hero.equipment.push_back(59);
+                                hero.equipWpn(dir.weaponDirectory[59]);
+                            }
+                            else
+                            {
+                                good = 0;
+                                while(!good)
+                                {
+                                    std::system("cls");
+                                    replaceMenu(hero,dir,0,59);
+                                    strChoice = getch();
+                                    std::stringstream stoi(strChoice);
+                                    stoi >> intChoice;
+                                    if(intChoice>=1&&intChoice<=hero.equipment.size())
+                                    {
+                                        cout << "Replaced " << dir.getItemName(hero.equipment[intChoice-1]) << " with " << dir.getItemName(59) << "." << endl;
+                                        hero.equipment[intChoice-1] = 59;
+                                        hero.equipWpn(dir.weaponDirectory[59]);
+                                        good = 1;
+                                    }
+                                    else if(intChoice==0)
+                                    {
+                                        good = 1;
+                                    }
+                                    else
+                                    {
+                                        cout << "Invalid input." << endl;
+                                        Sleep(shortWait);
+                                    }
+                                }
+                            }
+                            Sleep(longWait);
+                            throneDefensePoints = throneDefense(hero,dir,debug_opt,gankTracker);
                             break;
                         }
-                        std::system("cls");
-                        cout << "This cycle... of those who defeat the conquerer becoming one themselves... It cannot go on." << endl;
-                        Sleep(1000);
-                        cout << "The voices from above command you to defend the title of the Tyrant of the Tower." << endl;
-                        Sleep(1000);
-                        cout << "So you must ascend even further to truly break this cycle..." << endl;
-                        Sleep(2000);
-                        cout << "Press any key to continue ascending the tower.";
-                        yn = getch();
-                        hero.Empower();
+                        else
+                        {
+                            std::system("cls");
+                            cout << "You stare at Valentereth's axe in your hand, its power desperately calling you to wield it..." << endl;
+                            Sleep(shortWait);
+                            cout << "But is this truly the power you sought? To stay in this tower upon your throne, a prison of your own making?" << endl;
+                            Sleep(shortWait);
+                            cout << "You cast the axe aside. True power must lie further beyond..." << endl << endl;
+                            Sleep(midWait);
+                            cout << "Press any key to continue ascending the tower.";
+                            yn = getch();
+                            hero.Empower();
+                        }
                         std::system("cls");
                     }
                     if(boss==2)
@@ -938,7 +1708,7 @@ int main()
                                 hero.keys -= 1;
                                 cout << "You unlock the door." << endl;
                                 currentRoom.store.setUnlocked(1);
-                                Sleep(2000);
+                                Sleep(midWait);
                                 storeMenuHandler(hero,dir,currentRoom);
                                 clear();
                                 cout << "Floor " << depth << endl;
@@ -961,6 +1731,19 @@ int main()
                     {
                         storeMenuHandler(hero,dir,currentRoom);
                         clear();
+                        cout << "Floor " << depth << endl;
+                        cout << currentRoom.getDesc() << endl;
+                        for(int i=0;i<currentRoom.getLDescList().size();i++)
+                            cout << currentRoom.getLDescList()[i] << endl;
+                        if(hero.empowered==1)
+                            cout << currentRoom.ascDesc << endl;
+                        cout << currentRoom.getDrDesc() << endl;
+                        if(currentRoom.store.getLevel()!=-1)
+                            if(currentRoom.store.isUnlocked()==0)
+                                cout << "There is a locked door at the side of the room. The sign above it says it is a shop." << endl;
+                            else
+                                cout << "There is a shop on the side wall of the room." << endl;
+                        cout << currentRoom.creatDesc << endl;
                     }
                 }
                 else if(text=="check")
@@ -972,7 +1755,7 @@ int main()
                     if(currentRoom.monster.getName()=="Valentereth, the Tyrant"||currentRoom.monster.getName()=="Termineth, the Watcher")
                     {
                         cout << "You cannot run from this enemy." << endl;
-                        Sleep(2000);
+                        Sleep(midWait);
                         continue;
                     }
                     cout << "Enemy has not yet been defeated. Try to run past? (y/n)" << endl;
@@ -985,13 +1768,13 @@ int main()
                             if(foo>25) //pass
                             {
                                 cout << "You escape successfully!" << endl;
-                                Sleep(2000);
+                                Sleep(midWait);
                                 good = 1;
                             }
                             else if(foo>10) //pass, but damage
                             {
                                 cout << "The enemy attacks as you escape!" << endl;
-                                Sleep(2000);
+                                Sleep(midWait);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
                                 if(hero.mask.getID()==0) //Glass
                                     dmg = dmg*2;
@@ -1003,13 +1786,13 @@ int main()
                                     dmg = 0;
                                 hero.changeHP(-dmg);
                                 cout << "Dealt " << dmg << " damage!" << endl;
-                                Sleep(2000);
+                                Sleep(midWait);
                                 good = 1;
                             }
                             else //no pass, damage
                             {
                                 cout << "The enemy knocks you back into the room, blocking your way!" << endl;
-                                Sleep(2000);
+                                Sleep(midWait);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
                                 if(hero.mask.getID()==0) //Glass
                                     dmg = dmg*2;
@@ -1021,7 +1804,7 @@ int main()
                                     dmg = 0;
                                 hero.changeHP(-dmg);
                                 cout << "Dealt " << dmg << " damage!" << endl;
-                                Sleep(2000);
+                                Sleep(midWait);
                                 good = 0;
                             }
                         }
@@ -1030,13 +1813,13 @@ int main()
                             if(foo>40) //pass
                             {
                                 cout << "You escape successfully!" << endl;
-                                Sleep(2000);
+                                Sleep(midWait);
                                 good = 1;
                             }
                             else if(foo>20) //pass, but damage
                             {
                                 cout << "The enemy attacks as you escape!" << endl;
-                                Sleep(2000);
+                                Sleep(midWait);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
                                 if(hero.mask.getID()==0) //Glass
                                     dmg = dmg*2;
@@ -1048,13 +1831,13 @@ int main()
                                     dmg = 0;
                                 hero.changeHP(-dmg);
                                 cout << "Dealt " << dmg << " damage!" << endl;
-                                Sleep(2000);
+                                Sleep(midWait);
                                 good = 1;
                             }
                             else //no pass, damage
                             {
                                 cout << "The enemy knocks you back into the room, blocking your way!" << endl;
-                                Sleep(2000);
+                                Sleep(midWait);
                                 dmg = currentRoom.monster.getSTR() - hero.getDEF();
                                 if(hero.mask.getID()==0) //Glass
                                     dmg = dmg*2;
@@ -1066,14 +1849,14 @@ int main()
                                     dmg = 0;
                                 hero.changeHP(-dmg);
                                 cout << "Dealt " << dmg << " damage!" << endl;
-                                Sleep(2000);
+                                Sleep(midWait);
                                 good = 0;
                             }
                         }
                         if(hero.getHP()<=0)
                         {
                             cout << "You have fallen..." << endl;
-                            Sleep(3000);
+                            Sleep(longWait);
                             pass = 2;
                             end = 1;
                             break;
@@ -1081,9 +1864,144 @@ int main()
                         if(good==1)
                         {
                             score += 10;
-                            currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,itemStatus,dev);
+                            currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,randEncStatus,itemStatus,dev);
                         }
                     }
+                }
+                else if(text=="replace")
+                {
+                    bool inventoryType = 0;
+                    if(currentRoom.getIList()[itemIndex]<200||currentRoom.getIList()[itemIndex]>=400)
+                        inventoryType = 0;
+                    else
+                        inventoryType = 1;
+                    bool stop = 0;
+                    clear();
+                    while(!stop)
+                    {
+                        replaceMenu(hero,dir,inventoryType,currentRoom.getIList()[itemIndex]);
+                        strChoice = getch();
+                        std::stringstream stoi(strChoice);
+                        stoi >> intChoice;
+                        if(!inventoryType)
+                        {
+                            if(intChoice>=1&&intChoice<=hero.equipment.size())
+                            {
+                                if(hero.equipment[intChoice-1]<100)
+                                {
+                                    cout << dir.getItemName(hero.equipment[intChoice-1]) << " | " << dir.getItemDesc(hero.equipment[intChoice-1]) << endl;
+                                    cout << "RARITY: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getRarity() << endl;
+                                    if((hero.meleeTraining==0&&(dir.getItemName(hero.equipment[intChoice-1]).find("Dagger")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Knife")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Aerolinde")!=string::npos))||
+                                       (hero.meleeTraining==1&&(dir.getItemName(hero.equipment[intChoice-1]).find("Spear")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Pike")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Hyliat")!=string::npos))||
+                                       (hero.meleeTraining==2&&(dir.getItemName(hero.equipment[intChoice-1]).find("Sword")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Saber")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Pyrithia")!=string::npos))||
+                                       (hero.meleeTraining==3&&(dir.getItemName(hero.equipment[intChoice-1]).find("Axe")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Club")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Teratra")!=string::npos)))
+                                    {
+                                        cout << "STR: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getStr()+2 << endl;
+                                        cout << "ACC: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getAcc()+5 << endl;
+                                        cout << "CRIT: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getCrt()+5 << endl;
+                                    }
+                                    else
+                                    {
+                                        cout << "STR: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getStr() << endl;
+                                        cout << "ACC: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getAcc() << endl;
+                                        cout << "CRIT: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getCrt() << endl;
+                                    }
+                                    if(dir.weaponDirectory[hero.equipment[intChoice-1]].getMA()!=0)
+                                        cout << "MAGIC AMP: +" << dir.weaponDirectory[hero.equipment[intChoice-1]].getMA() << "%" << endl;
+                                }
+                                else if(hero.equipment[intChoice-1]<200)
+                                {
+                                    cout << dir.getItemName(hero.equipment[intChoice-1]) << " | " << dir.getItemDesc(hero.equipment[intChoice-1]) << endl;
+                                    cout << "RARITY: " << dir.armorDirectory[hero.equipment[intChoice-1]-100].getRarity() << endl;
+                                    cout << "DEF: " << dir.armorDirectory[hero.equipment[intChoice-1]-100].getDef() << endl;
+                                    cout << "DDG: " << dir.armorDirectory[hero.equipment[intChoice-1]-100].getDdg() << endl;
+                                    if(dir.armorDirectory[hero.equipment[intChoice-1]-100].getMG()!=0)
+                                        cout << "MANA REGEN: " << dir.armorDirectory[hero.equipment[intChoice-1]-100].getMG()  << endl;
+                                }
+                                else
+                                {
+                                    cout << dir.getItemName(hero.equipment[intChoice-1]) << " | " << dir.getItemDesc(hero.equipment[intChoice-1]) << endl;
+                                    cout << "RARITY: " << dir.ringDirectory[hero.equipment[intChoice-1]-400].getRarity() << endl;
+                                    if(dir.ringDirectory[hero.equipment[intChoice-1]-400].getAct()>0)
+                                        cout << "ACTIVATION RATE: " << dir.ringDirectory[hero.equipment[intChoice-1]-400].getAct() << "%" << endl;
+                                    if(dir.ringDirectory[hero.equipment[intChoice-1]-400].getHPR()>0)
+                                        cout << "HP REGEN: " << dir.ringDirectory[hero.equipment[intChoice-1]-400].getHPR() << endl;
+                                    if(dir.ringDirectory[hero.equipment[intChoice-1]-400].getMPR()>0)
+                                        cout << "MANA REGEN: " << dir.ringDirectory[hero.equipment[intChoice-1]-400].getMPR() << endl;
+                                }
+                                cout << "Are you sure you want to replace " << dir.getItemName(hero.equipment[intChoice-1]) << " with " << dir.getItemName(currentRoom.getIList()[itemIndex]) << "? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    cout << "Replaced " << dir.getItemName(hero.equipment[intChoice-1]) << " with " << dir.getItemName(currentRoom.getIList()[itemIndex]) << "." << endl;
+                                    Sleep(midWait);
+                                    hero.equipment[intChoice-1] = currentRoom.getIList()[itemIndex];
+                                    itemStatus[itemIndex] = 1;
+                                    stop = 1;
+                                }
+                            }
+                            else if(intChoice==0)
+                            {
+                                stop = 1;
+                            }
+                            else
+                            {
+                                cout << "Invalid input." << endl;
+                                Sleep(shortWait);
+                            }
+                        }
+                        else
+                        {
+                            if(intChoice>=1&&intChoice<=hero.inventory.size())
+                            {
+                                if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getID()<212) //Potion/Food
+                                {
+                                    cout << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getName() << " | " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getDesc() << endl;
+                                    cout << "RARITY: " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getRarity() << endl;
+                                    cout << "HP: " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getHP() << endl;
+                                    cout << "MP: " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getMP() << endl << endl;
+                                }
+                                else
+                                {
+                                    cout << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getName() << " | " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getDesc() << endl;
+                                    cout << "RARITY: " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getRarity() << endl << endl;
+                                }
+                                cout << "Are you sure you want to replace " << dir.getItemName(hero.inventory[intChoice-1]) << " with " << dir.getItemName(currentRoom.getIList()[itemIndex]) << "? (y/n)" << endl;
+                                strChoice = getch();
+                                if(strChoice=="y")
+                                {
+                                    cout << "Replaced " << dir.getItemName(hero.inventory[intChoice-1]) << " with " << dir.getItemName(currentRoom.getIList()[itemIndex]) << "." << endl;
+                                    Sleep(midWait);
+                                    hero.inventory[intChoice-1] = currentRoom.getIList()[itemIndex];
+                                    itemStatus[itemIndex] = 1;
+                                    stop = 1;
+                                }
+                            }
+                            else if(intChoice==0)
+                            {
+                                stop = 1;
+                            }
+                            else
+                            {
+                                cout << "Invalid input." << endl;
+                                Sleep(shortWait);
+                            }
+                        }
+                        clear();
+                    }
+                    cout << "Floor " << depth << endl << endl;
+                    cout << currentRoom.getDesc() << endl;
+                    for(int i=0;i<currentRoom.getLDescList().size();i++)
+                        cout << currentRoom.getLDescList()[i] << endl;
+                    if(hero.empowered==1)
+                        cout << currentRoom.ascDesc << endl;
+                    cout << currentRoom.getDrDesc() << endl;
+                    if(currentRoom.store.getLevel()!=-1)
+                        if(currentRoom.store.isUnlocked()==0)
+                            cout << "There is a locked door at the side of the room. The sign above it says it is a shop." << endl;
+                        else
+                            cout << "There is a shop on the side wall of the room." << endl;
+                    cout << currentRoom.creatDesc << endl;
                 }
                 else
                 {
@@ -1097,7 +2015,7 @@ int main()
                 if(menuval==-1) //Writing Save File
                 {
                     cout << "Quitting..." << endl;
-                    saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
+                    saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir,randEncStatus);
                     end = 1;
                 }
                 else
@@ -1127,7 +2045,7 @@ int main()
                     if(yn=='y')
                     {
                         cout << "Autosave disabled. Saving..." << endl;
-                        saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
+                        saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir,randEncStatus);
                         manSave = 1;
                     }
                 }
@@ -1140,7 +2058,7 @@ int main()
                         cout << "Autosave re-enabled." << endl;
                         manSave = 0;
                     }
-                    saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir);
+                    saveFunc(hero,filename,depth,minibossStatus,itemStatus,currentRoom,pass,dir,randEncStatus);
                 }
             }
             else if(err==8)
@@ -1171,6 +2089,10 @@ int main()
                 cout << "        -Synonyms: (None)" << endl;
                 cout << "        -Meaning: Enables/Disables manual saving (Autosave enabled by default)." << endl;
                 cout << "        -EG: save" << endl;
+                cout << "    SPEED: speed <speed>" << endl;
+                cout << "        -Synonyms: Delay, Textspeed, Gamespeed" << endl;
+                cout << "        -Meaning: Sets the speed of the gameplay to either slow, normal, or fast." << endl;
+                cout << "        -EG: speed fast" << endl;
                 cout << "    HELP: help" << endl;
                 cout << "        -Synonyms: Manual, H, Guide, Instructions" << endl;
                 cout << "        -Meaning: Opens a guide to actions." << endl;
@@ -1186,7 +2108,7 @@ int main()
             }*/
             else if(err==6) //DEBUG_GO
             {
-                currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,itemStatus,dev);
+                currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,randEncStatus,itemStatus,dev);
             }
             else if(err==10) //SEE
             {
@@ -1235,6 +2157,46 @@ int main()
                     saveLog = 0;
                 }
             }
+            else if(err==14)
+            {
+                cout << "Karma: " << karma << endl;
+            }
+            else if(err==15)
+            {
+                std::getline(cin,target);
+                while(target=="")
+                {
+                    cout << endl << "Select a speed: ";
+                    std::getline(cin,target);
+                }
+                if(target.front()==' ')
+                    target.erase(target.begin());
+                if(target=="slow"||target=="long")
+                {
+                    shortWait = 1500;
+                    midWait = 3000;
+                    longWait = 4500;
+                    cout << "Game speed set to slow." << endl;
+                }
+                else if(target=="normal"||target=="regular"||target=="medium")
+                {
+                    shortWait = 1000;
+                    midWait = 2000;
+                    longWait = 3000;
+                    cout << "Game speed set to normal." << endl;
+                }
+                else if(target=="fast"||target=="short")
+                {
+                    shortWait = 500;
+                    midWait = 1000;
+                    longWait = 1500;
+                    cout << "Game speed set to fast." << endl;
+                }
+                else
+                {
+                    cout << "Invalid speed. Try: slow, normal, fast" << endl;
+                }
+            }
         }
         else
             end = 1;
@@ -1242,35 +2204,21 @@ int main()
     if(win==1)
     {
         clear();
-        if(end==2)
-        {
-            cout << "You sit upon the throne, brimming with ancient power." << endl;
-            Sleep(2000);
-            cout << "At long last, after all the trials you endured, you are the ruler of the tower." << endl << endl;
-            Sleep(3000);
-            cout << "Your head aches and your vision blurs, but the feeling of power within is all that matters now." << endl;
-            Sleep(2000);
-            cout << "Perhaps some fool may ascend the tower someday, trying to take what is rightfully yours. The thought of it makes your blood boil." << endl << endl;
-            Sleep(2000);
-            cout << "But you will never, ever, let that happen." << endl << endl;
-            Sleep(3000);
-            cout << "Numb from the searing pain in your head, you grab your axe, and await your next challenger." << endl << endl << endl;
-        }
         if(pass==2)
         {
             cout << "GAME OVER!" << endl;
-            cout << "You inherited the throne of the Tower of Valentereth after " << depth << " rooms!" << endl;
+            cout << "You inherited the throne of the Tower of Valentereth, and defended it for " << throneDefensePoints << " rounds!" << endl;
             remove(filename.c_str());
             if(end!=2)
             {
                 ach.DejaVu++;
                 ach.RiseAndShine++;
             }
-            Sleep(2000);
-            if(hiscores(hero,depth))
+            Sleep(midWait);
+            if(hiscores(hero,depth+throneDefensePoints))
             {
                 cout << "On the leaderboard!" << endl;
-                Sleep(2000);
+                Sleep(midWait);
             }
         }
         else if(boss==2)
@@ -1278,11 +2226,11 @@ int main()
             cout << "CONGRATULATIONS!" << endl;
             cout << "You have broken the curse and ascended to the top of the Tower of Valentereth!" << endl;
             remove(filename.c_str());
-            Sleep(2000);
+            Sleep(midWait);
             if(hiscores(hero,100))
             {
                 cout << "On the leaderboard!" << endl;
-                Sleep(2000);
+                Sleep(midWait);
             }
         }
     }
@@ -1294,15 +2242,15 @@ int main()
         ach.RiseAndShine++;
         cout << "GAME OVER!" << endl;
         cout << "You made it to room " << depth << "!" << endl;
-        Sleep(2000);
+        Sleep(midWait);
         if(hiscores(hero,depth))
         {
             cout << "On the leaderboard!" << endl;
-            Sleep(2000);
+            Sleep(midWait);
         }
     }
     else
-        Sleep(2000);
+        Sleep(midWait);
     ach.writeAchievements();
     return 0;
 }
@@ -1348,7 +2296,7 @@ int actionHandler(string act, bool debug_opt, int gankTracker)
     {
         return 6;
     }
-    else if((act=="dsee"||act=="look_all")&&debug_opt)
+    else if((act=="dsee"||act=="dlook"||act=="look_all")&&debug_opt)
     {
         return 10;
     }
@@ -1363,6 +2311,14 @@ int actionHandler(string act, bool debug_opt, int gankTracker)
     else if(act=="savelog"&&debug_opt)
     {
         return 13;
+    }
+    else if(act=="karma"&&debug_opt)
+    {
+        return 14;
+    }
+    else if(act=="speed"||act=="delay"||act=="textspeed"||act=="gamespeed")
+    {
+        return 15;
     }
     else
     {
@@ -1427,9 +2383,21 @@ int menuHandler(Player &hero, Directory dir)
                     {
                         cout << dir.getItemName(hero.equipment[intChoice-1]) << " | " << dir.getItemDesc(hero.equipment[intChoice-1]) << endl;
                         cout << "RARITY: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getRarity() << endl;
-                        cout << "STR: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getStr() << endl;
-                        cout << "ACC: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getAcc() << endl;
-                        cout << "CRIT: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getCrt() << endl;
+                        if((hero.meleeTraining==0&&(dir.getItemName(hero.equipment[intChoice-1]).find("Dagger")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Knife")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Aerolinde")!=string::npos))||
+                           (hero.meleeTraining==1&&(dir.getItemName(hero.equipment[intChoice-1]).find("Spear")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Pike")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Hyliat")!=string::npos))||
+                           (hero.meleeTraining==2&&(dir.getItemName(hero.equipment[intChoice-1]).find("Sword")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Saber")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Pyrithia")!=string::npos))||
+                           (hero.meleeTraining==3&&(dir.getItemName(hero.equipment[intChoice-1]).find("Axe")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Club")!=string::npos||dir.getItemName(hero.equipment[intChoice-1]).find("Teratra")!=string::npos)))
+                        {
+                            cout << "STR: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getStr()+2 << endl;
+                            cout << "ACC: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getAcc()+5 << endl;
+                            cout << "CRIT: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getCrt()+5 << endl;
+                        }
+                        else
+                        {
+                            cout << "STR: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getStr() << endl;
+                            cout << "ACC: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getAcc() << endl;
+                            cout << "CRIT: " << dir.weaponDirectory[hero.equipment[intChoice-1]].getCrt() << endl;
+                        }
                         if(dir.weaponDirectory[hero.equipment[intChoice-1]].getMA()!=0)
                             cout << "MAGIC AMP: +" << dir.weaponDirectory[hero.equipment[intChoice-1]].getMA() << "%" << endl;
                     }
@@ -1467,13 +2435,13 @@ int menuHandler(Player &hero, Directory dir)
                             if(hero.mask.getID()==7) //Souls
                             {
                                 cout << "The weapon falls through your hand to the ground...";
-                                Sleep(2000);
+                                Sleep(midWait);
                             }
                             else
                             {
                                 hero.equipWpn(dir.weaponDirectory[hero.equipment[intChoice-1]]);
                                 cout << "Equipped " << dir.getItemName(hero.equipment[intChoice-1]);
-                                Sleep(2000);
+                                Sleep(midWait);
                             }
                         }
                         else if(hero.equipment[intChoice-1]<200)
@@ -1481,20 +2449,20 @@ int menuHandler(Player &hero, Directory dir)
                             if(hero.mask.getID()==7) //Souls
                             {
                                 cout << "The armor phases right through you...";
-                                Sleep(2000);
+                                Sleep(midWait);
                             }
                             else
                             {
                                 hero.equipAmr(dir.armorDirectory[hero.equipment[intChoice-1]-100]);
                                 cout << "Equipped " << dir.getItemName(hero.equipment[intChoice-1]);
-                                Sleep(2000);
+                                Sleep(midWait);
                             }
                         }
                         else
                         {
                             hero.equipRng(dir.ringDirectory[hero.equipment[intChoice-1]-400]);
                             cout << "Equipped " << dir.getItemName(hero.equipment[intChoice-1]);
-                            Sleep(2000);
+                            Sleep(midWait);
                         }
                     }
                     else if(strChoice=="2")
@@ -1537,7 +2505,7 @@ int menuHandler(Player &hero, Directory dir)
                         else
                         {
                             cout << "This ring cannot be enhanced any further." << endl;
-                            Sleep(2000);
+                            Sleep(midWait);
                             continue;
                         }
                         cout << endl << "GOLD COST: " << gCost << endl;
@@ -1549,13 +2517,13 @@ int menuHandler(Player &hero, Directory dir)
                             if(hero.gold<gCost)
                             {
                                 cout << "You cannot afford to enhance this ring." << endl;
-                                Sleep(2000);
+                                Sleep(midWait);
                                 continue;
                             }
                             if(hero.getMP()<mCost)
                             {
                                 cout << "You do not have enough MP to enhance this ring." << endl;
-                                Sleep(2000);
+                                Sleep(midWait);
                                 continue;
                             }
                             hero.gold -= gCost;
@@ -1574,19 +2542,19 @@ int menuHandler(Player &hero, Directory dir)
                                 if(hero.eqpRng.getID()==hero.equipment[intChoice-1]-12)
                                     hero.eqpRng = dir.ringDirectory[hero.equipment[intChoice-1]-400];
                             }
-                            Sleep(2000);
+                            Sleep(midWait);
                         }
                     }
                     else if(strChoice!="0")
                     {
                         cout << "Invalid action." << endl;
-                        Sleep(2000);
+                        Sleep(midWait);
                     }
                 }
                 else
                 {
                     cout << "Invalid item." << endl;
-                    Sleep(2000);
+                    Sleep(midWait);
                 }
             }while(nav==0);
             nav = 0;
@@ -1628,7 +2596,7 @@ int menuHandler(Player &hero, Directory dir)
                                 if(hero.getHP()>hero.getMHP())
                                     hero.setHP(hero.getMHP());
                                 cout << "You regained " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getHP() << " HP!" << endl;
-                                Sleep(2000);
+                                Sleep(midWait);
                             }
                             if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getMP()>0)
                             {
@@ -1636,7 +2604,7 @@ int menuHandler(Player &hero, Directory dir)
                                 if(hero.getMP()>hero.getMMP())
                                     hero.setMP(hero.getMMP());
                                 cout << "You regained " << dir.consumableDirectory[hero.inventory[intChoice-1]-200].getMP() << " MP!" << endl;
-                                Sleep(2000);
+                                Sleep(midWait);
                             }
                             hero.inventory.erase(hero.inventory.begin()+intChoice-1);
                             if(dir.consumableDirectory[hero.inventory[intChoice-1]-200].getName()=="Bread")
@@ -1651,7 +2619,7 @@ int menuHandler(Player &hero, Directory dir)
                         else if(strChoice!="0")
                         {
                             cout << "Invalid action." << endl;
-                            Sleep(2000);
+                            Sleep(midWait);
                         }
                     }
                     else
@@ -1669,14 +2637,14 @@ int menuHandler(Player &hero, Directory dir)
                         else if(strChoice!="0")
                         {
                             cout << "Invalid action." << endl;
-                            Sleep(2000);
+                            Sleep(midWait);
                         }
                     }
                 }
                 else
                 {
                     cout << "Invalid item." << endl;
-                    Sleep(2000);
+                    Sleep(midWait);
                 }
             }while(nav==0);
             nav = 0;
@@ -1707,8 +2675,18 @@ int menuHandler(Player &hero, Directory dir)
                     cout << "RARITY: " << dir.getItemRarity(hero.spellbook[intChoice-1]) << endl;
                     if(hero.spellbook[intChoice-1]<=314)
                     {
-                        cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-300].getManaCost() << endl;
-                        cout << "DAMAGE: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-300].getDMG() << endl;
+                        if((hero.magicTraining==0&&(hero.spellbook[intChoice-1]%3==2))||
+                           (hero.magicTraining==1&&(hero.spellbook[intChoice-1]%3==1))||
+                           (hero.magicTraining==2&&(hero.spellbook[intChoice-1]%3==0)))
+                        {
+                            cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-300].getManaCost()-1 << endl;
+                            cout << "DAMAGE: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-300].getDMG()+2 << endl;
+                        }
+                        else
+                        {
+                            cout << "MANA COST: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-300].getManaCost() << endl;
+                            cout << "DAMAGE: " << dir.attackSpellDirectory[hero.spellbook[intChoice-1]-300].getDMG() << endl;
+                        }
                     }
                     else if(hero.spellbook[intChoice-1]<=320)
                     {
@@ -1744,7 +2722,7 @@ int menuHandler(Player &hero, Directory dir)
                             if(hero.getHP()>hero.getMHP())
                                 hero.setHP(hero.getMHP());
                             cout << "You regained " << dir.healingSpellDirectory[hero.spellbook[intChoice-1]-315].getHPR() << " HP!" << endl;
-                            Sleep(2000);
+                            Sleep(midWait);
                         }
                         else
                             cout << "You don't have enough mana." << endl;
@@ -1752,20 +2730,23 @@ int menuHandler(Player &hero, Directory dir)
                     else if(strChoice!="0")
                     {
                         cout << "Invalid action." << endl;
-                        Sleep(2000);
+                        Sleep(midWait);
                     }
                 }
                 else
                 {
                     cout << "Invalid spell." << endl;
-                    Sleep(2000);
+                    Sleep(midWait);
                 }
             }while(nav==0);
             nav = 0;
         }
         else if(intChoice==6)
         {
-            cout << "Are you sure you want to quit? Your progress will be saved under your name. (y/n): ";
+            if(end!=2)
+                cout << "Are you sure you want to quit? Your progress will be saved under your name. (y/n)";
+            else
+                cout << "Give up? (y/n)";
             strChoice = getch();
             if(strChoice=="y")
                 nav = -1;
@@ -1773,7 +2754,7 @@ int menuHandler(Player &hero, Directory dir)
         else
         {
             cout << "Unknown command. Try one of the options on screen!" << endl;
-            Sleep(2000);
+            Sleep(midWait);
         }
     }while(nav==0);
     return nav;
@@ -1784,7 +2765,7 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
     if(currentRoom.store.getLevel()==-1)
     {
         cout << "No store in this room." << endl;
-        Sleep(3000);
+        Sleep(longWait);
         return -1;
     }
     int instore = 1;
@@ -1813,9 +2794,21 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                 {
                     cout << dir.getItemName(currentRoom.store.storeInventory[intChoice-1]) << " | " << dir.getItemDesc(currentRoom.store.storeInventory[intChoice-1]) << endl;
                     cout << "RARITY: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getRarity() << endl;
-                    cout << "STR: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getStr() << endl;
-                    cout << "ACC: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getAcc() << endl;
-                    cout << "CRIT: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getCrt() << endl;
+                    if((hero.meleeTraining==0&&(dir.getItemName(currentRoom.store.storeInventory[intChoice-1]).find("Dagger")!=string::npos||dir.getItemName(currentRoom.store.storeInventory[intChoice-1]).find("Knife")!=string::npos||dir.getItemName(currentRoom.store.storeInventory[intChoice-1]).find("Aerolinde")!=string::npos))||
+                       (hero.meleeTraining==1&&(dir.getItemName(currentRoom.store.storeInventory[intChoice-1]).find("Spear")!=string::npos||dir.getItemName(currentRoom.store.storeInventory[intChoice-1]).find("Pike")!=string::npos||dir.getItemName(currentRoom.store.storeInventory[intChoice-1]).find("Hyliat")!=string::npos))||
+                       (hero.meleeTraining==2&&(dir.getItemName(currentRoom.store.storeInventory[intChoice-1]).find("Sword")!=string::npos||dir.getItemName(currentRoom.store.storeInventory[intChoice-1]).find("Saber")!=string::npos||dir.getItemName(currentRoom.store.storeInventory[intChoice-1]).find("Pyrithia")!=string::npos))||
+                       (hero.meleeTraining==3&&(dir.getItemName(currentRoom.store.storeInventory[intChoice-1]).find("Axe")!=string::npos||dir.getItemName(currentRoom.store.storeInventory[intChoice-1]).find("Club")!=string::npos||dir.getItemName(currentRoom.store.storeInventory[intChoice-1]).find("Teratra")!=string::npos)))
+                    {
+                        cout << "STR: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getStr()+2 << endl;
+                        cout << "ACC: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getAcc()+5 << endl;
+                        cout << "CRIT: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getCrt()+5 << endl;
+                    }
+                    else
+                    {
+                        cout << "STR: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getStr() << endl;
+                        cout << "ACC: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getAcc() << endl;
+                        cout << "CRIT: " << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getCrt() << endl;
+                    }
                     if(dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getMA()!=0)
                         cout << "MAGIC AMP: +" << dir.weaponDirectory[currentRoom.store.storeInventory[intChoice-1]].getMA() << "%" << endl;
 
@@ -1842,8 +2835,18 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                     cout << "RARITY: " << dir.getItemRarity(currentRoom.store.storeInventory[intChoice-1]) << endl;
                     if(currentRoom.store.storeInventory[intChoice-1]<315)
                     {
-                        cout << "MANA COST: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getManaCost() << endl;
-                        cout << "DAMAGE: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getDMG() << endl;
+                        if((hero.magicTraining==0&&(currentRoom.store.storeInventory[intChoice-1]%3==2))||
+                           (hero.magicTraining==1&&(currentRoom.store.storeInventory[intChoice-1]%3==1))||
+                           (hero.magicTraining==2&&(currentRoom.store.storeInventory[intChoice-1]%3==0)))
+                        {
+                            cout << "MANA COST: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getManaCost()-1 << endl;
+                            cout << "DAMAGE: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getDMG()+2 << endl;
+                        }
+                        else
+                        {
+                            cout << "MANA COST: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getManaCost() << endl;
+                            cout << "DAMAGE: " << dir.attackSpellDirectory[currentRoom.store.storeInventory[intChoice-1]-300].getDMG() << endl;
+                        }
                     }
                     else if(currentRoom.store.storeInventory[intChoice-1]<321)
                     {
@@ -1884,14 +2887,14 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                     if(hero.gold<currentRoom.store.storeCost[intChoice-1])
                     {
                         cout << "You cannot afford this item." << endl;
-                        Sleep(2000);
+                        Sleep(midWait);
                     }
                     else if(currentRoom.store.storeInventory[intChoice-1]<200||currentRoom.store.storeInventory[intChoice-1]>=400)
                     {
                         if(hero.equipment.size()>=6)
                         {
                             cout << "Your inventory is full." << endl;
-                            Sleep(2000);
+                            Sleep(midWait);
                         }
                         else
                         {
@@ -1900,7 +2903,7 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                             hero.gold -= currentRoom.store.storeCost[intChoice-1];
                             currentRoom.store.storeInventory.erase(currentRoom.store.storeInventory.begin()+intChoice-1);
                             currentRoom.store.storeCost.erase(currentRoom.store.storeCost.begin()+intChoice-1);
-                            Sleep(2000);
+                            Sleep(midWait);
                         }
                     }
                     else if(currentRoom.store.storeInventory[intChoice-1]<300)
@@ -1908,7 +2911,7 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                         if(hero.inventory.size()>=6)
                         {
                             cout << "Your inventory is full." << endl;
-                            Sleep(2000);
+                            Sleep(midWait);
                         }
                         else
                         {
@@ -1917,7 +2920,7 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                             hero.gold -= currentRoom.store.storeCost[intChoice-1];
                             currentRoom.store.storeInventory.erase(currentRoom.store.storeInventory.begin()+intChoice-1);
                             currentRoom.store.storeCost.erase(currentRoom.store.storeCost.begin()+intChoice-1);
-                            Sleep(2000);
+                            Sleep(midWait);
                         }
                     }
                     else
@@ -1927,7 +2930,7 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                             if(hero.spellbook[i]==currentRoom.store.storeInventory[intChoice-1])
                             {
                                 cout << "You already know this spell." << endl;
-                                Sleep(2000);
+                                Sleep(midWait);
                                 chck = 1;
                             }
                         }
@@ -1938,7 +2941,7 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                             hero.gold -= currentRoom.store.storeCost[intChoice-1];
                             currentRoom.store.storeInventory.erase(currentRoom.store.storeInventory.begin()+intChoice-1);
                             currentRoom.store.storeCost.erase(currentRoom.store.storeCost.begin()+intChoice-1);
-                            Sleep(2000);
+                            Sleep(midWait);
                         }
                     }
                 }
@@ -1946,7 +2949,7 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
             else
             {
                 cout << "Invalid choice." << endl;
-                Sleep(2000);
+                Sleep(midWait);
             }
         }
         else if(currentRoom.store.getType()==1)
@@ -2025,12 +3028,12 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                 if(hero.gold<currentRoom.store.getSwapCost())
                 {
                     cout << "You cannot afford to divine." << endl;
-                    Sleep(2000);
+                    Sleep(midWait);
                 }
                 else if(curStatDown[0]<2)
                 {
                     cout << "You don't have enough " << statDown[0] << "." << endl;
-                    Sleep(2000);
+                    Sleep(midWait);
                 }
                 else
                 {
@@ -2080,19 +3083,19 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                     currentRoom.store.incStatCount();
                     cout << "Reduced " << statDown[0] << " by 2, and raised " << statUp[0] << " by 1!" << endl;
                 }
-                Sleep(2000);
+                Sleep(midWait);
             }
             if(intChoice==2)
             {
                 if(hero.gold<currentRoom.store.getSwapCost())
                 {
                     cout << "You cannot afford to divine." << endl;
-                    Sleep(2000);
+                    Sleep(midWait);
                 }
                 else if(curStatDown[1]<2)
                 {
                     cout << "You don't have enough " << statDown[1] << "." << endl;
-                    Sleep(2000);
+                    Sleep(midWait);
                 }
                 else
                 {
@@ -2142,17 +3145,272 @@ int storeMenuHandler(Player &hero,Directory dir,Room &currentRoom)
                     currentRoom.store.incStatCount();
                     cout << "Reduced " << statDown[1] << " by 2, and raised " << statUp[1] << " by 1!" << endl;
                 }
-                Sleep(2000);
+                Sleep(midWait);
             }
         }
     }
     return 0;
 }
 
-Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &rStatus, vector<bool> &iStatus, bool &dev)
+int throneDefense(Player &hero, Directory dir, bool debug_opt, bool &gankTracker)
 {
+    int kills = 0;
+    string action;
+    string target;
+    string holder;
+    int gd;
+    int ex;
+    int err;
+    Creature enemy = dir.creatureDirectory[54];
+    std::system("cls");
+    cout << "After some time waiting, your first challenger approaches. A hero stands before you." << endl << endl;
+    godMode = 0;
+    while(1==1)
+    {
+        if(hero.getHP()>hero.getMHP())
+            hero.setHP(hero.getMHP());
+        if(hero.getMP()>hero.getMMP())
+            hero.setMP(hero.getMMP());
+        if(hero.exp>=hero.getEXPGoal())
+            hero.levelUp();
+        cout << endl << "What do you do?" << endl;
+        cin >> action;
+        err = actionHandler(action,debug_opt,gankTracker);
+        if(err==1) //Look
+        {
+            std::getline(cin,target);
+            while(target=="")
+            {
+                cout << endl << "Select a target: ";
+                std::getline(cin,target);
+            }
+            if(target.front()==' ')
+                target.erase(target.begin());
+            if(target!="hero"&&target!="challenger"&&target!="traveler"&&target!="enemy"&&target!="monster")
+                continue;
+
+            if(hero.mask.getID()==2) //Darkness
+            {
+                holder = "Silhouette | Level ??\n";
+                holder += "HP: ??\n";
+                holder += "Strength: ??\n";
+                holder += "Accuracy: ??\n";
+                holder += "Defense: ??\n";
+                holder += "Dodge: ??";
+            }
+            else
+            {
+                holder = "Hero | Level ";
+
+                int monDmg = enemy.getSTR() - hero.getDEF();
+                int monHit = enemy.getACC() - hero.getDDG();
+                int heroDmg = hero.getSTR() - enemy.getDEF();
+                int heroHit = hero.getACC() -enemy.getDDG();
+
+                if(hero.eqpWpn.getID()==57)
+                    heroDmg = ceil(static_cast<float>(enemy.getHP())*.35);
+                if(hero.eqpAmr.getID()==142)
+                    monDmg -= monDmg/4;
+
+                if(hero.mask.getID()==6)
+                    heroDmg = heroDmg + (heroDmg/2);
+                if(hero.mask.getID()==5) //Whispers
+                    monDmg = static_cast<float>(monDmg)*1.5;
+                if((hero.meleeTraining==0&&(hero.eqpWpn.getName().find("Dagger")!=string::npos||hero.eqpWpn.getName().find("Knife")!=string::npos||hero.eqpWpn.getName().find("Aerolinde")!=string::npos))||
+                   (hero.meleeTraining==1&&(hero.eqpWpn.getName().find("Spear")!=string::npos||hero.eqpWpn.getName().find("Pike")!=string::npos||hero.eqpWpn.getName().find("Hyliat")!=string::npos))||
+                   (hero.meleeTraining==2&&(hero.eqpWpn.getName().find("Sword")!=string::npos||hero.eqpWpn.getName().find("Saber")!=string::npos||hero.eqpWpn.getName().find("Pyrithia")!=string::npos))||
+                   (hero.meleeTraining==3&&(hero.eqpWpn.getName().find("Axe")!=string::npos||hero.eqpWpn.getName().find("Club")!=string::npos||hero.eqpWpn.getName().find("Teratra")!=string::npos)))
+                {
+                    heroDmg += 2;
+                    heroHit += 5;
+                }
+
+                holder += "HP: " + std::to_string(enemy.getHP()) + "\n";
+                holder += "Strength: " + std::to_string(enemy.getSTR()) + " (Enemy DMG: " + std::to_string(monDmg) + ")\n";
+                holder += "Accuracy: " + std::to_string(enemy.getACC()) + " (Enemy Hit Rate: " + std::to_string(monHit) + ")\n";
+                holder += "Defense: " + std::to_string(enemy.getDEF()) + " (Your DMG: " + std::to_string(heroDmg) + ")\n";
+                holder += "Dodge: " + std::to_string(enemy.getDDG()) + " (Your Hit Rate: " + std::to_string(heroHit) + ")\n";
+
+                cout << holder << endl;
+            }
+        }
+        else if(err==3) //Fight
+        {
+            std::getline(cin,target);
+            while(target=="")
+            {
+                cout << endl << "Select a target: ";
+                std::getline(cin,target);
+            }
+            if(target.front()==' ')
+                target.erase(target.begin());
+            if(target!="hero"&&target!="challenger"&&target!="traveler"&&target!="enemy"&&target!="monster")
+                continue;
+            gd = goldPicker(enemy.getLEV());
+            ex = expPicker(enemy.getLEV());
+            if(hero.mask.getID()==7) //Souls
+                ex = ex*3;
+            pass = combatHandler(hero,enemy,dir,gd,ex,debug_opt);
+            switch(pass)
+            {
+                case 1:
+                    kills++;
+                    if(kills>=10)
+                    {
+                        cout << "Next." << endl;
+                        ach.CurseBearer = 1;
+                        Sleep(longWait);
+                    }
+                    else
+                    {
+                        cout << "Another defeated." << endl;
+                        Sleep(shortWait);
+                        cout << "You wait for the next challenger... time passes." << endl;
+                        Sleep(shortWait);
+                        cout << "You are not sure how many days, months, or years have passed, but you finally see another challenger enter the room." << endl;
+                        Sleep(shortWait);
+                        switch(kills)
+                        {
+                            case 0:case 1:case 2:
+                                cout << "You stand up from your throne, axe in hand, eager to show the foolish one what true power really is." << endl;
+                                break;
+                            case 3:case 4:
+                                cout << "You stand up slowly, axe in hand. You let out a sigh, and ready for battle." << endl;
+                                break;
+                            case 5:case 6:
+                                cout << "You arise slowly from the throne. Hoping this one will finally be strong enough to end you, you raise your axe and ready for combat." << endl;
+                                break;
+                            default:
+                                cout << "You stand up from the throne, feeling numb. You pray that this will be the one to end your suffering." << endl;
+                                break;
+                        }
+                        enemy = dir.creatureDirectory[54];
+
+                        enemy.setHP(enemy.getHP()+(kills*3));
+                        enemy.setSTR(enemy.getSTR()+(kills*2));
+                        enemy.setACC(enemy.getACC()+(kills*2));
+                        enemy.setDEF(enemy.getDEF()+(kills*2));
+                        enemy.setDDG(enemy.getDDG()+(kills*2));
+                        Sleep(longWait);
+                    }
+                    break;
+                case 2:
+                    return kills;
+            }
+            godMode = 0;
+        }
+        else if(err==12) //GODMODE
+        {
+            if(!godMode)
+            {
+                cout << "God mode enabled. ATK and DEF have been maxed out in combat for this room." << endl;
+                godMode = 1;
+            }
+            else
+            {
+                cout << "God mode disabled." << endl;
+                godMode = 0;
+            }
+        }
+        else if(err==15)
+        {
+            std::getline(cin,target);
+            while(target=="")
+            {
+                cout << endl << "Select a speed: ";
+                std::getline(cin,target);
+            }
+            if(target.front()==' ')
+                target.erase(target.begin());
+            if(target=="slow"||target=="long")
+            {
+                shortWait = 1500;
+                midWait = 3000;
+                longWait = 4500;
+                cout << "Game speed set to slow." << endl;
+            }
+            else if(target=="normal"||target=="regular"||target=="medium")
+            {
+                shortWait = 1000;
+                midWait = 2000;
+                longWait = 3000;
+                cout << "Game speed set to normal." << endl;
+            }
+            else if(target=="fast"||target=="short")
+            {
+                shortWait = 500;
+                midWait = 1000;
+                longWait = 1500;
+                cout << "Game speed set to fast." << endl;
+            }
+            else
+            {
+                cout << "Invalid speed. Try: slow, normal, fast" << endl;
+            }
+        }
+        else if(err==4)
+        {
+            err = menuHandler(hero,dir);
+            clear();
+            if(err==-1) //Writing Save File
+            {
+                return kills;
+            }
+            else
+            {
+                cout << "The hero stands ready for battle." << endl;
+            }
+        }
+        else if(err==8)
+        {
+            cout << endl;
+            cout << "Actions:" << endl;
+            cout << "    MOVE: move <target>" << endl;
+            cout << "        -Synonyms: Go, Enter, Leave, Walk, Next" << endl;
+            cout << "        -Meaning: Used to enter a new area." << endl;
+            cout << "        -EG: enter door" << endl;
+            cout << "    LOOK: look <target>" << endl;
+            cout << "        -Synonyms: Check, Examine, See" << endl;
+            cout << "        -Meaning: Used to examine a feature in the room." << endl;
+            cout << "        -EG: check crates" << endl;
+            cout << "    GET: get <target>" << endl;
+            cout << "        -Synonyms: Take, Grab, Add" << endl;
+            cout << "        -Meaning: Used to acquire a new item." << endl;
+            cout << "        -EG: get wooden sword" << endl;
+            cout << "    ATTACK: attack <target>" << endl;
+            cout << "        -Synonyms: Fight, Strike, Kill, Gank" << endl;
+            cout << "        -Meaning: Used to engage in combat with a creature." << endl;
+            cout << "        -EG: attack ogre" << endl;
+            cout << "    MENU: menu" << endl;
+            cout << "        -Synonyms: Inventory, Pause, M, Items" << endl;
+            cout << "        -Meaning: Opens up your menu." << endl;
+            cout << "        -EG: menu" << endl;
+            cout << "    SAVE: save" << endl;
+            cout << "        -Synonyms: (None)" << endl;
+            cout << "        -Meaning: Enables/Disables manual saving (Autosave enabled by default)." << endl;
+            cout << "        -EG: save" << endl;
+            cout << "    SPEED: speed <speed>" << endl;
+            cout << "        -Synonyms: Delay, Textspeed, Gamespeed" << endl;
+            cout << "        -Meaning: Sets the speed of the gameplay to either slow, normal, or fast." << endl;
+            cout << "        -EG: speed fast" << endl;
+            cout << "    HELP: help" << endl;
+            cout << "        -Synonyms: Manual, H, Guide, Instructions" << endl;
+            cout << "        -Meaning: Opens a guide to actions." << endl;
+            cout << "        -EG: help" << endl;
+            cout << endl;
+            cout << "For further help, consult the REAMDE file in the game files." << endl << endl;
+        }
+    }
+
+}
+
+Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &karma, Player &hero, int &pass, bool &win, Directory dir, int &boss, vector<bool> &mStatus, vector<bool> &rStatus, vector<bool> &reStatus, vector<bool> &iStatus, bool &dev)
+{
+    double percDmgDone;
+    double percDmgTook;
     score += 100;
     depth++;
+    ach.Vale++;
     itemDrop = 0;
     godMode = 0;
     if(depth%5==0)
@@ -2160,6 +3418,10 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
         if(adv<10)
             adv++;
     }
+    if(hero.mask.getID()==1)
+        karma -= 2;
+    if(rand()%5==0)
+        encounterHandler(hero,dir,adv,depth,reStatus);
     roomLogic(diff,rew,karma,adv,hero);
     std::system("cls");
     cout << "Room " << depth << endl;
@@ -2183,7 +3445,7 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
     Room currentRoom;
     currentRoom = roomGenerator(diff,rew,adv,dir,hero,mStatus,rStatus);
     //cout << "Karma: " << karma << endl;
-    if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth")
+    if(((depth/5)+1)>11&&currentRoom.monster.getName()!="Valentereth, the Tyrant"&&currentRoom.monster.getName()!="Termineth, the Watcher")
     {
         int egHPBuff = ((depth/5)-11)*6;
         int egStrBuff = ((depth/5)-11)*4;
@@ -2204,6 +3466,22 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
     for(int i=0;i<iStatus.size();i++)
         iStatus[i] = 0;
 
+    percDmgDone = (hero.getSTR()-currentRoom.monster.getDEF())/currentRoom.monster.getHP();
+    percDmgTook = (currentRoom.monster.getSTR()-hero.getDEF())/hero.getMHP();
+    if(adv>=5)
+    {
+        if(percDmgTook>percDmgDone*3)
+            karma += 2;
+        if(percDmgTook>percDmgDone*4)
+            karma += 2;
+        if(percDmgDone>percDmgTook*3)
+            karma -= 2;
+        if(percDmgDone>percDmgTook*4)
+            karma -= 2;
+    }
+
+    //cout << "Diff: " << diff << endl;
+    //cout << "Adv: " << adv << endl;
     //cout << "Karma: " << karma << endl;
     return currentRoom;
 }

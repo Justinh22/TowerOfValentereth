@@ -1,13 +1,13 @@
-void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStatus, vector<bool> itemStatus, Room currentRoom, int pass, Directory dir)
+void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStatus, vector<bool> itemStatus, Room currentRoom, int pass, Directory dir, vector<bool> randEncStatus)
 {
     std::ofstream saveFile;
     int boxNum;
     saveFile.open(filename);
     saveFile << hero.level << " " << hero.exp << " " << hero.gold << " " << hero.getHP() << " " << hero.getMHP() << " " << hero.getMP() << " " << hero.getMMP()
              << " " << hero.getNSTR() << " " << hero.getNCRT() << " " << hero.getNACC() << " " << hero.getNDEF() << " " << hero.getNDDG() << " " << hero.getLCK() << " " << depth
-             << " " << hero.keys << " " << hero.growth << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID() << " " << hero.eqpRng.getID()
-             << " " << minibossStatus[0] << " " << minibossStatus[1] << " " << minibossStatus[2] << " " << minibossStatus[3] << " " << minibossStatus[4] << " " << minibossStatus[5]
-             << " " << minibossStatus[6] << " " << score;
+             << " " << hero.keys << " " << hero.growth << " " << hero.meleeTraining << " " << hero.magicTraining << " " << hero.mask.getID() << " " << hero.eqpWpn.getID() << " " << hero.eqpAmr.getID()
+             << " " << hero.eqpRng.getID() << " " << minibossStatus[0] << " " << minibossStatus[1] << " " << minibossStatus[2] << " " << minibossStatus[3] << " " << minibossStatus[4]
+             << " " << minibossStatus[5] << " " << minibossStatus[6] << " " << score;
     for(int i=0;i<hero.equipment.size();i++)
     {
         saveFile << " " << hero.equipment[i];
@@ -24,9 +24,9 @@ void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStat
         saveFile << " " << hero.spellbook[i];
     saveFile << " " << -1 << "\n";
 
+
     //ROOM SAVE
 
-    //cout << "Saving room..." << endl;
 
     saveFile << currentRoom.getID() << " ";
 
@@ -119,9 +119,6 @@ void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStat
         }
     else
         saveFile << -1 << " ";
-    //cout << "AscDesc Done..." << endl;
-
-    //cout << "Descriptions Saved..." << endl;
 
     saveFile << currentRoom.contents << " ";
     saveFile << pass << " ";
@@ -154,6 +151,15 @@ void saveFunc(Player &hero,string filename, int depth, vector<bool> minibossStat
             saveFile << currentRoom.store.getStatDown()[1] << " ";
             saveFile << currentRoom.store.getStatCount() << " ";
         }
+    }
+
+    saveFile << "\n";
+
+    //RANDOM ENCOUNTER STATUS SAVE
+
+    for(int i=0;i<randEncStatus.size();i++)
+    {
+        saveFile << randEncStatus[i] << " ";
     }
 
     //cout << "Done!" << endl;
@@ -190,7 +196,7 @@ bool hiscores(Player &hero, int depth)
     if(flag==-1)
         return 0;
 
-    for(i=9;i>=0;i--) //Inserting it into the leaderboard
+    for(i=9;i>=0;i--) //Inserting score into the leaderboard
         if(i>flag)
             scoreArr[i] = scoreArr[i-1];
         else if(i==flag)
@@ -202,7 +208,7 @@ bool hiscores(Player &hero, int depth)
         else if(i==flag)
             nameArr[i] = hero.getName();
 
-    for(i=9;i>=0;i--) //Inserting name into the leaderboard
+    for(i=9;i>=0;i--) //Inserting depth into the leaderboard
         if(i>flag)
             depthArr[i] = depthArr[i-1];
         else if(i==flag)

@@ -4,7 +4,7 @@ A turn-based roguelike rpg, entirely in text.
 Welcome to Tower of Valentereth!!
 
 TO INSTALL:
-	Download the "Tower of Valentereth.msi" file, and use the installer to finish the installation progress. Files will be installed at the chosen
+	Download the "ToV.msi" file, and use the installer to finish the installation progress. Files will be installed at the chosen
 	path, and player data will be kept at C:\Users\{USER}\AppData\Local\VirtualStore.
 
 Intro:
@@ -17,11 +17,13 @@ Exploration:
     The game follows a set pattern; you advance to a new floor, and examine its surroundings. You can examine sections of the room's
     description to learn more about it, or look at containers around the room to find new items, equipment, and spells for you to pick up.
     Sometimes, even features around the room can have items hidden within them. If you wish to get items more quickly, you can target "all"
-	to pick up all items in the room, excluding those hidden in features.
+    to pick up all items in the room, excluding those hidden in features.
     If a creature is present in the room with you, they must be defeated before you can advance to the next floor, unless you attempt to run past.
     Once you gain enough experience points, your character will level up, gaining stat boosts and being restored to full health. The rarity and
     power of items you find will increase the further you ascend the tower. This can continue for countless floors, however, the end of your journey
     could lie behind any door, and there is no going back if you fall. Valentereth lies at floor 55, but what lies beyond that is a mystery.
+    Between floors, the player will sometimes stumble onto a random encounter, which can have various effects from offering items, abilities, or 
+    dealing damage to them.
 
 Menu:
     By using the menu command, you can access your inventory. Inside, you will find a variety of options; firstly, is your stats. This screen
@@ -54,12 +56,18 @@ Shops:
 	gold to perform one of the given stat transfers at the top of the screen (2 for 1) for an increasing gold cost. At an altar, the player can spend gold
 	to receive a random effect, relating to the given hint. Keys for these rooms can be found throughout the tower.
 
+Vale:
+	By ascending the tower, the player gains a currency known as Vale for each chamber explored. This currency is held over between ascents, and can 
+	be used to purchase items that the player can choose to begin a new ascent with. There are unlockable items, which after bought can be used for 
+	free for any following ascent (only one unlocked item per ascent), and one-time items, which are only purchased for the following ascent. Any number 
+	of one-time items can be purchased.
+
 Masks:
     Masks are a special item that can only be equipped at the start of an ascension of the tower. Each type of mask is an overhaul of one of the game's
     mechanics, and wearing one throughout the game will drastically alter the playstyle. Try them out and see how far you can make it!
 	-MASK OF GLASS: A smiling mask made of shimmering glass. When worn, doubles the damage dealt with strikes, but doubles the damage dealt to the
 		wearer.
-	-MASK OF WRATH: An enraged mask made of searing hot stone. When worn, raises strength and crit chance by 50%, but lowers accuracy by 33%.
+	-MASK OF FATE: A black and white mask, resembling a yin-yang. When worn, gain increased luck on level up, but become less lucky.
 	-MASK OF DARKNESS: A screaming mask made of dark obsidian. When worn, spells are amplified by 50%, but enemies cannot be identified.
 	-MASK OF ARCANA: A peaceful mask made of smooth marble. When worn, increases mana regeneration by 5, but all strikes deal half damage.
 	-MASK OF STEEL: A stoic mask made of hardened metal. When worn, halves damage taken from attacks, but enemies never miss.
@@ -84,6 +92,10 @@ Achievements:
 Saving:
     Tower of Valentereth uses autosave to save your level, stats, and items as you ascend the tower. Your save data is kept under your character's name.
     By using the "save" command, you can disable autosave and use manual saving.
+
+Game Speed:
+    Using the "speed" command (detailed in the help section), the player can select their desired speed at which the game is played. This effects the duration 
+    of the delay between messages.    
 
 Stats:
     LEVEL: The current level of your character. Increases every time your EXP meter fills up. For each time this stat increases, your other stats increase.
@@ -133,6 +145,10 @@ Actions:
 	    -Synonyms: (None)
 	    -Meaning: Enables/Disables manual saving (Autosave enabled by default).
 	    -EG: save
+    SPEED: speed <speed>
+        -Synonyms: Delay, Textspeed, Gamespeed
+        -Meaning: Sets the speed of the gameplay to either slow, normal, or fast.
+        -EG: speed fast
     HELP: help
 	    -Synonyms: Manual
 	    -Meaning: Opens a guide to actions similar to this file.
