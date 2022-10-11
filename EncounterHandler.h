@@ -22,7 +22,7 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
     } while(!good);
     randEncStatus[encounter] = 1;
     good = 0;
-    cout << "-------------------------------------------------------ENCOUNTER-------------------------------------------------------" << endl << endl;
+    cout << "-------------------------------------------------------ENCOUNTER-------------------------------------------------------" << endl << endl << endl;
 
     switch(encounter)
     {

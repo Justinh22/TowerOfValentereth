@@ -9,6 +9,9 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
     string name;
     bool next;
     int valid = 0;
+    bool equipped = 0;
+    bool used = 0;
+    char yn;
     if(action==0) //GO
     {
         //cout << "Command was 'GO'" << endl;
@@ -422,7 +425,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 return "You don't see anything there.";
         }
     }
-    else if(action==2) //TAKE
+    else if(action==2||action==4||action==5) //TAKE
     {
         //cout << "Command was 'GET'" << endl;
         returner = "";
@@ -533,6 +536,16 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     if(valid!=2||i<currentRoom.contents)
                     {
                         itemStatus[i] = 1;
+                        if(action==4&&valid==1)
+                        {
+                            if(currentRoom.getIList()[i]<100)
+                                hero.equipWpn(dir.weaponDirectory[currentRoom.getIList()[i]]);
+                            else if(currentRoom.getIList()[i]<200)
+                                hero.equipAmr(dir.armorDirectory[currentRoom.getIList()[i]-100]);
+                            else if(currentRoom.getIList()[i]>=400)
+                                hero.equipRng(dir.ringDirectory[currentRoom.getIList()[i]-400]);
+                            equipped = 1;
+                        }
                         hero.equipment.push_back(currentRoom.getIList()[i]);
                         if(currentRoom.getIList()[i]==57||currentRoom.getIList()[i]==58||currentRoom.getIList()[i]==142||currentRoom.getIList()[i]==434)
                             currentRoom.creatDesc = "";
@@ -559,7 +572,43 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     if(valid!=2||i<currentRoom.contents)
                     {
                         itemStatus[i] = 1;
-                        hero.inventory.push_back(currentRoom.getIList()[i]);
+                        if(action==5&&currentRoom.getIList()[i]<212&&valid==1)
+                        {
+                            used = 1;
+                            cout << dir.consumableDirectory[currentRoom.getIList()[i]-200].getName() << " | " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getDesc() << endl;
+                            cout << "RARITY: " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getRarity() << endl;
+                            cout << "HP: " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP() << endl;
+                            cout << "MP: " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP() << endl << endl;
+                            cout << "Would you like to use the " << dir.getItemName(currentRoom.getIList()[i]) << "? (y/n)" << endl;
+                            yn = getch();
+                            if(yn=='y')
+                            {
+                                returner = "";
+                                if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP()>0)
+                                {
+                                    hero.changeHP(dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP());
+                                    if(hero.getHP()>hero.getMHP())
+                                        hero.setHP(hero.getMHP());
+                                    returner += "You regained " + std::to_string(dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP()) + " HP!";
+                                }
+                                if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP()>0)
+                                {
+                                    hero.changeMP(dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP());
+                                    if(hero.getMP()>hero.getMMP())
+                                        hero.setMP(hero.getMMP());
+                                    if(returner!="")
+                                        returner = "\n";
+                                    returner += "You regained " + std::to_string(dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP()) + " MP!";
+                                }
+                                if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getName()=="Bread")
+                                    ach.Connoisseur++;
+                                if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getID()>=204&&dir.consumableDirectory[currentRoom.getIList()[i]-200].getID()<=211)
+                                    ach.Alchemist++;
+                                return returner;
+                            }
+                        }
+                        else
+                            hero.inventory.push_back(currentRoom.getIList()[i]);
                     }
                     //cout << "Size of item inventory: " << hero.inventory.size() << endl;
                 }
@@ -602,7 +651,12 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 if(valid==1)
                 {
                     if(currentRoom.getIList()[i]<300||currentRoom.getIList()[i]>=400)
-                        return "You picked up the " + dir.getItemName((currentRoom.getIList())[i]) + "!";
+                    {
+                        if(equipped)
+                            return "You equipped the " + dir.getItemName((currentRoom.getIList())[i]) + "!";
+                        else if(!used)
+                            return "You picked up the " + dir.getItemName((currentRoom.getIList())[i]) + "!";
+                    }
                     else
                         return "You learned " + dir.getItemName((currentRoom.getIList())[i]) + "!";
                 }

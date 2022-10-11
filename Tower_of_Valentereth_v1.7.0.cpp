@@ -1476,7 +1476,13 @@ int main()
                 if(target.front()==' ')
                     target.erase(target.begin());
                 //cout << target << "." << endl;
-                text = interactionHandler(err,target,hero,dir,currentRoom,pass,itemStatus,debug_opt,itemIndex);
+                if(action=="equip")
+                    text = interactionHandler(4,target,hero,dir,currentRoom,pass,itemStatus,debug_opt,itemIndex);
+                else if(action=="use"||action=="eat"||action=="drink")
+                    text = interactionHandler(5,target,hero,dir,currentRoom,pass,itemStatus,debug_opt,itemIndex);
+                else
+                    text = interactionHandler(err,target,hero,dir,currentRoom,pass,itemStatus,debug_opt,itemIndex);
+
                 if(text=="next")
                 {
                     currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,randEncStatus,itemStatus,dev);
@@ -2266,7 +2272,7 @@ int actionHandler(string act, bool debug_opt, int gankTracker)
         //cout << "You look at the ";
         return 1;
     }
-    else if(act=="take"||act=="get"||act=="grab"||act=="add"||act=="yoink"||act=="pickup")
+    else if(act=="take"||act=="get"||act=="grab"||act=="add"||act=="yoink"||act=="pickup"||act=="equip"||act=="use"||act=="drink"||act=="eat")
     {
         //cout << "You take the ";
         return 2;
