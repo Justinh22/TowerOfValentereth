@@ -875,7 +875,10 @@ Room roomGenerator(int diff, int rew, int adv, Directory dir, Player &hero, vect
     cout << desc << endl;
     if(currentRoom.store.getLevel()!=-1)
     {
-        cout << "There is a locked door at the side of the room. The sign above it says it is a shop." << endl;
+        if(currentRoom.store.getType()==0)
+            cout << "There is a locked door at the side of the room. The sign above it says it is a shop." << endl;
+        else
+            cout << "There is a locked door at the side of the room. The sign above says it is a diviner." << endl;
     }
     if(creature!=-1)
     {

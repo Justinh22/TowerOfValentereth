@@ -22,7 +22,7 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
     } while(!good);
     randEncStatus[encounter] = 1;
     good = 0;
-    cout << "---------------------------------------------------------ENCOUNTER-----------------------------------------------------" << endl << endl;
+    cout << "-------------------------------------------------------ENCOUNTER-------------------------------------------------------" << endl << endl;
 
     switch(encounter)
     {
@@ -709,7 +709,7 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                     }
                     else
                     {
-                        cout << "'Hey! Unless you've got gold to fork over, you'd best move along.'" << endl << endl;
+                        cout << "'Hey... I know I'm a kid, but I know how to count!'" << endl << endl;
                         Sleep(shortWait);
                     }
                 }

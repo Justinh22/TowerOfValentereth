@@ -24,7 +24,9 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
             return "store";
         }
         else
-            return "Unknown target.";
+        {
+            return "You cannot go there.";
+        }
     }
     else if(action==1) //LOOK
     {
@@ -118,9 +120,19 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
             else
             {
                 if(currentRoom.monster.getID()<57) //Miniboss
-                    holder = currentRoom.monster.getName() + " | Level " + std::to_string(currentRoom.monster.getLEV()-2) + "\n";
+                    holder = currentRoom.monster.getName() + " | Level " + std::to_string(currentRoom.monster.getLEV()-2);
+                    if(currentRoom.monster.getLEV()<hero.level)
+                        holder += " <-->\n";
+                    else if(currentRoom.monster.getLEV()-2<hero.level)
+                        holder += " <->\n";
+                    else if(currentRoom.monster.getLEV()-2==hero.level)
+                        holder += "\n";
+                    else if(currentRoom.monster.getLEV()-4<=hero.level)
+                        holder += " <+>\n";
+                    else if(currentRoom.monster.getLEV()-4>hero.level)
+                        holder += " <++>\n";
                 else
-                    holder = currentRoom.monster.getName() + " | Level " + std::to_string(hero.getLEV()+3) + "\n";
+                    holder = currentRoom.monster.getName() + " | Level " + std::to_string(hero.getLEV()+3) + " <++>\n";
 
                 int monDmg = currentRoom.monster.getSTR() - hero.getDEF();
                 int monHit = currentRoom.monster.getACC() - hero.getDDG();
@@ -404,7 +416,10 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     return "check";
                 }
             }
-            return "Unknown target.";
+            if (currentRoom.getDesc().find(target)!=std::string::npos)
+                return "You don't see anything interesting here.";
+            else
+                return "You don't see anything there.";
         }
     }
     else if(action==2) //TAKE
@@ -607,7 +622,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
         }
         //cout << valid << endl;
         if(valid!=2)
-            return "Unknown target.";
+            return "You can't seem to pick that up.";
         else
             return returner;
 
@@ -634,11 +649,11 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 return "fight";
         }
         else
-            return "Unknown target.";
+            return "You decide not to attack that.";
     }
     else
     {
-        return "Unknown action.";
+        return "You decide not to attack that.";
     }
     return "Error!";
 }

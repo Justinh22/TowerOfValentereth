@@ -1273,7 +1273,7 @@ int main()
                 cout << "brimming with dangerous power, ";
                 break;
             case 1:
-                cout << "filled with uncontrollable rage, ";
+                cout << "with the stars aligned in the night sky above, ";
                 break;
             case 2:
                 cout << "blind to the trials that await you, ";
@@ -2100,12 +2100,11 @@ int main()
                 cout << endl;
                 cout << "For further help, consult the REAMDE file in the game files." << endl << endl;
             }
-            /*else if(err==5)
+            else if(err==9)
             {
-                cin >> diff >> rew >> adv;
-                cout << "Generating room with diff = " << diff << ", rew = " << rew << ", and adv = " << adv << "." << endl;
-                roomGenerator(diff,rew,adv,dir);
-            }*/
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                continue;
+            }
             else if(err==6) //DEBUG_GO
             {
                 currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,randEncStatus,itemStatus,dev);
@@ -2322,7 +2321,7 @@ int actionHandler(string act, bool debug_opt, int gankTracker)
     }
     else
     {
-        cout << "Unknown command." << endl;
+        cout << "You can't figure out how to do that." << endl;
         return 9;
     }
 }
@@ -2548,13 +2547,8 @@ int menuHandler(Player &hero, Directory dir)
                     else if(strChoice!="0")
                     {
                         cout << "Invalid action." << endl;
-                        Sleep(midWait);
+                        Sleep(shortWait);
                     }
-                }
-                else
-                {
-                    cout << "Invalid item." << endl;
-                    Sleep(midWait);
                 }
             }while(nav==0);
             nav = 0;
@@ -2637,14 +2631,9 @@ int menuHandler(Player &hero, Directory dir)
                         else if(strChoice!="0")
                         {
                             cout << "Invalid action." << endl;
-                            Sleep(midWait);
+                            Sleep(shortWait);
                         }
                     }
-                }
-                else
-                {
-                    cout << "Invalid item." << endl;
-                    Sleep(midWait);
                 }
             }while(nav==0);
             nav = 0;
@@ -2730,13 +2719,8 @@ int menuHandler(Player &hero, Directory dir)
                     else if(strChoice!="0")
                     {
                         cout << "Invalid action." << endl;
-                        Sleep(midWait);
+                        Sleep(shortWait);
                     }
-                }
-                else
-                {
-                    cout << "Invalid spell." << endl;
-                    Sleep(midWait);
                 }
             }while(nav==0);
             nav = 0;
