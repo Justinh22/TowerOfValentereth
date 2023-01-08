@@ -123,6 +123,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
             else
             {
                 if(currentRoom.monster.getID()<57) //Miniboss
+                {
                     holder = currentRoom.monster.getName() + " | Level " + std::to_string(currentRoom.monster.getLEV()-2);
                     if(currentRoom.monster.getLEV()<hero.level)
                         holder += " <-->\n";
@@ -134,8 +135,11 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                         holder += " <+>\n";
                     else if(currentRoom.monster.getLEV()-4>hero.level)
                         holder += " <++>\n";
+                }
                 else
+                {
                     holder = currentRoom.monster.getName() + " | Level " + std::to_string(hero.getLEV()+3) + " <++>\n";
+                }
 
                 int monDmg = currentRoom.monster.getSTR() - hero.getDEF();
                 int monHit = currentRoom.monster.getACC() - hero.getDDG();
@@ -554,6 +558,43 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                 }
                 else if(currentRoom.getIList()[i]<=224&&currentRoom.getIList()[i]!=212)
                 {
+                    if(action==5&&currentRoom.getIList()[i]<212&&valid==1)
+                    {
+                        used = 1;
+                        cout << dir.consumableDirectory[currentRoom.getIList()[i]-200].getName() << " | " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getDesc() << endl;
+                        cout << "RARITY: " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getRarity() << endl;
+                        cout << "HP: " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP() << endl;
+                        cout << "MP: " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP() << endl << endl;
+                        cout << "Would you like to use the " << dir.getItemName(currentRoom.getIList()[i]) << "? (y/n)" << endl;
+                        yn = getch();
+                        if(yn=='y')
+                        {
+                            returner = "";
+                            if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP()>0)
+                            {
+                                hero.changeHP(dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP());
+                                if(hero.getHP()>hero.getMHP())
+                                    hero.setHP(hero.getMHP());
+                                returner += "You regained " + std::to_string(dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP()) + " HP!";
+                            }
+                            if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP()>0)
+                            {
+                                hero.changeMP(dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP());
+                                if(hero.getMP()>hero.getMMP())
+                                    hero.setMP(hero.getMMP());
+                                if(returner!="")
+                                    returner = "\n";
+                                returner += "You regained " + std::to_string(dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP()) + " MP!";
+                            }
+                            if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getName()=="Bread")
+                                ach.Connoisseur++;
+                            if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getID()>=204&&dir.consumableDirectory[currentRoom.getIList()[i]-200].getID()<=211)
+                                ach.Alchemist++;
+                            return returner;
+                        }
+                        else
+                            return "You didn't use the " + dir.consumableDirectory[currentRoom.getIList()[i]-200].getName();
+                    }
                     if(hero.inventory.size()>=6)
                     {
                         if(valid==1)
@@ -572,43 +613,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     if(valid!=2||i<currentRoom.contents)
                     {
                         itemStatus[i] = 1;
-                        if(action==5&&currentRoom.getIList()[i]<212&&valid==1)
-                        {
-                            used = 1;
-                            cout << dir.consumableDirectory[currentRoom.getIList()[i]-200].getName() << " | " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getDesc() << endl;
-                            cout << "RARITY: " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getRarity() << endl;
-                            cout << "HP: " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP() << endl;
-                            cout << "MP: " << dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP() << endl << endl;
-                            cout << "Would you like to use the " << dir.getItemName(currentRoom.getIList()[i]) << "? (y/n)" << endl;
-                            yn = getch();
-                            if(yn=='y')
-                            {
-                                returner = "";
-                                if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP()>0)
-                                {
-                                    hero.changeHP(dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP());
-                                    if(hero.getHP()>hero.getMHP())
-                                        hero.setHP(hero.getMHP());
-                                    returner += "You regained " + std::to_string(dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP()) + " HP!";
-                                }
-                                if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP()>0)
-                                {
-                                    hero.changeMP(dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP());
-                                    if(hero.getMP()>hero.getMMP())
-                                        hero.setMP(hero.getMMP());
-                                    if(returner!="")
-                                        returner = "\n";
-                                    returner += "You regained " + std::to_string(dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP()) + " MP!";
-                                }
-                                if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getName()=="Bread")
-                                    ach.Connoisseur++;
-                                if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getID()>=204&&dir.consumableDirectory[currentRoom.getIList()[i]-200].getID()<=211)
-                                    ach.Alchemist++;
-                                return returner;
-                            }
-                        }
-                        else
-                            hero.inventory.push_back(currentRoom.getIList()[i]);
+                        hero.inventory.push_back(currentRoom.getIList()[i]);
                     }
                     //cout << "Size of item inventory: " << hero.inventory.size() << endl;
                 }
