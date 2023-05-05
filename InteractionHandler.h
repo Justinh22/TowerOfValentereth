@@ -569,6 +569,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                         yn = getch();
                         if(yn=='y')
                         {
+                            itemStatus[i] = 1;
                             returner = "";
                             if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getHP()>0)
                             {
@@ -583,7 +584,7 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                                 if(hero.getMP()>hero.getMMP())
                                     hero.setMP(hero.getMMP());
                                 if(returner!="")
-                                    returner = "\n";
+                                    returner += "\n";
                                 returner += "You regained " + std::to_string(dir.consumableDirectory[currentRoom.getIList()[i]-200].getMP()) + " MP!";
                             }
                             if(dir.consumableDirectory[currentRoom.getIList()[i]-200].getName()=="Bread")

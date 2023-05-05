@@ -611,12 +611,12 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                         case 224: //Second Soul
                             break;
                     }
-                    if(end==3)
-                        break;
                     Sleep(shortWait);
                 }
 
                 hero.inventory.erase(hero.inventory.begin()+choice-1);
+                if(end==3)
+                    break;
                 if(dir.consumableDirectory[hero.inventory[choice-1]-200].getName()=="Bread")
                     ach.Connoisseur++;
                 if(dir.consumableDirectory[hero.inventory[choice-1]-200].getID()>=204&&dir.consumableDirectory[hero.inventory[choice-1]-200].getID()<=211)
@@ -1337,7 +1337,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
             switch(rand()%3)
             {
                 case 0:
-                    cout << "'The power is what you sought... why did you leave the throne?!'" << endl;
+                    cout << "'If power is what you sought... why did you leave the throne?!'" << endl;
                     break;
                 case 1:
                     cout << "'I will not let greed prevail... do your worst, mortal!'" << endl;
@@ -1394,7 +1394,7 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
                     ach.Beast = 1;
                 break;
                 case 58:
-                    hero.growth = 1;
+                    hero.growth += 2;
                     cout << "You gained Endrigaia's power! Your MPG rose by 2!";
                     ach.NaturesWrath = 1;
                     Sleep(midWait);

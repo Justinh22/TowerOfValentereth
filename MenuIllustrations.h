@@ -22,7 +22,7 @@ void titleScreen()
     cout << " |     4) Leaderboard                                                                                                 | " << endl;
     cout << " |     5) Achievements                                                                                                | " << endl;
     cout << " |     6) Masks                                                                                                       | " << endl;
-    cout << " |                                                                                                             v1.7.0 | " << endl;
+    cout << " |                                                                                                             v1.8.0 | " << endl;
     cout << " |____________________________________________________________________________________________________________________| " << endl;
     cout << "                                                                                                                        " << endl;
 }

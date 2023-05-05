@@ -1,7 +1,7 @@
 void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<bool> &randEncStatus)
 {
     std::system("cls");
-    int encounter = rand()%15;
+    int encounter = rand()%20;
     bool good=0;
     bool flag=0;
     int timeout = 0;
@@ -1151,19 +1151,244 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
             }
             break;
         case 15:
-
+            karma -= 2;
+            cout << "What luck! In front of you, a majestic treasure chest sits, ready to be claimed." << endl << endl;
+            cout << "1) Open it." << endl;
+            cout << "2) Leave it be." << endl << endl;
+            while(!good)
+            {
+                cout << "What do you do?" << endl;
+                strChoice = getch();
+                std::stringstream stoi(strChoice);
+                stoi >> intChoice;
+                if(intChoice==1)
+                {
+                    cout << "You open the chest!" << endl;
+                    if(rand()%2==0)
+                    {
+                        Sleep(shortWait);
+                        cout << "Inside you see a weapon!" << endl;
+                        Sleep(shortWait);
+                        if(adv>=10)
+                            amount = itemPicker(0,10);
+                        else
+                            amount = itemPicker(0,adv+1);
+                    }
+                    else
+                    {
+                        Sleep(shortWait);
+                        cout << "Inside you see a suit of armor!" << endl;
+                        Sleep(shortWait);
+                        if(adv>=10)
+                            amount = itemPicker(1,10);
+                        else
+                            amount = itemPicker(1,adv+1);
+                    }
+                    if(hero.equipment.size()<6)
+                    {
+                        cout << "You got a " << dir.getItemName(amount) << "!" << endl;
+                        hero.equipment.push_back(amount);
+                    }
+                    else
+                    {
+                        while(!good)
+                        {
+                            std::system("cls");
+                            replaceMenu(hero,dir,0,amount);
+                            strChoice = getch();
+                            std::stringstream stoi(strChoice);
+                            stoi >> intChoice;
+                            if(intChoice>=1&&intChoice<=hero.equipment.size())
+                            {
+                                cout << "Replaced " << dir.getItemName(hero.equipment[intChoice-1]) << " with " << dir.getItemName(amount) << "." << endl;
+                                Sleep(midWait);
+                                hero.equipment[intChoice-1] = amount;
+                                good = 1;
+                            }
+                            else if(intChoice==0)
+                            {
+                                good = 1;
+                            }
+                            else
+                            {
+                                cout << "Invalid input." << endl;
+                                Sleep(shortWait);
+                            }
+                        }
+                    }
+                    Sleep(longWait);
+                    good = 1;
+                }
+                else if(intChoice==2)
+                {
+                    cout << "You decide not to take the treasure." << endl;
+                    Sleep(longWait);
+                    good = 1;
+                }
+                else
+                {
+                    cout << "Invalid input." << endl << endl;
+                }
+            }
             break;
         case 16:
-
+            karma -= 2;
+            cout << "A long hall stretches before you, with light shining through stained glass windows to shower the marble floor with color. A woman stands at the center of the hall, holding a set of scales. 'Balance... All things become equal over time. Good, evil... Are you here to upset that balance?'" << endl << endl;
+            cout << "1) Lose 5 HP, Gain 5 MP." << endl;
+            cout << "2) Lose 10 HP, Gain 10 MP." << endl;
+            cout << "3) Lose 25 HP, Gain 25 MP." << endl;
+            cout << "4) Avoid the woman's gaze." << endl << endl;
+            while(!good)
+            {
+                cout << "What do you do?" << endl;
+                strChoice = getch();
+                std::stringstream stoi(strChoice);
+                stoi >> intChoice;
+                if(intChoice==1)
+                {
+                    cout << "You feel the energy in your body shift. 'Sometimes the small adjustments... are what keeps us steady.'" << endl;
+                    hero.changeHP(-5);
+                    hero.changeMP(5);
+                    Sleep(longWait);
+                    good = 1;
+                }
+                else if(intChoice==2)
+                {
+                    cout << "You feel the energy in your body swirl, and settle. 'Balance restored within... but will the tower survive your disruption?'" << endl;
+                    hero.changeHP(-10);
+                    hero.changeMP(10);
+                    Sleep(longWait);
+                    good = 1;
+                }
+                else if(intChoice==3)
+                {
+                    cout << "You feel the energy within you shift drastically, and are overcome with dizziness. 'Ah... a true student of order. Perhaps there is hope for us after all.'" << endl;
+                    hero.changeHP(-25);
+                    hero.changeMP(25);
+                    Sleep(longWait);
+                    good = 1;
+                }
+                else if(intChoice==4)
+                {
+                    cout << "You don't trust the woman, and leave without meeting her gaze. 'Walking in imbalance cannot last, mortal. Sooner or later you will fall...'" << endl;
+                    Sleep(longWait);
+                    good = 1;
+                }
+                else
+                {
+                    cout << "Invalid input." << endl << endl;
+                }
+            }
             break;
         case 17:
-
+            karma -= 2;
+            cout << "The hallway is overgrown here, and you feel spiritual energy in the air... You see a small creature resembling a groundhog covered in moss, with two glowing yellow antlers. In your mind, you hear it speak: 'You must be strong to have made it here, traveler. Could you lend us some of your power?'" << endl << endl;
+            cout << "1) Lose 20 MP, Gain 1 MPG." << endl;
+            cout << "2) Lose 50 HP, Gain 2 MPG." << endl;
+            cout << "3) Offer nothing." << endl << endl;
+            while(!good)
+            {
+                cout << "What do you do?" << endl;
+                strChoice = getch();
+                std::stringstream stoi(strChoice);
+                stoi >> intChoice;
+                if(intChoice==1)
+                {
+                    cout << "A small light floats from your chest toward the small creature, whose antlers glow with power. 'Oh, thank you kind traveler! Be wary of mother, she is not kind to visitors...'" << endl;
+                    hero.changeMP(-20);
+                    hero.growth += 1;
+                    Sleep(longWait);
+                    good = 1;
+                }
+                else if(intChoice==2)
+                {
+                    cout << "A large ball of light floats from your chest toward the small creature, whose antlers glow bright like the sun and sparkle with power. 'You are too kind, traveler! I've never known someone as nice as you to ascend the tower this far! Be wary of mother, she is not kind to visitors...'" << endl;
+                    hero.changeMP(-50);
+                    hero.growth += 2;
+                    Sleep(longWait);
+                    good = 1;
+                }
+                else if(intChoice==3)
+                {
+                    cout << "The creatures horns fade slightly. 'Aw... I wish you luck, traveler.'" << endl;
+                    Sleep(longWait);
+                    good = 1;
+                }
+                else
+                {
+                    cout << "Invalid input." << endl << endl;
+                }
+            }
             break;
         case 18:
-
+            cout << "A massive beast must have rampaged through this room, leaving traces of black ooze all throughout the hall... Within one of the puddles, you see the bones of a fallen traveler, and with them a satchel of gold. The ooze looks poisonous..." << endl << endl;
+            cout << "1) Lose " << 3*adv << " HP, Gain " << 10*adv << "G." << endl;
+            cout << "2) Avoid the puddle of ooze." << endl << endl;
+            while(!good)
+            {
+                cout << "What do you do?" << endl;
+                strChoice = getch();
+                std::stringstream stoi(strChoice);
+                stoi >> intChoice;
+                if(intChoice==1)
+                {
+                    cout << "You reach in and claim " << 10*adv << "G! The ooze burns away your flesh like acid..." << endl;
+                    hero.changeHP(-(3*adv));
+                    hero.gold += 10*adv;
+                    Sleep(longWait);
+                    good = 1;
+                }
+                else if(intChoice==2)
+                {
+                    cout << "You step over the toxic ooze, leaving the gold behind." << endl;
+                    Sleep(longWait);
+                    good = 1;
+                }
+                else
+                {
+                    cout << "Invalid input." << endl << endl;
+                }
+            }
             break;
         case 19:
-
+            karma -= 2;
+            cout << "A massive library stands before you, with books strewn all over. It seems like someone was studying the creation and combination of life... the images in these books are disturbing, and have notes scrawled along the margins. They do give you some ideas, though..." << endl << endl;
+            cout << "1) Embrace the material world - Gain 10 MHP, Lose 10 MMP." << endl;
+            cout << "2) Reject the material world - Gain 10 MMP, Lose 10 MHP." << endl;
+            cout << "3) Leave the books." << endl << endl;
+            while(!good)
+            {
+                cout << "What do you do?" << endl;
+                strChoice = getch();
+                std::stringstream stoi(strChoice);
+                stoi >> intChoice;
+                if(intChoice==1)
+                {
+                    cout << "You follow the book's instructions, finishing the ritual... you feel more anchored to the earth beneath you." << endl;
+                    hero.setMHP(hero.getMHP()+10);
+                    hero.setMMP(hero.getMMP()-10);
+                    Sleep(longWait);
+                    good = 1;
+                }
+                else if(intChoice==2)
+                {
+                    cout << "You follow the book's instructions, finishing the ritual... you feel as if you are losing grasp on the physical world." << endl;
+                    hero.setMHP(hero.getMHP()-10);
+                    hero.setMMP(hero.getMMP()+10);
+                    Sleep(longWait);
+                    good = 1;
+                }
+                else if(intChoice==3)
+                {
+                    cout << "These ideas are too dangerous... it's best not to meddle with them." << endl;
+                    Sleep(longWait);
+                    good = 1;
+                }
+                else
+                {
+                    cout << "Invalid input." << endl << endl;
+                }
+            }
             break;
     }
     cout << endl << endl << "Press any button to continue to the next chamber." << endl;
