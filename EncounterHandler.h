@@ -257,7 +257,6 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                                 if(intChoice>=1&&intChoice<=hero.equipment.size())
                                 {
                                     cout << "Replaced " << dir.getItemName(hero.equipment[intChoice-1]) << " with " << dir.getItemName(amount) << "." << endl;
-                                    Sleep(midWait);
                                     hero.equipment[intChoice-1] = amount;
                                     good = 1;
                                 }
@@ -390,7 +389,6 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                                 if(intChoice>=1&&intChoice<=hero.equipment.size())
                                 {
                                     cout << "Replaced " << dir.getItemName(hero.equipment[intChoice-1]) << " with " << dir.getItemName(amount) << "." << endl;
-                                    Sleep(midWait);
                                     hero.equipment[intChoice-1] = amount;
                                     good = 1;
                                 }
@@ -573,7 +571,6 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                                 if(intChoice>=1&&intChoice<=hero.equipment.size())
                                 {
                                     cout << "Replaced " << dir.getItemName(hero.equipment[intChoice-1]) << " with " << dir.getItemName(amount) << "." << endl;
-                                    Sleep(midWait);
                                     hero.equipment[intChoice-1] = amount;
                                     good = 1;
                                 }
@@ -772,7 +769,6 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                                 if(intChoice>=1&&intChoice<=hero.inventory.size())
                                 {
                                     cout << "Replaced " << dir.getItemName(hero.inventory[intChoice-1]) << " with " << dir.getItemName(224) << "." << endl;
-                                    Sleep(midWait);
                                     hero.inventory[intChoice-1] = 224;
                                     good = 1;
                                 }
@@ -933,7 +929,6 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                             if(intChoice>=1&&intChoice<=hero.inventory.size())
                             {
                                 cout << "Replaced " << dir.getItemName(hero.inventory[intChoice-1]) << " with " << dir.getItemName(items[intChoice-1]) << "." << endl;
-                                Sleep(longWait);
                                 hero.inventory[intChoice-1] = items[intChoice-1];
                                 good = 1;
                             }
@@ -1037,7 +1032,6 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                             if(intChoice>=1&&intChoice<=hero.equipment.size())
                             {
                                 cout << "Replaced " << dir.getItemName(hero.equipment[intChoice-1]) << " with " << dir.getItemName(amount) << "." << endl;
-                                Sleep(midWait);
                                 hero.equipment[intChoice-1] = amount;
                                 good = 1;
                             }
@@ -1201,7 +1195,6 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                             if(intChoice>=1&&intChoice<=hero.equipment.size())
                             {
                                 cout << "Replaced " << dir.getItemName(hero.equipment[intChoice-1]) << " with " << dir.getItemName(amount) << "." << endl;
-                                Sleep(midWait);
                                 hero.equipment[intChoice-1] = amount;
                                 good = 1;
                             }
@@ -1294,19 +1287,33 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                 stoi >> intChoice;
                 if(intChoice==1)
                 {
-                    cout << "A small light floats from your chest toward the small creature, whose antlers glow with power. 'Oh, thank you kind traveler! Be wary of mother, she is not kind to visitors...'" << endl;
-                    hero.changeMP(-20);
-                    hero.growth += 1;
-                    Sleep(longWait);
-                    good = 1;
+                    if(hero.getMP()>=20)
+                    {
+                        cout << "A small light floats from your chest toward the small creature, whose antlers glow with power. 'Oh, thank you kind traveler! Be wary of mother, she is not kind to visitors...'" << endl;
+                        hero.changeMP(-20);
+                        hero.growth += 1;
+                        Sleep(longWait);
+                        good = 1;
+                    }
+                    else
+                    {
+                        cout << "'Oh you are too kind... but you dont have that much power to give...'" << endl;
+                    }
                 }
                 else if(intChoice==2)
                 {
-                    cout << "A large ball of light floats from your chest toward the small creature, whose antlers glow bright like the sun and sparkle with power. 'You are too kind, traveler! I've never known someone as nice as you to ascend the tower this far! Be wary of mother, she is not kind to visitors...'" << endl;
-                    hero.changeMP(-50);
-                    hero.growth += 2;
-                    Sleep(longWait);
-                    good = 1;
+                    if(hero.getMP()>=50)
+                    {
+                        cout << "A large ball of light floats from your chest toward the small creature, whose antlers glow bright like the sun and sparkle with power. 'You are too kind, traveler! I've never known someone as nice as you to ascend the tower this far! Be wary of mother, she is not kind to visitors...'" << endl;
+                        hero.changeMP(-50);
+                        hero.growth += 2;
+                        Sleep(longWait);
+                        good = 1;
+                    }
+                    else
+                    {
+                        cout << "'Oh you are too kind... but you dont have that much power to give...'" << endl;
+                    }
                 }
                 else if(intChoice==3)
                 {
