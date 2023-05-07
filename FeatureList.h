@@ -176,6 +176,7 @@ vector<Feature> initFDir(vector<Feature> featureDirectory)
     BlackSlime.addKey("black slime");
     BlackSlime.addKey("ooze");
     BlackSlime.addKey("black ooze");
+    BlackSlime.addKey("puddle");
     featureDirectory.push_back(BlackSlime);
 
     Feature SingleCoffin("coffin","You recognize the name on the coffin... it was someone who had ventured into the tower before you.\nBut when you look inside the coffin, they look nothing like what they once did...",23,1,2); //23

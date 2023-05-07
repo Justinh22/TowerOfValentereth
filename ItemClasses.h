@@ -462,8 +462,8 @@ public:
         int gain=0;
         if(mask.getID()==3)
             gain+=5;
-        if(growth)
-            gain+=2;
+        if(growth>0)
+            gain+=growth;
         return eqpAmr.getMG()+gain+eqpRng.getMPR();
     }
     int getMA()
@@ -521,7 +521,7 @@ public:
     int gold;
     int exp;
     int keys;
-    bool growth;
+    int growth;
     bool empowered;
     Item mask;
     int meleeTraining; // -1 = None, 0 = Dagger, 1 = Spear, 2 = Sword, 3 = Axe

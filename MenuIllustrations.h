@@ -22,7 +22,7 @@ void titleScreen()
     cout << " |     4) Leaderboard                                                                                                 | " << endl;
     cout << " |     5) Achievements                                                                                                | " << endl;
     cout << " |     6) Masks                                                                                                       | " << endl;
-    cout << " |                                                                                                             v1.7.0 | " << endl;
+    cout << " |                                                                                                             v1.8.0 | " << endl;
     cout << " |____________________________________________________________________________________________________________________| " << endl;
     cout << "                                                                                                                        " << endl;
 }
@@ -581,6 +581,7 @@ void combatMain(Player hero, Creature monster, int monCHP)
     if(hero.mask.getID()==2) //Darkness
     {
         monHP = "";
+        secondMonHP = "";
         if(monster.getHP()<=100)
             for(int i=0;i<monster.getHP();i++)
                 monHP += "X";

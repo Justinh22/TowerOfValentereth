@@ -1273,7 +1273,7 @@ int main()
                 cout << "brimming with dangerous power, ";
                 break;
             case 1:
-                cout << "filled with uncontrollable rage, ";
+                cout << "with the stars aligned in the night sky above, ";
                 break;
             case 2:
                 cout << "blind to the trials that await you, ";
@@ -1476,7 +1476,13 @@ int main()
                 if(target.front()==' ')
                     target.erase(target.begin());
                 //cout << target << "." << endl;
-                text = interactionHandler(err,target,hero,dir,currentRoom,pass,itemStatus,debug_opt,itemIndex);
+                if(action=="equip")
+                    text = interactionHandler(4,target,hero,dir,currentRoom,pass,itemStatus,debug_opt,itemIndex);
+                else if(action=="use"||action=="eat"||action=="drink")
+                    text = interactionHandler(5,target,hero,dir,currentRoom,pass,itemStatus,debug_opt,itemIndex);
+                else
+                    text = interactionHandler(err,target,hero,dir,currentRoom,pass,itemStatus,debug_opt,itemIndex);
+
                 if(text=="next")
                 {
                     currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,randEncStatus,itemStatus,dev);
@@ -2100,12 +2106,11 @@ int main()
                 cout << endl;
                 cout << "For further help, consult the REAMDE file in the game files." << endl << endl;
             }
-            /*else if(err==5)
+            else if(err==9)
             {
-                cin >> diff >> rew >> adv;
-                cout << "Generating room with diff = " << diff << ", rew = " << rew << ", and adv = " << adv << "." << endl;
-                roomGenerator(diff,rew,adv,dir);
-            }*/
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                continue;
+            }
             else if(err==6) //DEBUG_GO
             {
                 currentRoom = advance(depth,itemDrop,adv,diff,rew,karma,hero,pass,win,dir,boss,minibossStatus,roomStatus,randEncStatus,itemStatus,dev);
@@ -2267,7 +2272,7 @@ int actionHandler(string act, bool debug_opt, int gankTracker)
         //cout << "You look at the ";
         return 1;
     }
-    else if(act=="take"||act=="get"||act=="grab"||act=="add"||act=="yoink"||act=="pickup")
+    else if(act=="take"||act=="get"||act=="grab"||act=="add"||act=="yoink"||act=="pickup"||act=="equip"||act=="use"||act=="drink"||act=="eat")
     {
         //cout << "You take the ";
         return 2;
@@ -2322,7 +2327,7 @@ int actionHandler(string act, bool debug_opt, int gankTracker)
     }
     else
     {
-        cout << "Unknown command." << endl;
+        cout << "You can't figure out how to do that." << endl;
         return 9;
     }
 }
@@ -2548,13 +2553,8 @@ int menuHandler(Player &hero, Directory dir)
                     else if(strChoice!="0")
                     {
                         cout << "Invalid action." << endl;
-                        Sleep(midWait);
+                        Sleep(shortWait);
                     }
-                }
-                else
-                {
-                    cout << "Invalid item." << endl;
-                    Sleep(midWait);
                 }
             }while(nav==0);
             nav = 0;
@@ -2637,14 +2637,9 @@ int menuHandler(Player &hero, Directory dir)
                         else if(strChoice!="0")
                         {
                             cout << "Invalid action." << endl;
-                            Sleep(midWait);
+                            Sleep(shortWait);
                         }
                     }
-                }
-                else
-                {
-                    cout << "Invalid item." << endl;
-                    Sleep(midWait);
                 }
             }while(nav==0);
             nav = 0;
@@ -2730,13 +2725,8 @@ int menuHandler(Player &hero, Directory dir)
                     else if(strChoice!="0")
                     {
                         cout << "Invalid action." << endl;
-                        Sleep(midWait);
+                        Sleep(shortWait);
                     }
-                }
-                else
-                {
-                    cout << "Invalid spell." << endl;
-                    Sleep(midWait);
                 }
             }while(nav==0);
             nav = 0;

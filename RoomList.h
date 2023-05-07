@@ -304,6 +304,7 @@ vector<Room> initRDir(vector<Room> roomDirectory, vector<Feature> featureDirecto
     roomDirectory.push_back(R59);
 
     Room R60(60,"You have to catch yourself as you enter a wide circular room, with most the floor missing apart from a walkway around the outer stone wall. The pit in the center of the room seems to have no bottom...");
+    R60.addFeat(featureDirectory[2]);
     R60.addFeat(featureDirectory[10]);
     R60.addFeat(featureDirectory[68]);
     roomDirectory.push_back(R60);
