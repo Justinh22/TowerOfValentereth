@@ -1397,6 +1397,51 @@ void encounterHandler(Player &hero, Directory dir, int &adv, int &depth, vector<
                 }
             }
             break;
+            case 20:
+                cout << "You step into a cold laboratory. A vat sits in its center, filled to the brim with a mysterious, murky fluid. Something about it feels... lucky?" << endl << endl;
+                cout << "1) Drink a little - Lose " << hero.getMHP()/5 << " HP." << endl;
+                cout << "2) Drink some - Lose " << hero.getMHP()/4 << " HP." << endl;
+                cout << "3) Drink a lot - Lose " << hero.getMHP()/2 << " HP." << endl;
+                cout << "4) Don't drink any." << endl << endl;
+                while(!good)
+                {
+                    cout << "What do you do?" << endl;
+                    strChoice = getch();
+                    std::stringstream stoi(strChoice);
+                    stoi >> intChoice;
+                    if(intChoice==1)
+                    {
+                        cout << "You take a deep breath, then swallow a mouthful of the fluid. Good fortune may be around the corner..." << endl;
+                        karma -= 2;
+                        Sleep(longWait);
+                        good = 1;
+                    }
+                    else if(intChoice==2)
+                    {
+                        cout << "You take a deep breath, then swallow a glass full of the fluid. 'Must have earned some karma for that...'" << endl;
+                        karma -= 4;
+                        Sleep(longWait);
+                        good = 1;
+                    }
+                    else if(intChoice==3)
+                    {
+                        cout << "You take a deep breath, then begin guzzling the murky concoction. You feel a bit sick... but also like fate is on your side." << endl;
+                        karma -= 6;
+                        Sleep(longWait);
+                        good = 1;
+                    }
+                    else if(intChoice==4)
+                    {
+                        cout << "Of all the things to do, why drink an unknown fluid in a lab? This is for the best. You head out of the lab." << endl;
+                        Sleep(longWait);
+                        good = 1;
+                    }
+                    else
+                    {
+                        cout << "Invalid input." << endl << endl;
+                    }
+                }
+                break;
     }
     cout << endl << endl << "Press any button to continue to the next chamber." << endl;
     strChoice = getch();
