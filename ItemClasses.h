@@ -463,7 +463,7 @@ public:
         if(mask.getID()==3)
             gain+=5;
         if(growth>0)
-            gain+=2;
+            gain+=growth;
         return eqpAmr.getMG()+gain+eqpRng.getMPR();
     }
     int getMA()
