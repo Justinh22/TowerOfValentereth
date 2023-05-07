@@ -1374,6 +1374,8 @@ int combatHandler(Player &hero, Creature &monster, Directory dir, int gd, int ex
         score += gd;
         ach.Expert++;
         ach.Unstoppable++;
+        hero.changeMP(hero.getMG());
+        hero.changeHP(hpBuff);
         Sleep(midWait);
         if(monster.getID()>=57)
         {
