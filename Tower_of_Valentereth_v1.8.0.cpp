@@ -25,6 +25,7 @@ bool godMode = 0;
 int karma = 5;
 int end = 0;
 int pass = 1;
+int lastTarget = -1;
 int shortWait = 1000;
 int midWait = 2000;
 int longWait = 3000;
@@ -954,7 +955,7 @@ int main()
     string filename;
     int saveStats[30];
     int roomData[15];
-    int randEncCount = 15;
+    int randEncCount = 21;
     vector<bool> randEncStatus(randEncCount,0);
     vector<int> saveFList;
     vector<int> saveIList;
@@ -1083,7 +1084,7 @@ int main()
                             data >> saveCheck;
                             itemStatus[i] = saveCheck>0;
                         }
-                        for(int i=1;i<15;i++)
+                        for(int i=1;i<21;i++)
                             data >> roomData[i];
                     }
                     else if(line==2)
@@ -3398,6 +3399,7 @@ Room advance(int &depth, bool &itemDrop, int &adv, int &diff, int &rew, int &kar
 {
     double percDmgDone;
     double percDmgTook;
+    lastTarget = -1;
     score += 100;
     depth++;
     ach.Vale++;

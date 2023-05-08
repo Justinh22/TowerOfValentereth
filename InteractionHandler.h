@@ -232,6 +232,8 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                             {
                                 if(itemStatus[j-1+currentRoom.contents]==0)
                                 {
+                                    lastTarget = j-1+currentRoom.contents;
+                                    //cout << "LastTarget: " << j-1+currentRoom.contents << endl;
                                     if(holder!="")
                                         holder += "\n";
                                     if(currentRoom.getIList()[j-1+currentRoom.contents]<300||currentRoom.getIList()[j-1+currentRoom.contents]>=400)
@@ -244,6 +246,8 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                             {
                                 if(itemStatus[j-1+currentRoom.contents]==0)
                                 {
+                                    lastTarget = j-1+currentRoom.contents;
+                                    //cout << "LastTarget: " << j-1+currentRoom.contents << endl;
                                     if(holder=="")
                                         holder = "Your mind spirals... You begin to recall " + dir.getItemName(currentRoom.getIList()[j-1+currentRoom.contents]) + ".";
                                     else
@@ -323,6 +327,8 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
                     valid = 1;
                 if(valid==1)
                 {
+                    lastTarget = i;
+                    //cout << "LastTarget: " << i << endl;
                     if(currentRoom.getIList()[i]<100)
                     {
                         cout << dir.getItemName(currentRoom.getIList()[i]) << " | " << dir.getItemDesc(currentRoom.getIList()[i]) << endl;
@@ -434,10 +440,24 @@ string interactionHandler(int action, string target, Player &hero, Directory &di
         //cout << "Command was 'GET'" << endl;
         returner = "";
         //cout << currentRoom.getIList().size();
-        for(int i=0;i<currentRoom.getIList().size();i++)
+        int i = 0;
+        bool tgtCheck = false;
+        for(int x=0;x<currentRoom.getIList().size();x++)
         {
+            if(!tgtCheck)
+            {
+                tgtCheck = true;
+                if(lastTarget>-1)
+                    i = lastTarget;
+                    x--;
+            }
+            else if(x==lastTarget)
+                continue;
+            else
+                i = x;
             if(itemStatus[i]==1)
                 continue;
+            //cout << "i = " << i << endl;
             valid = 0;
             holder = dir.getItemName((currentRoom.getIList())[i]);
             std::transform(holder.begin(), holder.end(), holder.begin(), ::tolower);
